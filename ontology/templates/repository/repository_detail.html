@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2>{{object.name}} (Repository)</h2>
+<p>{{object.description}}</p>
+<p>{{object.organisation.name}}</p>
+
+<a class="btn btn-primary" href="{% url "o_model_create" repository_id=object.id %}">New Model</a>
+
+{% include "o_model/o_model_table.html" with object_list=omodels %}
+
+{% endblock content %}

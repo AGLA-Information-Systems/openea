@@ -1,0 +1,20 @@
+<table class="table table-fluid">
+    <thead>
+        <tr>
+            <th>Tag</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for Tag in object_list %}
+        <tr>
+            <td><a class="link-dark" href="{% url "tag_detail" Tag.id %}">{{ Tag }}</a></td>
+            <td>{{ Tag.description }}</td>
+            <td><a href="{% url "tag_update" Tag.id %}">edit</a></td>
+            <td><a href="{% url "tag_delete" Tag.id %}">delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

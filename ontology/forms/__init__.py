@@ -1,0 +1,1 @@
+from .o_predicate import OPredicateCreateForm

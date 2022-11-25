@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2 class="form-title">Model</h2>
+
+<a href="{% url "o_model_create" %}">New</a>
+
+{% include "o_model/o_model_table.html" %}
+
+{% endblock content %}

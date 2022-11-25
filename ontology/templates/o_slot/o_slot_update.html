@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2 class="form-title">Update OSlot</h2>
+<form class="form-group" method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" value="Submit" />
+</form>
+
+{% endblock content %}

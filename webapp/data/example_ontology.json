@@ -1,0 +1,21 @@
+{
+    "entities": [
+        [null, "mammal", "group of vertebrate animals constituting the class Mammalia"],
+        [null, "human", "group of vertebrate animals constituting the class Hominidae"],
+        [null, "color", "visual perception of the frequency of light"],
+        [null, "hair-color", "color of the hair"],
+        [null, "height", "measurement from base to top"],
+        [null, "meter", "unit of measurement of distance"]
+    ],
+    "relations": [],
+    "ontology": [
+        [null, null, "human", null, "is-a-subtype-of", null, "mammal", ""],
+        [null, null, "mammal", null, "is-a-subtype-of", null, "THING", ""],
+        [null, null, "color", null, "is-a-subtype-of", null, "THING", ""],
+        [null, null, "hair-color", null, "is-a-subtype-of", null, "THING", ""],      
+        [null, null, "hair-color", null, "is-an-aspect-of", null, "human", ""],
+        [null, null, "meter", null, "is-a-subtype-of", null, "THING", ""],
+        [null, null, "height", null, "is-a-subtype-of", null, "THING", ""],
+        [null, null, "height", null, "is-an-aspect-of", null, "human", ""]
+    ]
+}

@@ -1,0 +1,84 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+{% load get_dict_item %}
+
+{% block content %}
+<h2 class="form-title">Cost - Benefit Report</h2>
+
+<form id="export_form" method="post">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+  <div class="row align-items-md-stretch">
+    <div class="col-md-6">
+      <div class="form-check">
+        {{ form.model.errors }}
+        {{ form.model|as_crispy_field }}
+      </div>
+      <div class="form-check">
+        {{ form.cost_predicate.errors }}
+        {{ form.cost_predicate|as_crispy_field }}
+      </div>
+      <div class="form-check">
+        {{ form.profit_predicate.errors }}
+        {{ form.profit_predicate|as_crispy_field }}
+      </div>
+      
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-check">
+        {{ form.amount_concept.errors }}
+        {{ form.amount_concept|as_crispy_field }}
+      </div>
+      <button type="submit" class="btn btn-primary mb-3">Analyze</button>
+    </div>
+  </div>
+</form>
+
+<hr/>
+<table class="table table-fluid">
+  <thead>
+      <tr>
+          <th>{{ amount_concept }}</th>
+          <th>{{ cost_concept }}</th>
+          <th>{{ profit_concept }}</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for amount_type, total in summary.items %}
+      <tr>
+          <td>{{ amount_type }}</td>
+          <td>{{ total|get_dict_item:"cost" }}</td>
+          <td>{{ total|get_dict_item:"profit" }}</td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+<hr/>
+<ul>
+  {% for cost in cost_instances %}
+    <li><a class="link-dark" href="{% url "o_instance_detail" cost.id %}">{{ cost.name }}</a></li>
+    {% with cost_instances_amounts|get_dict_item:cost.id as amounts %}
+      <ul>
+        {% for amount in amounts %}
+          <li>{{ amount.name }}::{{ amount.concept }}</li>
+        {% endfor %}
+      </ul>
+    {% endwith %}
+  {% endfor %}
+</ul>
+
+<hr/>
+<ul>
+{% for profit in profit_instances %}
+  <li><a class="link-dark" href="{% url "o_instance_detail" profit.id %}">{{ profit.name }}</a></li>
+  {% with profit_instances_amounts|get_dict_item:profit.id as amounts %}
+    <ul>
+      {% for amount in amounts %}
+        <li>{{ amount.name }}::{{ amount.concept }}</li>
+      {% endfor %}
+    </ul>
+  {% endwith %}
+{% endfor %}
+</ul>
+{% endblock content %}

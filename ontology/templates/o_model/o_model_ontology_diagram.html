@@ -1,0 +1,130 @@
+{% load static %}
+{% load js %}
+
+<script type="text/javascript" src="{% static '/js/vis-data.min.js' %}"></script>
+<script type="text/javascript" src="{% static '/js/vis-network.min.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static '/css/vis-network.min.css' %}" />
+<!-- You may include other packages like Vis Timeline or Vis Graph3D here. -->
+
+
+<div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <div>
+          <strong>Concepts</strong> <input type="checkbox" onClick="toggle_checkboxes(this, 'concept-filter')" /><br/>
+            <ul id="diagram-concepts"></ul>
+          <strong>Relations</strong> <input type="checkbox" onClick="toggle_checkboxes(this, 'concept-relation-filter')" /><br/>
+            <ul id="diagram-concepts-relations"></ul>
+        </div>
+        <div></div>
+      </div>
+      <div class="col-lg">
+        <div id="metamodel" style="height:700px; width:800px;"></div>
+      </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+  var ontology_data = {{ ontology_data | safe }};
+  // create an array with nodes
+  var ontology_dataset_nodes = [];
+  var ontology_dataset_edges = [];
+  var concepts = {};
+  var relations = {};
+
+  for (const [concept_id, concept] of Object.entries(ontology_data['concepts'])){
+    ontology_dataset_nodes.push({id: concept_id, label:concept.name, concept_id: concept.id, physics: false, shape: "box", color: "rgba(230,230,230,0.9)", margin: 15 });
+    concepts[concept_id] = concept.name;
+  }
+  for (const [predicate_id, predicate] of Object.entries(ontology_data['predicates'])){
+        ontology_dataset_edges.push({from: predicate.subject_id, to: predicate.object_id, relation_id: predicate.relation_id, arrows: "to", label: predicate.relation, physics: false, smooth: { type: "horizontal" }, color: "rgba(150,150,150,0.5)", arrowStrikethrough: false});
+        relations[predicate.relation_id] = predicate.relation;
+  }
+
+  var ul = document.getElementById('diagram-concepts')
+  for (const [concept_id, concept] of Object.entries(concepts)){
+    var li=document.createElement('li');
+    
+    var checkit = document.createElement('input')
+    checkit.id = 'check-concept-'+concept_id,
+    checkit.name = 'concept-filter',
+    checkit.value = concept_id,
+    checkit.type = 'checkbox'
+    checkit.checked = true
+    var label = document.createElement('label')
+    label.htmlFor = 'check-concept-'+concept_id;
+    label.appendChild(document.createTextNode(concept));
+
+    li.appendChild(checkit);
+    li.appendChild(label);
+    ul.appendChild(li);
+  }
+
+  var ul = document.getElementById('diagram-concepts-relations')
+  for (const [relation_id, relation] of Object.entries(relations)){
+    var li=document.createElement('li');
+    
+    var checkit = document.createElement('input')
+    checkit.id = 'check-relation-'+relation_id,
+    checkit.name = 'concept-relation-filter',
+    checkit.value = relation_id,
+    checkit.type = 'checkbox'
+    checkit.checked = true
+    var label = document.createElement('label')
+    label.htmlFor = 'check-relation-'+relation_id;
+    label.appendChild(document.createTextNode(relation));
+
+    li.appendChild(checkit);
+    li.appendChild(label);
+    ul.appendChild(li);
+  }
+
+const concepts_filter = (node) => {
+    var node_checkbox = document.getElementById("check-concept-"+node.concept_id)
+    if (node_checkbox){
+        return node_checkbox.checked == true;
+    }
+    return false;
+};
+
+const concepts_relations_filter = (edge) => {
+    var edge_checkbox = document.getElementById("check-relation-"+edge.relation_id)
+    if (edge_checkbox){
+        return edge_checkbox.checked == true;
+    }
+    return false;
+};
+
+  // create a network
+  const ontology_nodes_view = new vis.DataView(new vis.DataSet(ontology_dataset_nodes), { filter: concepts_filter });
+  const ontology_edges_view = new vis.DataView(new vis.DataSet(ontology_dataset_edges), { filter: concepts_relations_filter });
+  var network_concepts = new vis.Network(
+    document.getElementById("metamodel"),
+    {
+      nodes: ontology_nodes_view,
+      edges: ontology_edges_view
+    }, 
+    {});
+
+
+  document.getElementsByName("concept-filter").forEach((filter) =>
+        filter.addEventListener("change", (e) => {
+          ontology_nodes_view.refresh();
+        })
+  );
+  document.getElementsByName("concept-relation-filter").forEach((filter) =>
+        filter.addEventListener("change", (e) => {
+          ontology_edges_view.refresh();
+        })
+  );
+</script>
+
+<script type="text/javascript">
+  function toggle_checkboxes(source, filter_name){
+    checkboxes = document.getElementsByName(filter_name);
+    for(var i=0, n=checkboxes.length;i<n;i++) {
+      checkboxes[i].checked = source.checked;
+    }
+  }
+</script>

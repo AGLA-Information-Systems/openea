@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2>{{object.name}} (Task)</h2>
+<p>{{object.description}}</p>
+<p>{{object.type}}</p>
+<p>{{object.status}}</p>
+<p>{{object.user}}</p>
+<p>{{object.organisation.name}}</p>
+<p>{{object.attachment.name}}</p>
+<p>{{object.config}}</p>
+<p>{{object.started_at}}</p>
+<p>{{object.ended_at}}</p>
+{% endblock content %}

@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2 class="form-title">Import</h2>
+
+<form id="import_form" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+  <div class="row align-items-md-stretch">
+    <div class="col-md-6">
+      <div class="form-check">
+        <input class="form-control" type="file" name="import_file" id="import_file">
+      </div>
+      <div class="form-check">
+        {{ form.knowledge_set.errors }}
+        {{ form.knowledge_set|as_crispy_field }}
+      </div>
+      <div class="form-check">
+        {{ form.model.errors }}
+        {{ form.model|as_crispy_field }}
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-check">
+        {{ form.import_format.errors }}
+        {{ form.import_format|as_crispy_field }}
+      </div>
+      <button type="submit" class="btn btn-primary mb-3">Start Import</button>
+    </div>
+  </div>
+</form>
+
+{% endblock content %}

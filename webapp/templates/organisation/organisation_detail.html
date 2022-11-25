@@ -1,0 +1,278 @@
+{% extends 'layout.html' %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row align-items-center pb-2">
+    <h2>{{object.name}} (Organisation)</h2>
+    <div class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+            <a class="btn btn-secondary" href="{% url "security_group_admin_rebuild" organisation_id=object.id %}" class="dropdown-item" href="#">Rebuild Permissions</a>
+        </div>
+    </div>
+</div>
+<p>{{object.description}}</p>
+
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        {% if show_repositories %}<button class="nav-link active" id="nav-repositories-tab" data-bs-toggle="tab" data-bs-target="#nav-repositories" type="button" role="tab" aria-controls="nav-repositories" aria-selected="false">{% trans "Repositories" %}</button>{% endif%}
+        {% if show_profiles %}<button class="nav-link" id="nav-profiles-tab" data-bs-toggle="tab" data-bs-target="#nav-profiles" type="button" role="tab" aria-controls="nav-profiles" aria-selected="true">{% trans "Profiles" %}</button>{% endif%}
+        {% if show_security_groups %}<button class="nav-link" id="nav-security-groups-tab" data-bs-toggle="tab" data-bs-target="#nav-security-groups" type="button" role="tab" aria-controls="nav-security-groups" aria-selected="false">{% trans "Security Groups" %}</button>{% endif%}
+        {% if show_permissions %}<button class="nav-link" id="nav-permissions-tab" data-bs-toggle="tab" data-bs-target="#nav-permissions" type="button" role="tab" aria-controls="nav-permissions" aria-selected="false">{% trans "Permissions" %}</button>{% endif%}
+        {% if show_tag_groups %}<button class="nav-link" id="nav-tag-groups-tab" data-bs-toggle="tab" data-bs-target="#nav-tag-groups" type="button" role="tab" aria-controls="nav-tag-groups" aria-selected="false">{% trans "Tag Groups" %}</button>{% endif%}
+        {% if show_tags %}<button class="nav-link" id="nav-tags-tab" data-bs-toggle="tab" data-bs-target="#nav-tags" type="button" role="tab" aria-controls="nav-tags" aria-selected="false">{% trans "Tags" %}</button>{% endif%}
+        {% if show_tasks %}<button class="nav-link" id="nav-tasks-tab" data-bs-toggle="tab" data-bs-target="#nav-tasks" type="button" role="tab" aria-controls="nav-tasks" aria-selected="false">{% trans "Tasks" %}</button>{% endif%}
+        {% if show_configurations %}<button class="nav-link" id="nav-configurations-tab" data-bs-toggle="tab" data-bs-target="#nav-configurations" type="button" role="tab" aria-controls="nav-configurations" aria-selected="false">{% trans "Configuration" %}</button>{% endif%}
+    </div>
+</nav>
+
+<div class="tab-content" id="nav-tabContent">
+    
+    {% if show_repositories %}
+
+    <div class="tab-pane fade show active" id="nav-repositories" role="tabpanel" aria-labelledby="nav-repositories-tab">
+        <div class="mt-3"><a class="btn btn-primary" href="{% url "repository_create_organisation" organisation_id=object.id %}">New Repository</a></div>
+        <table class="table table-fluid">
+            <thead>
+                <tr>
+                    <th>Repository</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for Repository in repositories %}
+                <tr>
+                    <td><a class="link-dark" href="{% url "repository_detail" Repository.id %}">{{ Repository }}</a></td>
+                    <td><a href="{% url "repository_update" Repository.id %}">edit</a></td>
+                    <td><a href="{% url "repository_delete" Repository.id %}">delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {% if repositories.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?repository_page=1">&laquo; first</a></li>
+                    <li class="page-item"><a class="page-link" href="?repository_page={{ repositories.previous_page_number }}">previous</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="#">{{ repositories.number }} of {{ repositories.paginator.num_pages }}</a></li>
+                {% if repositories.has_next %}
+                    <li class="page-item"><a class="page-link" href="?repository_page={{ repositories.next_page_number }}">next</a></li>
+                    <li class="page-item"><a class="page-link" href="?repository_page={{ repositories.paginator.num_pages }}">last &raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+
+    {% endif %}
+    {% if show_profiles %}
+
+    <div class="tab-pane fade" id="nav-profiles" role="tabpanel" aria-labelledby="nav-profiles-tab">
+        <div class="mt-3"><a class="btn btn-primary" href="{% url "profile_create" organisation_id=object.id %}">New Profile</a></div>
+        <table class="table table-fluid">
+            <thead>
+                <tr>
+                    <th>Profile</th>
+                    <th>User</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for Profile in profiles %}
+                <tr>
+                    <td><a class="link-dark" href="{% url "profile_detail" Profile.id %}">{{ Profile }}</a></td>
+                    <td>{{ Profile.user }}</td>
+                    <td><a href="{% url "profile_update" Profile.id %}">edit</a></td>
+                    <td><a href="{% url "profile_delete" Profile.id %}">delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {% if profiles.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?profile_page=1">&laquo; first</a></li>
+                    <li class="page-item"><a class="page-link" href="?profile_page={{ profiles.previous_page_number }}">previous</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="#">{{ profiles.number }} of {{ profiles.paginator.num_pages }}</a></li>
+                {% if profiles.has_next %}
+                    <li class="page-item"><a class="page-link" href="?profile_page={{ profiles.next_page_number }}">next</a></li>
+                    <li class="page-item"><a class="page-link" href="?profile_page={{ profiles.paginator.num_pages }}">last &raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+
+    {% endif %}
+    {% if show_security_groups %}
+
+    <div class="tab-pane fade" id="nav-security-groups" role="tabpanel" aria-labelledby="nav-security-groups-tab">
+        <div class="mt-3"><a class="btn btn-primary" href="{% url "security_group_create" organisation_id=object.id %}">New Security Group</a></div>
+        <table class="table table-fluid">
+            <thead>
+                <tr>
+                    <th>Security Group</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for security_group in security_groups %}
+                <tr>
+                    <td><a class="link-dark" href="{% url "security_group_detail" security_group.id %}">{{ security_group }}</a></td>
+                    <td><a href="{% url "security_group_update" security_group.id %}">edit</a></td>
+                    <td><a href="{% url "security_group_delete" security_group.id %}">delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {% if security_groups.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?security_group_page=1">&laquo; first</a></li>
+                    <li class="page-item"><a class="page-link" href="?security_group_page={{ security_groups.previous_page_number }}">previous</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="#">{{ security_groups.number }} of {{ security_groups.paginator.num_pages }}</a></li>
+                {% if security_groups.has_next %}
+                    <li class="page-item"><a class="page-link" href="?security_group_page={{ security_groups.next_page_number }}">next</a></li>
+                    <li class="page-item"><a class="page-link" href="?security_group_page={{ security_groups.paginator.num_pages }}">last &raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+
+    {% endif %}
+    {% if show_permissions %}
+
+    <div class="tab-pane fade" id="nav-permissions" role="tabpanel" aria-labelledby="nav-permissions-tab">
+        <div class="mt-3"><a class="btn btn-primary" href="{% url "permission_create" organisation_id=object.id %}">New Permission</a></div>
+        <table class="table table-fluid">
+            <thead>
+                <tr>
+                    <th>Permission</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for permission in permissions %}
+                <tr>
+                    <td><a class="link-dark" href="{% url "permission_detail" permission.id %}">{{ permission.get_action_display }}:{{ permission.get_object_type_display }}</a></td>
+                    <td>{{ permission.object_identifier }}</td>
+                    <td><a href="{% url "permission_update" permission.id %}">edit</a></td>
+                    <td><a href="{% url "permission_delete" permission.id %}">delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {% if permissions.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?permission_page=1">&laquo; first</a></li>
+                    <li class="page-item"><a class="page-link" href="?permission_page={{ permissions.previous_page_number }}">previous</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="#">{{ permissions.number }} of {{ permissions.paginator.num_pages }}</a></li>
+                {% if permissions.has_next %}
+                    <li class="page-item"><a class="page-link" href="?permission_page={{ permissions.next_page_number }}">next</a></li>
+                    <li class="page-item"><a class="page-link" href="?permission_page={{ permissions.paginator.num_pages }}">last &raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+
+    {% endif %}
+    {% if show_tasks %}
+
+    <div class="tab-pane fade" id="nav-tasks" role="tabpanel" aria-labelledby="nav-tasks-tab">
+        <div class="mt-3"><a class="btn btn-primary" href="{% url "task_create" organisation_id=object.id %}">New Task</a></div>
+        {% include "task/task_table.html" with object_list=tasks %}
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {% if tasks.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?task_page=1">&laquo; first</a></li>
+                    <li class="page-item"><a class="page-link" href="?task_page={{ tasks.previous_page_number }}">previous</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="#">{{ tasks.number }} of {{ tasks.paginator.num_pages }}</a></li>
+                {% if tasks.has_next %}
+                    <li class="page-item"><a class="page-link" href="?task_page={{ tasks.next_page_number }}">next</a></li>
+                    <li class="page-item"><a class="page-link" href="?task_page={{ tasks.paginator.num_pages }}">last &raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+    {% if show_tag_groups %}
+
+    <div class="tab-pane fade" id="nav-tag-groups" role="tabpanel" aria-labelledby="nav-tag-groups-tab">
+        <div class="mt-3"><a class="btn btn-primary" href="{% url "tag_group_create" organisation_id=object.id %}">New Tag Group</a></div>
+        {% include "tag_group/tag_group_table.html" with object_list=tag_groups %}
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {% if tag_groups.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?tag_group_page=1">&laquo; first</a></li>
+                    <li class="page-item"><a class="page-link" href="?tag_group_page={{ tag_groups.previous_page_number }}">previous</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="#">{{ tag_groups.number }} of {{ tag_groups.paginator.num_pages }}</a></li>
+                {% if tag_groups.has_next %}
+                    <li class="page-item"><a class="page-link" href="?tag_group_page={{ tag_groups.next_page_number }}">next</a></li>
+                    <li class="page-item"><a class="page-link" href="?tag_group_page={{ tag_groups.paginator.num_pages }}">last &raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+    {% if show_tags %}
+
+    <div class="tab-pane fade" id="nav-tags" role="tabpanel" aria-labelledby="nav-tags-tab">
+        {% include "tag/tag_table.html" with object_list=tags %}
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {% if tags.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?tag_page=1">&laquo; first</a></li>
+                    <li class="page-item"><a class="page-link" href="?tag_page={{ tags.previous_page_number }}">previous</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="#">{{ tags.number }} of {{ tags.paginator.num_pages }}</a></li>
+                {% if tags.has_next %}
+                    <li class="page-item"><a class="page-link" href="?tag_page={{ tags.next_page_number }}">next</a></li>
+                    <li class="page-item"><a class="page-link" href="?tag_page={{ tags.paginator.num_pages }}">last &raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+    {% if show_configurations %}
+
+    <div class="tab-pane fade" id="nav-configurations" role="tabpanel" aria-labelledby="nav-configurations-tab">
+        <div class="mt-3"><a class="btn btn-primary" href="{% url "configuration_create" organisation_id=object.id %}">Add Configuration</a></div>
+        <div class="mt-3"><a class="btn btn-primary" href="{% url "configuration_rebuild" organisation_id=object.id %}">Rebuild</a></div>
+        {% include "configuration/configuration_table.html" with object_list=configurations %}
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {% if configurations.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?configuration_page=1">&laquo; first</a></li>
+                    <li class="page-item"><a class="page-link" href="?configuration_page={{ configurations.previous_page_number }}">previous</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="#">{{ configurations.number }} of {{ configurations.paginator.num_pages }}</a></li>
+                {% if configurations.has_next %}
+                    <li class="page-item"><a class="page-link" href="?configuration_page={{ configurations.next_page_number }}">next</a></li>
+                    <li class="page-item"><a class="page-link" href="?configuration_page={{ configurations.paginator.num_pages }}">last &raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+    
+</div>
+
+{% endblock content %}

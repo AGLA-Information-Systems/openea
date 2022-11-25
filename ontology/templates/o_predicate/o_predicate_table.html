@@ -1,0 +1,22 @@
+<table class="table table-fluid" id="table-predicates">
+    <thead>
+        <tr>
+            <th>Predicate</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for OPredicate in object_list %}
+        <tr>
+            <td><a class="link-dark" href="{% url "o_predicate_detail" OPredicate.id %}">{{OPredicate.name}} [{{OPredicate.cardinality_min}},{{OPredicate.cardinality_max}}]</a></td>
+            <td>{% for tag in OPredicate.tags.all %}{{ tag.name }} {% endfor %}</td>
+            <td>{{ OPredicate.get_quality_status_display }}</td>
+            <td><a href="{% url "o_predicate_update" OPredicate.id %}">edit</a></td>
+            <td><a href="{% url "o_predicate_delete" OPredicate.id %}">delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

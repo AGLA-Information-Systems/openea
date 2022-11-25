@@ -1,0 +1,5 @@
+from .repository_delete_test import RepositoryDeleteTestCase
+from .repository_update_test import RepositoryUpdateTestCase
+from .repository_detail_test import RepositoryDetailTestCase
+from .repository_create_test import RepositoryCreateTestCase
+from .repository_list_test import RepositoryListTestCase

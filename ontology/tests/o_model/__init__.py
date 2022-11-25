@@ -1,0 +1,5 @@
+from .o_model_delete_test import OModelDeleteTestCase
+from .o_model_update_test import OModelUpdateTestCase
+from .o_model_detail_test import OModelDetailTestCase
+from .o_model_create_test import OModelCreateTestCase
+from .o_model_list_test import OModelListTestCase

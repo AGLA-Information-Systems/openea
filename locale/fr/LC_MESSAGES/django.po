@@ -1,0 +1,237 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-22 22:32-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ontology/templates/o_model/o_model_detail.html:15
+msgid "Import"
+msgstr "Import"
+
+#: ontology/templates/o_model/o_model_detail.html:16
+msgid "Export"
+msgstr "Export"
+
+#: ontology/templates/o_model/o_model_detail.html:17
+msgid "Report"
+msgstr "Rapport"
+
+#: ontology/templates/o_model/o_model_detail.html:54
+msgid "Reports"
+msgstr "Rapports"
+
+#: ontology/templates/o_model/o_model_detail.html:55
+msgid "Instances"
+msgstr "Instances"
+
+#: ontology/templates/o_model/o_model_detail.html:56
+msgid "Instances Diagram"
+msgstr "Diagramme d'instances"
+
+#: ontology/templates/o_model/o_model_detail.html:57
+msgid "Concepts"
+msgstr "Concepts"
+
+#: ontology/templates/o_model/o_model_detail.html:58
+msgid "Relations"
+msgstr "Relations"
+
+#: ontology/templates/o_model/o_model_detail.html:59
+msgid "Ontology"
+msgstr "Ontologie"
+
+#: ontology/templates/o_model/o_model_detail.html:60
+msgid "Ontology Diagram"
+msgstr "Diagramme d'ontologie"
+
+#: webapp/templates/frontpage.dev.html:8 webapp/templates/frontpage.prod.html:8
+#: webapp/templates/frontpage.saas.html:8
+msgid "Mission"
+msgstr "Mission"
+
+#: webapp/templates/frontpage.dev.html:9 webapp/templates/frontpage.prod.html:9
+#: webapp/templates/frontpage.saas.html:9
+msgid ""
+"The mission of OpenEA (Open Enterprise Architect) is to provide an open "
+"source enterprise-grade Enterprise Architecture tool, for governments, and "
+"researchers."
+msgstr ""
+"La mission d'OpenEA (Open Enterprise Architect) est de fournir un outil "
+"d'architecture d'entreprise  de qualité entreprise, à code ouvert, pour les "
+"gouvernements et les chercheurs"
+
+#: webapp/templates/frontpage.dev.html:14
+#: webapp/templates/frontpage.prod.html:14
+#: webapp/templates/frontpage.saas.html:38
+msgid "Already have an organisation, Start here"
+msgstr "Vous avez déjà une organisation, débutez ici"
+
+#: webapp/templates/frontpage.dev.html:15
+#: webapp/templates/frontpage.prod.html:15
+#: webapp/templates/frontpage.saas.html:39
+msgid ""
+"The entry point for defining an ontology is the repository. A repository may "
+"contain one or more versioned models/metamodels"
+msgstr ""
+"Le point d'entrée pour la définition d'une ontologie est le référentiel.Le "
+"référentiel peut contenir un ou plusieurs modèles ou méta modèles."
+
+#: webapp/templates/frontpage.dev.html:16
+#: webapp/templates/frontpage.prod.html:16
+#: webapp/templates/frontpage.saas.html:40
+msgid "Browse Organisations"
+msgstr "Afficher les organisations"
+
+#: webapp/templates/frontpage.dev.html:17
+#: webapp/templates/frontpage.prod.html:17
+#: webapp/templates/frontpage.saas.html:41
+msgid "Browse Repositories"
+msgstr "Afficher les référentiels"
+
+#: webapp/templates/frontpage.dev.html:24
+#: webapp/templates/frontpage.prod.html:24
+#: webapp/templates/frontpage.saas.html:48
+msgid "Join the team"
+msgstr "Rejoignez l'équipe"
+
+#: webapp/templates/frontpage.dev.html:25
+#: webapp/templates/frontpage.prod.html:25
+#: webapp/templates/frontpage.saas.html:49
+msgid "Get aboard by contributing and/or joining the "
+msgstr "Venez à bord en contribuant et/ou rejoignez l'"
+
+#: webapp/templates/frontpage.dev.html:25
+#: webapp/templates/frontpage.prod.html:25
+#: webapp/templates/frontpage.saas.html:49
+msgid "team"
+msgstr "équipe"
+
+#: webapp/templates/frontpage.dev.html:25
+#: webapp/templates/frontpage.prod.html:25
+#: webapp/templates/frontpage.saas.html:49
+msgid "or if you are already on keybase"
+msgstr "ou si vous êtes déjà sur Keybase"
+
+#: webapp/templates/frontpage.dev.html:25
+#: webapp/templates/frontpage.prod.html:25
+#: webapp/templates/frontpage.saas.html:49
+msgid "Team OpenEA"
+msgstr "Équipe OpenEA"
+
+#: webapp/templates/frontpage.dev.html:31
+#: webapp/templates/frontpage.prod.html:31
+#: webapp/templates/frontpage.saas.html:55
+msgid "Get help"
+msgstr "Obtenez de l'aide"
+
+#: webapp/templates/frontpage.dev.html:32
+#: webapp/templates/frontpage.prod.html:32
+#: webapp/templates/frontpage.saas.html:56
+msgid "The manual is available here."
+msgstr "Le manuel d'utilisation est ici."
+
+#: webapp/templates/frontpage.dev.html:33
+#: webapp/templates/frontpage.prod.html:33
+#: webapp/templates/frontpage.saas.html:57
+msgid "Documentation"
+msgstr "Documentation"
+
+#: webapp/templates/frontpage.saas.html:15
+msgid "Request a private instance"
+msgstr ""
+
+#: webapp/templates/frontpage.saas.html:16
+msgid ""
+"For increased privacy, private instances are offered on site or in the cloud."
+msgstr " Pour une confidentialité accrue, des instances privées sont offertes sur site ou dans l'infonuage."
+
+#: webapp/templates/frontpage.saas.html:17
+msgid "Private Instance"
+msgstr "Instances privées"
+
+#: webapp/templates/frontpage.saas.html:22
+msgid "Register organisation in SaaS platform"
+msgstr "Enregistrez votre organisation sur la plateforme SaaS"
+
+#: webapp/templates/frontpage.saas.html:23
+msgid "Oragnisations are created in the current SaaS, free of charge."
+msgstr "Les organisations sont ajoutées dans le SaaS sans frais"
+
+#: webapp/templates/frontpage.saas.html:24
+#, fuzzy
+#| msgid "Browse Organisations"
+msgid "Register Organisation"
+msgstr "Afficher les organisations"
+
+#: webapp/templates/frontpage.saas.html:29
+msgid "Select a tailored support plan"
+msgstr "Selectionnez un plan de support de personnalisé"
+
+#: webapp/templates/frontpage.saas.html:30
+msgid "Need a service plan tailored to your needs, let us know."
+msgstr "Besoin d'un plan de service personnalisé, laissez-nous savoir. "
+
+#: webapp/templates/frontpage.saas.html:31
+msgid "Tailored service"
+msgstr "Service personnalisé"
+
+#: webapp/templates/layout.html:36
+msgid "OpenEA"
+msgstr "OpenEA"
+
+#: webapp/templates/organisation/organisation_detail.html:18
+#: webapp/templates/user-menu.html:9
+msgid "Repositories"
+msgstr "Référentiels"
+
+#: webapp/templates/organisation/organisation_detail.html:19
+#: webapp/templates/user-menu.html:10
+msgid "Profiles"
+msgstr "Profils"
+
+#: webapp/templates/organisation/organisation_detail.html:20
+msgid "Security Groups"
+msgstr "Groupes de sécurité"
+
+#: webapp/templates/organisation/organisation_detail.html:21
+msgid "Permissions"
+msgstr "Permissions"
+
+#: webapp/templates/organisation/organisation_detail.html:22
+msgid "Tag Groups"
+msgstr "Groupes d'Étiquettes"
+
+#: webapp/templates/organisation/organisation_detail.html:23
+msgid "Tags"
+msgstr "Étiquettes"
+
+#: webapp/templates/organisation/organisation_detail.html:24
+#: webapp/templates/user-menu.html:11
+msgid "Tasks"
+msgstr "Tâches"
+
+#: webapp/templates/organisation/organisation_detail.html:25
+msgid "Configuration"
+msgstr "Configuration"
+
+#: webapp/templates/user-menu.html:14
+msgid "Sign out"
+msgstr "Fermer la session"
+
+#: webapp/templates/user-menu.html:18
+msgid "Sign in"
+msgstr "Ouvrir une session"

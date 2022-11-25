@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<h2 class="form-title">Add OSlot</h2>
+    <form class="form-group" method="POST">
+        {{ form.non_field_errors }}
+        {% csrf_token %}
+        {{ form.model|as_crispy_field }}
+        {{ form.predicate|as_crispy_field }}
+        {{ form.subject|as_crispy_field }}
+        {{ form.object|as_crispy_field }}
+        {{ form.description|as_crispy_field }}
+        {{ form.new_object_name|as_crispy_field }}
+        {{ form.new_object_description|as_crispy_field }}
+
+        
+        <input type="submit" value="Submit" />
+    </form>
+{% endblock content %}

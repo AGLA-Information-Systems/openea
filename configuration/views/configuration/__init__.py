@@ -1,0 +1,5 @@
+from .configuration_delete import ConfigurationDeleteView
+from .configuration_update import ConfigurationUpdateView
+from .configuration_detail import ConfigurationDetailView
+from .configuration_create import ConfigurationCreateView, ConfigurationRebuildView
+from .configuration_list import ConfigurationListView, ConfigurationListOrganisationView, ConfigurationListUserView

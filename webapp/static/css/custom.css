@@ -1,0 +1,44 @@
+.btn {
+    margin: 1px;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+input[type='checkbox'] {
+    margin-right: 5px;
+}
+
+#mynetwork {
+width: 600px;
+height: 600px;
+border: 1px solid lightgray;
+}
+#mynetwork p {
+max-width: 40px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+ul ul {
+    list-style-type: dot;
+}
+
+a {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+}

@@ -1,0 +1,230 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-22 22:33-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ontology/templates/o_model/o_model_detail.html:15
+msgid "Import"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_detail.html:16
+msgid "Export"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_detail.html:17
+msgid "Report"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_detail.html:54
+msgid "Reports"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_detail.html:55
+msgid "Instances"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_detail.html:56
+msgid "Instances Diagram"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_detail.html:57
+msgid "Concepts"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_detail.html:58
+msgid "Relations"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_detail.html:59
+msgid "Ontology"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_detail.html:60
+msgid "Ontology Diagram"
+msgstr ""
+
+#: webapp/templates/frontpage.dev.html:8 webapp/templates/frontpage.prod.html:8
+#: webapp/templates/frontpage.saas.html:8
+msgid "Mission"
+msgstr ""
+
+#: webapp/templates/frontpage.dev.html:9 webapp/templates/frontpage.prod.html:9
+#: webapp/templates/frontpage.saas.html:9
+msgid ""
+"The mission of OpenEA (Open Enterprise Architect) is to provide an open "
+"source enterprise-grade Enterprise Architecture tool, for governments, and "
+"researchers."
+msgstr ""
+
+#: webapp/templates/frontpage.dev.html:14
+#: webapp/templates/frontpage.prod.html:14
+#: webapp/templates/frontpage.saas.html:38
+msgid "Already have an organisation, Start here"
+msgstr ""
+
+#: webapp/templates/frontpage.dev.html:15
+#: webapp/templates/frontpage.prod.html:15
+#: webapp/templates/frontpage.saas.html:39
+msgid ""
+"The entry point for defining an ontology is the repository. A repository may "
+"contain one or more versioned models/metamodels"
+msgstr ""
+
+#: webapp/templates/frontpage.dev.html:16
+#: webapp/templates/frontpage.prod.html:16
+#: webapp/templates/frontpage.saas.html:40
+msgid "Browse Organisations"
+msgstr ""
+
+#: webapp/templates/frontpage.dev.html:17
+#: webapp/templates/frontpage.prod.html:17
+#: webapp/templates/frontpage.saas.html:41
+msgid "Browse Repositories"
+msgstr ""
+
+#: webapp/templates/frontpage.dev.html:24
+#: webapp/templates/frontpage.prod.html:24
+#: webapp/templates/frontpage.saas.html:48
+msgid "Join the team"
+msgstr ""
+
+#: webapp/templates/frontpage.dev.html:25
+#: webapp/templates/frontpage.prod.html:25
+#: webapp/templates/frontpage.saas.html:49
+msgid "Get aboard by contributing and/or joining the "
+msgstr ""
+
+#: webapp/templates/frontpage.dev.html:25
+#: webapp/templates/frontpage.prod.html:25
+#: webapp/templates/frontpage.saas.html:49
+msgid "team"
+msgstr ""
+
+#: webapp/templates/frontpage.dev.html:25
+#: webapp/templates/frontpage.prod.html:25
+#: webapp/templates/frontpage.saas.html:49
+msgid "or if you are already on keybase"
+msgstr ""
+
+#: webapp/templates/frontpage.dev.html:25
+#: webapp/templates/frontpage.prod.html:25
+#: webapp/templates/frontpage.saas.html:49
+msgid "Team OpenEA"
+msgstr ""
+
+#: webapp/templates/frontpage.dev.html:31
+#: webapp/templates/frontpage.prod.html:31
+#: webapp/templates/frontpage.saas.html:55
+msgid "Get help"
+msgstr ""
+
+#: webapp/templates/frontpage.dev.html:32
+#: webapp/templates/frontpage.prod.html:32
+#: webapp/templates/frontpage.saas.html:56
+msgid "The manual is available here."
+msgstr ""
+
+#: webapp/templates/frontpage.dev.html:33
+#: webapp/templates/frontpage.prod.html:33
+#: webapp/templates/frontpage.saas.html:57
+msgid "Documentation"
+msgstr ""
+
+#: webapp/templates/frontpage.saas.html:15
+msgid "Request a private instance"
+msgstr ""
+
+#: webapp/templates/frontpage.saas.html:16
+msgid ""
+"For increased privacy, private instances are offered on site or in the cloud."
+msgstr ""
+
+#: webapp/templates/frontpage.saas.html:17
+msgid "Private Instance"
+msgstr ""
+
+#: webapp/templates/frontpage.saas.html:22
+msgid "Register organisation in SaaS platform"
+msgstr ""
+
+#: webapp/templates/frontpage.saas.html:23
+msgid "Oragnisations are created in the current SaaS, free of charge."
+msgstr ""
+
+#: webapp/templates/frontpage.saas.html:24
+msgid "Register Organisation"
+msgstr ""
+
+#: webapp/templates/frontpage.saas.html:29
+msgid "Select a tailored support plan"
+msgstr ""
+
+#: webapp/templates/frontpage.saas.html:30
+msgid "Need a service plan tailored to your needs, let us know."
+msgstr ""
+
+#: webapp/templates/frontpage.saas.html:31
+msgid "Tailored service"
+msgstr ""
+
+#: webapp/templates/layout.html:36
+msgid "OpenEA"
+msgstr ""
+
+#: webapp/templates/organisation/organisation_detail.html:18
+#: webapp/templates/user-menu.html:9
+msgid "Repositories"
+msgstr ""
+
+#: webapp/templates/organisation/organisation_detail.html:19
+#: webapp/templates/user-menu.html:10
+msgid "Profiles"
+msgstr ""
+
+#: webapp/templates/organisation/organisation_detail.html:20
+msgid "Security Groups"
+msgstr ""
+
+#: webapp/templates/organisation/organisation_detail.html:21
+msgid "Permissions"
+msgstr ""
+
+#: webapp/templates/organisation/organisation_detail.html:22
+msgid "Tag Groups"
+msgstr ""
+
+#: webapp/templates/organisation/organisation_detail.html:23
+msgid "Tags"
+msgstr ""
+
+#: webapp/templates/organisation/organisation_detail.html:24
+#: webapp/templates/user-menu.html:11
+msgid "Tasks"
+msgstr ""
+
+#: webapp/templates/organisation/organisation_detail.html:25
+msgid "Configuration"
+msgstr ""
+
+#: webapp/templates/user-menu.html:14
+msgid "Sign out"
+msgstr ""
+
+#: webapp/templates/user-menu.html:18
+msgid "Sign in"
+msgstr ""

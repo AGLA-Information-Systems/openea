@@ -1,0 +1,8 @@
+{
+    "instances": [
+        [null, "Kossi", "", null, "human", null, "hair-color", null, null, "grey", "", null, "color"],
+        [null, "Tom", "", null, "human", null, "hair-color", null, null, "blonde", "", null, "color"],
+        [null, "Jerry", "", null, "human", null, "hair-color", null, null, "black", "", null, "color"],
+        [null, "Jerry", "", null, "human", null, "height", null, null, "1.87", "", null, "meter"]
+    ]
+}

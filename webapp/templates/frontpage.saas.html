@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+
+{% load i18n %}
+
+{% block content %}
+
+<div class="container-fluid py-5">
+  <h1 class="display-5 fw-bold">{% trans "Mission" %}</h1>
+  <p class="col-md-8 fs-4">{% trans "The mission of OpenEA (Open Enterprise Architect) is to provide an open source enterprise-grade Enterprise Architecture tool, for governments, and researchers." %}</p>
+</div>
+
+<div class="row mb-4 align-items-md-stretch">
+  <div class="col-md-4">
+    <div class="h-100 p-5 bg-light rounded-3">
+      <h2>{% trans "Request a private instance" %}</h2>
+      <p>{% trans "For increased privacy, private instances are offered on site or in the cloud." %}</p>
+      <a href="mailto:{{contact_email}}?subject=Private Instance" class="btn btn-outline-secondary" >{% trans "Private Instance" %}</a>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="h-100 p-5 text-white bg-dark rounded-3">
+      <h2>{% trans "Register organisation in SaaS platform" %}</h2>
+      <p>{% trans "Oragnisations are created in the current SaaS, free of charge." %}</p>
+      <a href="mailto:{{contact_email}}?subject=Register Organisation" class="btn btn-outline-light">{% trans "Register Organisation" %}</a>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="h-100 p-5 bg-light rounded-3">
+      <h2>{% trans "Select a tailored support plan" %}</h2>
+      <p>{% trans "Need a service plan tailored to your needs, let us know." %}</p>
+      <a href="mailto:{{contact_email}}?subject=Tailored Service" class="btn btn-outline-secondary">{% trans "Tailored service" %}</a>
+    </div>
+  </div>
+</div>
+
+<div class="p-5 mb-4 bg-light rounded-3">
+  <div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold">{% trans "Already have an organisation, Start here" %}</h1>
+    <p class="col-md-8 fs-4">{% trans "The entry point for defining an ontology is the repository. A repository may contain one or more versioned models/metamodels" %}</p>
+    <a href="{% url 'organisation_list' %}" class="btn btn-primary btn-lg">{% trans "Browse Organisations" %}</a>
+    <a href="{% url 'repository_list' %}" class="btn btn-primary btn-lg">{% trans "Browse Repositories" %}</a>
+  </div>
+</div>
+
+<div class="row mb-4 align-items-md-stretch">
+  <div class="col-md-6">
+    <div class="h-100 p-5 text-white bg-dark rounded-3">
+      <h2>{% trans "Join the team" %}</h2>
+      <p>{% trans "Get aboard by contributing and/or joining the " %}<a href="https://keybase.io/team/openea">{% trans "team" %}</a> {% trans "or if you are already on keybase" %}, <a href="keybase://team-page/openea">{% trans "Team OpenEA" %}</a> </p>
+      <a href="https://keybase.io/team/openea" class="btn btn-outline-light" >Contribute</a>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="h-100 p-5 bg-light border rounded-3">
+      <h2>{% trans "Get help" %}</h2>
+      <p>{% trans "The manual is available here." %}</p>
+      <a href="/about/resources" class="btn btn-outline-secondary" >{% trans "Documentation" %}</a>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

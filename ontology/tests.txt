@@ -1,0 +1,5 @@
+python manage.py test  ontology.tests.ExcelPluginTestCase.test_import_ontology
+python manage.py test  ontology.tests.EssentialPluginTestCase.test_import_ontology
+python manage.py test  ontology.tests.EssentialPluginTestCase.test_import_instances
+
+python manage.py test  ontology.tests.KnowledgeBaseControllerTestCase.test_import_essential_export_excel_instances

@@ -1,0 +1,122 @@
+{% load static %}
+{% load js %}
+
+<script type="text/javascript" src="{% static '/js/vis-data.min.js' %}"></script>
+<script type="text/javascript" src="{% static '/js/vis-network.min.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static '/css/vis-network.min.css' %}" />
+<!-- You may include other packages like Vis Timeline or Vis Graph3D here. -->
+
+
+<div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <div>
+          Instances
+            <ul id="diagram-instances"></ul>
+          Relations
+            <ul id="diagram-instances-relations"></ul>
+        </div>
+        <div></div>
+      </div>
+      <div class="col-lg">
+        <div id="mynetwork-instance" style="height:700px; width:800px;"></div>
+      </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+  var instances_data = {{ instances_data | safe }};
+  // create an array with nodes
+  var instances_dataset_nodes = [];
+  var instances_dataset_edges = [];
+  var instance_concepts = {};
+  var instance_slot_relations = {};
+
+  for (const [instance_id, instance] of Object.entries(instances_data['instances'])){
+    instances_dataset_nodes.push({id: instance.id, label:instance.name+'::'+instance.concept, concept_id: instance.concept_id, physics: false, shape: "box", color: "rgba(230,230,230,0.9)", margin: 15 });
+    instance_concepts[instance.concept_id] = instance.concept;
+    for (const [slot_id, slot] of Object.entries(instance['ownslots'])){
+        instances_dataset_edges.push({from: instance.id, to: slot.object_id, arrows: "to", label: slot.relation, physics: false, smooth: { type: "cubicBezier" }, relation_id: slot.relation_id, color: "rgba(150,150,150,0.5)", arrowStrikethrough: false});
+        instance_slot_relations[slot.relation_id] = slot.relation;
+    }
+  }
+
+  var ul = document.getElementById('diagram-instances')
+  for (const [concept_id, concept] of Object.entries(instance_concepts)){
+    var li=document.createElement('li');
+    
+    var checkit = document.createElement('input')
+    checkit.id = 'check-instance-concept-'+concept_id,
+    checkit.name = 'instance-concept-filter',
+    checkit.value = concept_id,
+    checkit.type = 'checkbox'
+    checkit.checked = true
+    var label = document.createElement('label')
+    label.htmlFor = 'check-instance-concept-'+concept_id;
+    label.appendChild(document.createTextNode(concept));
+
+    li.appendChild(checkit);
+    li.appendChild(label);
+    ul.appendChild(li);
+  }
+
+  var ul = document.getElementById('diagram-instances-relations')
+  for (const [relation_id, relation] of Object.entries(instance_slot_relations)){
+    var li=document.createElement('li');
+    
+    var checkit = document.createElement('input')
+    checkit.id = 'check-instance-relation-'+relation_id,
+    checkit.name = 'instance-relation-filter',
+    checkit.value = relation_id,
+    checkit.type = 'checkbox'
+    checkit.checked = true
+    var label = document.createElement('label')
+    label.htmlFor = 'check-instance-relation-'+relation_id;
+    label.appendChild(document.createTextNode(relation));
+
+    li.appendChild(checkit);
+    li.appendChild(label);
+    ul.appendChild(li);
+  }
+
+const instances_filter = (node) => {
+    var node_checkbox = document.getElementById("check-instance-concept-"+node.concept_id)
+    if (node_checkbox){
+        return node_checkbox.checked == true;
+    }
+    return false;
+};
+
+const instances_relations_filter = (edge) => {
+    var edge_checkbox = document.getElementById("check-instance-relation-"+edge.relation_id)
+    if (edge_checkbox){
+        return edge_checkbox.checked == true;
+    }
+    return false;
+};
+
+  // create a network
+  const instances_nodes_view = new vis.DataView(new vis.DataSet(instances_dataset_nodes), { filter: instances_filter });
+  const instances_edges_view = new vis.DataView(new vis.DataSet(instances_dataset_edges), { filter: instances_relations_filter });
+  var container = document.getElementById("mynetwork-instance");
+  var options = {};
+  var network_instances = new vis.Network(container, 
+  {
+    nodes: instances_nodes_view,
+    edges: instances_edges_view
+  }, options);
+
+
+  document.getElementsByName("instance-concept-filter").forEach((filter) =>
+        filter.addEventListener("change", (e) => {
+            instances_nodes_view.refresh();
+        })
+  );
+  document.getElementsByName("instance-relation-filter").forEach((filter) =>
+        filter.addEventListener("change", (e) => {
+            instances_edges_view.refresh();
+        })
+  );
+
+</script>

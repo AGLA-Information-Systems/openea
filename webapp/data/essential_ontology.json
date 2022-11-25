@@ -1,0 +1,75 @@
+{
+    "entities": [
+        [null, ":THING", "The original subject of all entities"],
+        [null, ":SYSTEM-CLASS", "A system concept"],
+        [null, ":ANNOTATION", "A note"],
+        [null, ":INSTANCE-ANNOTATION", "A note"],
+        [null, ":CONSTRAINT", "A constraint"],
+        [null, ":PAL-CONSTRAINT", "A constraint"],
+        [null, ":META-CLASS", "A note"],
+        [null, ":CLASS", "A class of THING"],
+        [null, ":SLOT", "A property or aspect of a class"],
+        [null, ":FACET", "A restriction on a slot"],
+        [null, ":STANDARD-CLASS", "A class of thing"],
+        [null, ":STANDARD-SLOT", "A property or aspect of a class"],
+        [null, ":STANDARD-FACET", "A restriction on a slot"],
+        [null, ":RELATION", "A predicate description"],
+        [null, ":DIRECTED-BINARY-RELATION", "A directed predicate"],
+
+        [null, ":PAL-DESCRIPTION", "A directed predicate"],
+        [null, ":PAL-NAME", "A directed predicate"],
+        [null, ":PAL-RANGE", "A directed predicate"],
+        [null, ":PAL-STATEMENT", "A directed predicate"],
+
+        [null, ":ANNOTATION-TEXT", "A note"],
+        [null, ":CREATION-TIMESTAMP", "the timestamp of creation of the file"],
+        [null, ":CREATOR", "the user who created the file"],
+        [null, ":ASSOCIATED-SLOT", "the slot associated to the facet"],
+        [null, ":ASSOCIATED-FACET", "the facet associated to the slot"],
+        [null, ":ESSENTIAL-SLOT", "the facet associated to the slot"],
+
+        [null, "name", "default property of a thing"],
+        [null, "description", "default property of a thing"]
+
+    ],
+    "relations": [
+        [null, "is-a-subtype-of", "Relation describing the subsumption"],
+        [null, "is-classified-as", "Relation describing the instance of a class"],
+        [null, "is-part-of", "Relation describing the aggreagation"],
+        [null, "is-an-aspect-of", "Relation describing the ascpect/property of an concept"],
+        [null, "is-equal-to", "Relation describing the equality of concepts"],
+        [null, "is-a-restriction-on", "Relation describing a restriction on an concept"],
+        [null, "is-qualified-as", "Relation describing the attribution of value"]
+    ],
+    "ontology": [
+        [null, null, "name", null, "is-an-aspect-of", null, ":THING", ""],
+        [null, null, "description", null, "is-an-aspect-of", null, ":THING", ""],
+
+        [null, null, ":ANNOTATION", null, "is-a-subtype-of", null, ":THING", ""],
+        [null, null, ":INSTANCE-ANNOTATION", null, "is-a-subtype-of", null, ":ANNOTATION", ""],
+        [null, null, ":CONSTRAINT", null, "is-a-subtype-of", null, ":THING", ""],
+        [null, null, ":PAL-CONSTRAINT", null, "is-a-subtype-of", null, ":CONSTRAINT", ""],
+        [null, null, ":META-CLASS", null, "is-a-subtype-of", null, ":THING", ""],
+        [null, null, ":CLASS", null, "is-a-subtype-of", null, ":META-CLASS", ""],
+        [null, null, ":SLOT", null, "is-a-subtype-of", null, ":META-CLASS", ""],
+        [null, null, ":FACET", null, "is-a-subtype-of", null, ":META-CLASS", ""],
+        [null, null, ":STANDARD-CLASS", null, "is-a-subtype-of", null, ":CLASS", ""],
+        [null, null, ":STANDARD-SLOT", null, "is-a-subtype-of", null, ":SLOT", ""],
+        [null, null, ":STANDARD-FACET", null, "is-a-subtype-of", null, ":FACET", ""],
+        [null, null, ":DIRECTED-BINARY-RELATION", null, "is-a-subtype-of", null, ":RELATION", ""],
+        [null, null, ":SLOT", null, "is-an-aspect-of", null, ":CLASS", ""],
+        [null, null, ":FACET", null, "is-a-restriction-on", null, ":SLOT", ""],
+
+        [null, null, ":PAL-DESCRIPTION", null, "is-an-aspect-of", null, ":PAL-CONSTRAINT", ""],
+        [null, null, ":PAL-NAME", null, "is-an-aspect-of", null, ":PAL-CONSTRAINT", ""],
+        [null, null, ":PAL-RANGE", null, "is-an-aspect-of", null, ":PAL-CONSTRAINT", ""],
+        [null, null, ":PAL-STATEMENT", null, "is-an-aspect-of", null, ":PAL-CONSTRAINT", ""],
+        
+        [null, null, ":ESSENTIAL-SLOT", null, "is-a-subtype-of", null, ":STANDARD-SLOT", ""],
+        [null, null, ":ANNOTATION-TEXT", null, "is-an-aspect-of", null, ":INSTANCE-ANNOTATION", ""],
+        [null, null, ":CREATION-TIMESTAMP", null, "is-an-aspect-of", null, ":INSTANCE-ANNOTATION", ""],
+        [null, null, ":CREATOR", null, "is-an-aspect-of", null, ":INSTANCE-ANNOTATION", ""],
+        [null, null, ":ASSOCIATED-SLOT", null, "is-an-aspect-of", null, ":STANDARD-FACET", ""],
+        [null, null, ":ASSOCIATED-FACET", null, "is-an-aspect-of", null, ":ESSENTIAL-SLOT", ""]
+    ]
+}

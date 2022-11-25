@@ -1,0 +1,5 @@
+from .o_predicate_delete import OPredicateDeleteView
+from .o_predicate_update import OPredicateUpdateView
+from .o_predicate_detail import OPredicateDetailView
+from .o_predicate_create import OPredicateCreateView
+from .o_predicate_list import OPredicateListView

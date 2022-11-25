@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2 class="form-title">SecurityGroup</h2>
+
+<table class="table table-fluid">
+    <thead>
+        <tr>
+            <th>SecurityGroup</th>
+            <th>Organisation</th>
+            <th>View</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for SecurityGroup in object_list %}
+        <tr>
+            <td>{{ SecurityGroup }}</td>
+            <td><a href="{% url "organisation_detail" SecurityGroup.organisation.id %}">{{ SecurityGroup.organisation.name }}</a></td>
+            <td><a href="{% url "security_group_detail" SecurityGroup.id %}">view</a></td>
+            <td><a href="{% url "security_group_update" SecurityGroup.id %}">edit</a></td>
+            <td><a href="{% url "security_group_delete" SecurityGroup.id %}">delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url "security_group_create_user" user_id=user.id %}">New</a>
+
+{% endblock content %}

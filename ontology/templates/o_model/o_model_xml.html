@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{% load get_dict_item %}
+<model id="{{model.id}}">
+    <name>{{model.name}}</name>
+    <description>{{model.description}}</description>
+    <predicates>
+        {% for predicate in predicates %}
+        <predicate id="{{predicate.id}}">
+            <subject id="{{predicate.subject.id}}">{{predicate.subject.name}}</subject>
+            <relation id="{{predicate.relation.id}}">{{predicate.relation.name}}</relation>
+            <object id="{{predicate.object.id}}">{{predicate.object.name}}</object>
+        </predicate>
+        {% endfor %}
+    </predicates>
+    <instances>
+        {% for instance in instances %}
+        <instance id="{{instance.id}}">
+            <name>{{instance.name}}</name>
+            <description>{{instance.description}}</description>
+            <concept id="{{concept.id}}">{{instance.concept}}</concept>
+            <ownslots>
+            {% for slot in ownslots|get_dict_item:instance.id %}
+                <slot id="{{slot.id}}">
+                    <predicate id="{{slot.predicate.id}}">{{slot.predicate.name}}</predicate>
+                    <description>{{slot.description}}</description>
+                    <concept id="{{slot.object.concept.id}}">{{slot.object.concept.name}}</concept>
+                    <object id="{{slot.object.id}}">{{slot.object.name}}</object>
+                </slot>
+            {% endfor %}
+            </ownslots>
+            <inslots>
+            {% for slot in inslots|get_dict_item:instance.id %}
+                <slot id="{{slot.id}}">
+                    <predicate id="{{slot.predicate.id}}">{{slot.predicate.name}}</predicate>
+                    <description>{{slot.description}}</description>
+                    <concept id="{{slot.subject.concept.id}}">{{slot.subject.concept.name}}</concept>
+                    <subject id="{{slot.subject.id}}">{{slot.subject.name}}</subject>
+                </slot>
+            {% endfor %}
+            </inslots>
+        </instance>
+        {% endfor %}
+    </instances>
+</model>

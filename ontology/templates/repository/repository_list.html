@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2 class="form-title">Repository</h2>
+
+<table class="table table-fluid">
+    <thead>
+        <tr>
+            <th>Repository</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for Repository in object_list %}
+        <tr>
+            <td><a href="{% url "repository_detail" Repository.id %}">{{ Repository.name }}</a></td>
+            <td><a href="{% url "repository_detail" Repository.id %}">{{ Repository.organisation }}</a></td>
+            <td>{% for tag in Repository.tags.all %}{{ tag.name }} {% endfor %}</td>
+            <td><a href="{% url "repository_update" Repository.id %}">edit</a></td>
+            <td><a href="{% url "repository_delete" Repository.id %}">delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url "repository_create" %}">New</a>
+
+{% endblock content %}

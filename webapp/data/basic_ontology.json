@@ -1,0 +1,26 @@
+{
+    "entities": [
+        [null, "THING", "The original subject of all entities"],
+        [null, "CLASS", "A class of THING"],
+        [null, "SLOT", "A property or aspect of a class"],
+        [null, "FACET", "A restriction on a slot"],
+        [null, "RELATION", "A predicate description"]
+    ],
+    "relations": [
+        [null, "is-a-subtype-of", "Relation describing the subsumption"],
+        [null, "is-classified-as", "Relation describing the instance of a class"],
+        [null, "is-part-of", "Relation describing the aggreagation"],
+        [null, "is-an-aspect-of", "Relation describing the ascpect/property of an concept"],
+        [null, "is-qualified-as", "Relation describing the instance of a class"],
+        [null, "is-equal-to", "Relation describing the equality of concepts"],
+        [null, "is-a-restriction-on", "Relation describing a restriction on an concept"]
+    ],
+    "ontology": [
+        [null, null, "CLASS", null, "is-a-subtype-of", null, "THING", ""],
+        [null, null, "SLOT", null, "is-a-subtype-of", null, "THING", ""],
+        [null, null, "FACET", null, "is-a-subtype-of", null, "THING", ""],
+        [null, null, "RELATION", null, "is-a-subtype-of", null, "THING", ""],       
+        [null, null, "SLOT", null, "is-an-aspect-of", null, "CLASS", ""],
+        [null, null, "FACET", null, "is-a-restriction-on", null, "SLOT", ""]
+    ]
+}

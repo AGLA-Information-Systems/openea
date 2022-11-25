@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2 class="form-title">Profile</h2>
+
+<table class="table table-fluid">
+    <thead>
+        <tr>
+            <th>Profile</th>
+            <th>Organisation</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for Profile in object_list %}
+        <tr>
+            <td><a class="link-dark" href="{% url "profile_detail" Profile.id %}">{{ Profile }}</a></td>
+            <td><a href="{% url "organisation_detail" Profile.organisation.id %}">{{ Profile.organisation.name }}</a></td>
+            {% if Profile.is_active %}
+            <td>active</td>
+            {% else %}
+            <td><a href="{% url "profile_activate" Profile.id %}">activate</a></td>
+            {% endif %}
+            <td><a href="{% url "profile_update" Profile.id %}">edit</a></td>
+            <td><a href="{% url "profile_delete" Profile.id %}">delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url "profile_create_user" user_id=user.id %}">New</a>
+
+{% endblock content %}

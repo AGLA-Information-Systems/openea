@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row align-items-center pb-2">
+  <div>
+    <a class="link-dark breadcrumb" href="{% url "o_model_detail" model_id %}" href="#"> (Model) {{ object.model.name|truncatechars:15 }} > </a>
+    <h2>{{object.name}} (Relation)</h2>
+  </div>
+    <div class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+      <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+          <a class="btn btn-secondary" href="{% url "o_relation_update" object.id %}" class="dropdown-item" href="#">Edit</a>
+      </div>
+    </div>
+  </div>
+<p>{{object.description}}</p>
+<p>{{object.get_type_display}}</p>
+<p>{{object.get_quality_status_display}}</p>
+<p>{% for tag in object.tags.all %}
+  {{ tag.name }} 
+{% endfor %}
+</p>
+{% endblock content %}

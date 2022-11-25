@@ -1,0 +1,26 @@
+<table class="table table-fluid" id="table-relations">
+    <thead>
+        <tr>
+            <th>Relation</th>
+            <th>Type</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ORelation in object_list %}
+        <tr>
+            <td><a class="link-dark" href="{% url "o_relation_detail" ORelation.id %}">{{ ORelation.name }}</a></td>
+            <td>{{ ORelation.get_type_display }}</td>
+            <td>{{ OConcept.description }}</td>
+            <td>{% for tag in ORelation.tags.all %}{{ tag.name }} {% endfor %}</td>
+            <td>{{ ORelation.get_quality_status_display }}</td>
+            <td><a href="{% url "o_relation_update" ORelation.id %}">edit</a></td>
+            <td><a href="{% url "o_relation_delete" ORelation.id %}">delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

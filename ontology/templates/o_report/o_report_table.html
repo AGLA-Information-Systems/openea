@@ -1,0 +1,28 @@
+<table class="table table-fluid" id="table-reports">
+    <thead>
+        <tr>
+            <th>Report</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for report in object_list %}
+        <tr>
+            <td><a class="link-dark" href="{% url "o_report_detail" report.id %}">{{ report.name }}</a></td>
+            <td>{{ report.description }}</td>
+            <td>{{ report.path }}</td>
+            <td>{% for tag in report.tags.all %}{{ tag.name }} {% endfor %}</td>
+            <td>{{ report.get_quality_status_display }}</td>
+            <td><a href="{% url "o_report_run" report.id %}">run</a></td>
+            <td><a href="{% url "o_report_update" report.id %}">edit</a></td>
+            <td><a href="{% url "o_report_delete" report.id %}">delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

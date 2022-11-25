@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2 class="form-title">OReport</h2>
+
+{% include "o_report/o_report_table.html" %}
+
+<a href="{% url "o_report_create" %}">New</a>
+
+{% endblock content %}

@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2 class="form-title">Tag Group</h2>
+
+{% include "tag_group/tag_group_table.html"%}
+
+
+<a href="{% url "tag_group_create_user" user_id=user.id %}">New</a>
+
+{% endblock content %}

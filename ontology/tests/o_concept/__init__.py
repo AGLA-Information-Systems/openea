@@ -1,0 +1,5 @@
+from .o_concept_delete_test import OConceptDeleteTestCase
+from .o_concept_update_test import OConceptUpdateTestCase
+from .o_concept_detail_test import OConceptDetailTestCase
+from .o_concept_create_test import OConceptCreateTestCase
+from .o_concept_list_test import OConceptListTestCase

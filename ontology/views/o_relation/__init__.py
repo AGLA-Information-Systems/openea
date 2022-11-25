@@ -1,0 +1,5 @@
+from .o_relation_delete import ORelationDeleteView
+from .o_relation_update import ORelationUpdateView
+from .o_relation_detail import ORelationDetailView
+from .o_relation_create import ORelationCreateView
+from .o_relation_list import ORelationListView

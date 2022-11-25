@@ -1,0 +1,5 @@
+from .o_predicate_delete_test import OPredicateDeleteTestCase
+from .o_predicate_update_test import OPredicateUpdateTestCase
+from .o_predicate_detail_test import OPredicateDetailTestCase
+from .o_predicate_create_test import OPredicateCreateTestCase
+from .o_predicate_list_test import OPredicateListTestCase

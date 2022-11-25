@@ -1,0 +1,5 @@
+from .profile_delete_test import ProfileDeleteTestCase
+from .profile_update_test import ProfileUpdateTestCase
+from .profile_detail_test import ProfileDetailTestCase
+from .profile_create_test import ProfileCreateTestCase
+from .profile_list_test import ProfileListTestCase

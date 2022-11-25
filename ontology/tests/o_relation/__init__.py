@@ -1,0 +1,5 @@
+from .o_relation_delete_test import ORelationDeleteTestCase
+from .o_relation_update_test import ORelationUpdateTestCase
+from .o_relation_detail_test import ORelationDetailTestCase
+from .o_relation_create_test import ORelationCreateTestCase
+from .o_relation_list_test import ORelationListTestCase

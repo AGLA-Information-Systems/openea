@@ -1,0 +1,24 @@
+<table class="table table-fluid" id="table-concepts">
+    <thead>
+        <tr>
+            <th>Concept</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for OConcept in object_list %}
+        <tr>
+            <td><a class="link-dark" href="{% url "o_concept_detail" OConcept.id %}">{{ OConcept.name }}</a></td>
+            <td>{{ OConcept.description }}</td>
+            <td>{% for tag in OConcept.tags.all %}{{ tag.name }} {% endfor %}</td>
+            <td>{{ OConcept.get_quality_status_display }}</td>
+            <td><a href="{% url "o_concept_update" OConcept.id %}">edit</a></td>
+            <td><a href="{% url "o_concept_delete" OConcept.id %}">delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

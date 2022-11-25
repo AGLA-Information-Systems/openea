@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2 class="form-title">Organisation</h2>
+
+<table class="table table-fluid">
+    <thead>
+        <tr>
+            <th>Organisation</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for Organisation in object_list %}
+        <tr>
+            <td><a href="{% url "organisation_detail" Organisation.id %}">{{ Organisation }}</a></td>
+            <td><a href="{% url "organisation_update" Organisation.id %}">edit</a></td>
+            <td><a href="{% url "organisation_delete" Organisation.id %}">delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url "organisation_create" %}">New</a>
+
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2 class="form-title">Slot</h2>
+
+<table class="table table-fluid">
+    <thead>
+        <tr>
+            <th>Slot</th>
+            <th>Class</th>
+            <th>View</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for OSlot in object_list %}
+        <tr>
+            <td>{{ OSlot[0] }}</td>
+            <td>{{ OSlot[1] }}</td>
+            <td><a href="{% url "o_slot_detail" OSlot[0].id %}">view</a></td>
+            <td><a href="{% url "o_slot_update" OSlot[0].id %}">edit</a></td>
+            <td><a href="{% url "o_slot_delete" OSlot[0].id %}">delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url "o_slot_create" %}">New</a>
+
+{% endblock content %}
