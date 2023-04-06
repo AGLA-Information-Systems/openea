@@ -3,7 +3,7 @@ from django.core.paginator import Paginator
 
 from authorization.controllers.utils import CustomPermissionRequiredMixin
 from taxonomy.models import TagGroup, Tag
-from webapp.models import Profile
+from organisation.models import Profile
 
 
 class TagGroupDetailView(CustomPermissionRequiredMixin, DetailView):

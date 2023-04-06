@@ -1,11 +1,15 @@
-from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin
-from ontology.forms.o_instance.o_instance_update import OInstanceUpdateForm
+from django.http import HttpResponseRedirect
+from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import FormView
 
+from authorization.controllers.utils import CustomPermissionRequiredMixin
+from ontology.forms.o_instance.o_instance_update import OInstanceUpdateForm
 from ontology.models import OInstance, OPredicate, OSlot
+from openea.utils import Utils
+from utils.views.custom import SingleObjectView
 
-class OInstanceUpdateView(CustomPermissionRequiredMixin, FormView):
+
+class OInstanceUpdateView(CustomPermissionRequiredMixin, SingleObjectView, FormView):
     model = OInstance
     template_name = "o_instance/o_instance_update.html"
     form_class = OInstanceUpdateForm
@@ -22,7 +26,9 @@ class OInstanceUpdateView(CustomPermissionRequiredMixin, FormView):
 
             instance.name = form.cleaned_data.get('name', None)
             instance.code = form.cleaned_data.get('code', None)
+            instance.concept = form.cleaned_data.get('concept', '')
             instance.description = form.cleaned_data.get('description', '')
+            instance.quality_status = form.cleaned_data.get('quality_status', '')
             #instance.tag_groups = form.cleaned_data.get('tag_groups')
             instance.tags.set(form.cleaned_data.get('tags', []))
 
@@ -31,17 +37,33 @@ class OInstanceUpdateView(CustomPermissionRequiredMixin, FormView):
             predicates_as_subject = OPredicate.objects.filter(subject=concept).all()
             predicates_as_object = OPredicate.objects.filter(object=concept).all()
 
-            for x in predicates_as_subject:
-                slot_values = form.cleaned_data.get(x.name, [])
-                for slot_value in slot_values:
-                    slot = OSlot.objects.get_or_create(model=model, predicate=x, subject=instance, object=slot_value)
+            # for x in predicates_as_subject:
+            #     object_concept = x.object
+            #     if object_concept.name == Utils.RESOURCE_CONCEPT:
+            #         slot_value = form.cleaned_data.get(x.name, '')
+            #         slot = OSlot.get_or_create(model=model, predicate=x, subject=instance, value=slot_value)
+            #     else:
+            #         slot_values = form.cleaned_data.get(x.name, [])
+            #         for slot_value in slot_values:
+            #             slot = OSlot.get_or_create(model=model, predicate=x, subject=instance, value=slot_value)
                     
-            for x in predicates_as_object:
+            # for x in predicates_as_object:
+            #     subject_concept = x.subject
+            #     if subject_concept.name == Utils.RESOURCE_CONCEPT:
+            #         slot_value = form.cleaned_data.get(x.name, '')
+            #         slot = OSlot.get_or_create(model=model, predicate=x, subject=slot_value, object=instance)
+            #     else:
+            #         slot_values = form.cleaned_data.get(x.name, [])
+            #         for slot_value in slot_values:
+            #             slot = OSlot.get_or_create(model=model, predicate=x, subject=slot_value, object=instance)
+
+            for x in predicates_as_subject:
+                object_concept = x.object
                 slot_values = form.cleaned_data.get(x.name, [])
                 for slot_value in slot_values:
-                    slot = OSlot.objects.get_or_create(model=model, predicate=x, subject=slot_value, object=instance)
+                    slot, created = OSlot.objects.get_or_create(model=model, predicate=x, subject=instance, object=slot_value)
 
-        return super().form_valid(form)
+        return HttpResponseRedirect(self.get_success_url())
 
     def get_initial(self):
         initials = super().get_initial()
@@ -49,5 +71,4 @@ class OInstanceUpdateView(CustomPermissionRequiredMixin, FormView):
         return initials
 
     def get_success_url(self):
-        pk = self.object.model.id
-        return reverse('o_model_detail', kwargs={'pk': pk})
+        return reverse('o_instance_detail', kwargs={'pk': self.kwargs.get('pk')})

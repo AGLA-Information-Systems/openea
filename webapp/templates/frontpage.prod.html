@@ -1,7 +1,8 @@
 {% extends 'layout.html' %}
 
 {% load i18n %}
-
+{% block meta %}<meta name="description" content="Home">{% endblock meta %}
+{% block title %}Home{% endblock title %}
 {% block content %}
 
 <div class="container-fluid py-5">
@@ -23,7 +24,7 @@
     <div class="h-100 p-5 text-white bg-dark rounded-3">
       <h2>{% trans "Join the team" %}</h2>
       <p>{% trans "Get aboard by contributing and/or joining the " %}<a href="https://keybase.io/team/openea">{% trans "team" %}</a> {% trans "or if you are already on keybase" %}, <a href="keybase://team-page/openea">{% trans "Team OpenEA" %}</a> </p>
-      <a href="https://keybase.io/team/openea" class="btn btn-outline-light" >Contribute</a>
+      <a href="https://keybase.io/team/openea" class="btn btn-outline-light" >{% trans "Contribute" %}</a>
     </div>
   </div>
   <div class="col-md-6">

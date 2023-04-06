@@ -5,11 +5,11 @@ from ontology.controllers.knowledge_base import KnowledgeBaseController
 from ontology.models import OConcept, OInstance, OSlot, OModel, OPredicate, ORelation, OSlot
 
 class OSlotUpdateForm(forms.ModelForm):
-    description = forms.CharField(required=False)
     subject = forms.ModelChoiceField(queryset=OInstance.objects.all())
     object = forms.ModelChoiceField(queryset=OInstance.objects.all())
     predicate = forms.ModelChoiceField(queryset=OPredicate.objects.all())
     model = forms.ModelChoiceField(queryset=OModel.objects.all())
+    description = forms.CharField(required=False)
 
     def __init__(self,*args,**kwargs):
         initial_arguments = kwargs.pop('initial')

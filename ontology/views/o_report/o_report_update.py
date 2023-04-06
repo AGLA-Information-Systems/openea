@@ -4,8 +4,9 @@ from django.urls import reverse_lazy, reverse
 from authorization.controllers.utils import CustomPermissionRequiredMixin
 
 from ontology.models import OReport
+from utils.views.custom import SingleObjectView
 
-class OReportUpdateView(CustomPermissionRequiredMixin, UpdateView):
+class OReportUpdateView(CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
     model = OReport
     fields = ['name', 'description', 'path', 'content', 'model', 'quality_status',  'tags']
     template_name = "o_report/o_report_update.html"
@@ -14,8 +15,11 @@ class OReportUpdateView(CustomPermissionRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         if self.request.user.is_authenticated:
+            path = form.cleaned_data['path']
+            if path is not None:
+                path = re.sub('/+','/', '/' + path.replace('.', '/'))
             form.instance.modified_by = self.request.user
-            form.instance.path = re.sub('/+','/', '/' + form.instance.path)
+            form.instance.path = path
         return super().form_valid(form)
 
     def get_success_url(self):

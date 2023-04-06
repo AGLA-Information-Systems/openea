@@ -1,1 +1,2 @@
 from .o_predicate_create import OPredicateCreateForm
+from .o_predicate_update import OPredicateUpdateForm

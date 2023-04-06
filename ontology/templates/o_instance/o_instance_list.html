@@ -1,11 +1,12 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block head_extras %} {{ form.media }} {% endblock head_extras %}
 
 {% block content %}
-<h2 class="form-title">Instance</h2>
+<h2 class="form-title">{% trans "Instance" %}</h2>
 
 {% include "o_instance/o_instance_table.html" %}
-
-<a href="{% url "o_instance_create" %}">New</a>
 
 {% endblock content %}

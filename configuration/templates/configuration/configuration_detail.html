@@ -1,34 +1,36 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
+{% load i18n %}
+{% load mkd %}
 
 {% block content %}
 <div class="d-flex flex-column flex-md-row align-items-center pb-2">
     <div class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
       <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-          <a class="btn btn-secondary" href="{% url "configuration_update" object.id %}" class="dropdown-item" href="#">Edit</a>
+          <a class="btn btn-secondary" href="{% url "configuration_update" object.id %}" class="dropdown-item" href="#">{% trans "Edit" %}</a>
       </div>
     </div>
   </div>
 
-<a class="link-dark breadcrumb" href="{% url "o_model_detail" model_id %}" href="#"> (Model) {{ object.name|truncatechars:9 }}</a>
-<h2>{{object.name}} (Configuration)</h2>
-<p>{{object.description}}</p>
-<p>{{object.get_quality_status_display}}</p>
+<a class="link-dark breadcrumb" href="{% url "o_model_detail" model_id %}" href="#"> ({% trans "Model" %}) {{ object.name|truncatechars:9 }}</a>
+<h2>{{object.name}} ({% trans "Configuration" %})</h2>
+<p>{{object.description | markdown | safe}}</p>
+<p>{% trans object.get_quality_status_display %}</p>
 <p>{% for tag in object.tags.all %}
     {{ tag.name }}
   {% endfor %}
 </p>
 
-<div class="mt-3"><a class="btn btn-primary" href="{% url "o_instance_create" concept_id=object.id %}">New Instance</a></div>
+<div class="mt-3"><a class="btn btn-primary" href="{% url "o_instance_create" concept_id=object.id %}">{% trans "New Instance" %}</a></div>
 <hr/>
 <div>
-    <strong>Parents:</strong>
+    <strong>{% trans "Parents" %}:</strong>
     {% for parent_concept in parent_concepts %}
     <a class="link-dark" href="{% url "configuration_detail" parent_concept.id %}">{{ parent_concept.name }}</a>
     {% endfor %}
 </div>
 <div>
-    <strong>Children:</strong>
+    <strong>{% trans "Children" %}:</strong>
     {% for child_concept in child_concepts %}
     <a class="link-dark" href="{% url "configuration_detail" child_concept.id %}">{{ child_concept.name }}</a>
     {% endfor %}
@@ -37,8 +39,8 @@
 <table class="table table-fluid">
     <thead>
         <tr>
-            <th>Instance</th>
-            <th>Description</th>
+            <th>{% trans "Instance" %}</th>
+            <th>{% trans "Description" %}</th>
             <th></th>
             <th></th>
         </tr>
@@ -48,8 +50,8 @@
         <tr>
             <td><a class="link-dark" href="{% url "o_instance_detail" instance.id %}">{{ instance }}</a></td>
             <td>{{ instance.description }}</td>
-            <td><a href="{% url "o_instance_update" instance.id %}">edit</a></td>
-            <td><a href="{% url "o_instance_delete" instance.id %}">delete</a></td>
+            <td><a href="{% url "o_instance_update" instance.id %}">{% trans "edit" %}</a></td>
+            <td><a href="{% url "o_instance_delete" instance.id %}">{% trans "delete" %}</a></td>
         </tr>
         {% endfor %}
     </tbody>
@@ -58,13 +60,13 @@
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
         {% if instances.has_previous %}
-            <li class="page-item"><a class="page-link" href="?instance_page=1">&laquo; first</a></li>
-            <li class="page-item"><a class="page-link" href="?instance_page={{ instances.previous_page_number }}">previous</a></li>
+            <li class="page-item"><a class="page-link" href="?instance_page=1">&laquo;{% trans "first" %} </a></li>
+            <li class="page-item"><a class="page-link" href="?instance_page={{ instances.previous_page_number }}">{% trans "previous" %}</a></li>
         {% endif %}
         <li class="page-item"><a class="page-link" href="#">{{ instances.number }} of {{ instances.paginator.num_pages }}</a></li>
         {% if instances.has_next %}
-            <li class="page-item"><a class="page-link" href="?instance_page={{ instances.next_page_number }}">next</a></li>
-            <li class="page-item"><a class="page-link" href="?instance_page={{ instances.paginator.num_pages }}">last &raquo;</a></li>
+            <li class="page-item"><a class="page-link" href="?instance_page={{ instances.next_page_number }}">{% trans "next" %}</a></li>
+            <li class="page-item"><a class="page-link" href="?instance_page={{ instances.paginator.num_pages }}">{% trans "last" %} &raquo;</a></li>
         {% endif %}
     </ul>
 </nav>

@@ -1,8 +1,9 @@
+{% load i18n %}
 <table class="table table-fluid" id="table-instances">
     <thead>
         <tr>
-            <th>Instance</th>
-            <th>Concept</th>
+            <th>{% trans "Instance" %}</th>
+            <th>{% trans "Concept" %}</th>
             <th></th>
             <th></th>
             <th></th>
@@ -11,15 +12,15 @@
         </tr>
     </thead>
     <tbody>
-        {% for instance in instances %}
+        {% for instance in object_list %}
         <tr>
             <td><a class="link-dark" href="{% url "o_instance_detail" instance.id %}">{{ instance.code }} {{ instance.name }}</a></td>
             <td><a class="link-dark" href="{% url "o_concept_detail" instance.concept.id %}">{{ instance.concept.name }}</a></td>
-            <td>{{ instance.description }}</td>
+            <td>{{ instance.description | truncatechars:200}}</td>
             <td>{% for tag in instance.tags.all %}{{ tag.name }} {% endfor %}</td>
-            <td>{{ instance.get_quality_status_display }}</td>
-            <td><a href="{% url "o_instance_update" instance.id %}">edit</a></td>
-            <td><a href="{% url "o_instance_delete" instance.id %}">delete</a></td>
+            <td>{% trans instance.get_quality_status_display %}</td>
+            <td><a href="{% url "o_instance_update" instance.id %}">{% trans "edit" %}</a></td>
+            <td><a href="{% url "o_instance_delete" instance.id %}">{% trans "delete" %}</a></td>
         </tr>
         {% endfor %}
     </tbody>

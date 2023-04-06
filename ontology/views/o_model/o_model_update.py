@@ -1,12 +1,14 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
 from authorization.controllers.utils import CustomPermissionRequiredMixin
+from ontology.forms.o_model.o_model_update import OModelUpdateForm
 
 from ontology.models import OModel
+from utils.views.custom import SingleObjectView
 
-class OModelUpdateView(CustomPermissionRequiredMixin, UpdateView):
+class OModelUpdateView(CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
     model = OModel
-    fields = ['name', 'version', 'description', 'repository',  'tags']
+    form_class = OModelUpdateForm
     template_name = "o_model/o_model_update.html"
     #success_url = reverse_lazy('o_model_list')
     permission_required = [('UPDATE', model.get_object_type(), None)]

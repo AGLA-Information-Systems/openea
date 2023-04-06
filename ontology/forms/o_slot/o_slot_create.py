@@ -4,9 +4,9 @@ from ontology.controllers.utils import KnowledgeBaseUtils
 from ontology.models import OConcept, OInstance, OModel, OPredicate, OSlot
 
 class OSlotCreateForm(forms.ModelForm):
-    description = forms.CharField(required=False)
     new_object_name = forms.CharField(required=False)
     new_object_description = forms.CharField(required=False)
+    description = forms.CharField(required=False)
 
     def __init__(self,*args,**kwargs):
         initial_arguments = kwargs.pop('initial')

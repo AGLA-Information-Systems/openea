@@ -6,8 +6,9 @@ from ontology.forms.o_slot.o_slot_update import OSlotUpdateForm
 from django.views.generic.edit import FormView
 
 from ontology.models import OInstance, OSlot, OPredicate, OSlot
+from utils.views.custom import SingleObjectView
 
-class OSlotUpdateView(CustomPermissionRequiredMixin, FormView):
+class OSlotUpdateView(CustomPermissionRequiredMixin, SingleObjectView, FormView):
     model = OSlot
     template_name = "o_slot/o_slot_update.html"
     form_class = OSlotUpdateForm

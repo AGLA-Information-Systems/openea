@@ -1,12 +1,15 @@
 {% extends 'layout.html' %}
-{% load i18n %}
 {% load crispy_forms_tags %}
+{% load i18n %}
+{% load mkd %}
 
+{% block meta %}<meta name="description" content="{% trans "Model detail" %}">{% endblock meta %}
+{% block title %}{% trans "Model detail" %}{% endblock title %}
 {% block content %}
 <div class="d-flex flex-column flex-md-row align-items-center pb-2">
     <div>
         <a class="link-dark" href="{% url "organisation_detail" pk=object.repository.organisation.id %}" href="#"> {{ object.repository.organisation.name }} > </a>
-        <h2>{{object.name}} (Model)</h2>
+        <h2>{{object.name}} ({% trans "Model" %})</h2>
     </div>
     <div class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
@@ -43,7 +46,7 @@
         </div>
     </div>
 </div>
-<p>{{object.description}}</p>
+<p>{{object.description | markdown | safe}}</p>
 <p>{% for tag in object.tags.all %}
     {{ tag.name }} 
   {% endfor %}
@@ -52,12 +55,12 @@
 <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
         {% if show_reports %}<button class="nav-link" id="nav-reports-tab" data-bs-toggle="tab" data-bs-target="#nav-reports" type="button" role="tab" aria-controls="nav-reports" aria-selected="false">{% trans "Reports" %}</button>{% endif %}
-        {% if show_instances %}<button class="nav-link active" id="nav-instances-tab" data-bs-toggle="tab" data-bs-target="#nav-instances" type="button" role="tab" aria-controls="nav-instances" aria-selected="false">{% trans "Instances" %}</button>{% endif %}
-        {% if show_instances %}<button class="nav-link" id="nav-instances-diagram-tab" data-bs-toggle="tab" data-bs-target="#nav-instances-diagram" type="button" role="tab" aria-controls="nav-instances-diagram" aria-selected="false">{% trans "Instances Diagram" %}</button>{% endif %}
         {% if show_concepts %}<button class="nav-link" id="nav-entities-tab" data-bs-toggle="tab" data-bs-target="#nav-entities" type="button" role="tab" aria-controls="nav-entities" aria-selected="false">{% trans "Concepts" %}</button>{% endif %}
         {% if show_relations %}<button class="nav-link" id="nav-relations-tab" data-bs-toggle="tab" data-bs-target="#nav-relations" type="button" role="tab" aria-controls="nav-relations" aria-selected="false">{% trans "Relations" %}</button>{% endif %}
         {% if show_predicates %}<button class="nav-link" id="nav-predicates-tab" data-bs-toggle="tab" data-bs-target="#nav-predicates" type="button" role="tab" aria-controls="nav-predicates" aria-selected="true">{% trans "Ontology" %}</button>{% endif %}     
         {% if show_predicates %}<button class="nav-link" id="nav-ontology-diagram-tab" data-bs-toggle="tab" data-bs-target="#nav-ontology-diagram" type="button" role="tab" aria-controls="nav-ontology-diagram" aria-selected="false">{% trans "Ontology Diagram" %}</button>{% endif %}
+        {% if show_predicates %}<button class="nav-link" id="nav-ontology-matrix-tab" data-bs-toggle="tab" data-bs-target="#nav-ontology-matrix" type="button" role="tab" aria-control="nav-ontology-matrix" aria-selected="false">{% trans "Ontology Matrix" %}</button>{% endif %}
+        {% if show_instances %}<button class="nav-link" id="nav-instance-matrix-tab" data-bs-toggle="tab" data-bs-target="#nav-instance-matrix" type="button" role="tab" aria-control="nav-instance-matrix" aria-selected="false">{% trans "Instance Matrix" %}</button>{% endif %}
     </div>
 </nav>
 
@@ -65,69 +68,46 @@
 
     {% if show_reports %}
     <div class="tab-pane fade" id="nav-reports" role="tabpanel" aria-labelledby="nav-reports-tab">
-        <div class="mt-3"><a class="btn btn-primary" href="{% url "o_report_create" model_id=object.id %}">New Report</a></div>
+        <div class="mt-3"><a class="btn btn-primary" href="{% url "o_report_create" model_id=object.id %}">{% trans "New Report" %}</a></div>
         <br>
-        <input class="form-control" id="search-reports" type="text" placeholder="Search..">
+        <input class="form-control" id="search-reports" type="text" placeholder="{% trans "Filter" %}...">
         {% include "o_report/o_report_table.html" with object_list=reports %}
         
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 {% if reports.has_previous %}
                     <li class="page-item"><a class="page-link" href="?report_page=1">&laquo; first</a></li>
-                    <li class="page-item"><a class="page-link" href="?report_page={{ reports.previous_page_number }}">previous</a></li>
+                    <li class="page-item"><a class="page-link" href="?report_page={{ reports.previous_page_number }}">{% trans "previous" %}</a></li>
                 {% endif %}
                 <li class="page-item"><a class="page-link" href="#">{{ reports.number }} of {{ reports.paginator.num_pages }}</a></li>
                 {% if reports.has_next %}
-                    <li class="page-item"><a class="page-link" href="?report_page={{ reports.next_page_number }}">next</a></li>
-                    <li class="page-item"><a class="page-link" href="?report_page={{ reports.paginator.num_pages }}">last &raquo;</a></li>
+                    <li class="page-item"><a class="page-link" href="?report_page={{ reports.next_page_number }}">{% trans "next" %}</a></li>
+                    <li class="page-item"><a class="page-link" href="?report_page={{ reports.paginator.num_pages }}">{% trans "last" %} &raquo;</a></li>
                 {% endif %}
             </ul>
         </nav>
 
-    </div>
-
-    {% endif %}
-    {% if show_instances %}
-    
-    <div class="tab-pane fade show active" id="nav-instances" role="tabpanel" aria-labelledby="nav-instances-tab">
-        <br>
-        <input class="form-control" id="search-instances" type="text" placeholder="Search..">
-        {% include "o_instance/o_instance_table.html" with object_list=instances %}
-
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                {% if instances.has_previous %}
-                    <li class="page-item"><a class="page-link" href="?instance_page=1">&laquo; first</a></li>
-                    <li class="page-item"><a class="page-link" href="?instance_page={{ instances.previous_page_number }}">previous</a></li>
-                {% endif %}
-                <li class="page-item"><a class="page-link" href="#">{{ instances.number }} of {{ instances.paginator.num_pages }}</a></li>
-                {% if instances.has_next %}
-                    <li class="page-item"><a class="page-link" href="?instance_page={{ instances.next_page_number }}">next</a></li>
-                    <li class="page-item"><a class="page-link" href="?instance_page={{ instances.paginator.num_pages }}">last &raquo;</a></li>
-                {% endif %}
-            </ul>
-        </nav>
     </div>
 
     {% endif %}
     {% if show_concepts %}
 
     <div class="tab-pane fade" id="nav-entities" role="tabpanel" aria-labelledby="nav-entities-tab">
-        <div class="mt-3"><a class="btn btn-primary" href="{% url "o_concept_create" model_id=object.id %}">New Concept</a></div>
+        <div class="mt-3"><a class="btn btn-primary" href="{% url "o_concept_create" model_id=object.id %}">{% trans "New Concept" %}</a></div>
         <br>
-        <input class="form-control" id="search-concepts" type="text" placeholder="Search..">
+        <input class="form-control" id="search-concepts" type="text" placeholder="{% trans "Filter" %}...">
         {% include "o_concept/o_concept_table.html" with object_list=concepts %}
         
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 {% if entities.has_previous %}
-                    <li class="page-item"><a class="page-link" href="?concept_page=1">&laquo; first</a></li>
-                    <li class="page-item"><a class="page-link" href="?concept_page={{ entities.previous_page_number }}">previous</a></li>
+                    <li class="page-item"><a class="page-link" href="?concept_page=1">&laquo; {% trans "first" %}</a></li>
+                    <li class="page-item"><a class="page-link" href="?concept_page={{ entities.previous_page_number }}">{% trans "previous" %}</a></li>
                 {% endif %}
                 <li class="page-item"><a class="page-link" href="#">{{ entities.number }} of {{ entities.paginator.num_pages }}</a></li>
                 {% if entities.has_next %}
-                    <li class="page-item"><a class="page-link" href="?concept_page={{ entities.next_page_number }}">next</a></li>
-                    <li class="page-item"><a class="page-link" href="?concept_page={{ entities.paginator.num_pages }}">last &raquo;</a></li>
+                    <li class="page-item"><a class="page-link" href="?concept_page={{ entities.next_page_number }}">{% trans "next" %}</a></li>
+                    <li class="page-item"><a class="page-link" href="?concept_page={{ entities.paginator.num_pages }}">{% trans "last" %} &raquo;</a></li>
                 {% endif %}
             </ul>
         </nav>
@@ -137,21 +117,21 @@
     {% if show_relations %}
 
     <div class="tab-pane fade" id="nav-relations" role="tabpanel" aria-labelledby="nav-relations-tab">
-        <div class="mt-3"><a class="btn btn-primary" href="{% url "o_relation_create" model_id=object.id %}">New Relation</a></div>
+        <div class="mt-3"><a class="btn btn-primary" href="{% url "o_relation_create" model_id=object.id %}">{% trans "New Relation" %}</a></div>
         <br>
-        <input class="form-control" id="search-relations" type="text" placeholder="Search..">
+        <input class="form-control" id="search-relations" type="text" placeholder="{% trans "Filter" %}...">
         {% include "o_relation/o_relation_table.html" with object_list=relations %}
 
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 {% if relations.has_previous %}
-                    <li class="page-item"><a class="page-link" href="?relation_page=1">&laquo; first</a></li>
-                    <li class="page-item"><a class="page-link" href="?relation_page={{ relations.previous_page_number }}">previous</a></li>
+                    <li class="page-item"><a class="page-link" href="?relation_page=1">&laquo;{% trans "first" %} </a></li>
+                    <li class="page-item"><a class="page-link" href="?relation_page={{ relations.previous_page_number }}">{% trans "previous" %}</a></li>
                 {% endif %}
                 <li class="page-item"><a class="page-link" href="#">{{ relations.number }} of {{ relations.paginator.num_pages }}</a></li>
                 {% if relations.has_next %}
-                    <li class="page-item"><a class="page-link" href="?relation_page={{ relations.next_page_number }}">next</a></li>
-                    <li class="page-item"><a class="page-link" href="?relation_page={{ relations.paginator.num_pages }}">last &raquo;</a></li>
+                    <li class="page-item"><a class="page-link" href="?relation_page={{ relations.next_page_number }}">{% trans "next" %}</a></li>
+                    <li class="page-item"><a class="page-link" href="?relation_page={{ relations.paginator.num_pages }}">{% trans "last" %} &raquo;</a></li>
                 {% endif %}
             </ul>
         </nav>
@@ -161,33 +141,25 @@
     {% if show_predicates %}
 
     <div class="tab-pane fade" id="nav-predicates" role="tabpanel" aria-labelledby="nav-predicates-tab">
-        <div class="mt-3"><a class="btn btn-primary" href="{% url "o_predicate_create" model_id=object.id %}">New Predicate</a></div>
+        <div class="mt-3"><a class="btn btn-primary" href="{% url "o_predicate_create" model_id=object.id %}">{% trans "New Predicate" %}</a></div>
         <br>
-        <input class="form-control" id="search-predicates" type="text" placeholder="Search..">
+        <input class="form-control" id="search-predicates" type="text" placeholder="{% trans "Filter" %}...">
         {% include "o_predicate/o_predicate_table.html" with object_list=predicates %}
         
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 {% if predicates.has_previous %}
-                    <li class="page-item"><a class="page-link" href="?predicate_page=1">&laquo; first</a></li>
-                    <li class="page-item"><a class="page-link" href="?predicate_page={{ predicates.previous_page_number }}">previous</a></li>
+                    <li class="page-item"><a class="page-link" href="?predicate_page=1">&laquo; {% trans "first" %}</a></li>
+                    <li class="page-item"><a class="page-link" href="?predicate_page={{ predicates.previous_page_number }}">{% trans "previous" %}</a></li>
                 {% endif %}
                 <li class="page-item"><a class="page-link" href="#">{{ predicates.number }} of {{ predicates.paginator.num_pages }}</a></li>
                 {% if predicates.has_next %}
-                    <li class="page-item"><a class="page-link" href="?predicate_page={{ predicates.next_page_number }}">next</a></li>
-                    <li class="page-item"><a class="page-link" href="?predicate_page={{ predicates.paginator.num_pages }}">last &raquo;</a></li>
+                    <li class="page-item"><a class="page-link" href="?predicate_page={{ predicates.next_page_number }}">{% trans "next" %}</a></li>
+                    <li class="page-item"><a class="page-link" href="?predicate_page={{ predicates.paginator.num_pages }}">{% trans "last" %} &raquo;</a></li>
                 {% endif %}
             </ul>
         </nav>
 
-    </div>
-
-    {% endif %}
-    {% if show_instances %}
-
-    <div class="tab-pane fade" id="nav-instances-diagram" role="tabpanel" aria-labelledby="nav-instances-diagram-tab">
-        <br>
-        {% include "o_model/o_model_instances_diagram.html" %}
     </div>
 
     {% endif %}
@@ -198,6 +170,21 @@
         {% include "o_model/o_model_ontology_diagram.html" %}
     </div>
 
+    {% endif %}
+
+    {% if show_predicates %}
+    <div class="tab-pane fade" id="nav-ontology-matrix" role="tabpanel" aria-labelledby="nav-ontology-matrix-tab">
+        <br>
+        {% include "o_model/o_model_ontology_matrix.html" %}
+    </div>
+    
+    {% endif %}
+
+    {% if show_instances %}
+     <div class="tab-pane fade" id="nav-instance-matrix" role="tabpanel" aria-labelledby="nav-instance-matrix-tab">
+        <br>
+        {% include "o_model/o_model_instances_matrix.html" %}
+    </div>
     {% endif %}
 
 </div>
@@ -214,36 +201,44 @@
 </script>
 <script>
     $(document).ready(function(){
-      $("#search-reports").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#table-reports tr").filter(function() {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        $("#search-reports").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $("#table-reports tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
         });
-      });
-      $("#search-instances").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#table-instances tr").filter(function() {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        $("#search-concepts").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $("#table-concepts tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
         });
-      });
-      $("#search-concepts").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#table-concepts tr").filter(function() {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        $("#search-relations").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $("#table-relations tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
         });
-      });
-      $("#search-relations").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#table-relations tr").filter(function() {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        $("#search-predicates").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $("#table-predicates tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
         });
-      });
-      $("#search-predicates").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#table-predicates tr").filter(function() {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-      });
+
+        $('#diagram-concepts').select2();
+        $('#diagram-concepts-relations').select2();
+
+        $('#concepts-matrix-select-rows').select2();
+        $('#concepts-matrix-select-columns').select2();
+        generateConceptMatrix();
+
+        $('#instances-matrix-rows-concept').select2();
+        $('#instances-matrix-columns-concept').select2();
+
+        $('#instances-matrix-rows').select2();
+        $('#instances-matrix-columns').select2();
+        generateInstancesMatrix()
     });
 </script>
 {% endblock content %}

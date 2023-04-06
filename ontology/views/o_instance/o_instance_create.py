@@ -1,12 +1,14 @@
 from unicodedata import name
-from django.views.generic.edit import CreateView
-from django.urls import reverse_lazy, reverse
+
+from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.urls import reverse, reverse_lazy
+from django.views.generic.edit import CreateView, FormView
+
 from authorization.controllers.utils import CustomPermissionRequiredMixin
 from ontology.controllers.knowledge_base import KnowledgeBaseController
 from ontology.forms.o_instance.o_instance_create import OInstanceCreateForm
-from django.views.generic.edit import FormView
-
 from ontology.models import OConcept, OInstance, OModel
+
 
 class OInstanceCreateView(CustomPermissionRequiredMixin, FormView):
     model = OInstance
@@ -20,10 +22,16 @@ class OInstanceCreateView(CustomPermissionRequiredMixin, FormView):
             concept = OConcept.objects.get(id=self.kwargs.get('concept_id'))
             model = concept.model
             concept = form.cleaned_data['concept']
-            form.instance = OInstance.get_or_create(model=model, concept=concept, name=form.cleaned_data['name'], code=form.cleaned_data['code'], description=form.cleaned_data['description'])
-            form.instance.created_by = self.request.user
-        return super().form_valid(form)
-
+            #form.instance = OInstance.get_or_create(model=model, concept=concept, name=form.cleaned_data['name'], code=form.cleaned_data['code'], description=form.cleaned_data['description'])
+            form.instance.instance, created = OInstance.objects.get_or_create(model=model,
+                                                                            concept=concept,
+                                                                            name=form.cleaned_data['name'],
+                                                                            defaults={'code': form.cleaned_data['code'],
+                                                                                    'description':form.cleaned_data['description'],
+                                                                                    'quality_status':form.cleaned_data['quality_status'],
+                                                                                    'created_by': self.request.user})
+        return HttpResponseRedirect(self.get_success_url())
+            
     def get_initial(self):
         initials = super().get_initial()
         initials['concept_id'] = self.kwargs.get('concept_id')

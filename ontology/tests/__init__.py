@@ -1,31 +1,19 @@
-from .o_slot import OSlotDeleteTestCase
-from .o_slot import OSlotUpdateTestCase
-from .o_slot import OSlotDetailTestCase
-from .o_slot import OSlotCreateTestCase
-from .o_slot import OSlotListTestCase
-from .o_predicate import OPredicateDeleteTestCase
-from .o_predicate import OPredicateUpdateTestCase
-from .o_predicate import OPredicateDetailTestCase
-from .o_predicate import OPredicateCreateTestCase
-from .o_predicate import OPredicateListTestCase
-from .o_relation import ORelationDeleteTestCase
-from .o_relation import ORelationUpdateTestCase
-from .o_relation import ORelationDetailTestCase
-from .o_relation import ORelationCreateTestCase
-from .o_relation import ORelationListTestCase
-from .o_concept import OConceptDeleteTestCase
-from .o_concept import OConceptUpdateTestCase
-from .o_concept import OConceptDetailTestCase
-from .o_concept import OConceptCreateTestCase
-from .o_concept import OConceptListTestCase
-from .o_model import OModelDeleteTestCase
-from .o_model import OModelUpdateTestCase
-from .o_model import OModelDetailTestCase
-from .o_model import OModelCreateTestCase
-from .o_model import OModelListTestCase
-from .repository import RepositoryDeleteTestCase
-from .repository import RepositoryUpdateTestCase
-from .repository import RepositoryDetailTestCase
-from .repository import RepositoryCreateTestCase
-from .repository import RepositoryListTestCase
-from .knowledge_base import KnowledgeBaseControllerTestCase
+from .controllers.knowledge_base_test import KnowledgeBaseControllerTestCase
+from .o_concept import (OConceptCreateTestCase, OConceptDeleteTestCase,
+                        OConceptDetailTestCase, OConceptListTestCase,
+                        OConceptUpdateTestCase)
+from .o_model import (OModelCreateTestCase, OModelDeleteTestCase,
+                      OModelDetailTestCase, OModelListTestCase,
+                      OModelUpdateTestCase)
+from .o_predicate import (OPredicateCreateTestCase, OPredicateDeleteTestCase,
+                          OPredicateDetailTestCase, OPredicateListTestCase,
+                          OPredicateUpdateTestCase)
+from .o_relation import (ORelationCreateTestCase, ORelationDeleteTestCase,
+                         ORelationDetailTestCase, ORelationListTestCase,
+                         ORelationUpdateTestCase)
+from .o_slot import (OSlotCreateTestCase, OSlotDeleteTestCase,
+                     OSlotDetailTestCase, OSlotListTestCase,
+                     OSlotUpdateTestCase)
+from .repository import (RepositoryCreateTestCase, RepositoryDeleteTestCase,
+                         RepositoryDetailTestCase, RepositoryListTestCase,
+                         RepositoryUpdateTestCase)

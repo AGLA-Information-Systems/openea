@@ -3,19 +3,20 @@
 {Description}
 {License_info}
 """
-import os
 import json
+import os
 from uuid import UUID
+
 from django.db import transaction
+
 from ontology.controllers.utils import KnowledgeBaseUtils
 from ontology.plugins.plugin import ACTION_EXPORT, ACTION_IMPORT, Plugin
-
 
 __author__ = "Patrick Agbokou"
 __copyright__ = "Copyright 2021, OpenEA"
 __credits__ = ["Patrick Agbokou"]
 __license__ = "Apache License 2.0"
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 __maintainer__ = "Patrick Agbokou"
 __email__ = "patrick.agbokou@aglaglobal.com"
 __status__ = "Development"

@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load get_dict_item %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row align-items-center pb-2">
+  <div>
+    <a class="link-dark breadcrumb" href="{% url "o_model_detail" model_id %}" href="#"> ({% trans "Model" %}) {{ object.model.name|truncatechars:15 }} > </a>
+  </div>
+  <div class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+    </div>
+  </div>
+</div>
+
+<script src="/static/reports/costs_profits.js"></script>
+<script>
+  var model;
+  function get_data(model_id){
+    $.getJSON("/o_model_json/" + model_id, { get_param: 'value' }, function(data) {
+      model=data;
+      process_report(model);
+    });
+  }
+</script>
+<div id="report">
+  <a class="btn btn-primary" href="javascript:process_report();" class="dropdown-item">Analyser</a>
+</div> 
+<script>
+  $( document ).ready(function() {
+      const {
+        host, hostname, href, origin, pathname, port, protocol, search
+      } = window.location
+      get_data(pathname.split("/")[2]);
+  });
+</script>
+
+{% endblock content %}

@@ -1,11 +1,13 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
+{% load i18n %}
+{% load mkd %}
 
 {% block content %}
-<h2>{{object.name}} (Tag Group)</h2>
-<p>{{object.description}}</p>
+<h2>{{object.name}} ({% trans "Tag Group" %})</h2>
+<p>{{object.description | markdown | safe}}</p>
 
-<div class="mt-3"><a class="btn btn-primary" href="{% url "tag_create" tag_group_id=object.id %}">New Tag</a></div>
+<div class="mt-3"><a class="btn btn-primary" href="{% url "tag_create" tag_group_id=object.id %}">{% trans "New Tag" %}</a></div>
 {% include "tag/tag_table.html" with object_list=tags%}
 
 {% endblock content %}

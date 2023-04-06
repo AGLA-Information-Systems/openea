@@ -1,11 +1,10 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
+{% load i18n %}
 
 {% block content %}
-<h2 class="form-title">ORelation</h2>
+<h2 class="form-title">{% trans "Relation" %}</h2>
 
 {% include "o_relation/o_relation_table.html" %}
-
-<a href="{% url "o_relation_create" %}">New</a>
 
 {% endblock content %}

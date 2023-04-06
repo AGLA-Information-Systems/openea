@@ -3,7 +3,7 @@ from django import forms
 from configuration.models import Configuration
 
 
-from webapp.models import Organisation
+from organisation.models import Organisation
 
 class ConfigurationUpdateForm(forms.ModelForm):
     name = forms.CharField()

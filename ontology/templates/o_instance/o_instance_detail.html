@@ -1,22 +1,25 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
 {% load get_dict_item %}
+{% load i18n %}
+{% load mkd %}
 
 {% block content %}
 <div class="d-flex flex-column flex-md-row align-items-center pb-2">
     <div>
-        <a class="link-dark breadcrumb" href="{% url "o_model_detail" model_id %}" href="#"> (Model) {{ object.model.name|truncatechars:15 }} > </a>
-        <h2>{{object.name}} (Instance: {{object.concept.name}} )</h2>
+        <a class="link-dark breadcrumb" href="{% url "o_model_detail" model_id %}" href="#"> ({% trans "Model" %}) {{ object.model.name|truncatechars:15 }} > </a>
+        <h2>{{object.name}} ({{object.concept.name}})</h2>
     </div>
     <div class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-            <a class="btn btn-secondary" href="{% url "o_instance_update" object.id %}" class="dropdown-item" href="#">Edit</a>
+            <a class="btn btn-secondary" href="{% url "o_instance_update" object.id %}" class="dropdown-item" href="#">{% trans "Edit" %}</a>
+            <a class="btn btn-secondary" href="{% url "o_instance_delete" object.id %}" class="dropdown-item" href="#">{% trans "Delete" %}</a>
         </div>
     </div>
 </div>
 <p>{{object.code}}</p>
-<p>{{object.description}}</p>
-<p>{{object.get_quality_status_display}}</p>
+<p>{{object.description | markdown | safe}}</p>
+<p>{% trans object.get_quality_status_display %}</p>
 <p>{% for tag in object.tags.all %}
     {{ tag.name }}
   {% endfor %}
@@ -26,12 +29,17 @@
 <!-- <div class="text-muted">Slots inherited as subject</div> -->
 {% for p, slot_values in inherited_as_subject_slots.items %}
 <ul>
-    <li>{{ p.name }}: 
+    <li> <span class="text-secondary">{{ p.name }}</span>: 
         <ul>
             {% for slot_value in slot_values %}
-            <li><a class="link-dark" href="{% url "o_instance_detail" slot_value.object.id %}">{{ slot_value.object.name }}</a> 
-                <!-- <a href="{% url "o_slot_update" slot_value.id %}">edit</a>-->
-                <a href="{% url "o_slot_delete" slot_value.id %}">delete</a></li>
+            <li>
+            {% if slot_value.object %}
+                <a class="link-dark" href="{% url "o_instance_detail" slot_value.object.id %}">{{ slot_value.object.name }}</a>
+            {% else %}
+                <span class="link-dark" >{{ slot_value.value }}</span>
+            {% endif %}
+                <a href="{% url "o_slot_delete" slot_value.id %}">{% trans "delete" %}</a>
+            </li>
             {% endfor %}
         </ul>
         <div class="mt-3">
@@ -51,12 +59,12 @@
 <div class="text-muted">Slots inherited as object</div> -->
 {% for p, slot_values in inherited_as_object_slots.items %}
 <ul>
-    <li>{{ p.name }}: 
+    <li> <span class="text-secondary">{{ p.name }}</span>: 
         <ul>
             {% for slot_value in slot_values %}
             <li><a class="link-dark" href="{% url "o_instance_detail" slot_value.subject.id %}">{{ slot_value.subject.name }}</a> 
-                 <!-- <a href="{% url "o_slot_update" slot_value.id %}">edit</a>-->
-                 <a href="{% url "o_slot_delete" slot_value.id %}">delete</a></li>
+                 <!-- <a href="{% url "o_slot_update" slot_value.id %}">{% trans "edit" %}</a>-->
+                 <a href="{% url "o_slot_delete" slot_value.id %}">{% trans "delete" %}</a></li>
             {% endfor %}
         </ul>
         <div class="mt-3">
@@ -76,12 +84,17 @@
 <div class="text-muted">Slots owned as subject</div> -->
 {% for p, slot_values in own_as_subject_slots.items %}
 <ul>
-    <li>{{ p.name }}: 
+    <li> <span class="text-secondary">{{ p.name }}</span>: 
         <ul>
             {% for slot_value in slot_values %}
-            <li><a class="link-dark" href="{% url "o_instance_detail" slot_value.object.id %}">{{ slot_value.object.name }}</a> 
-                  <!-- <a href="{% url "o_slot_update" slot_value.id %}">edit</a>-->
-                  <a href="{% url "o_slot_delete" slot_value.id %}">delete</a></li>
+            <li>
+            {% if slot_value.object %}
+                <a class="link-dark" href="{% url "o_instance_detail" slot_value.object.id %}">{{ slot_value.object.name }}</a>
+            {% else %}
+                <span class="link-dark" >{{ slot_value.value }}</span>
+            {% endif %}
+                <a href="{% url "o_slot_delete" slot_value.id %}">{% trans "delete" %}</a>
+            </li>
             {% endfor %}
         </ul>
         <div class="mt-3">
@@ -101,12 +114,11 @@
 <div class="text-muted">Slots owned as object</div> -->
 {% for p, slot_values in own_as_object_slots.items %}
 <ul>
-    <li>{{ p.name }}: 
+    <li> <span class="text-secondary">{{ p.name }}</span>: 
         <ul>
             {% for slot_value in slot_values %}
             <li><a class="link-dark" href="{% url "o_instance_detail" slot_value.subject.id %}">{{ slot_value.subject.name }}</a> 
-                  <!-- <a href="{% url "o_slot_update" slot_value.id %}">edit</a>-->
-                  <a href="{% url "o_slot_delete" slot_value.id %}">delete</a></li>
+                  <a href="{% url "o_slot_delete" slot_value.id %}">{% trans "delete" %}</a></li>
             {% endfor %}
         </ul>
         <div class="mt-3">

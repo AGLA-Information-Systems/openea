@@ -1,0 +1,146 @@
+{% load static %}
+{% load js %}
+{% load i18n %}
+
+
+<script type="text/javascript" src="{% static '/js/vis-data.min.js' %}"></script>
+<script type="text/javascript" src="{% static '/js/vis-network.min.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static '/css/vis-network.min.css' %}" />
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm" style="margin-bottom: 40px">
+      <div>
+        <strong>{% trans "Concepts on Rows" %}</strong> 
+        <br/>
+        <em>All: </em>
+        <input type="checkbox" onClick="toggle_checkbox(this, 'concepts-matrix-select-rows', all_concepts)" />
+
+        <br/>
+        <select id="concepts-matrix-select-rows" multiple="multiple" style="width: 80%"></select>
+        <br/> <br/>
+
+        <strong>{% trans "Concepts on Columns" %}</strong> 
+        <br/>
+        <em>All: </em>
+        <input type="checkbox" onClick="toggle_checkbox(this, 'concepts-matrix-select-columns', all_concepts)" />
+
+        <br/>
+        <select id="concepts-matrix-select-columns" multiple="multiple" style="width: 80%"></select>
+        <br/> <br/>
+
+      </div>
+    </div>
+    <div class="col-lg">
+      <div id="concepts-matrix" style="min-width:800px;"></div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  const log = console.log;
+  var predicates = {};
+
+  // get predicates
+  for (const [predicate_id, predicate] of Object.entries(ontology_data["predicates"])){
+    predicates[predicate_id] = predicate;
+  }
+
+  var conceptMatrixSelectRows = document.getElementById("concepts-matrix-select-rows");
+  var conceptMatrixSelectColumns = document.getElementById("concepts-matrix-select-columns");
+
+  // Create the concept filter checkboxes
+  for (const [concept_id, concept] of Object.entries(concepts)){
+    var option = document.createElement("option");
+    option.value = concept_id;
+    option.text = concept;
+    conceptMatrixSelectRows.appendChild(option);
+    conceptMatrixSelectColumns.appendChild(option.cloneNode(true));
+  }
+
+</script>
+
+
+<script>
+
+  // get the realtion between two concepts
+  function getRelation(concept_id, other_concept_id) {
+    for (const [predicate_id, predicate] of Object.entries(predicates)){
+      if (predicate["subject_id"] == concept_id && predicate["object_id"] == other_concept_id) {
+        return predicate["relation"];
+      }
+    }
+    return "---";
+  }
+
+
+  function generateConceptMatrix() {
+    const selectedConceptsRows = $('#concepts-matrix-select-rows').val();
+    const selectedConceptsColumns = $('#concepts-matrix-select-columns').val();
+
+    const conceptTableDiv = document.getElementById("concepts-matrix");
+
+    // Clear the div
+    while (conceptTableDiv.firstChild) {
+      conceptTableDiv.removeChild(conceptTableDiv.firstChild);
+    }
+
+    // Create the table
+    var conceptTable = document.createElement("table");
+    conceptTable.className = "table table-striped table-bordered table-hover";
+
+    // Create the table head
+    var conceptTableHead = document.createElement("thead");
+    var conceptTableHeadRow = document.createElement("tr");
+
+    var conceptTableHeadCell = document.createElement("th");
+    conceptTableHeadCell.appendChild(document.createTextNode("Concepts"));
+    conceptTableHeadRow.appendChild(conceptTableHeadCell);
+
+    for (const [concept_id, concept] of Object.entries(concepts)){
+      if (selectedConceptsColumns.includes(concept_id)) {
+        var conceptTableHeadCell = document.createElement("th");
+        conceptTableHeadCell.appendChild(document.createTextNode(concept));
+        conceptTableHeadRow.appendChild(conceptTableHeadCell);
+      }
+    }
+    conceptTableHead.appendChild(conceptTableHeadRow);
+
+    // Create the table body
+    var conceptTableBody = document.createElement("tbody");
+
+    for (const [concept_id, concept] of Object.entries(concepts)){
+      if (selectedConceptsRows.includes(concept_id)) {
+        var conceptTableBodyRow = document.createElement("tr");
+
+        var conceptTableBodyCell = document.createElement("th");
+        conceptTableBodyCell.appendChild(document.createTextNode(concept));
+        conceptTableBodyRow.appendChild(conceptTableBodyCell);
+        
+        for (const [other_concept_id, other_concept] of Object.entries(concepts)){
+          if (selectedConceptsColumns.includes(other_concept_id)) {
+            var conceptTableBodyCell = document.createElement("td");
+            conceptTableBodyCell.appendChild(document.createTextNode(getRelation(concept_id, other_concept_id)));
+            conceptTableBodyRow.appendChild(conceptTableBodyCell);
+          }
+        }
+        conceptTableBody.appendChild(conceptTableBodyRow);
+      } 
+    }
+
+    // Append the table to the div
+    conceptTable.appendChild(conceptTableHead);
+    conceptTable.appendChild(conceptTableBody);
+    conceptTableDiv.appendChild(conceptTable);
+  }
+
+  $('#concepts-matrix-select-rows').on('change', function() {
+    generateConceptMatrix();
+  });
+  $('#concepts-matrix-select-columns').on('change', function() {
+    generateConceptMatrix();
+  });
+
+</script>

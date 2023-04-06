@@ -1,4 +1,8 @@
+from django.conf import settings
+
 class Utils:
+    RESOURCE_CONCEPT = settings.RESOURCE_CONCEPT
+
     OBJECT_ORGANISATION = 'ORGA'
     OBJECT_PROFILE = 'PROF'
     OBJECT_TASK = 'TASK'
@@ -39,3 +43,4 @@ class Utils:
     ]
 
     OBJECT_TYPE = SUPERADMIN_OBJECT_TYPE + ADMIN_OBJECT_TYPE
+

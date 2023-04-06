@@ -3,7 +3,7 @@ from django.core.paginator import Paginator
 
 from authorization.models import Permission, SecurityGroup
 from authorization.controllers.utils import CustomPermissionRequiredMixin
-from webapp.models import Profile
+from organisation.models import Profile
 
 
 class SecurityGroupDetailView(CustomPermissionRequiredMixin, DetailView):

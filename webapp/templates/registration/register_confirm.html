@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+
+{% block title %}Confirm your email{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% if confirm %}
+Thank you for your email confirmation. Now you can login with your account {{ email }}.
+{% else %}
+Activation link is invalid!
+{% endif %}
+{% endblock %}

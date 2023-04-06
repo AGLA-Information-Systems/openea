@@ -1,5 +1,7 @@
 {% load static %}
+{% load i18n %}
 {% load js %}
+{% load i18n %}
 
 <script type="text/javascript" src="{% static '/js/vis-data.min.js' %}"></script>
 <script type="text/javascript" src="{% static '/js/vis-network.min.js' %}"></script>
@@ -11,10 +13,20 @@
     <div class="row">
       <div class="col-sm">
         <div>
-          <strong>Concepts</strong> <input type="checkbox" onClick="toggle_checkboxes(this, 'concept-filter')" /><br/>
-            <ul id="diagram-concepts"></ul>
-          <strong>Relations</strong> <input type="checkbox" onClick="toggle_checkboxes(this, 'concept-relation-filter')" /><br/>
-            <ul id="diagram-concepts-relations"></ul>
+          <strong>{% trans "Concepts" %}</strong>
+          <br>
+          <em>All: </em>
+          <input type="checkbox" onClick="toggle_checkbox(this, 'diagram-concepts', all_concepts)"/><br/>
+          <select id="diagram-concepts" multiple="multiple" style="width: 100%"></select>
+          
+          <br/><br/>
+
+          <strong>{% trans "Relations" %}</strong>
+          <br>
+          <em>All: </em>
+          <input type="checkbox" onClick="toggle_checkbox(this, 'diagram-concepts-relations', all_relations)"/><br/>
+          <select id="diagram-concepts-relations" multiple="multiple" style="width: 100%"></select>
+
         </div>
         <div></div>
       </div>
@@ -33,72 +45,60 @@
   var concepts = {};
   var relations = {};
 
+  var all_concepts = [];
+  var all_relations = [];
+
   for (const [concept_id, concept] of Object.entries(ontology_data['concepts'])){
     ontology_dataset_nodes.push({id: concept_id, label:concept.name, concept_id: concept.id, physics: false, shape: "box", color: "rgba(230,230,230,0.9)", margin: 15 });
     concepts[concept_id] = concept.name;
+    all_concepts.push(concept_id);
   }
   for (const [predicate_id, predicate] of Object.entries(ontology_data['predicates'])){
         ontology_dataset_edges.push({from: predicate.subject_id, to: predicate.object_id, relation_id: predicate.relation_id, arrows: "to", label: predicate.relation, physics: false, smooth: { type: "horizontal" }, color: "rgba(150,150,150,0.5)", arrowStrikethrough: false});
         relations[predicate.relation_id] = predicate.relation;
+        all_relations.push(predicate.relation_id);
   }
 
-  var ul = document.getElementById('diagram-concepts')
+  // add concepts to the concept select
+  var diagramConcepts = document.getElementById('diagram-concepts');
+  
   for (const [concept_id, concept] of Object.entries(concepts)){
-    var li=document.createElement('li');
-    
-    var checkit = document.createElement('input')
-    checkit.id = 'check-concept-'+concept_id,
-    checkit.name = 'concept-filter',
-    checkit.value = concept_id,
-    checkit.type = 'checkbox'
-    checkit.checked = true
-    var label = document.createElement('label')
-    label.htmlFor = 'check-concept-'+concept_id;
-    label.appendChild(document.createTextNode(concept));
-
-    li.appendChild(checkit);
-    li.appendChild(label);
-    ul.appendChild(li);
+    var option = document.createElement("option");
+    option.value = concept_id;
+    option.text = concept;
+    diagramConcepts.appendChild(option);
   }
 
-  var ul = document.getElementById('diagram-concepts-relations')
+  // add relations to the relation select
+  var diagramConceptsRelations = document.getElementById('diagram-concepts-relations');
+
   for (const [relation_id, relation] of Object.entries(relations)){
-    var li=document.createElement('li');
-    
-    var checkit = document.createElement('input')
-    checkit.id = 'check-relation-'+relation_id,
-    checkit.name = 'concept-relation-filter',
-    checkit.value = relation_id,
-    checkit.type = 'checkbox'
-    checkit.checked = true
-    var label = document.createElement('label')
-    label.htmlFor = 'check-relation-'+relation_id;
-    label.appendChild(document.createTextNode(relation));
-
-    li.appendChild(checkit);
-    li.appendChild(label);
-    ul.appendChild(li);
+    var option = document.createElement("option");
+    option.value = relation_id;
+    option.text = relation;
+    diagramConceptsRelations.appendChild(option);
   }
-
-const concepts_filter = (node) => {
-    var node_checkbox = document.getElementById("check-concept-"+node.concept_id)
-    if (node_checkbox){
-        return node_checkbox.checked == true;
+  
+  const concepts_filter = (node) => {
+    var selectedConcepts = $('#diagram-concepts').val();
+    if (selectedConcepts){
+      return selectedConcepts.includes(node.concept_id.toString());
     }
     return false;
-};
+  };
 
-const concepts_relations_filter = (edge) => {
-    var edge_checkbox = document.getElementById("check-relation-"+edge.relation_id)
-    if (edge_checkbox){
-        return edge_checkbox.checked == true;
+  const concepts_relations_filter = (edge) => {
+    var selectedRelations = $('#diagram-concepts-relations').val();
+    if (selectedRelations){
+      return selectedRelations.includes(edge.relation_id.toString());
     }
     return false;
-};
+  };
 
   // create a network
   const ontology_nodes_view = new vis.DataView(new vis.DataSet(ontology_dataset_nodes), { filter: concepts_filter });
   const ontology_edges_view = new vis.DataView(new vis.DataSet(ontology_dataset_edges), { filter: concepts_relations_filter });
+
   var network_concepts = new vis.Network(
     document.getElementById("metamodel"),
     {
@@ -107,24 +107,23 @@ const concepts_relations_filter = (edge) => {
     }, 
     {});
 
+  $('#diagram-concepts').on('change', function() {
+    ontology_nodes_view.refresh();
+  });
 
-  document.getElementsByName("concept-filter").forEach((filter) =>
-        filter.addEventListener("change", (e) => {
-          ontology_nodes_view.refresh();
-        })
-  );
-  document.getElementsByName("concept-relation-filter").forEach((filter) =>
-        filter.addEventListener("change", (e) => {
-          ontology_edges_view.refresh();
-        })
-  );
+  $('#diagram-concepts-relations').on('change', function() {
+    ontology_edges_view.refresh();
+  });
+
 </script>
 
 <script type="text/javascript">
-  function toggle_checkboxes(source, filter_name){
-    checkboxes = document.getElementsByName(filter_name);
-    for(var i=0, n=checkboxes.length;i<n;i++) {
-      checkboxes[i].checked = source.checked;
+  function toggle_checkbox(source, select_id, all_options){
+    if (source.checked){
+      $('#'+select_id).val(all_options).trigger('change');
+    }
+    else{
+      $('#'+select_id).val(null).trigger('change');
     }
   }
 </script>

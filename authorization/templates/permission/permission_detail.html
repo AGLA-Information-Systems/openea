@@ -1,8 +1,10 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
+{% load i18n %}
+{% load mkd %}
 
 {% block content %}
-<h2>{{object.name}} (Permission)</h2>
-<p>{{object.description}}</p>
+<h2>{{object.name}} ({% trans "Permission" %})</h2>
+<p>{{object.description | markdown | safe}}</p>
 <p>{{object.organisation.name}}</p>
 {% endblock content %}

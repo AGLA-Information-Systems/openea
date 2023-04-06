@@ -1,48 +1,32 @@
-from faulthandler import disable
 from django import forms
-from ontology.controllers.knowledge_base import KnowledgeBaseController
-from ontology.controllers.utils import KnowledgeBaseUtils
+from django_select2 import forms as s2forms
+from ontology.models import OConcept, OConcept, OModel
+from taxonomy.models import Tag
 
-from ontology.models import OConcept, OInstance, OModel, OPredicate, ORelation, OSlot
-
-class OInstanceUpdateForm(forms.ModelForm):
+class OConceptUpdateForm(forms.ModelForm):
     name = forms.CharField()
-    description = forms.CharField(required=False)
-    concept = forms.ModelChoiceField(queryset=OConcept.objects.all())
+    description = forms.CharField(required=False, widget=forms.Textarea)
     model = forms.ModelChoiceField(queryset=OModel.objects.all())
 
     def __init__(self,*args,**kwargs):
         initial_arguments = kwargs.pop('initial')
         super().__init__(*args, **kwargs)
-        instance = OInstance.objects.get(id=initial_arguments.get('pk'))
-        model = instance.model
-        concept = instance.concept
+        concept = OConcept.objects.get(id=initial_arguments.get('pk'))
+        model = concept.model
         
-        self.fields['name'].initial = instance.name
-        self.fields['concept'].queryset = OConcept.objects.filter(model__id=model.id)
-        self.fields['concept'].initial = concept
+        self.fields['name'].initial = concept.name
+        self.fields['description'].initial = concept.description
+        self.fields['quality_status'].initial = concept.quality_status
         self.fields['model'].queryset = OModel.objects.filter(id=model.id)
         self.fields['model'].initial = model.id
-
-        #predicates_as_subject = OPredicate.objects.filter(subject=concept).all()
-        #predicates_as_object = OPredicate.objects.filter(object=concept).all()
-
-        parents = KnowledgeBaseUtils.get_parent_concepts(concept=concept)
-        lineage = [x[0] for x in parents] + [concept]
-        parents_and_own_predicates_as_subject = OPredicate.objects.filter(subject__in=lineage)
-
-        for x in parents_and_own_predicates_as_subject:
-            if x.relation.name != "is-a":
-                object_concept = x.object
-                required = False
-                if x.cardinality_min > 0:
-                    required = True
-                self.fields[x.name] = forms.ModelMultipleChoiceField(queryset=OInstance.objects.filter(concept=object_concept), required=required)
-                slots = OSlot.objects.filter(model=model, predicate=x, subject=instance)
-                self.fields[x.name].initial = [s.object.id for s in slots]
-
-
+        self.fields['model'].disabled = True
 
     class Meta:      
-        model = OInstance
+        model = OConcept
         fields = ['name', 'description', 'model', 'quality_status',  'tags']
+        widgets = {
+            'tags': s2forms.ModelSelect2MultipleWidget(
+                queryset=Tag.objects.all(),
+                search_fields=['name__icontains']
+            )
+        }

@@ -1,12 +1,11 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
+{% load i18n %}
+{% load i18n %}
 
 {% block content %}
-<h2 class="form-title">OConcept</h2>
+<h2 class="form-title">{% trans "Concept" %}</h2>
 
 {% include "o_concept/o_concept_table.html" %}
-
-<a href="{% url "o_concept_create" %}">New</a>
-
 
 {% endblock content %}

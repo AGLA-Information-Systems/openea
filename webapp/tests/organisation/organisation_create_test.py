@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from authorization.controllers.utils import create_organisation_admin_security_group
 from authorization.models import Permission, SecurityGroup
 from webapp.models import Organisation, Profile
+from utils.test.helpers import create_organisation, create_security_group, create_user, create_user_profile
 
 class OrganisationCreateTestCase(TestCase):
     def setUp(self):
@@ -20,14 +21,10 @@ class OrganisationCreateTestCase(TestCase):
         self.siteadmin_security_group.save()
 
 
-        self.org_1 = Organisation.objects.create(name='Org 1', description='', location='test')
-        self.org_1.save()
-        self.org_1_admin_user = User.objects.create(username='org1admin')
-        self.org_1_admin_user.set_password('12345')
-        self.org_1_admin_user.save()
-        self.org_1_admin_profile = Profile.objects.create(role='Admin', user=self.siteadmin_user, organisation=self.org_1)
-        self.org_1_admin_profile.save()
-        self.org_1_admin_security_group = SecurityGroup.objects.create(name='Org 1 SecG', description='', organisation=self.org_1)
+        self.org_1 = create_organisation(name='Org 1', description='', location='test')
+        self.org_1_admin_user = create_user(username='org1admin')
+        self.org_1_admin_profile = create_user_profile(role='Admin', user=self.siteadmin_user, organisation=self.org_1)
+        self.org_1_admin_security_group = create_security_group(name='Org 1 SecG', description='', organisation=self.org_1)
         self.org_1_admin_security_group.profiles.add(self.org_1_admin_profile)
 
 
@@ -70,5 +67,3 @@ class OrganisationCreateTestCase(TestCase):
 
         response = self.client.get(reverse('organisation_create'))
         self.assertRedirects(response, '/user/login/?redirect_to=/organisation/create/', status_code=302, target_status_code=200, fetch_redirect_response=True)
-
-        

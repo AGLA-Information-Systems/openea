@@ -2,7 +2,7 @@ import uuid
 from django.db import models
 from openea.utils import Utils
 
-from webapp.models import Organisation, Profile
+from organisation.models import Organisation, Profile
 from django.contrib.auth.models import User
 
 class SecurityGroup(models.Model):
@@ -19,11 +19,11 @@ class SecurityGroup(models.Model):
     )
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='security_group_created')
+    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='security_group_created')
     modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='security_group_modified')
+    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='security_group_modified')
     deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='security_group_deleted')
+    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='security_group_deleted')
 
     def get_or_create(name, organisation, description=''):
         try:
@@ -71,11 +71,11 @@ class Permission(models.Model):
     organisation = models.ForeignKey(Organisation, on_delete=models.DO_NOTHING, null=True, related_name='organisation_permissions')
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='permission_created')
+    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='permission_created')
     modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='permission_modified')
+    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='permission_modified')
     deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='permission_deleted')
+    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='permission_deleted')
 
     unique_permission_per_organisation = models.UniqueConstraint(
         name='unique_permission_per_organisation',

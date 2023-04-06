@@ -1,11 +1,10 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
+{% load i18n %}
 
 {% block content %}
-<h2 class="form-title">OPredicate</h2>
+<h2 class="form-title">{% trans "Predicate" %}</h2>
 
 {% include "o_predicate/o_predicate_table.html" %}
-
-<a href="{% url "o_predicate_create" %}">New</a>
 
 {% endblock content %}

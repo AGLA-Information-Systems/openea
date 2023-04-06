@@ -1,7 +1,8 @@
+{% load i18n %}
 <table class="table table-fluid" id="table-concepts">
     <thead>
         <tr>
-            <th>Configuration</th>
+            <th>{% trans "Configuration" %}</th>
             <th></th>
             <th></th>
             <th></th>
@@ -12,8 +13,8 @@
         <tr>
             <td><a class="link-dark" href="{% url "configuration_detail" Configuration.id %}">{{ Configuration.name }}</a></td>
             <td>{{ Configuration.content }}</td>
-            <td><a href="{% url "configuration_update" Configuration.id %}">edit</a></td>
-            <td><a href="{% url "configuration_delete" Configuration.id %}">delete</a></td>
+            <td><a href="{% url "configuration_update" Configuration.id %}">{% trans "edit" %}</a></td>
+            <td><a href="{% url "configuration_delete" Configuration.id %}">{% trans "delete" %}</a></td>
         </tr>
         {% endfor %}
     </tbody>

@@ -1,1 +1,2 @@
 from .o_instance_create import OInstanceCreateForm
+from .o_instance_update import OInstanceUpdateForm

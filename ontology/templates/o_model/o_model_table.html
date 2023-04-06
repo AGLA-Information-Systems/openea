@@ -1,7 +1,8 @@
+{% load i18n %}
 <table class="table table-fluid">
     <thead>
         <tr>
-            <th>Model</th>
+            <th>{% trans "Model" %}</th>
             <th></th>
             <th></th>
         </tr>
@@ -10,8 +11,8 @@
         {% for OModel in object_list %}
         <tr>
             <td><a class="link-dark" href="{% url "o_model_detail" OModel.id %}">{{ OModel.name }} {{ OModel.version }}</a></td>
-            <td><a href="{% url "o_model_update" OModel.id %}">edit</a></td>
-            <td><a href="{% url "o_model_delete" OModel.id %}">delete</a></td>
+            <td><a href="{% url "o_model_update" OModel.id %}">{% trans "edit" %}</a></td>
+            <td><a href="{% url "o_model_delete" OModel.id %}">{% trans "delete" %}</a></td>
         </tr>
         {% endfor %}
     </tbody>

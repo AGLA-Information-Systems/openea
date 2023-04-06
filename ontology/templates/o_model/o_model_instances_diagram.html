@@ -1,5 +1,7 @@
 {% load static %}
+{% load i18n %}
 {% load js %}
+{% load i18n %}
 
 <script type="text/javascript" src="{% static '/js/vis-data.min.js' %}"></script>
 <script type="text/javascript" src="{% static '/js/vis-network.min.js' %}"></script>
@@ -11,9 +13,9 @@
     <div class="row">
       <div class="col-sm">
         <div>
-          Instances
+          {% trans "Instances" %}
             <ul id="diagram-instances"></ul>
-          Relations
+          {% trans "Relations" %}
             <ul id="diagram-instances-relations"></ul>
         </div>
         <div></div>

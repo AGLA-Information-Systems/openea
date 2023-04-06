@@ -1,9 +1,11 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
+{% load i18n %}
+{% load mkd %}
 
 {% block content %}
 <div class="d-flex flex-column flex-md-row align-items-center pb-2">
-    <h2>{{object.name}} (Model)</h2>
+    <h2>{{object.name}} ({% trans "Model" %})</h2>
 
     <div class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
@@ -35,7 +37,7 @@
         </div>
     </div>
 </div>
-<p>{{object.description}}</p>
+<p>{{object.description | markdown | safe}}</p>
 
 
 <nav>
@@ -48,12 +50,12 @@
 
 <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-predicates" role="tabpanel" aria-labelledby="nav-predicates-tab">
-        <div class="mt-3"><a class="btn btn-primary" href="{% url "o_predicate_create" model_id=object.id %}">New Predicate</a></div>
+        <div class="mt-3"><a class="btn btn-primary" href="{% url "o_predicate_create" model_id=object.id %}">{% trans "New Predicate" %}</a></div>
         <table class="table table-fluid">
             <thead>
                 <tr>
-                    <th>Predicate</th>
-                    <th>View</th>
+                    <th>{% trans "Predicate" %}</th>
+                    <th>{% trans "View" %}</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -63,8 +65,8 @@
                 <tr>
                     <td>{{ OPredicate }}</td>
                     <td><a href="{% url "o_predicate_detail" OPredicate.id %}">view</a></td>
-                    <td><a href="{% url "o_predicate_update" OPredicate.id %}">edit</a></td>
-                    <td><a href="{% url "o_predicate_delete" OPredicate.id %}">delete</a></td>
+                    <td><a href="{% url "o_predicate_update" OPredicate.id %}">{% trans "edit" %}</a></td>
+                    <td><a href="{% url "o_predicate_delete" OPredicate.id %}">{% trans "delete" %}</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -74,12 +76,12 @@
             <ul class="pagination justify-content-center">
                 {% if predicates.has_previous %}
                     <li class="page-item"><a class="page-link" href="?predicate_page=1">&laquo; first</a></li>
-                    <li class="page-item"><a class="page-link" href="?predicate_page={{ predicates.previous_page_number }}">previous</a></li>
+                    <li class="page-item"><a class="page-link" href="?predicate_page={{ predicates.previous_page_number }}">{% trans "previous" %}</a></li>
                 {% endif %}
                 <li class="page-item"><a class="page-link" href="#">{{ predicates.number }} of {{ predicates.paginator.num_pages }}</a></li>
                 {% if predicates.has_next %}
-                    <li class="page-item"><a class="page-link" href="?predicate_page={{ predicates.next_page_number }}">next</a></li>
-                    <li class="page-item"><a class="page-link" href="?predicate_page={{ predicates.paginator.num_pages }}">last &raquo;</a></li>
+                    <li class="page-item"><a class="page-link" href="?predicate_page={{ predicates.next_page_number }}">{% trans "next" %}</a></li>
+                    <li class="page-item"><a class="page-link" href="?predicate_page={{ predicates.paginator.num_pages }}">{% trans "last" %} &raquo;</a></li>
                 {% endif %}
             </ul>
         </nav>
@@ -87,13 +89,13 @@
     </div>
 
     <div class="tab-pane fade" id="nav-entities" role="tabpanel" aria-labelledby="nav-entities-tab">
-        <div class="mt-3"><a class="btn btn-primary" href="{% url "o_concept_create" model_id=object.id %}">New Concept</a></div>
+        <div class="mt-3"><a class="btn btn-primary" href="{% url "o_concept_create" model_id=object.id %}">{% trans "New Concept" %}</a></div>
         <table class="table table-fluid">
             <thead>
                 <tr>
-                    <th>Concept</th>
-                    <th>Description</th>
-                    <th>View</th>
+                    <th>{% trans "Concept" %}</th>
+                    <th>{% trans "Description" %}</th>
+                    <th>{% trans "View" %}</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -104,8 +106,8 @@
                     <td>{{ OConcept }}</td>
                     <td>{{ OConcept.description }}</td>
                     <td><a href="{% url "o_concept_detail" OConcept.id %}">view</a></td>
-                    <td><a href="{% url "o_concept_update" OConcept.id %}">edit</a></td>
-                    <td><a href="{% url "o_concept_delete" OConcept.id %}">delete</a></td>
+                    <td><a href="{% url "o_concept_update" OConcept.id %}">{% trans "edit" %}</a></td>
+                    <td><a href="{% url "o_concept_delete" OConcept.id %}">{% trans "delete" %}</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -115,25 +117,25 @@
             <ul class="pagination justify-content-center">
                 {% if entities.has_previous %}
                     <li class="page-item"><a class="page-link" href="?concept_page=1">&laquo; first</a></li>
-                    <li class="page-item"><a class="page-link" href="?concept_page={{ entities.previous_page_number }}">previous</a></li>
+                    <li class="page-item"><a class="page-link" href="?concept_page={{ entities.previous_page_number }}">{% trans "previous" %}</a></li>
                 {% endif %}
                 <li class="page-item"><a class="page-link" href="#">{{ entities.number }} of {{ entities.paginator.num_pages }}</a></li>
                 {% if entities.has_next %}
-                    <li class="page-item"><a class="page-link" href="?concept_page={{ entities.next_page_number }}">next</a></li>
-                    <li class="page-item"><a class="page-link" href="?concept_page={{ entities.paginator.num_pages }}">last &raquo;</a></li>
+                    <li class="page-item"><a class="page-link" href="?concept_page={{ entities.next_page_number }}">{% trans "next" %}</a></li>
+                    <li class="page-item"><a class="page-link" href="?concept_page={{ entities.paginator.num_pages }}">{% trans "last" %} &raquo;</a></li>
                 {% endif %}
             </ul>
         </nav>
     </div>
 
     <div class="tab-pane fade" id="nav-relations" role="tabpanel" aria-labelledby="nav-relations-tab">
-        <div class="mt-3"><a class="btn btn-primary" href="{% url "o_relation_create" model_id=object.id %}">New Relation</a></div>
+        <div class="mt-3"><a class="btn btn-primary" href="{% url "o_relation_create" model_id=object.id %}">{% trans "New Relation" %}</a></div>
         <table class="table table-fluid">
             <thead>
                 <tr>
-                    <th>Relation</th>
-                    <th>Description</th>
-                    <th>View</th>
+                    <th>{% trans "Relation" %}</th>
+                    <th>{% trans "Description" %}</th>
+                    <th>{% trans "View" %}</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -144,8 +146,8 @@
                     <td>{{ ORelation }}</td>
                     <td>{{ OConcept.description }}</td>
                     <td><a href="{% url "o_relation_detail" ORelation.id %}">view</a></td>
-                    <td><a href="{% url "o_relation_update" ORelation.id %}">edit</a></td>
-                    <td><a href="{% url "o_relation_delete" ORelation.id %}">delete</a></td>
+                    <td><a href="{% url "o_relation_update" ORelation.id %}">{% trans "edit" %}</a></td>
+                    <td><a href="{% url "o_relation_delete" ORelation.id %}">{% trans "delete" %}</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -155,12 +157,12 @@
             <ul class="pagination justify-content-center">
                 {% if relations.has_previous %}
                     <li class="page-item"><a class="page-link" href="?relation_page=1">&laquo; first</a></li>
-                    <li class="page-item"><a class="page-link" href="?relation_page={{ relations.previous_page_number }}">previous</a></li>
+                    <li class="page-item"><a class="page-link" href="?relation_page={{ relations.previous_page_number }}">{% trans "previous" %}</a></li>
                 {% endif %}
                 <li class="page-item"><a class="page-link" href="#">{{ relations.number }} of {{ relations.paginator.num_pages }}</a></li>
                 {% if relations.has_next %}
-                    <li class="page-item"><a class="page-link" href="?relation_page={{ relations.next_page_number }}">next</a></li>
-                    <li class="page-item"><a class="page-link" href="?relation_page={{ relations.paginator.num_pages }}">last &raquo;</a></li>
+                    <li class="page-item"><a class="page-link" href="?relation_page={{ relations.next_page_number }}">{% trans "next" %}</a></li>
+                    <li class="page-item"><a class="page-link" href="?relation_page={{ relations.paginator.num_pages }}">{% trans "last" %} &raquo;</a></li>
                 {% endif %}
             </ul>
         </nav>

@@ -4,19 +4,19 @@ from django.core.paginator import Paginator
 from authorization.models import Permission
 from authorization.controllers.utils import CustomPermissionRequiredMixin, check_permission
 from ontology.controllers.utils import KnowledgeBaseUtils
-
+from django.http import Http404
 from ontology.plugins.json import GenericEncoder
+from utils.views.custom import SingleObjectView
 from openea.utils import Utils
 
 from ontology.models import OInstance, OModel, OConcept, ORelation, OPredicate, OReport
 
 
-class OModelDetailView(CustomPermissionRequiredMixin, DetailView):
+class OModelDetailView(CustomPermissionRequiredMixin, SingleObjectView, DetailView):
     model = OModel
     template_name = "o_model/o_model_detail.html"
     paginate_by = 10000
     permission_required = [(Permission.PERMISSION_ACTION_VIEW, model.get_object_type(), None)]
-
 
     def get_context_data(self, **kwargs):
         context = super(OModelDetailView, self).get_context_data(**kwargs)
@@ -58,6 +58,6 @@ class OModelDetailView(CustomPermissionRequiredMixin, DetailView):
             context['reports'] = report_paginator.get_page(report_page_number)
 
         context['ontology_data'] = json.dumps(KnowledgeBaseUtils.ontology_to_dict(model=model), cls=GenericEncoder)
-        context['instances_data'] = json.dumps(KnowledgeBaseUtils.instances_to_dict(model=model), cls=GenericEncoder)
+        #context['instances_data'] = json.dumps(KnowledgeBaseUtils.instances_to_dict(model=model), cls=GenericEncoder)
 
         return context

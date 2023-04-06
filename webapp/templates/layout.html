@@ -13,7 +13,7 @@
         </a>
 
         <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-          <span class="me-3 py-2 fs-10 text-dark text-decoration-none" href="#">v1.0.0-Beta</span>
+          <span class="me-3 py-2 fs-10 text-dark text-decoration-none" href="#">v1.0.1</span>
           
           {% include "language_switcher.html" %}
           {% include "user-menu.html" %}
@@ -24,7 +24,7 @@
 
     <main>
     {% block content %}
-    <p>Placeholder for page content.</p>
+    <p>{% trans "Placeholder for page content." %} </p>
     {% endblock content %}
     </main>
 
@@ -35,31 +35,31 @@
           <small class="d-block mb-3 text-muted">&copy; 2017–2022</small>
         </div>
         <div class="col-6 col-md">
-          <h5>Features</h5>
+          <h5>{% trans "Features" %} </h5>
           <ul class="list-unstyled text-small">
-            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/features#">Web based enterprise architecture tool</a></li>
-            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/features#">Ontology engine and research tool</a></li>
-            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/features#">Tailored metamodel for your organisation</a></li>
-            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/features#">Dynamic visualization</a></li>
-            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/features#">Custom reports on knowledge base</a></li>
-            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/features#">Model exchange</a></li>
-            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/features#">Custom Plugin development</a></li>
+            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/features#">{% trans "Web based enterprise architecture tool" %}</a></li>
+            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/features#">{% trans "Ontology engine and research tool" %}</a></li>
+            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/features#">{% trans "Tailored metamodel for your organisation" %}</a></li>
+            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/features#">{% trans "Dynamic visualization" %}</a></li>
+            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/features#">{% trans "Custom reports on knowledge base" %}</a></li>
+            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/features#">{% trans "Model exchange" %}</a></li>
+            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/features#">{% trans "Custom Plugin development" %}</a></li>
           </ul>
         </div>
         <div class="col-6 col-md">
-          <h5>Resources</h5>
+          <h5>{% trans "Resources" %}</h5>
           <ul class="list-unstyled text-small">
-            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/resources#">Documentation</a></li>
-            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/resources#">Support</a></li>
+            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/resources#">{% trans "Documentation" %}</a></li>
+            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/resources#">{% trans "Support" %}</a></li>
           </ul>
         </div>
         <div class="col-6 col-md">
-          <h5>About</h5>
+          <h5>{% trans "About" %}</h5>
           <ul class="list-unstyled text-small">
-            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/contact">Contact us</a></li>
-            <li class="mb-1"><a class="link-secondary text-decoration-none" href="https://keybase.io/team/openea">Team</a></li>
-            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/terms#">Terms</a></li>
-            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/privacy#">Privacy Policy</a></li>
+            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/contact">{% trans "Contact us" %}</a></li>
+            <li class="mb-1"><a class="link-secondary text-decoration-none" href="https://keybase.io/team/openea">{% trans "Team" %}</a></li>
+            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/terms#">{% trans "Terms" %}</a></li>
+            <li class="mb-1"><a class="link-secondary text-decoration-none" href="/about/privacy#">{% trans "Privacy Policy" %}</a></li>
           </ul>
         </div>
       </div>

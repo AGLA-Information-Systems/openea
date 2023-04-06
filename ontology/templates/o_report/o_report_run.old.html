@@ -1,15 +1,17 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
+{% load i18n %}
 {% load get_dict_item %}
+{% load i18n %}
 
 {% block content %}
 <div class="d-flex flex-column flex-md-row align-items-center pb-2">
   <div>
-    <a class="link-dark breadcrumb" href="{% url "o_model_detail" model_id %}" href="#"> (Model) {{ object.model.name|truncatechars:15 }} > </a>
+    <a class="link-dark breadcrumb" href="{% url "o_model_detail" model_id %}" href="#"> ({% trans "Model" %}) {{ object.model.name|truncatechars:15 }} > </a>
   </div>
   <div class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-        <a class="btn btn-secondary" href="{% url "o_report_update" object.id %}" class="dropdown-item" href="#"> Edit</a>
+        <a class="btn btn-secondary" href="{% url "o_report_update" object.id %}" class="dropdown-item" href="#">{% trans "Edit" %}</a>
     </div>
   </div>
 </div>
@@ -27,7 +29,7 @@
   }
 </script>
 <div id="report">
-  <a class="btn btn-primary" href="javascript:process_report();" class="dropdown-item">Analyser</a>
+  <a class="btn btn-primary" href="javascript:process_report();" class="dropdown-item">{% trans "Analyser" %}</a>
 </div> 
 <script>
   $( document ).ready(function() {

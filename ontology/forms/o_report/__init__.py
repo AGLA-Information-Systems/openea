@@ -1,1 +1,2 @@
-from .o_concept_create import OInstanceCreateForm
+from .o_report_create import OReportCreateForm
+from .o_report_update import OReportUpdateForm

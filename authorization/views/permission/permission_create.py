@@ -1,13 +1,14 @@
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy, reverse
+from authorization.forms.permission.o_permission_create import OPermissionCreateForm
 
 from authorization.models import Permission
 from authorization.controllers.utils import CustomPermissionRequiredMixin
 
 class PermissionCreateView(CustomPermissionRequiredMixin, CreateView):
     model = Permission
-    fields = ['action', 'object_type', 'object_identifier', 'description', 'organisation']
     template_name = "permission/permission_create.html"
+    form_class = OPermissionCreateForm
     #success_url = reverse_lazy('permission_list')
     permission_required = [('CREATE', model.get_object_type(), None)]
 

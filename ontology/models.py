@@ -1,16 +1,18 @@
-from django.db import models
-from django.contrib.auth.models import User
-from openea.utils import Utils
-from taxonomy.models import Tag, TagGroup
-from webapp.models import Organisation
 import uuid
 
+from django.contrib.auth.models import User
+from django.db import models
+from django.utils.translation import gettext as _
+
+from openea.utils import Utils
+from taxonomy.models import Tag, TagGroup
+from organisation.models import Organisation
 
 __author__ = "Patrick Agbokou"
 __copyright__ = "Copyright 2021, OpenEA"
 __credits__ = ["Patrick Agbokou"]
 __license__ = "Apache License 2.0"
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 __maintainer__ = "Patrick Agbokou"
 __email__ = "patrick.agbokou@aglaglobal.com"
 __status__ = "Development"
@@ -32,12 +34,12 @@ class Repository(models.Model):
         deferrable=models.Deferrable.DEFERRED,
     )
 
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='repository_created')
+    created_at = models.DateTimeField(auto_now_add=True, null=True, verbose_name=_("Created at"))
+    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, verbose_name=_("Created by"), related_name='repository_created')
     modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='repository_modified')
+    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='repository_modified')
     deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='repository_deleted')
+    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='repository_deleted')
 
     def get_or_create(name, version=None, description='', id=None):
         try:
@@ -46,12 +48,12 @@ class Repository(models.Model):
             try:
                 repository = Repository.objects.get(name=name)
             except:
-                repository = Repository.objects.create(name=name, description=description, id=id)
+                repository = Repository.objects.create(name=name, description=description or '', id=id)
         repository.name = name
         repository.description = description
         repository.save()
         return repository
-
+    
     def get_organisation(self):
         return self.organisation
 
@@ -68,8 +70,8 @@ class Repository(models.Model):
 QUALITY_STATUS_PROPOSED = 'QP'
 QUALITY_STATUS_APPROVED = 'QA'
 QUALITY_STATUS = [
-        (QUALITY_STATUS_PROPOSED, 'Proposed'),
-        (QUALITY_STATUS_APPROVED, 'Approved'),
+        (QUALITY_STATUS_PROPOSED, _('Proposed')),
+        (QUALITY_STATUS_APPROVED, _('Approved')),
 ]
 
 class OModel(models.Model):
@@ -81,11 +83,11 @@ class OModel(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='model_created')
+    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='model_created')
     modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='model_modified')
+    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='model_modified')
     deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='model_deleted')
+    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='model_deleted')
 
     unique_model_version_per_repository = models.UniqueConstraint(
         name='unique_model_version_per_repository',
@@ -100,13 +102,17 @@ class OModel(models.Model):
             try:
                 model = OModel.objects.get(repository=repository, name=name, version=version)
             except:
-                model = OModel.objects.create(repository=repository, name=name, version=version, description=description, id=id)
+                model = OModel.objects.create(repository=repository, name=name, version=version, description=description or '', id=id)
         model.name = name
         model.version = version
         model.description = description
         model.save()
         return model
 
+    @property
+    def organisation(self):
+        return self.repository.organisation
+    
     def get_organisation(self):
         return self.repository.organisation
 
@@ -126,11 +132,11 @@ class OConcept(models.Model):
     quality_status = models.CharField(max_length=2, choices=QUALITY_STATUS, default=QUALITY_STATUS_PROPOSED)
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='concept_created')
+    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='concept_created')
     modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='concept_modified')
+    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='concept_modified')
     deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='concept_deleted')
+    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='concept_deleted')
 
     def get_or_create(name, description='', model=None, id=None):
         try:
@@ -139,12 +145,16 @@ class OConcept(models.Model):
             try:
                 concept = OConcept.objects.get(model=model, name=name)
             except:
-                concept = OConcept.objects.create(model=model, name=name, description=description, id=id)
+                concept = OConcept.objects.create(model=model, name=name, description=description or '', id=id)
         concept.name = name
         concept.description = description
         concept.save()
         return concept
 
+    @property
+    def organisation(self):
+        return self.model.repository.organisation
+    
     def get_organisation(self):
         return self.model.repository.organisation
 
@@ -162,9 +172,9 @@ class ORelation(models.Model):
     INHERITANCE_SUPER_IS_OBJECT = 'HESR'
     PROPERTY = 'PROP'
     RELATION_TYPE = [
-        (PROPERTY, 'Property'),
-        (INHERITANCE_SUPER_IS_SUBJECT, 'Inheritance (Parent=Subject)'),
-        (INHERITANCE_SUPER_IS_OBJECT, 'Inheritance (Parent=Object)'),
+        (PROPERTY, _('Property')),
+        (INHERITANCE_SUPER_IS_SUBJECT, _('Inheritance (Parent=Subject)')),
+        (INHERITANCE_SUPER_IS_OBJECT, _('Inheritance (Parent=Object)')),
     ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -177,11 +187,11 @@ class ORelation(models.Model):
     quality_status = models.CharField(max_length=2, choices=QUALITY_STATUS, default=QUALITY_STATUS_PROPOSED)
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='relation_created')
+    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='relation_created')
     modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='relation_modified')
+    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='relation_modified')
     deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='relation_deleted')
+    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='relation_deleted')
 
     unique_relation_per_model = models.UniqueConstraint(
         name='unique_relation_per_model',
@@ -196,13 +206,17 @@ class ORelation(models.Model):
             try:
                 relation = ORelation.objects.get(model=model, name=name)
             except:
-                relation = ORelation.objects.create(model=model, name=name, type=type, description=description, id=id)
+                relation = ORelation.objects.create(model=model, name=name, type=type, description=description or '', id=id)
         relation.name = name
         relation.description = description
         relation.type = type
         relation.save()
         return relation
 
+    @property
+    def organisation(self):
+        return self.model.repository.organisation
+    
     def get_organisation(self):
         return self.model.repository.organisation
 
@@ -229,11 +243,11 @@ class OPredicate(models.Model):
     quality_status = models.CharField(max_length=2, choices=QUALITY_STATUS, default=QUALITY_STATUS_PROPOSED)
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='predicate_created')
+    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='predicate_created')
     modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='predicate_modified')
+    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='predicate_modified')
     deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='predicate_deleted')
+    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='predicate_deleted')
 
     unique_predicate_per_model = models.UniqueConstraint(
         name='unique_predicate_per_model',
@@ -252,7 +266,7 @@ class OPredicate(models.Model):
             try:
                 predicate = OPredicate.objects.get(relation=relation, subject=subject, object=object)
             except:
-                predicate = OPredicate.objects.create(model=model, subject=subject, relation=relation, object=object, description=description, cardinality_min=cardinality_min, cardinality_max=cardinality_max, id=id)
+                predicate = OPredicate.objects.create(model=model, subject=subject, relation=relation, object=object, description=description or '', cardinality_min=cardinality_min, cardinality_max=cardinality_max, id=id)
         predicate.description = description
         predicate.subject = subject
         predicate.object = object
@@ -262,6 +276,10 @@ class OPredicate(models.Model):
         predicate.save()
         return predicate
 
+    @property
+    def organisation(self):
+        return self.model.repository.organisation
+    
     def get_organisation(self):
         return self.model.repository.organisation
 
@@ -286,11 +304,11 @@ class OInstance(models.Model):
     quality_status = models.CharField(max_length=2, choices=QUALITY_STATUS, default=QUALITY_STATUS_PROPOSED)
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='instance_created')
+    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='instance_created')
     modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='instance_modified')
+    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='instance_modified')
     deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='instance_deleted')
+    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='instance_deleted')
 
     unique_instance_per_model = models.UniqueConstraint(
         name='unique_instance_per_model',
@@ -305,12 +323,16 @@ class OInstance(models.Model):
             try:
                 instance = OInstance.objects.get(model=model, name=name, code=code, concept=concept)
             except:
-                instance = OInstance.objects.create(model=model, name=name, code=code, concept=concept, description=description, id=id)
+                instance = OInstance.objects.create(model=model, name=name, code=code, concept=concept, description=description or '', id=id)
         instance.description = description
         instance.concept = concept
         instance.save()
         return instance
 
+    @property
+    def organisation(self):
+        return self.model.repository.organisation
+    
     def get_organisation(self):
         return self.model.repository.organisation
 
@@ -318,7 +340,7 @@ class OInstance(models.Model):
         return Utils.OBJECT_INSTANCE
 
     def __str__(self):
-        return "{}::{}".format(self.name, self.concept)
+        return "{} :: {}".format(self.name, self.concept)
 
 class OSlot(models.Model):
     """
@@ -333,11 +355,11 @@ class OSlot(models.Model):
     model = models.ForeignKey(OModel, on_delete=models.CASCADE, null=True, related_name='slots')
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='slot_created')
+    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='slot_created')
     modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='slot_modified')
+    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='slot_modified')
     deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='slot_deleted')
+    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='slot_deleted')
 
 
     unique_slot_per_model = models.UniqueConstraint(
@@ -350,14 +372,14 @@ class OSlot(models.Model):
     def name(self):
         return self.predicate.name
 
-    def get_or_create(model, predicate, description='', subject=None, object=None, id=None):
+    def get_or_create(model, predicate, description='', subject=None, object=None, value=None, id=None):
         try:
             slot = OSlot.objects.get(id=id)
         except:
             try:
-                slot = OSlot.objects.get(model=model, predicate=predicate, subject=subject, object=object)
+                slot = OSlot.objects.get(model=model, predicate=predicate, subject=subject, object=object, value=value)
             except:
-                slot = OSlot.objects.create(model=model, predicate=predicate, subject=subject,  object=object, description=description, id=id)
+                slot = OSlot.objects.create(model=model, predicate=predicate, subject=subject,  object=object, value=value, description=description or '', id=id)
         slot.description = description
         slot.predicate = predicate
         slot.subject = subject
@@ -365,6 +387,10 @@ class OSlot(models.Model):
         slot.save()
         return slot
 
+    @property
+    def organisation(self):
+        return self.model.repository.organisation
+    
     def get_organisation(self):
         return self.model.repository.organisation
 
@@ -372,7 +398,13 @@ class OSlot(models.Model):
         return Utils.OBJECT_INSTANCE
 
     def __str__(self):
-        return "{} {} {}".format(self.subject.name, self.name, self.object.name)
+        subject_name = ''
+        if self.subject is not None:
+            subject_name = self.subject.name
+        object_name = self.value
+        if self.object is not None:
+            object_name = self.object.name
+        return "{} {} {}".format(subject_name, self.name, object_name)
 
 class OReport(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -385,11 +417,11 @@ class OReport(models.Model):
     quality_status = models.CharField(max_length=2, choices=QUALITY_STATUS, default=QUALITY_STATUS_PROPOSED)
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='report_created')
+    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='report_created')
     modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='report_modified')
+    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='report_modified')
     deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='report_deleted')
+    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='report_deleted')
 
     def get_or_create(name, description='', model=None, id=None, path=None, content=''):
         try:
@@ -398,12 +430,16 @@ class OReport(models.Model):
             try:
                 report = OReport.objects.get(model=model, name=name)
             except:
-                report = OReport.objects.create(model=model, name=name, description=description, path=path, content=content, id=id)
+                report = OReport.objects.create(model=model, name=name, description=description or '', path=path, content=content, id=id)
         report.description = description
         report.content = content
         report.path = path
         report.save()
         return report
+    
+    @property
+    def organisation(self):
+        return self.model.repository.organisation
     
     def get_organisation(self):
         return self.model.repository.organisation

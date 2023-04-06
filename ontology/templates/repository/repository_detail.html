@@ -1,12 +1,14 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
+{% load i18n %}
+{% load mkd %}
 
 {% block content %}
-<h2>{{object.name}} (Repository)</h2>
-<p>{{object.description}}</p>
-<p>{{object.organisation.name}}</p>
+<h2>{{object.name}} ({% trans "Repository" %})</h2>
+<p>{{object.description | markdown | safe}}</p>
+<p><a class="link-dark" href="{% url "organisation_detail" pk=object.organisation.id %}" href="#"> {{ object.organisation.name }} > </a></p>
 
-<a class="btn btn-primary" href="{% url "o_model_create" repository_id=object.id %}">New Model</a>
+<a class="btn btn-primary" href="{% url "o_model_create" repository_id=object.id %}">{% trans "New Model" %}</a>
 
 {% include "o_model/o_model_table.html" with object_list=omodels %}
 

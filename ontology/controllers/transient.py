@@ -221,4 +221,3 @@ class KnowledgeBaseController:
 
     def export_yaml():
         raise NotImplementedError
-

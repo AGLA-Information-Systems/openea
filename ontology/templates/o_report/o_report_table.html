@@ -1,7 +1,8 @@
+{% load i18n %}
 <table class="table table-fluid" id="table-reports">
     <thead>
         <tr>
-            <th>Report</th>
+            <th>{% trans "Report" %}</th>
             <th></th>
             <th></th>
             <th></th>
@@ -18,10 +19,10 @@
             <td>{{ report.description }}</td>
             <td>{{ report.path }}</td>
             <td>{% for tag in report.tags.all %}{{ tag.name }} {% endfor %}</td>
-            <td>{{ report.get_quality_status_display }}</td>
-            <td><a href="{% url "o_report_run" report.id %}">run</a></td>
-            <td><a href="{% url "o_report_update" report.id %}">edit</a></td>
-            <td><a href="{% url "o_report_delete" report.id %}">delete</a></td>
+            <td>{% trans report.get_quality_status_display %}</td>
+            <td><a href="{% url "o_report_run" report.id %}">{% trans "run" %}</a></td>
+            <td><a href="{% url "o_report_update" report.id %}">{% trans "edit" %}</a></td>
+            <td><a href="{% url "o_report_delete" report.id %}">{% trans "delete" %}</a></td>
         </tr>
         {% endfor %}
     </tbody>

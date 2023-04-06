@@ -1,0 +1,192 @@
+{% load static %}
+{% load js %}
+{% load i18n %}
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm" style="margin-bottom: 40px">
+      <div>
+        <strong>{% trans "Concepts on Rows" %}</strong> 
+        <br/> <br/>
+        <select id="instances-matrix-rows-concept" style="width: 80%"></select>
+        <br/> <br/>
+
+        <strong>{% trans "Subject Instances" %}</strong> 
+        <br/><br/>
+        <select id="instances-matrix-rows" multiple="multiple" style="width: 80%"></select>
+        <br/> <br/>
+
+        <strong>{% trans "Concepts on Columns" %}</strong> 
+        <br/>
+
+        <br/>
+        <select id="instances-matrix-columns-concept" style="width: 80%"></select>
+        <br/> <br/>
+
+        <strong>{% trans "Object Instances" %}</strong> 
+        <br/><br/>
+        <select id="instances-matrix-columns" multiple="multiple" style="width: 80%"></select>
+        <br/> <br/>
+
+      </div>
+    </div>
+    <div class="col-lg">
+      <div id="instance-matrix" style="min-width:800px;"></div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+    var instancesMatrixRowsConcept = document.getElementById("instances-matrix-rows-concept");
+    var instancesMatrixColumnsConcept = document.getElementById("instances-matrix-columns-concept");
+
+    // add concepts to selects
+    for (const [concept_id, concept] of Object.entries(concepts)) {
+        var option = document.createElement("option");
+        option.value = concept_id;
+        option.text = concept;
+        instancesMatrixRowsConcept.appendChild(option);
+        instancesMatrixColumnsConcept.appendChild(option.cloneNode(true));
+    }
+
+    async function getConceptInstances(concept_id) {
+        try {
+            const data = await $.ajax({
+                url: "/o_instance/json_list/" + concept_id,
+                type: "GET",
+            });
+            return data;
+        } catch (error) {
+            return null;
+        }
+    }
+
+    function addInstancesToSelect(select, instancesData) {instancesMatrixRowsConcept
+        try {
+            if (instancesData == null) {
+                return;
+            }
+            while (select.firstChild) {
+                select.removeChild(select.firstChild);
+            }
+            for (const [instance_id, instance] of Object.entries(instancesData)) {
+                var option = document.createElement("option");
+                option.value = instance_id;
+                option.text = instance.name;
+                select.appendChild(option);
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+</script>
+
+<script>
+    var rowInstances = [];
+    var columnInstances = [];
+
+    // get relation between instances
+    function getInstancesRelation(instance_1, instance_2) {
+        for (const [slot_id, slot] of Object.entries(rowInstances[instance_1].ownslots)) {
+            if (slot.object_id == instance_2) {
+                return slot.relation;
+            }
+        }
+        return "----";
+    }
+
+    // generate the instance matrixo_model_instances_matrix
+    function generateInstancesMatrix() {
+        const selectedInstancesRows = $('#instances-matrix-rows').val();
+        const selectedInstancesColumns = $('#instances-matrix-columns').val();
+
+        const instanceMatrixContainer = document.getElementById("instance-matrix");
+
+        // clear the instance matrix
+        while(instanceMatrixContainer.firstChild) {
+            instanceMatrixContainer.removeChild(instanceMatrixContainer.firstChild);
+        }
+
+        // create the table
+        var instanceMatrix = document.createElement("table");
+        instanceMatrix.className = "table table-striped table-bordered table-hover";
+
+        // create the table head
+        var instanceMatrixHead = document.createElement("thead");
+        var instanceMatrixHeadRow = document.createElement("tr");
+
+        // create the first cell of the table head
+        var instanceMatrixHeadCell = document.createElement("th");
+        instanceMatrixHeadCell.innerHTML = "Instances";
+        instanceMatrixHeadRow.appendChild(instanceMatrixHeadCell);
+
+        // create the cells of the table head
+        for (const [instance_id, instance] of Object.entries(columnInstances)) {
+            if (selectedInstancesColumns.includes(instance_id)) {
+                var instanceMatrixHeadCell = document.createElement("th");
+                instanceMatrixHeadCell.appendChild(document.createTextNode(instance.name));
+                instanceMatrixHeadRow.appendChild(instanceMatrixHeadCell);
+            }
+        }
+
+        // create the table body
+        var instanceMatrixBody = document.createElement("tbody");
+
+        // create the rows of the table body
+        for (const [instance_id, instance] of Object.entries(rowInstances)) {
+            if (selectedInstancesRows.includes(instance_id)) {
+                var instanceMatrixBodyRow = document.createElement("tr");
+                var instanceMatrixBodyRowCell = document.createElement("td");
+                instanceMatrixBodyRowCell.appendChild(document.createTextNode(instance.name));
+                instanceMatrixBodyRow.appendChild(instanceMatrixBodyRowCell);
+
+                for (const [other_instance_id, instance] of Object.entries(columnInstances)) {
+                    if (!selectedInstancesColumns.includes(other_instance_id)) {
+                        continue;
+                    }
+                    var instanceMatrixBodyRowCell = document.createElement("td");
+                    instanceMatrixBodyRowCell.appendChild(document.createTextNode(getInstancesRelation(instance_id, other_instance_id)));
+                    instanceMatrixBodyRow.appendChild(instanceMatrixBodyRowCell);
+                }
+                instanceMatrixBody.appendChild(instanceMatrixBodyRow);
+            }
+        }
+
+        // append the table components to the table
+        instanceMatrixHead.appendChild(instanceMatrixHeadRow);
+        instanceMatrix.appendChild(instanceMatrixHead);
+        instanceMatrix.appendChild(instanceMatrixBody);
+        instanceMatrixContainer.appendChild(instanceMatrix);
+    }
+
+    // initilize the selects
+    async function initializeInstancesMatrixSelect() {   
+        rowInstances = await getConceptInstances($('#instances-matrix-rows-concept').val());
+        columnInstances = await getConceptInstances($('#instances-matrix-columns-concept').val());
+        addInstancesToSelect(document.getElementById("instances-matrix-rows"), rowInstances);
+        addInstancesToSelect(document.getElementById("instances-matrix-columns"), columnInstances);
+    }
+
+    initializeInstancesMatrixSelect();
+
+    $('#instances-matrix-rows-concept').change(async function() {
+        rowInstances = await getConceptInstances($(this).val());
+        addInstancesToSelect(document.getElementById("instances-matrix-rows"), rowInstances);
+    });
+    $('#instances-matrix-columns-concept').change(async function() {
+        columnInstances = await getConceptInstances($(this).val());
+        addInstancesToSelect(document.getElementById("instances-matrix-columns"), columnInstances);
+    });
+
+    $('#instances-matrix-rows').change(function() {
+        generateInstancesMatrix();
+    });
+
+    $('#instances-matrix-columns').change(function() {
+        generateInstancesMatrix();
+    });
+    
+</script>

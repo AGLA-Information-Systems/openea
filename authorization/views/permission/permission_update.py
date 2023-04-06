@@ -1,13 +1,14 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
+from authorization.forms.permission.o_permission_create import OPermissionCreateForm
 
 from authorization.models import Permission
 from authorization.controllers.utils import CustomPermissionRequiredMixin
 
 class PermissionUpdateView(CustomPermissionRequiredMixin, UpdateView):
     model = Permission
-    fields = ['action', 'object_type', 'object_identifier', 'description', 'organisation']
     template_name = "permission/permission_update.html"
+    form_class = OPermissionCreateForm
     #success_url = reverse_lazy('permission_list')
     permission_required = [('UPDATE', model.get_object_type(), None)]
 

@@ -1,9 +1,12 @@
 import re
-from django.views.generic.edit import CreateView
-from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin
 
+from django.http import HttpResponseRedirect
+from django.urls import reverse, reverse_lazy
+from django.views.generic.edit import CreateView
+
+from authorization.controllers.utils import CustomPermissionRequiredMixin
 from ontology.models import OReport
+
 
 class OReportCreateView(CustomPermissionRequiredMixin, CreateView):
     model = OReport
@@ -14,11 +17,17 @@ class OReportCreateView(CustomPermissionRequiredMixin, CreateView):
 
     def form_valid(self, form):
         if self.request.user.is_authenticated:
-            form.instance = OReport.get_or_create(model=form.cleaned_data['model'], name=form.cleaned_data['name'], path=form.cleaned_data['path'], content=form.cleaned_data['content'], description=form.cleaned_data['description'])
-            form.instance.created_by = self.request.user
-            if form.instance.path is not None:
-                form.instance.path = re.sub('/+','/', '/' + form.instance.path.replace('..', '/'))
-        return super().form_valid(form)
+            path = form.cleaned_data['path']
+            if path is not None:
+                path = re.sub('/+','/', '/' + path.replace('.', '/'))
+            form.instance, created = OReport.objects.get_or_create(model=form.cleaned_data['model'],
+                                                                name=form.cleaned_data['name'],
+                                                                defaults={'path': path,
+                                                                            'content': form.cleaned_data['content'],
+                                                                            'description':form.cleaned_data['description'],
+                                                                            'quality_status':form.cleaned_data['quality_status'],
+                                                                            'created_by': self.request.user})
+        return HttpResponseRedirect(self.get_success_url())
 
     def get_initial(self):
         initials = super().get_initial()

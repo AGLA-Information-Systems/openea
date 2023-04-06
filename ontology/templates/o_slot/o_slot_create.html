@@ -1,21 +1,33 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
-
+{% load i18n %}
 
 {% block content %}
-<h2 class="form-title">Add OSlot</h2>
+<h2 class="form-title">{% trans "Add Slot" %}</h2>
     <form class="form-group" method="POST">
         {{ form.non_field_errors }}
         {% csrf_token %}
-        {{ form.model|as_crispy_field }}
         {{ form.predicate|as_crispy_field }}
-        {{ form.subject|as_crispy_field }}
-        {{ form.object|as_crispy_field }}
+        <div class="row">
+            <div class="col-md-5">
+                <fieldset>
+                    <legend>{% trans "Select an existing instance" %}</legend>
+                {{ form.subject|as_crispy_field }}
+                {{ form.object|as_crispy_field }}
+                </fieldset>
+            </div>
+            <div class="col-md-1">{% trans "Or" %}</div>
+            <div class="col-md-5">
+                <fieldset>
+                    <legend>{% trans "Create a new instance" %}</legend>
+                {{ form.new_object_name|as_crispy_field }}
+                {{ form.new_object_description|as_crispy_field }}
+                </fieldset>
+            </div>
+        </div>
         {{ form.description|as_crispy_field }}
-        {{ form.new_object_name|as_crispy_field }}
-        {{ form.new_object_description|as_crispy_field }}
-
+        {{ form.model|as_crispy_field }}
         
-        <input type="submit" value="Submit" />
+        <input class="btn btn-primary" type="submit" value="{% trans 'Submit' %}" />
     </form>
 {% endblock content %}

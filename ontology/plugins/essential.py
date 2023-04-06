@@ -4,19 +4,20 @@
 {License_info}
 """
 import os
-import urllib.parse
 import re
+import urllib.parse
+
 from django.db import transaction
+
 from ontology.controllers.knowledge_base import KnowledgeBaseController
 from ontology.plugins.plugin import ACTION_IMPORT, Plugin
 from webapp.constants import KNOWLEDGE_SET_INSTANCES, KNOWLEDGE_SET_ONTOLOGY
-
 
 __author__ = "Patrick Agbokou"
 __copyright__ = "Copyright 2021, OpenEA"
 __credits__ = ["Patrick Agbokou"]
 __license__ = "Apache License 2.0"
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 __maintainer__ = "Patrick Agbokou"
 __email__ = "patrick.agbokou@aglaglobal.com"
 __status__ = "Development"

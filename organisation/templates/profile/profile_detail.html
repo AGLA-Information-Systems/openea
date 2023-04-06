@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load mkd %}
+
+{% block content %}
+<h2>{{object.name}} ({% trans "Profile" %})</h2>
+<p>{{object.description | markdown | safe}}</p>
+<p>{{object.organisation.name}}</p>
+{% endblock content %}
+
+<hr/>
+<table class="table table-fluid">
+    <thead>
+        <tr>
+            <th>{% trans "Security Group" %}</th>
+            <th>{% trans "Description" %}</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for security_group in object.security_groups %}
+        <tr>
+            <td><a class="link-dark" href="{% url "o_security_group_detail" security_group.id %}">{{ security_group.name }}</a></td>
+            <td>{{ security_group.description }}</td>
+            <td><a href="{% url "o_security_group_update" security_group.id %}">{% trans "edit" %}</a></td>
+            <td><a href="{% url "o_security_group_delete" security_group.id %}">{% trans "delete" %}</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>

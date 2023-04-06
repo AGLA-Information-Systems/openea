@@ -1,8 +1,10 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
+{% load i18n %}
+{% load mkd %}
 
 {% block content %}
-<h2>{{object.name}} (Tag)</h2>
-<p>{{object.description}}</p>
+<h2>{{object.name}} ({% trans "Tag" %})</h2>
+<p>{{object.description | markdown | safe}}</p>
 <p>{{object.tag_group}}</p>
 {% endblock content %}

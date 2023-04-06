@@ -1,10 +1,12 @@
+from django.http import Http404
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy, reverse
 from authorization.controllers.utils import CustomPermissionRequiredMixin
-
+from django.core.exceptions import PermissionDenied
 from ontology.models import OPredicate
+from utils.views.custom import SingleObjectView
 
-class OPredicateDeleteView(CustomPermissionRequiredMixin, DeleteView):
+class OPredicateDeleteView(CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
     model = OPredicate
     template_name = "o_predicate/o_predicate_delete.html"
     #success_url = reverse_lazy('o_predicate_list')

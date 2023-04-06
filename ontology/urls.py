@@ -7,9 +7,12 @@ from ontology.views import (
     OModelDeleteView, OModelUpdateView, OModelDetailView, OModelCreateView, OModelListView, OModelReportView,
     RepositoryDeleteView, RepositoryUpdateView, RepositoryDetailView, RepositoryCreateView, RepositoryListView
 )
+from ontology.views.import_export import ExportView, ImportView
+from ontology.views.json_report import JSONReportView
 from ontology.views.o_instance.o_instance_create import OInstanceCreateView
 from ontology.views.o_instance.o_instance_delete import OInstanceDeleteView
 from ontology.views.o_instance.o_instance_detail import OInstanceDetailView
+from ontology.views.o_instance.o_instance_json_list import OInstanceJSONListView
 from ontology.views.o_instance.o_instance_list import OInstanceListView
 from ontology.views.o_instance.o_instance_update import OInstanceUpdateView
 from ontology.views.o_model.o_model_json import OModelJSONView
@@ -25,6 +28,8 @@ from ontology.views.o_report.o_report_delete import OReportDeleteView
 from ontology.views.o_report.o_report_detail import OReportDetailView
 from ontology.views.o_report.o_report_list import OReportListView
 from ontology.views.o_report.o_report_update import OReportUpdateView
+from ontology.views.report import ReportView
+from ontology.views.xml_report import XMLReportView
 
 urlpatterns = [
     path('repository/list/', RepositoryListView.as_view(), name='repository_list'),
@@ -54,6 +59,7 @@ urlpatterns = [
     path('o_predicate/update/<uuid:pk>/', OPredicateUpdateView.as_view(), name='o_predicate_update'),
     path('o_predicate/delete/<uuid:pk>/', OPredicateDeleteView.as_view(), name='o_predicate_delete'),
     path('o_instance/list/<uuid:concept_id>/', OInstanceListView.as_view(), name='o_instance_list'),
+    path('o_instance/json_list/<uuid:concept_id>/', OInstanceJSONListView.as_view(), name='o_instance_json_list'),
     path('o_instance/create/<uuid:concept_id>/', OInstanceCreateView.as_view(), name='o_instance_create'),
     path('o_instance/detail/<uuid:pk>/', OInstanceDetailView.as_view(), name='o_instance_detail'),
     path('o_instance/update/<uuid:pk>/', OInstanceUpdateView.as_view(), name='o_instance_update'),
@@ -72,5 +78,11 @@ urlpatterns = [
 
     path('o_model/report/<uuid:pk>/', OModelReportView.as_view(), name='o_model_report'),
     path('o_model_xml/<uuid:model_id>/', OModelXMLView.as_view(), name='o_model_xml'),
-    path('o_model_json/<uuid:model_id>/', OModelJSONView.as_view(), name='o_model_json')
+    path('o_model_json/<uuid:model_id>/', OModelJSONView.as_view(), name='o_model_json'),
+
+    path('model_import/<uuid:model_id>/', ImportView.as_view(), name='model_import'),
+    path('model_export/<uuid:model_id>/', ExportView.as_view(), name='model_export'),
+    path('model_report/<uuid:model_id>/', ReportView.as_view(), name='model_report'),
+    path('xml_report/<uuid:model_id>/', XMLReportView.as_view(), name='xml_report'),
+    path('json_report/<uuid:model_id>/', JSONReportView.as_view(), name='json_report')
 ]

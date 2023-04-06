@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block content %}
+<h2 class="form-title">{% trans "Export" %}</h2>
+
+<form id="export_form" method="post">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+  <div class="row align-items-md-stretch">
+    <div class="col-md-6">
+      <div class="form-check">
+        {{ form.knowledge_set.errors }}
+        {{ form.knowledge_set|as_crispy_field }}
+      </div>
+      <div class="form-check">
+        {{ form.model.errors }}
+        {{ form.model|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-check">
+          {{ form.export_format.errors }}
+          {{ form.export_format|as_crispy_field }}
+      </div>
+      <button type="submit" class="btn btn-primary mb-3">{% trans "Start Export" %}</button>
+    </div>
+  </div>
+</form>
+{% endblock content %}

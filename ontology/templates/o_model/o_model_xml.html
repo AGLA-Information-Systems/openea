@@ -1,8 +1,12 @@
+{% load i18n %}
+
 <?xml version="1.0" encoding="UTF-8"?>
+{% load i18n %}
 {% load get_dict_item %}
+{% load mkd %}
 <model id="{{model.id}}">
     <name>{{model.name}}</name>
-    <description>{{model.description}}</description>
+    <description>{{model.description | markdown | safe}}</description>
     <predicates>
         {% for predicate in predicates %}
         <predicate id="{{predicate.id}}">
@@ -16,13 +20,13 @@
         {% for instance in instances %}
         <instance id="{{instance.id}}">
             <name>{{instance.name}}</name>
-            <description>{{instance.description}}</description>
+            <description>{{instance.description | markdown | safe}}</description>
             <concept id="{{concept.id}}">{{instance.concept}}</concept>
             <ownslots>
             {% for slot in ownslots|get_dict_item:instance.id %}
                 <slot id="{{slot.id}}">
                     <predicate id="{{slot.predicate.id}}">{{slot.predicate.name}}</predicate>
-                    <description>{{slot.description}}</description>
+                    <description>{{slot.description | markdown | safe}}</description>
                     <concept id="{{slot.object.concept.id}}">{{slot.object.concept.name}}</concept>
                     <object id="{{slot.object.id}}">{{slot.object.name}}</object>
                 </slot>
@@ -32,7 +36,7 @@
             {% for slot in inslots|get_dict_item:instance.id %}
                 <slot id="{{slot.id}}">
                     <predicate id="{{slot.predicate.id}}">{{slot.predicate.name}}</predicate>
-                    <description>{{slot.description}}</description>
+                    <description>{{slot.description | markdown | safe}}</description>
                     <concept id="{{slot.subject.concept.id}}">{{slot.subject.concept.name}}</concept>
                     <subject id="{{slot.subject.id}}">{{slot.subject.name}}</subject>
                 </slot>

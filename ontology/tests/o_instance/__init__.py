@@ -1,0 +1,5 @@
+from .o_instance_delete_test import OInstanceDeleteTestCase
+from .o_instance_update_test import OInstanceUpdateTestCase
+from .o_instance_detail_test import OInstanceDetailTestCase
+from .o_instance_create_test import OInstanceCreateTestCase
+from .o_instance_list_test import OInstanceListTestCase

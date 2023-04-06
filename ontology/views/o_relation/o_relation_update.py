@@ -1,13 +1,16 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
 from authorization.controllers.utils import CustomPermissionRequiredMixin
+from ontology.forms.o_relation.o_relation_update import ORelationUpdateForm
 
 from ontology.models import ORelation
+from utils.views.custom import SingleObjectView
 
-class ORelationUpdateView(CustomPermissionRequiredMixin, UpdateView):
+class ORelationUpdateView(CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
     model = ORelation
-    fields = ['name', 'description', 'type', 'model', 'quality_status',  'tags']
+    form_class = ORelationUpdateForm
     template_name = "o_relation/o_relation_update.html"
+    form_class = ORelationUpdateForm
     #success_url = reverse_lazy('o_relation_list')
     permission_required = [('UPDATE', model.get_object_type(), None)]
 
@@ -15,6 +18,11 @@ class ORelationUpdateView(CustomPermissionRequiredMixin, UpdateView):
         if self.request.user.is_authenticated:
             form.instance.modified_by = self.request.user
         return super().form_valid(form)
+
+    def get_initial(self):
+        initials = super().get_initial()
+        initials['pk'] = self.kwargs.get('pk')
+        return initials
 
     def get_success_url(self):
         pk = self.object.model.id

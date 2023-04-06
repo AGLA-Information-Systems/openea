@@ -42,3 +42,16 @@ a:hover {
       font-size: 3.5rem;
     }
 }
+
+.wmd-input{
+    background-color:white;
+}
+.wmd-button-bar {
+    width: 100%;
+    background-color: white;
+}
+.wmd-panel {
+    margin-left: 0%;
+    margin-right: 0%;
+    width: 100%;
+}

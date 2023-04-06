@@ -1,13 +1,16 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
+{% load i18n %}
 
 {% block content %}
-<h2 class="form-title">Repository</h2>
+<h2 class="form-title">{% trans "Repository" %}</h2>
+
+<a class="btn btn-primary" href="{% url "repository_create" %}">{% trans "New" %}</a>
 
 <table class="table table-fluid">
     <thead>
         <tr>
-            <th>Repository</th>
+            <th>{% trans "Repository" %}</th>
             <th></th>
             <th></th>
             <th></th>
@@ -15,18 +18,16 @@
         </tr>
     </thead>
     <tbody>
-        {% for Repository in object_list %}
+        {% for repository in object_list %}
         <tr>
-            <td><a href="{% url "repository_detail" Repository.id %}">{{ Repository.name }}</a></td>
-            <td><a href="{% url "repository_detail" Repository.id %}">{{ Repository.organisation }}</a></td>
-            <td>{% for tag in Repository.tags.all %}{{ tag.name }} {% endfor %}</td>
-            <td><a href="{% url "repository_update" Repository.id %}">edit</a></td>
-            <td><a href="{% url "repository_delete" Repository.id %}">delete</a></td>
+            <td><a href="{% url "repository_detail" repository.id %}">{{ repository.name }}</a></td>
+            <td><a href="{% url "organisation_detail" repository.organisation.id %}">{{ repository.organisation }}</a></td>
+            <td>{% for tag in repository.tags.all %}{{ tag.name }} {% endfor %}</td>
+            <td><a href="{% url "repository_update" repository.id %}">{% trans "edit" %}</a></td>
+            <td><a href="{% url "repository_delete" repository.id %}">{% trans "delete" %}</a></td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-
-<a href="{% url "repository_create" %}">New</a>
 
 {% endblock content %}

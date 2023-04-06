@@ -12,15 +12,16 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import configparser
 from pathlib import Path
+
 ini_config = configparser.ConfigParser()
 ini_config.read('config.ini')
 
 ENVIRONMENT = ini_config.get('DEFAULT', "ENVIRONMENT", fallback='dev')
-CONTACT_EMAIL = ini_config.get('DEFAULT', "CONTACT_EMAIL", fallback='info@aglaglobal.com')
+CONTACT_EMAIL = ini_config.get('DEFAULT', "CONTACT_EMAIL", fallback='email@email.com')
+RESOURCE_CONCEPT = ini_config.get('DEFAULT', "RESOURCE_CONCEPT", fallback='{Resource}')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -44,14 +45,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'webapp.apps.WebappConfig',
+    'organisation.apps.OrganisationConfig',
     'authorization.apps.AuthorizationConfig',
     'authentication.apps.AuthenticationConfig',
     'ontology.apps.OntologyConfig',
-    'webapp.apps.WebappConfig',
+    
     'taxonomy.apps.TaxonomyConfig',
     'configuration.apps.ConfigurationConfig',
     'crispy_forms',
     "crispy_bootstrap5",
+    'pagedown',
+
+    'django_select2',
 ]
 
 MIDDLEWARE = [
@@ -64,7 +70,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'django.middleware.locale.LocaleMiddleware',
-    'webapp.middleware.profile.ActiveProfileMiddleware',
+    'organisation.middleware.profile.ActiveProfileMiddleware',
 ]
 
 ROOT_URLCONF = 'openea.urls'
@@ -86,9 +92,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'openea.wsgi.application'
-
-#CSRF_COOKIE_DOMAIN = '.openenterprisearchitect.com'
-#CSRF_TRUSTED_ORIGINS = ['https://*.openenterprisearchitect.com','https://*.127.0.0.1']
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -137,6 +140,21 @@ USE_L10N = True
 
 USE_TZ = True
 
+LANGUAGES = [
+  ('fr-ca', 'French'),
+  ('en', 'English'),
+  ('es', 'Spanish'),
+  ('de', 'German'),
+  ('ja', 'Japanese'),
+  ('pt', 'Portuguese'),
+  ('ru', 'Russian'),
+  ('sw', 'Swahili'),
+  ('zh-cn', 'Chinese')
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -184,12 +202,32 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 #     }
 # }
 
-LANGUAGES = [
-  ('en-us', 'English'),
-  ('fr', 'French'),
-  ('es', 'Spanish'),
-]
 
-LOCALE_PATHS = [
-    BASE_DIR / 'locale',
-]
+# Django Select2
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    },
+    "select2": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/2",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+# Tell select2 which cache configuration to use:
+SELECT2_CACHE_BACKEND = "select2"
+
+EMAIL_BACKEND = ini_config.get('Email', "EMAIL_BACKEND", fallback='django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = ini_config.get('Email', "EMAIL_HOST", fallback='localhost')
+EMAIL_PORT = ini_config.getint('Email', "EMAIL_PORT", fallback=25)
+EMAIL_HOST_USER = ini_config.get('Email', "EMAIL_HOST_USER", fallback='')
+EMAIL_HOST_PASSWORD = ini_config.get('Email', "EMAIL_HOST_PASSWORD", fallback='')
+EMAIL_USE_TLS = ini_config.getboolean('Email', "EMAIL_USE_TLS", fallback=True) 
+EMAIL_USE_SSL = ini_config.getboolean('Email', "EMAIL_USE_SSL", fallback=False)

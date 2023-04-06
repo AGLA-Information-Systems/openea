@@ -1,10 +1,20 @@
+from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import DeleteView
-from django.urls import reverse_lazy, reverse
+from django.core.exceptions import PermissionDenied
 from authorization.controllers.utils import CustomPermissionRequiredMixin
-
 from ontology.models import OConcept
+from utils.views.custom import SingleObjectView
 
-class OConceptDeleteView(CustomPermissionRequiredMixin, DeleteView):
+__author__ = "Patrick Agbokou"
+__copyright__ = "Copyright 2021, OpenEA"
+__credits__ = ["Patrick Agbokou"]
+__license__ = "Apache License 2.0"
+__version__ = "1.0.0"
+__maintainer__ = "Patrick Agbokou"
+__email__ = "patrick.agbokou@aglaglobal.com"
+__status__ = "Development"
+
+class OConceptDeleteView(CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
     model = OConcept
     template_name = "o_concept/o_concept_delete.html"
     #success_url = reverse_lazy('o_concept_list')

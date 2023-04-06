@@ -1,1 +1,2 @@
-from .o_instance_create import OInstanceCreateForm
+from .o_relation_create import ORelationCreateForm
+from .o_relation_update import ORelationUpdateForm

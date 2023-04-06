@@ -1,6 +1,6 @@
 import os
 from django.test import TestCase
-from ..plugins.excel import ExcelPlugin, concept_name_from_excel, relation_name_from_excel
+from ..plugins.excel import ExcelPlugin
 from ..plugins.essential import EssentialPlugin, ESSENTIAL_ONTOLOGY
 from ..controllers.knowledge_base import KnowledgeBaseController, BASIC_ONTOLOGY, EXAMPLE_ONTOLOGY, EXAMPLE_INSTANCES
 from ..models import OModel, OConcept, OPredicate

@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load mkd %}
+
+{% block content %}
+<h2>{{object.name}} ({% trans "Task" %})</h2>
+<p>{{object.description | markdown | safe}}</p>
+<p>{{object.type}}</p>
+<p>{{object.status}}</p>
+<p>{{object.user}}</p>
+<p>{{object.organisation.name}}</p>
+<p>{{object.attachment.name}}</p>
+<p>{{object.config}}</p>
+<p>{{object.started_at}}</p>
+<p>{{object.ended_at}}</p>
+{% endblock content %}

@@ -1,10 +1,12 @@
+from django.http import Http404
 from django.views.generic import DetailView
 from authorization.controllers.utils import CustomPermissionRequiredMixin
 
 from ontology.models import Repository, OModel
+from utils.views.custom import SingleObjectView
 
 
-class RepositoryDetailView(CustomPermissionRequiredMixin, DetailView):
+class RepositoryDetailView(CustomPermissionRequiredMixin, SingleObjectView, DetailView):
     model = Repository
     template_name = "repository/repository_detail.html"
     permission_required = [('VIEW', model.get_object_type(), None)]

@@ -1,14 +1,15 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
 from authorization.controllers.utils import CustomPermissionRequiredMixin
+from ontology.forms.o_predicate.o_predicate_update import OPredicateUpdateForm
 
 from ontology.models import OPredicate
+from utils.views.custom import SingleObjectView
 
-class OPredicateUpdateView(CustomPermissionRequiredMixin, UpdateView):
+class OPredicateUpdateView(CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
     model = OPredicate
-    fields = ['model', 'subject', 'relation', 'object', 'description', 'description',
-              'cardinality_min', 'cardinality_max', 'quality_status',  'tags']
     template_name = "o_predicate/o_predicate_update.html"
+    form_class = OPredicateUpdateForm
     #success_url = reverse_lazy('o_predicate_list')
     permission_required = [('UPDATE', model.get_object_type(), None)]
 
@@ -16,6 +17,11 @@ class OPredicateUpdateView(CustomPermissionRequiredMixin, UpdateView):
         if self.request.user.is_authenticated:
             form.instance.modified_by = self.request.user
         return super().form_valid(form)
+    
+    def get_initial(self):
+        initials = super().get_initial()
+        initials['pk'] = self.kwargs.get('pk')
+        return initials
 
     def get_success_url(self):
         pk = self.object.model.id

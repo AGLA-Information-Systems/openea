@@ -1,11 +1,12 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
+{% load i18n %}
 
 {% block content %}
-<h2 class="form-title">Add SecurityGroup</h2>
+<h2 class="form-title">{% trans "Add SecurityGroup" %}</h2>
     <form class="form-group" method="POST">
         {% csrf_token %}
         {{ form|crispy }}
-        <input type="submit" value="Submit" />
+        <input class="btn btn-primary" type="submit" value="{% trans 'Submit' %}" />
     </form>
 {% endblock content %}

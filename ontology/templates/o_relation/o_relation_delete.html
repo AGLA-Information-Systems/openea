@@ -1,10 +1,11 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
+{% load i18n %}
 
 {% block content %}
-<h2 class="form-title"> Delete ORelation </h2>
+<h2 class="form-title">{% trans "Delete Relation" %}</h2>
 <form class="form-group" method="POST">{% csrf_token %}
-    <p>Are you sure you want to delete "{{ object }}"?</p>
-    <input type="submit" value="Confirm">
+    <p>{% trans "Are you sure you want to delete" %} "{{ object }}"?</p>
+    <input class="btn btn-primary" type="submit" value="{% trans 'Confirm' %}" />
 </form>
 {% endblock content %}

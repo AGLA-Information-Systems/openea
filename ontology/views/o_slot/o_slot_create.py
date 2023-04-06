@@ -5,7 +5,7 @@ from ontology.forms.o_slot.o_slot_create import OSlotCreateForm
 from django.views.generic.edit import FormView
 
 from ontology.models import OConcept, OInstance, OPredicate, OSlot, OModel
-from webapp.utils import handle_errors
+from utils.generic import handle_errors
 
 class OSlotCreateView(CustomPermissionRequiredMixin, FormView):
     model = OSlot
@@ -37,13 +37,16 @@ class OSlotCreateView(CustomPermissionRequiredMixin, FormView):
                 else:
                     possible_concepts = [x[0] for x in KnowledgeBaseUtils.get_child_concepts(concept=predicate.subject)] + [predicate.subject]
                 
+                if not new_instance_name:
+                    raise ValueError('NO_INSTANCE_NAME')
+                
                 if concept in possible_concepts:
                     new_instance_concept = concept
-                    new_instance = OInstance.objects.create(
+                    new_instance, created = OInstance.objects.get_or_create(
                         model=model, 
                         concept=new_instance_concept,
                         name=new_instance_name,
-                        description=new_instance_desc)
+                        defaults={'description': new_instance_desc})
                 if is_subject:
                     object = new_instance
                 else:
@@ -53,13 +56,12 @@ class OSlotCreateView(CustomPermissionRequiredMixin, FormView):
             if predicate.cardinality_max != 0 and slots_count >= predicate.cardinality_max:
                 raise ValueError('MAX_SLOTS_REACHED')
 
-            slot = OSlot.objects.create(
+            slot, created = OSlot.objects.get_or_create(
                 model=model, 
                 predicate=predicate, 
                 subject=subject,
                 object=object
             )
-            slot.save()
         return super().form_valid(form)
 
     def get_initial(self):

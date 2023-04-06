@@ -1,24 +1,26 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
+{% load i18n %}
+{% load mkd %}
 
 {% block content %}
 <div class="d-flex flex-column flex-md-row align-items-center pb-2">
-    <h2>{{object.name}} (SecurityGroup)</h2>
+    <h2>{{object.name}} ({% trans "SecurityGroup" %})</h2>
     <div class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
       <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-          <a class="btn btn-secondary" href="{% url "organisation_detail" organisation_id %}" class="dropdown-item" href="#"> < Organisation</a>
+          <a class="btn btn-secondary" href="{% url "organisation_detail" organisation_id %}" class="dropdown-item" href="#"> {% trans "Organisation" %}</a>
       </div>
     </div>
   </div>
-<p>{{object.description}}</p>
+<p>{{object.description | markdown | safe}}</p>
 <p>{{object.organisation.name}}</p>
-<div class="mt-3"><a class="btn btn-primary" href="{% url "permission_create" organisation_id=organisation_id %}">Add Permission</a></div>
+<div class="mt-3"><a class="btn btn-primary" href="{% url "permission_create" organisation_id=organisation_id %}">{% trans "Add Permission" %}</a></div>
 <hr/>
 <table class="table table-fluid">
     <thead>
         <tr>
-            <th>Permission</th>
-            <th>Description</th>
+            <th>{% trans "Permission" %}</th>
+            <th>{% trans "Description" %}</th>
             <th></th>
             <th></th>
             <th></th>
@@ -27,11 +29,11 @@
     <tbody>
         {% for permission in permissions %}
         <tr>
-            <td><a class="link-dark" href="{% url "permission_detail" permission.id %}">{{ permission.get_action_display }}:{{ permission.get_object_type_display }}</a></td>
+            <td><a class="link-dark" href="{% url "permission_detail" permission.id %}">{% trans permission.get_action_display %}:{% trans permission.get_object_type_display %}</a></td>
             <td>{{ permission.description }}</td>
             <td>{{ permission.object_identifier }}</td>
-            <td><a href="{% url "permission_update" permission.id %}">edit</a></td>
-            <td><a href="{% url "permission_delete" permission.id %}">delete</a></td>
+            <td><a href="{% url "permission_update" permission.id %}">{% trans "edit" %}</a></td>
+            <td><a href="{% url "permission_delete" permission.id %}">{% trans "delete" %}</a></td>
         </tr>
         {% endfor %}
     </tbody>
@@ -40,26 +42,26 @@
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
         {% if permissions.has_previous %}
-            <li class="page-item"><a class="page-link" href="?permission_page=1">&laquo; first</a></li>
-            <li class="page-item"><a class="page-link" href="?permission_page={{ permissions.previous_page_number }}">previous</a></li>
+            <li class="page-item"><a class="page-link" href="?permission_page=1">&laquo; {% trans "first" %}</a></li>
+            <li class="page-item"><a class="page-link" href="?permission_page={{ permissions.previous_page_number }}">{% trans "previous" %}</a></li>
         {% endif %}
-        <li class="page-item"><a class="page-link" href="#">{{ permissions.number }} of {{ permissions.paginator.num_pages }}</a></li>
+        <li class="page-item"><a class="page-link" href="#">{{ permissions.number }} {% trans "of" %} {{ permissions.paginator.num_pages }}</a></li>
         {% if permissions.has_next %}
-            <li class="page-item"><a class="page-link" href="?permission_page={{ permissions.next_page_number }}">next</a></li>
-            <li class="page-item"><a class="page-link" href="?permission_page={{ permissions.paginator.num_pages }}">last &raquo;</a></li>
+            <li class="page-item"><a class="page-link" href="?permission_page={{ permissions.next_page_number }}">{% trans "next" %}</a></li>
+            <li class="page-item"><a class="page-link" href="?permission_page={{ permissions.paginator.num_pages }}">{% trans "last" %} &raquo;</a></li>
         {% endif %}
     </ul>
 </nav>
 
 
 <hr/>
-<div class="mt-3"><a class="btn btn-primary" href="{% url "profile_create" organisation_id=object.id %}">Add Profile</a></div>
+<div class="mt-3"><a class="btn btn-primary" href="{% url "profile_create" organisation_id=object.id %}">{% trans "Add Profile" %}</a></div>
 <hr/>
 <table class="table table-fluid">
     <thead>
         <tr>
-            <th>Profile</th>
-            <th>Description</th>
+            <th>{% trans "Profile" %}</th>
+            <th>{% trans "Description" %}</th>
             <th></th>
             <th></th>
         </tr>
@@ -69,8 +71,8 @@
         <tr>
             <td><a class="link-dark" href="{% url "profile_detail" profile.id %}">{{ profile }}</a></td>
             <td>{{ profile.description }}</td>
-            <td><a href="{% url "profile_update" profile.id %}">edit</a></td>
-            <td><a href="{% url "profile_delete" profile.id %}">delete</a></td>
+            <td><a href="{% url "profile_update" profile.id %}">{% trans "edit" %}</a></td>
+            <td><a href="{% url "profile_delete" profile.id %}">{% trans "delete" %}</a></td>
         </tr>
         {% endfor %}
     </tbody>
@@ -79,13 +81,13 @@
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
         {% if profiles.has_previous %}
-            <li class="page-item"><a class="page-link" href="?profile_page=1">&laquo; first</a></li>
-            <li class="page-item"><a class="page-link" href="?profile_page={{ profiles.previous_page_number }}">previous</a></li>
+            <li class="page-item"><a class="page-link" href="?profile_page=1">&laquo;{% trans "first" %} </a></li>
+            <li class="page-item"><a class="page-link" href="?profile_page={{ profiles.previous_page_number }}">{% trans "previous" %}</a></li>
         {% endif %}
-        <li class="page-item"><a class="page-link" href="#">{{ profiles.number }} of {{ profiles.paginator.num_pages }}</a></li>
+        <li class="page-item"><a class="page-link" href="#">{{ profiles.number }} {% trans "of" %} {{ profiles.paginator.num_pages }}</a></li>
         {% if profiles.has_next %}
-            <li class="page-item"><a class="page-link" href="?profile_page={{ profiles.next_page_number }}">next</a></li>
-            <li class="page-item"><a class="page-link" href="?profile_page={{ profiles.paginator.num_pages }}">last &raquo;</a></li>
+            <li class="page-item"><a class="page-link" href="?profile_page={{ profiles.next_page_number }}">{% trans "next" %}</a></li>
+            <li class="page-item"><a class="page-link" href="?profile_page={{ profiles.paginator.num_pages }}">{% trans "last" %} &raquo;</a></li>
         {% endif %}
     </ul>
 </nav>

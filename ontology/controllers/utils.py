@@ -1,6 +1,13 @@
-from operator import mod
 from ontology.models import OConcept, OInstance, OPredicate, ORelation, OSlot
 
+__author__ = "Patrick Agbokou"
+__copyright__ = "Copyright 2021, OpenEA"
+__credits__ = ["Patrick Agbokou"]
+__license__ = "Apache License 2.0"
+__version__ = "1.0.0"
+__maintainer__ = "Patrick Agbokou"
+__email__ = "patrick.agbokou@aglaglobal.com"
+__status__ = "Development"
 
 DEFAULT_MAX_LEVEL = 100
 
@@ -12,12 +19,10 @@ class KnowledgeBaseUtils:
     def get_recursive_parent_concepts(concept, results, level, max_level=DEFAULT_MAX_LEVEL):
         if level > max_level:
             return results
-
         parents = [x.subject for x in OPredicate.objects.filter(object=concept, relation__type=ORelation.INHERITANCE_SUPER_IS_SUBJECT)] + [x.object for x in OPredicate.objects.filter(subject=concept, relation__type=ORelation.INHERITANCE_SUPER_IS_OBJECT)]
-        results = results + [(x, level) for x in parents]
         for x in parents:
-            KnowledgeBaseUtils.get_recursive_parent_concepts(concept=x, results=results, level=level+1, max_level=DEFAULT_MAX_LEVEL)
-        return results  
+            results = results + KnowledgeBaseUtils.get_recursive_parent_concepts(concept=x, results=results, level=level+1, max_level=DEFAULT_MAX_LEVEL)
+        return [(x, level) for x in parents] + results 
 
     def get_child_concepts(concept, max_level=DEFAULT_MAX_LEVEL):
         return KnowledgeBaseUtils.get_recursive_child_concepts(concept, results=[], level=0, max_level=max_level)
@@ -25,41 +30,34 @@ class KnowledgeBaseUtils:
     def get_recursive_child_concepts(concept, results, level, max_level=DEFAULT_MAX_LEVEL):
         if level > max_level:
             return results
-
         children = [x.subject for x in OPredicate.objects.filter(object=concept, relation__type=ORelation.INHERITANCE_SUPER_IS_OBJECT)] + [x.object for x in OPredicate.objects.filter(subject=concept, relation__type=ORelation.INHERITANCE_SUPER_IS_SUBJECT)]
-        results = results + [(x, level) for x in children]
         for x in children:
-            KnowledgeBaseUtils.get_recursive_child_concepts(concept=x, results=results, level=level+1, max_level=DEFAULT_MAX_LEVEL)
-        return results  
+            results = results + KnowledgeBaseUtils.get_recursive_child_concepts(concept=x, results=results, level=level+1, max_level=DEFAULT_MAX_LEVEL)  
+        return  [(x, level) for x in children] + results
+    
+    def get_related_object_concepts(concept, predicate_ids, level=0, max_level=DEFAULT_MAX_LEVEL):
+        predicates = OPredicate.objects.filter(subject=concept)
+        if predicate_ids is not None and isinstance(predicate_ids, list):
+            predicates = predicates.filter(id__in=predicate_ids)
 
-    def get_leveled_linked_concepts(results, level, concept, relation_name, direction='object', max_level=DEFAULT_MAX_LEVEL):
-        return KnowledgeBaseUtils.get_linked_concepts_recursive(results=results, level=level, concept=concept, relation_name=relation_name, direction=direction, max_level=max_level)
+        if level >= max_level:
+            return [(x.object, level) for x in predicates]
+        results = []
+        for x in predicates:
+            results = results + KnowledgeBaseUtils.get_related_object_concepts(level=level + 1, concept=x.object, predicate_ids=predicate_ids, max_level=max_level)
+        return [(x.object, level) for x in predicates] + results
 
-    def get_linked_concepts(results, level, concept, relation_name, direction='object', max_level=DEFAULT_MAX_LEVEL):
-        return KnowledgeBaseUtils.get_linked_concepts_recursive(results=results, level=level, concept=concept, relation_name=relation_name, direction=direction, max_level=max_level)
+    def get_related_subject_concepts(concept, predicate_ids, level=0, max_level=DEFAULT_MAX_LEVEL):
+        predicates = OPredicate.objects.filter(object=concept)
+        if predicate_ids is not None and isinstance(predicate_ids, list):
+            predicates = predicates.filter(id__in=predicate_ids)
 
-    def get_linked_concepts_recursive(results, level, concept, relation_name, direction='object', max_level=DEFAULT_MAX_LEVEL):
-        if level > max_level:
-            return results
-
-        level = level + 1
-        direct_results = []
-        
-        if direction == 'subject':
-            direct_links = concept.is_object_of.filter(relation__name=relation_name).all()
-        else:
-            direct_links = concept.is_subject_of.filter(relation__name=relation_name).all()
-        
-        for predicate in direct_links:
-            if direction == 'subject':
-                next_concept = predicate.subject
-            else:
-                next_concept = predicate.object
-            if next_concept:
-                results.append((next_concept, level))
-            KnowledgeBaseUtils.get_linked_concepts_recursive(results=results, level=level, concept=next_concept, relation_name=relation_name, direction=direction, max_level=max_level)
-        
-        return results
+        if level >= max_level:
+            return [(x.subject, level) for x in predicates]
+        results = []
+        for x in predicates:
+            results = results + KnowledgeBaseUtils.get_related_subject_concepts(level=level + 1, concept=x.subject, predicate_ids=predicate_ids, max_level=max_level)
+        return [(x.subject, level) for x in predicates] + results
 
     def ontology_from_dict(model, data=None):
         for concept_id, concept_data in data['concepts'].items():
@@ -81,7 +79,8 @@ class KnowledgeBaseUtils:
             "description": model.description,
             "concepts": {},
             "relations": {},
-            "predicates": {}
+            "predicates": {},
+            'url': KnowledgeBaseUtils.get_url('model', model.id)
             }
         for concept in OConcept.objects.filter(model=model).all():
             parents = KnowledgeBaseUtils.get_parent_concepts(concept=concept)
@@ -91,14 +90,16 @@ class KnowledgeBaseUtils:
                 "name": concept.name,
                 "description": concept.description,
                 "parents": {str(x[0].id): x[0].name for x in parents},
-                "children": {str(x[0].id): x[0].name for x in children}
+                "children": {str(x[0].id): x[0].name for x in children},
+                'url': KnowledgeBaseUtils.get_url('concept', concept.id)
             }
         for relation in ORelation.objects.filter(model=model).all():
             data['relations'][str(relation.id)] = {
                 "id": relation.id,
                 "name": relation.name,
                 "description": relation.description,
-                "type": relation.type
+                "type": relation.type,
+                'url': KnowledgeBaseUtils.get_url('relation', relation.id)
             }
         for predicate in OPredicate.objects.filter(model=model).all():
             data['predicates'][str(predicate.id)] = {
@@ -110,7 +111,8 @@ class KnowledgeBaseUtils:
                 "object_id": predicate.object.id,
                 "object": predicate.object.name,
                 "cardinality_min": predicate.cardinality_min,
-                "cardinality_max": predicate.cardinality_max
+                "cardinality_max": predicate.cardinality_max,
+                'url': KnowledgeBaseUtils.get_url('predicate', predicate.id)
             }
         return data
 
@@ -132,7 +134,6 @@ class KnowledgeBaseUtils:
                 OSlot.get_or_create(id=slot_id, model=model, name=slot['name'], predicate=predicate, description=slot['description'], subject=subject, object=instance)
 
 
-
     def instances_to_dict(model):
         data = {
             'id': model.id,
@@ -140,7 +141,8 @@ class KnowledgeBaseUtils:
             'name': model.name,
             "description": model.description,
             "predicates": {},
-            "instances": {}
+            "instances": {},
+            'url': KnowledgeBaseUtils.get_url('model', model.id)
             }
         for predicate in OPredicate.objects.filter(model=model).all():
             data['predicates'][str(predicate.id)] = {
@@ -152,7 +154,8 @@ class KnowledgeBaseUtils:
                 "object_id": predicate.object.id,
                 "object": predicate.object.name,
                 "cardinality_min": predicate.cardinality_min,
-                "cardinality_max": predicate.cardinality_max
+                "cardinality_max": predicate.cardinality_max,
+                'url': KnowledgeBaseUtils.get_url('predicate', predicate.id)
             }
         for instance in OInstance.objects.filter(model=model).all():
             data['instances'][str(instance.id)] = {
@@ -163,7 +166,8 @@ class KnowledgeBaseUtils:
                 "concept_id": instance.concept.id,
                 "concept": instance.concept.name,
                 "ownslots": {},
-                "inslots": {}
+                "inslots": {},
+                'url': KnowledgeBaseUtils.get_url('instance', instance.id)
             }
             for slot in OSlot.objects.filter(model=model, subject=instance).all():
                 data['instances'][str(instance.id)]["ownslots"][str(slot.id)] = {
@@ -173,10 +177,11 @@ class KnowledgeBaseUtils:
                     "predicate": slot.predicate.name,
                     "relation_id": slot.predicate.relation.id,
                     "relation": slot.predicate.relation.name,
-                    "concept_id": slot.object.concept.id,
-                    "concept": slot.object.concept.name,
-                    "object_id": slot.object.id,
-                    "object": slot.object.name
+                    "concept_id": slot.predicate.object.id,
+                    "concept": slot.predicate.object.name,
+                    "object_id": slot.object.id if slot.object is not None else None,
+                    "object": slot.object.name if slot.object is not None else None,
+                    "value": slot.value
                 }
             for slot in OSlot.objects.filter(model=model, object=instance).all():
                 data['instances'][str(instance.id)]["inslots"][str(slot.id)] = {
@@ -186,9 +191,19 @@ class KnowledgeBaseUtils:
                     "predicate": slot.predicate.name,
                     "relation_id": slot.predicate.relation.id,
                     "relation": slot.predicate.relation.name,
-                    "concept_id": slot.subject.concept.id,
-                    "concept": slot.subject.concept.name,
+                    "concept_id": slot.predicate.subject.id,
+                    "concept": slot.predicate.subject.name,
                     "subject_id": slot.subject.id,
                     "subject": slot.subject.name
                 }
         return data
+
+    def get_url(object_type, id):
+        object_types = {
+            'model': '/o_model/detail/',
+            'concept': '/o_concept/detail/',
+            'relation': '/o_relation/detail/',
+            'predicate': '/o_predicate/detail/',
+            'instance': '/o_instance/detail/'
+        }
+        return object_types[object_type] + str(id)

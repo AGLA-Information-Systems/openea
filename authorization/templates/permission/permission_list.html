@@ -1,15 +1,16 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
+{% load i18n %}
 
 {% block content %}
-<h2 class="form-title">Permission</h2>
+<h2 class="form-title">{% trans "Permission" %}</h2>
 
 <table class="table table-fluid">
     <thead>
         <tr>
-            <th>Permission</th>
-            <th>Organisation</th>
-            <th>View</th>
+            <th>{% trans "Permission" %}</th>
+            <th>{% trans "Organisation" %}</th>
+            <th>{% trans "View" %}</th>
             <th></th>
             <th></th>
         </tr>
@@ -19,14 +20,14 @@
         <tr>
             <td>{{ Permission }}</td>
             <td><a href="{% url "organisation_detail" Permission.organisation.id %}">{{ Permission.organisation.name }}</a></td>
-            <td><a href="{% url "permission_detail" Permission.id %}">view</a></td>
-            <td><a href="{% url "permission_update" Permission.id %}">edit</a></td>
-            <td><a href="{% url "permission_delete" Permission.id %}">delete</a></td>
+            <td><a href="{% url "permission_detail" Permission.id %}">{% trans "view" %}</a></td>
+            <td><a href="{% url "permission_update" Permission.id %}">{% trans "edit" %}</a></td>
+            <td><a href="{% url "permission_delete" Permission.id %}">{% trans "delete" %}</a></td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 
-<a href="{% url "permission_create_user" user_id=user.id %}">New</a>
+<a href="{% url "permission_create_user" user_id=user.id %}">{% trans "New" %}</a>
 
 {% endblock content %}

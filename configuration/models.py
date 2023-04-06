@@ -2,7 +2,7 @@ import uuid
 from django.db import models
 
 from openea.utils import Utils
-from webapp.models import Organisation
+from organisation.models import Organisation
 
 
 class Configuration(models.Model):
