@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.views.generic import View
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from ontology.models import OConcept, OInstance, OModel, OPredicate, OSlot
 
 
-class OModelXMLView(CustomPermissionRequiredMixin, View):
+class OModelXMLView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
     permission_required = [('VIEW', OModel.get_object_type(), None)]
 
     def get(self, request, *args, **kwargs):

@@ -1,12 +1,13 @@
 import re
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from ontology.models import OReport
 from utils.views.custom import SingleObjectView
 
-class OReportUpdateView(CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
+class OReportUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
     model = OReport
     fields = ['name', 'description', 'path', 'content', 'model', 'quality_status',  'tags']
     template_name = "o_report/o_report_update.html"

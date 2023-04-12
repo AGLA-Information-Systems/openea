@@ -1,12 +1,13 @@
 from django.http import Http404
 from django.views.generic import DetailView
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from ontology.models import ORelation
 from utils.views.custom import SingleObjectView
 
 
-class ORelationDetailView(CustomPermissionRequiredMixin, SingleObjectView, DetailView):
+class ORelationDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DetailView):
     model = ORelation
     template_name = "o_relation/o_relation_detail.html"
     permission_required = [('VIEW', model.get_object_type(), None)]

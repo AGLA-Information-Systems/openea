@@ -4,11 +4,12 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView
 
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.models import OReport
 
 
-class OReportCreateView(CustomPermissionRequiredMixin, CreateView):
+class OReportCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CreateView):
     model = OReport
     fields = ['name', 'description', 'path', 'content', 'model', 'quality_status',  'tags']
     template_name = "o_report/o_report_create.html"

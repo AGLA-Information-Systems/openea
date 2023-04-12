@@ -1,12 +1,13 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.forms.o_concept.o_concept_update import OConceptUpdateForm
 
 from ontology.models import OConcept
 from utils.views.custom import SingleObjectView
 
-class OConceptUpdateView(CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
+class OConceptUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
     model = OConcept
     form_class = OConceptUpdateForm
     template_name = "o_concept/o_concept_update.html"

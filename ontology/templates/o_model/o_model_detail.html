@@ -61,6 +61,7 @@
         {% if show_predicates %}<button class="nav-link" id="nav-ontology-diagram-tab" data-bs-toggle="tab" data-bs-target="#nav-ontology-diagram" type="button" role="tab" aria-controls="nav-ontology-diagram" aria-selected="false">{% trans "Ontology Diagram" %}</button>{% endif %}
         {% if show_predicates %}<button class="nav-link" id="nav-ontology-matrix-tab" data-bs-toggle="tab" data-bs-target="#nav-ontology-matrix" type="button" role="tab" aria-control="nav-ontology-matrix" aria-selected="false">{% trans "Ontology Matrix" %}</button>{% endif %}
         {% if show_instances %}<button class="nav-link" id="nav-instance-matrix-tab" data-bs-toggle="tab" data-bs-target="#nav-instance-matrix" type="button" role="tab" aria-control="nav-instance-matrix" aria-selected="false">{% trans "Instance Matrix" %}</button>{% endif %}
+        {% if show_gap_analysis %}<button class="nav-link" id="nav-gap-analysis-tab" data-bs-toggle="tab" data-bs-target="#nav-gap-analysis" type="button" role="tab" aria-control="nav-gap-analysis" aria-selected="false">{% trans "Model Gap Analysis"%}</button>{% endif %}
     </div>
 </nav>
 
@@ -187,6 +188,13 @@
     </div>
     {% endif %}
 
+    {% if show_gap_analysis %}
+    <div class="tab-pane fade" id="nav-gap-analysis" role="tabpanel" aria-labelledby="nav-gap-analysis-tab">
+        <br>
+        {% include "o_model/o_model_gap_analysis.html" %}
+    </div>
+    {% endif %}
+
 </div>
 <script>
     $(document).ready(function(){
@@ -239,6 +247,9 @@
         $('#instances-matrix-rows').select2();
         $('#instances-matrix-columns').select2();
         generateInstancesMatrix()
+
+        $('#model-gap-select').select2();
+        getModelsData();
     });
 </script>
 {% endblock content %}

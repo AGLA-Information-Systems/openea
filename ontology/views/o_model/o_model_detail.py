@@ -2,7 +2,9 @@ import json
 from django.views.generic import DetailView
 from django.core.paginator import Paginator
 from authorization.models import Permission
-from authorization.controllers.utils import CustomPermissionRequiredMixin, check_permission
+from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
+from authorization.controllers.utils import check_permission
 from ontology.controllers.utils import KnowledgeBaseUtils
 from django.http import Http404
 from ontology.plugins.json import GenericEncoder
@@ -12,7 +14,7 @@ from openea.utils import Utils
 from ontology.models import OInstance, OModel, OConcept, ORelation, OPredicate, OReport
 
 
-class OModelDetailView(CustomPermissionRequiredMixin, SingleObjectView, DetailView):
+class OModelDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DetailView):
     model = OModel
     template_name = "o_model/o_model_detail.html"
     paginate_by = 10000
@@ -56,6 +58,14 @@ class OModelDetailView(CustomPermissionRequiredMixin, SingleObjectView, DetailVi
             report_paginator = Paginator(report_list, self.paginate_by)
             report_page_number = self.request.GET.get('report_page')
             context['reports'] = report_paginator.get_page(report_page_number)
+
+        context['show_gap_analysis'] = True
+        if context['show_gap_analysis']:
+            # get all the models that are not the current one
+            model_list = OModel.objects.exclude(id=model.id).order_by('name').all()
+            model_paginator = Paginator(model_list, self.paginate_by)
+            model_page_number = self.request.GET.get('model_page')
+            context['models'] = model_paginator.get_page(model_page_number)
 
         context['ontology_data'] = json.dumps(KnowledgeBaseUtils.ontology_to_dict(model=model), cls=GenericEncoder)
         #context['instances_data'] = json.dumps(KnowledgeBaseUtils.instances_to_dict(model=model), cls=GenericEncoder)

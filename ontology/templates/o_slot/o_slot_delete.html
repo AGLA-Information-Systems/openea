@@ -6,6 +6,7 @@
 <h2 class="form-title">{% trans "Delete Slot" %}</h2>
 <form class="form-group" method="POST">{% csrf_token %}
     <p>{% trans "Are you sure you want to delete" %} "{{ object }}"?</p>
+    <input type="hidden" name="return_url" value="{{ return_url }}"/>
     <input class="btn btn-primary" type="submit" value="{% trans 'Confirm' %}" />
 </form>
 {% endblock content %}

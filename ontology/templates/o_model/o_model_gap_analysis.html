@@ -1,0 +1,171 @@
+{% load static %}
+{% load js %}
+{% load i18n %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm" style="margin-bottom: 40px">
+            <strong>{% trans "Other Model" %}</strong> 
+            <br/> <br/>
+            <select id="model-gap-select" style="width: 80%">
+                <option value="">----</option>
+            </select>
+        </div>
+        <div class="col-lg">
+            <div id="model-gap" style="min-width: 700px"></div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var models = {};
+    const currentModelId = window.location.pathname.split('/')[3];
+
+    async function getModelsData() {
+        try {
+            const data = await $.ajax({
+                url: '/o_model/json_list/',
+                type: 'GET',
+                dataType: 'json',
+            })
+            models = data;
+            addModelsToSelect(models);
+            return data;
+        } catch (error) {
+            console.error("Error: ", error);
+        }
+    }
+
+    function addModelsToSelect(models) {
+        const select = document.getElementById('model-gap-select');
+
+        for (const [model_id, model] of Object.entries(models)) {
+            if (model.id != currentModelId) {
+                const option = document.createElement('option');
+                option.value = model.id;
+                option.text = model.name;
+                select.appendChild(option);
+            }
+        }
+    }
+
+</script>
+
+<script>
+    function getModelsOrder(model_1, model_2) {
+        model_1 = models[model_1];
+        model_2 = models[model_2];
+
+        const modelsOrder = {
+            first: model_1.name.localeCompare(model_2.name) < 0 ? model_1.id : model_2.id,
+            second: model_1.name.localeCompare(model_2.name) < 0 ? model_2.id : model_1.id,
+        };
+
+        return modelsOrder;
+    }
+
+    function getModelGap(modelsOrder, compareOn) {
+        const modelGap = {
+            first: [],
+            second: [],
+        };
+
+        const firstModel = models[modelsOrder.first];
+        const secondModel = models[modelsOrder.second];
+
+        var firstModelItems = [];
+        var secondModelItems = [];
+
+       if (compareOn === "predicates") {
+            for (const [item_id, item] of Object.entries(firstModel[compareOn])) {
+                firstModelItems.push(`${item.subject}::${item.relation}::${item.object}`);
+            }
+            for (const [item_id, item] of Object.entries(secondModel[compareOn])) {
+                secondModelItems.push(`${item.subject}::${item.relation}::${item.object}`);
+            }
+        } else {
+            for (const [item_id, item] of Object.entries(firstModel[compareOn])) {
+                firstModelItems.push(item.name);
+            }
+            for (const [item_id, item] of Object.entries(secondModel[compareOn])) {
+                secondModelItems.push(item.name);
+            }
+        }
+        
+        modelGap.first = firstModelItems.filter(item => !secondModelItems.includes(item));
+        modelGap.second = secondModelItems.filter(item => !firstModelItems.includes(item));
+
+        return modelGap;
+    }
+
+    function generateModelGapAnalysis() {
+        var modelGap = document.getElementById('model-gap');
+
+        const otherModel = $('#model-gap-select').val();
+
+        if (!otherModel) {
+            return;
+        }
+
+        const modelsOrder = getModelsOrder(currentModelId, otherModel);
+
+        // clear the container
+        while (modelGap.firstChild) {
+            modelGap.removeChild(modelGap.firstChild);
+        }
+
+        // create the table
+        const table = document.createElement('table');
+        table.className = "table table-striped table-bordered table-hover table-sm";
+
+        // create the table head
+        var tableHead = document.createElement("thead");
+        var tableHeadRow = document.createElement("tr");
+
+        // create the first cell of the table head
+        var tableHeadCell = document.createElement("th");
+        tableHeadCell.innerHTML = "Models";
+        tableHeadRow.appendChild(tableHeadCell);
+
+        // add column names
+        for (const model of Object.values(modelsOrder)) {
+            var tableHeadCell = document.createElement("th");
+            tableHeadCell.innerHTML = models[model].name;
+            tableHeadRow.appendChild(tableHeadCell);
+        }
+
+        // create the table body
+        var tableBody = document.createElement("tbody");
+
+        // add rows
+        const compareOn = ["concepts", "relations", "predicates", "instances"];
+        for (const item of compareOn) {
+            const modelGap = getModelGap(modelsOrder, item);
+
+            var tableBodyRow = document.createElement("tr");
+            var tableBodyRowCell = document.createElement("td");
+            tableBodyRowCell.innerHTML = item.charAt(0).toUpperCase() + item.slice(1);
+            tableBodyRow.appendChild(tableBodyRowCell);
+
+            var tableBodyFirstRowCell = document.createElement("td");
+            tableBodyFirstRowCell.appendChild(document.createTextNode(modelGap.first.join(", ")));
+            tableBodyRow.appendChild(tableBodyFirstRowCell);
+
+            var tableBodySecondRowCell = document.createElement("td");
+            tableBodySecondRowCell.appendChild(document.createTextNode(modelGap.second.join(", ")));
+            tableBodyRow.appendChild(tableBodySecondRowCell);
+
+            tableBody.appendChild(tableBodyRow);
+        }
+
+        tableHead.appendChild(tableHeadRow);
+        table.appendChild(tableHead);
+        table.appendChild(tableBody);
+        modelGap.appendChild(table);
+    }
+
+    $('#model-gap-select').change(function () {
+        generateModelGapAnalysis();
+    });
+</script>

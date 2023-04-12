@@ -1,13 +1,14 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse, reverse_lazy
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from ontology.forms.repository.repository_update import RepositoryUpdateForm
 
 from ontology.models import Repository
 from utils.views.custom import SingleObjectView
 
-class RepositoryUpdateView(CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
+class RepositoryUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
     model = Repository
     template_name = "repository/repository_update.html"
     form_class = RepositoryUpdateForm

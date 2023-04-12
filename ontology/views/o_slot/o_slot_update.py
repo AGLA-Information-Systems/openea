@@ -1,6 +1,7 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.controllers.knowledge_base import KnowledgeBaseController
 from ontology.forms.o_slot.o_slot_update import OSlotUpdateForm
 from django.views.generic.edit import FormView
@@ -8,7 +9,7 @@ from django.views.generic.edit import FormView
 from ontology.models import OInstance, OSlot, OPredicate, OSlot
 from utils.views.custom import SingleObjectView
 
-class OSlotUpdateView(CustomPermissionRequiredMixin, SingleObjectView, FormView):
+class OSlotUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, FormView):
     model = OSlot
     template_name = "o_slot/o_slot_update.html"
     form_class = OSlotUpdateForm
@@ -16,14 +17,15 @@ class OSlotUpdateView(CustomPermissionRequiredMixin, SingleObjectView, FormView)
     permission_required = [('UPDATE', model.get_object_type(), None)]
 
     def form_valid(self, form):
-        if self.request.user.is_authenticated:
-            form.instance.created_by = self.request.user
-            slot = OSlot.objects.get(id=self.kwargs.get('pk'))
-            self.object = slot
-            #TODO: handle subject and object
-            object=OInstance.objects.get(id=form.cleaned_data['object'].id)
-            slot.object=object
-            slot.save()
+        self.return_url = self.request.POST.get('return_url')
+        form.instance.created_by = self.request.user
+        slot = OSlot.objects.get(id=self.kwargs.get('pk'))
+        self.object = slot
+        #TODO: handle subject and object
+        object=OInstance.objects.get(id=form.cleaned_data['object'].id)
+        slot.object=object
+        slot.order=form.cleaned_data['order']
+        slot.save()
             
         return super().form_valid(form)
 
@@ -33,5 +35,7 @@ class OSlotUpdateView(CustomPermissionRequiredMixin, SingleObjectView, FormView)
         return initials
 
     def get_success_url(self):
-        pk = self.object.model.id
-        return reverse('o_model_detail', kwargs={'pk': pk})
+        if self.return_url:
+            return self.return_url
+        pk = self.object.id
+        return reverse('o_slot_detail', kwargs={'pk': pk})

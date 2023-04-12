@@ -17,121 +17,56 @@
         </div>
     </div>
 </div>
-<p>{{object.code}}</p>
+<dl class="row">
+    <dt class="col-sm-3">{% trans "Code" %}</dt>
+    <dd class="col-sm-9">{{object.code}}</dd>
+
+    <dt class="col-sm-3">{% trans "Quality Status" %}</dt>
+    <dd class="col-sm-9">{% trans object.get_quality_status_display %}</dd>
+</dl>
 <p>{{object.description | markdown | safe}}</p>
-<p>{% trans object.get_quality_status_display %}</p>
 <p>{% for tag in object.tags.all %}
     {{ tag.name }}
   {% endfor %}
 </p>
 
 <hr>
-<!-- <div class="text-muted">Slots inherited as subject</div> -->
-{% for p, slot_values in inherited_as_subject_slots.items %}
+
+{% for p in all_predicates  %}
 <ul>
-    <li> <span class="text-secondary">{{ p.name }}</span>: 
+    <li> <span class="text-secondary">{{ p.predicate.name }}</span>: 
         <ul>
-            {% for slot_value in slot_values %}
-            <li>
-            {% if slot_value.object %}
-                <a class="link-dark" href="{% url "o_instance_detail" slot_value.object.id %}">{{ slot_value.object.name }}</a>
-            {% else %}
-                <span class="link-dark" >{{ slot_value.value }}</span>
-            {% endif %}
-                <a href="{% url "o_slot_delete" slot_value.id %}">{% trans "delete" %}</a>
-            </li>
+            {% for slot_value in p.slots|dictsort:"order" %}
+                {% if p.kind == "inherited_as_subject" or p.kind == "own_as_subject" %}
+                    {% if slot_value.object %}
+                        <a class="link-dark" href="{% url "o_instance_detail" slot_value.object.id %}">{{ slot_value.object.name }}</a>
+                    {% else %}
+                        <span class="link-dark" >{{ slot_value.value }}</span>
+                    {% endif %}
+                        <a href="{% url "o_slot_update" slot_value.id %}">{% trans "edit" %}</a>
+                        <a href="{% url "o_slot_delete" slot_value.id %}">{% trans "delete" %}</a>
+                    </li>
+                {% elif p.kind == "inherited_as_object" or p.kind == "own_as_object" %}
+                    <li><a class="link-dark" href="{% url "o_instance_detail" slot_value.subject.id %}">{{ slot_value.subject.name }}</a> 
+                        <a href="{% url "o_slot_update" slot_value.id %}">{% trans "edit" %}</a>
+                        <a href="{% url "o_slot_delete" slot_value.id %}">{% trans "delete" %}</a>
+                    </li>   
+                {% endif %} 
             {% endfor %}
+
         </ul>
         <div class="mt-3">
-            {% with p.id as opcs_key %}
-                {% with inherited_as_subject_possible_concepts|get_dict_item:opcs_key as opcs %} 
-                    {% for concept in opcs %}
-                        <a class="btn btn-primary" href="{% url "o_slot_create" instance_id=object.id predicate_id=p.id concept_id=concept.id is_subject=1 %}">+ {{concept.name}}</a>
-                    {% endfor %} 
-                {% endwith  %}
-            {% endwith  %}
+            {% for concept in p.possible_concepts %}
+                {% if p.kind == "inherited_as_subject" or p.kind == "own_as_subject" %}
+                    <a class="btn btn-primary" href="{% url "o_slot_create" instance_id=object.id predicate_id=p.predicate.id concept_id=concept.id is_subject=1 %}">+ {{concept.name}}</a>
+                {% elif p.kind == "inherited_as_object" or p.kind == "own_as_object"  %}
+                    <a class="btn btn-primary" href="{% url "o_slot_create" instance_id=object.id predicate_id=p.predicate.id concept_id=concept.id is_subject=0 %}">+ {{concept.name}}</a>
+                {% endif %} 
+            {% endfor %} 
         </div>
     </li>
 </ul>
 {% endfor %}
 
-<!-- <hr>
-<div class="text-muted">Slots inherited as object</div> -->
-{% for p, slot_values in inherited_as_object_slots.items %}
-<ul>
-    <li> <span class="text-secondary">{{ p.name }}</span>: 
-        <ul>
-            {% for slot_value in slot_values %}
-            <li><a class="link-dark" href="{% url "o_instance_detail" slot_value.subject.id %}">{{ slot_value.subject.name }}</a> 
-                 <!-- <a href="{% url "o_slot_update" slot_value.id %}">{% trans "edit" %}</a>-->
-                 <a href="{% url "o_slot_delete" slot_value.id %}">{% trans "delete" %}</a></li>
-            {% endfor %}
-        </ul>
-        <div class="mt-3">
-            {% with p.id as opcs_key %}
-                {% with inherited_as_object_possible_concepts|get_dict_item:opcs_key as opcs %} 
-                    {% for concept in opcs %}
-                        <a class="btn btn-primary" href="{% url "o_slot_create" instance_id=object.id predicate_id=p.id concept_id=concept.id is_subject=0 %}">+ {{concept.name}}</a>
-                    {% endfor %} 
-                {% endwith  %}
-            {% endwith  %}
-        </div>
-    </li>
-</ul>
-{% endfor %}
-
-<!-- <hr>
-<div class="text-muted">Slots owned as subject</div> -->
-{% for p, slot_values in own_as_subject_slots.items %}
-<ul>
-    <li> <span class="text-secondary">{{ p.name }}</span>: 
-        <ul>
-            {% for slot_value in slot_values %}
-            <li>
-            {% if slot_value.object %}
-                <a class="link-dark" href="{% url "o_instance_detail" slot_value.object.id %}">{{ slot_value.object.name }}</a>
-            {% else %}
-                <span class="link-dark" >{{ slot_value.value }}</span>
-            {% endif %}
-                <a href="{% url "o_slot_delete" slot_value.id %}">{% trans "delete" %}</a>
-            </li>
-            {% endfor %}
-        </ul>
-        <div class="mt-3">
-            {% with p.id as opcs_key %}
-                {% with own_as_subject_possible_concepts|get_dict_item:opcs_key as opcs %} 
-                    {% for concept in opcs %}
-                        <a class="btn btn-primary" href="{% url "o_slot_create" instance_id=object.id predicate_id=p.id concept_id=concept.id is_subject=1 %}">+ {{concept.name}}</a>
-                    {% endfor %} 
-                {% endwith  %}
-            {% endwith  %}
-        </div>
-    </li>
-</ul>
-{% endfor %}
-
-<!-- <hr>
-<div class="text-muted">Slots owned as object</div> -->
-{% for p, slot_values in own_as_object_slots.items %}
-<ul>
-    <li> <span class="text-secondary">{{ p.name }}</span>: 
-        <ul>
-            {% for slot_value in slot_values %}
-            <li><a class="link-dark" href="{% url "o_instance_detail" slot_value.subject.id %}">{{ slot_value.subject.name }}</a> 
-                  <a href="{% url "o_slot_delete" slot_value.id %}">{% trans "delete" %}</a></li>
-            {% endfor %}
-        </ul>
-        <div class="mt-3">
-            {% with p.id as opcs_key %}
-                {% with own_as_object_possible_concepts|get_dict_item:opcs_key as opcs %} 
-                    {% for concept in opcs %}
-                        <a class="btn btn-primary" href="{% url "o_slot_create" instance_id=object.id predicate_id=p.id concept_id=concept.id is_subject=0 %}">+ {{concept.name}}</a>
-                    {% endfor %} 
-                {% endwith  %}
-            {% endwith  %}
-        </div>
-    </li>
-</ul>
-{% endfor %}
 
 {% endblock content %}

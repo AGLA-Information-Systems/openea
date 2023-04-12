@@ -349,6 +349,7 @@ class OSlot(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     description = models.TextField(blank=True, null=True)
     value = models.CharField(max_length=1024, blank=True, null=True)
+    order = models.CharField(max_length=1024, blank=True, null=True)
     subject = models.ForeignKey(OInstance, on_delete=models.CASCADE, null=True, related_name='slot_subject')
     object = models.ForeignKey(OInstance, on_delete=models.CASCADE, null=True, related_name='slot_object')
     predicate = models.ForeignKey(OPredicate, on_delete=models.CASCADE, null=True, related_name='used_in')
@@ -372,18 +373,19 @@ class OSlot(models.Model):
     def name(self):
         return self.predicate.name
 
-    def get_or_create(model, predicate, description='', subject=None, object=None, value=None, id=None):
+    def get_or_create(model, predicate, description='', order='0', subject=None, object=None, value=None, id=None):
         try:
             slot = OSlot.objects.get(id=id)
         except:
             try:
                 slot = OSlot.objects.get(model=model, predicate=predicate, subject=subject, object=object, value=value)
             except:
-                slot = OSlot.objects.create(model=model, predicate=predicate, subject=subject,  object=object, value=value, description=description or '', id=id)
+                slot = OSlot.objects.create(model=model, predicate=predicate, subject=subject,  object=object, value=value, description=description or '', order=order, id=id)
         slot.description = description
         slot.predicate = predicate
         slot.subject = subject
         slot.object = object
+        slot.order = order
         slot.save()
         return slot
 

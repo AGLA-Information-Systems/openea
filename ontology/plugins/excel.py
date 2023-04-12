@@ -199,22 +199,23 @@ class ExcelPlugin(Plugin):
                     
                     slot_id = ws['G' + str(index)].value or None
                     slot_name = name_from_excel(ws['H' + str(index)].value)
-                    slot_description = ws['I' + str(index)].value or ''
+                    slot_order  = ws['I' + str(index)].value or '0'
+                    slot_description = ws['J' + str(index)].value or ''
 
-                    predicate_id = ws['J' + str(index)].value or None
-                    predicate_cardinality_min = ws['K' + str(index)].value or 0
-                    predicate_cardinality_max = ws['L' + str(index)].value or 0
+                    predicate_id = ws['K' + str(index)].value or None
+                    predicate_cardinality_min = ws['L' + str(index)].value or 0
+                    predicate_cardinality_max = ws['M' + str(index)].value or 0
 
-                    relation_id = ws['M' + str(index)].value or None
-                    relation_id_name = name_from_excel(ws['N' + str(index)].value)
+                    relation_id = ws['N' + str(index)].value or None
+                    relation_id_name = name_from_excel(ws['O' + str(index)].value)
 
-                    object_concept_id = ws['O' + str(index)].value or None
-                    object_concept_name = name_from_excel(ws['P' + str(index)].value)
+                    object_concept_id = ws['P' + str(index)].value or None
+                    object_concept_name = name_from_excel(ws['Q' + str(index)].value)
 
-                    object_id = ws['Q' + str(index)].value or None
-                    object_name = name_from_excel(ws['R' + str(index)].value)
-                    object_code = name_from_excel(ws['S' + str(index)].value)
-                    object_description = ws['T' + str(index)].value or ''
+                    object_id = ws['R' + str(index)].value or None
+                    object_name = name_from_excel(ws['S' + str(index)].value)
+                    object_code = name_from_excel(ws['T' + str(index)].value)
+                    object_description = ws['U' + str(index)].value or ''
 
                     if instance_name:
                         concept = OConcept.get_or_create(model=model, name=concept_name, id=concept_id)
@@ -225,7 +226,7 @@ class ExcelPlugin(Plugin):
                         instance = OInstance.get_or_create(model=model, name=instance_name, code=instance_code, concept=concept, id=instance_id, description=instance_description)
                         object = OInstance.get_or_create(model=model, name=object_name, code=object_code, concept=object_concept, id=object_id, description=object_description)
                         
-                        slot = OSlot.get_or_create(model=model, predicate=predicate, description=slot_description, subject=instance, object=object, id=slot_id)
+                        slot = OSlot.get_or_create(model=model, predicate=predicate, description=slot_description, order=slot_order, subject=instance, object=object, id=slot_id)
 
             # Close the workbook after reading
             wb.close()
@@ -241,7 +242,7 @@ class ExcelPlugin(Plugin):
         sheet = wb['instances']
         sheet.append(['InstanceID', 'Instance', 'Instance Code', 'Description',
                       'ConceptID', 'Concept',
-                      'SlotID', 'Slot', 'Slot Description',
+                      'SlotID', 'Slot' , 'Slot Order', 'Slot Description',
                       'PredicateID', 'Cardinality Min', 'Cardinality Max',
                       'RelationID', 'Relation',
                       'Object ConceptID', 'Object Concept',
@@ -256,36 +257,37 @@ class ExcelPlugin(Plugin):
 
         sheet.column_dimensions['G'].hidden = True
         sheet.column_dimensions['H'].width = 25
-        sheet.column_dimensions['I'].hidden = True
-
+        sheet.column_dimensions['I'].width = 25
         sheet.column_dimensions['J'].hidden = True
-        sheet.column_dimensions['K'].width = 10
+
+        sheet.column_dimensions['K'].hidden = True
         sheet.column_dimensions['L'].width = 10
+        sheet.column_dimensions['M'].width = 10
 
-        sheet.column_dimensions['M'].hidden = True
-        sheet.column_dimensions['N'].width = 25
+        sheet.column_dimensions['N'].hidden = True
+        sheet.column_dimensions['O'].width = 25
 
-        sheet.column_dimensions['O'].hidden = True
-        sheet.column_dimensions['P'].width = 25
+        sheet.column_dimensions['P'].hidden = True
+        sheet.column_dimensions['Q'].width = 25
 
-        sheet.column_dimensions['Q'].hidden = True
-        sheet.column_dimensions['R'].width = 25
-        sheet.column_dimensions['S'].width = 10
-        sheet.column_dimensions['T'].hidden = True
+        sheet.column_dimensions['R'].hidden = True
+        sheet.column_dimensions['S'].width = 25
+        sheet.column_dimensions['T'].width = 10
+        sheet.column_dimensions['U'].hidden = True
         
         count = 1
         for instance in OInstance.objects.filter(model=model).all():
             for slot in OSlot.objects.filter(model=model, subject=instance).all():
                 sheet.append([str(instance.id), name_to_excel(instance.name), name_to_excel(instance.code), instance.description,
                               str(instance.concept.id), name_to_excel(instance.concept.name),
-                              str(slot.id), name_to_excel(slot.name), slot.description,
+                              str(slot.id), name_to_excel(slot.name), slot.order, slot.description,
                               str(slot.predicate.id), str(slot.predicate.cardinality_min), str(slot.predicate.cardinality_max),
                               str(slot.predicate.relation.id),  name_to_excel(slot.predicate.relation.name),
                               str(slot.object.concept.id), name_to_excel(slot.object.concept.name),
                               str(slot.object.id), name_to_excel(slot.object.name), name_to_excel(slot.object.code), slot.object.description])
                 count = count + 1
 
-        table = Table(displayName="instances", ref="A1:R{}".format(count))
+        table = Table(displayName="instances", ref="A1:U{}".format(count))
         StyleController.apply_table_style(table)
         sheet.add_table(table)
 

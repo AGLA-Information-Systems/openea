@@ -13,7 +13,6 @@ class OSlotCreateForm(forms.ModelForm):
         is_subject = initial_arguments.get('is_subject')
         instance_id = initial_arguments.get('instance_id')
         predicate_id = initial_arguments.get('predicate_id')
-        concept_id = initial_arguments.get('concept_id')
 
         instance = OInstance.objects.get(id=instance_id)
         predicate = OPredicate.objects.get(id=predicate_id)
@@ -40,7 +39,7 @@ class OSlotCreateForm(forms.ModelForm):
             self.fields['object'].initial = instance.id
             self.fields['subject'].required = False
         
-
+        self.fields['order'].initial = '0'
     class Meta:      
         model = OSlot
-        fields = ['model', 'predicate', 'subject', 'object', 'description']
+        fields = ['model', 'predicate', 'subject', 'object', 'description', 'order']

@@ -1,9 +1,22 @@
 from django.http import Http404
 from django.core.exceptions import PermissionDenied
-
+from urllib.parse import urlparse
 from organisation.models import Organisation
 
-class SingleObjectView:
+
+class ReferrerView:
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        full_url = self.request.META.get('HTTP_REFERER')
+        parsed = urlparse(full_url)
+        context["return_url"] = full_url
+        context["return_path"] = parsed.path
+        self.return_url = full_url
+        return context
+
+
+class SingleObjectView (ReferrerView):
     def get_object(self, **kwargs):
         obj = super().get_object(**kwargs)
         if self.request.user.is_staff:
@@ -24,7 +37,7 @@ class SingleObjectView:
     #     form.instance.modified_by = self.request.user
     #     return super().form_valid(form)
     
-class MultipleObjectsView:
+class MultipleObjectsView (ReferrerView):
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         if self.request.user.is_staff:

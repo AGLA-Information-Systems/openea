@@ -1,13 +1,14 @@
 from django.views.generic.edit import CreateView
 from django.urls import reverse, reverse_lazy
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from ontology.forms.repository.repository_create import RepositoryCreateForm
 
 from ontology.models import Repository
 from utils.views.custom import SingleObjectView
 
-class RepositoryCreateView(CustomPermissionRequiredMixin, CreateView):
+class RepositoryCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CreateView):
     model = Repository
     template_name = "repository/repository_create.html"
     form_class = RepositoryCreateForm

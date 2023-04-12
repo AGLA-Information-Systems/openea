@@ -15,32 +15,18 @@
     </div>
   </div>
   
+<dl class="row">
+    <dt class="col-sm-3">{% trans "Subject" %}</dt>
+    <dd class="col-sm-9"><a href="{% url "o_instance_detail" object.subject.id %}">{{object.subject.name}}</a></dd>
 
-<p>{{object.description | markdown | safe}}</p>
+    <dt class="col-sm-3">{% trans "Object" %}</dt>
+    <dd class="col-sm-9"><a href="{% url "o_instance_detail" object.object.id %}">{{object.object.name}}</a></dd>
 
-<hr>
-{% for p, slot_values in inslots.items %}
-<ul>
-    <li> <span class="text-secondary">{{ p.name }}</span>: <div class="mt-3"><a class="btn btn-primary" href="{% url "o_slot_create" instance_id=object.id predicate_id=p.id %}">+ {% trans "Slot Value" %} </a></div>
-        <ul>
-            {% for slot_value in slot_values %}
-            <li>{{ slot_value.subject.name }}  <a href="{% url "o_slot_update" slot_value.id %}">{% trans "edit" %}</a> <a href="{% url "o_slot_delete" slot_value.id %}">{% trans "delete" %}</a></li>
-            {% endfor %}
-        </ul>
-    </li>
-</ul>
-{% endfor %}
-<hr>
-{% for p, slot_values in ownslots.items %}
-<ul>
-    <li> <span class="text-secondary">{{ p.name }}</span>: <div class="mt-3"><a class="btn btn-primary" href="{% url "o_slot_create" instance_id=object.id predicate_id=p.id %}">+ {% trans "Slot Value" %}</a></div>
-        <ul>
-            {% for slot_value in slot_values %}
-            <li>{{ slot_value.object.name }}  <a href="{% url "o_slot_update" slot_value.id %}">{% trans "edit" %}</a> <a href="{% url "o_slot_delete" slot_value.id %}">{% trans "delete" %}</a></li>
-            {% endfor %}
-        </ul>
-    </li>
-</ul>
-{% endfor %}
+    <dt class="col-sm-3">{% trans "Order" %}</dt>
+    <dd class="col-sm-9">{{object.order}}</dd>
+
+    <dt class="col-sm-3">{% trans "Description" %}</dt>
+    <dd class="col-sm-9">{{object.description | markdown | safe}}</dd>
+</dl>
 
 {% endblock content %}

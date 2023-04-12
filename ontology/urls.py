@@ -16,6 +16,7 @@ from ontology.views.o_instance.o_instance_json_list import OInstanceJSONListView
 from ontology.views.o_instance.o_instance_list import OInstanceListView
 from ontology.views.o_instance.o_instance_update import OInstanceUpdateView
 from ontology.views.o_model.o_model_json import OModelJSONView
+from ontology.views.o_model.o_model_json_list import OModelJSONListView
 from ontology.views.o_model.o_model_xml import OModelXMLView
 from ontology.views.o_report.o_report_run import OReportRunView
 from ontology.views.o_slot.o_slot_list import OSlotListView
@@ -79,6 +80,7 @@ urlpatterns = [
     path('o_model/report/<uuid:pk>/', OModelReportView.as_view(), name='o_model_report'),
     path('o_model_xml/<uuid:model_id>/', OModelXMLView.as_view(), name='o_model_xml'),
     path('o_model_json/<uuid:model_id>/', OModelJSONView.as_view(), name='o_model_json'),
+    path('o_model/json_list/', OModelJSONListView.as_view(), name='o_model_json_list'),
 
     path('model_import/<uuid:model_id>/', ImportView.as_view(), name='model_import'),
     path('model_export/<uuid:model_id>/', ExportView.as_view(), name='model_export'),
