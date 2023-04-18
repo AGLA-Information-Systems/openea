@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from authorization.controllers.utils import create_organisation_admin_security_group
-from webapp.models import Organisation, Profile
+from organisation.models import Organisation, Profile
 from django.contrib.auth.models import User
 from django.db import transaction
 

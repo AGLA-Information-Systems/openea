@@ -15,7 +15,7 @@ __maintainer__ = "Patrick Agbokou"
 __email__ = "patrick.agbokou@aglaglobal.com"
 __status__ = "Development"
 
-class OConceptDeleteView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
+class OConceptDeleteView(CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
     model = OConcept
     template_name = "o_concept/o_concept_delete.html"
     #success_url = reverse_lazy('o_concept_list')

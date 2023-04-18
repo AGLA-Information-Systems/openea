@@ -7,7 +7,7 @@ from django.core.exceptions import PermissionDenied
 from ontology.models import ORelation
 from utils.views.custom import SingleObjectView
 
-class ORelationDeleteView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
+class ORelationDeleteView(CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
     model = ORelation
     template_name = "o_relation/o_relation_delete.html"
     #success_url = reverse_lazy('o_relation_list')

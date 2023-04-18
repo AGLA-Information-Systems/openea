@@ -14,7 +14,7 @@ from ontology.models import OModel, OConcept, ORelation, OPredicate
 
 
 
-class OModelReportView(LoginRequiredMixin, CustomPermissionRequiredMixin, DetailView):
+class OModelReportView(CustomPermissionRequiredMixin, DetailView):
     model = OModel
     #template_name = "o_model/o_model_report.xml"
     paginate_by = 10000

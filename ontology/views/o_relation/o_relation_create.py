@@ -8,7 +8,7 @@ from ontology.forms.o_relation.o_relation_create import ORelationCreateForm
 from ontology.models import ORelation
 
 
-class ORelationCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CreateView):
+class ORelationCreateView(CustomPermissionRequiredMixin, CreateView):
     model = ORelation
     form_class = ORelationCreateForm
     template_name = "o_relation/o_relation_create.html"

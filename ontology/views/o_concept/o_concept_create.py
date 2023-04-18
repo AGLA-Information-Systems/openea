@@ -16,7 +16,7 @@ __maintainer__ = "Patrick Agbokou"
 __email__ = "patrick.agbokou@aglaglobal.com"
 __status__ = "Development"
 
-class OConceptCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CreateView):
+class OConceptCreateView(CustomPermissionRequiredMixin, CreateView):
     model = OConcept
     form_class = OConceptCreateForm
     template_name = "o_concept/o_concept_create.html"

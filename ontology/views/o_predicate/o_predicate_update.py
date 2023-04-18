@@ -7,7 +7,7 @@ from ontology.forms.o_predicate.o_predicate_update import OPredicateUpdateForm
 from ontology.models import OPredicate
 from utils.views.custom import SingleObjectView
 
-class OPredicateUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
+class OPredicateUpdateView(CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
     model = OPredicate
     template_name = "o_predicate/o_predicate_update.html"
     form_class = OPredicateUpdateForm

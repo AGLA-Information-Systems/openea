@@ -7,7 +7,7 @@ from ontology.models import OSlot, OPredicate, OSlot
 from utils.views.custom import SingleObjectView
 
 
-class OSlotDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DetailView):
+class OSlotDetailView(CustomPermissionRequiredMixin, SingleObjectView, DetailView):
     model = OSlot
     template_name = "o_slot/o_slot_detail.html"
     permission_required = [('VIEW', model.get_object_type(), None)]

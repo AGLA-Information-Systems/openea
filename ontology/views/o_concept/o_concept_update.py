@@ -7,7 +7,7 @@ from ontology.forms.o_concept.o_concept_update import OConceptUpdateForm
 from ontology.models import OConcept
 from utils.views.custom import SingleObjectView
 
-class OConceptUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
+class OConceptUpdateView(CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
     model = OConcept
     form_class = OConceptUpdateForm
     template_name = "o_concept/o_concept_update.html"

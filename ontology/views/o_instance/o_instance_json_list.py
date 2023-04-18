@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.models import OInstance, OSlot
 
 
-class OInstanceJSONListView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
+class OInstanceJSONListView(CustomPermissionRequiredMixin, View):
     model = OInstance
     paginate_by = 10000
     permission_required = [('LIST', model.get_object_type(), None)]

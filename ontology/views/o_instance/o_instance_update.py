@@ -10,7 +10,7 @@ from openea.utils import Utils
 from utils.views.custom import SingleObjectView
 
 
-class OInstanceUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, FormView):
+class OInstanceUpdateView(CustomPermissionRequiredMixin, SingleObjectView, FormView):
     model = OInstance
     template_name = "o_instance/o_instance_update.html"
     form_class = OInstanceUpdateForm

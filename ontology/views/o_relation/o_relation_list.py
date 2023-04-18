@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.models import ORelation
 from utils.views.custom import MultipleObjectsView
 
-class ORelationListView(LoginRequiredMixin, CustomPermissionRequiredMixin, MultipleObjectsView, ListView):
+class ORelationListView(CustomPermissionRequiredMixin, MultipleObjectsView, ListView):
     model = ORelation
     template_name = "o_relation/o_relation_list.html"
     paginate_by = 10000

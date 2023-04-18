@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.models import OConcept
 from utils.views.custom import MultipleObjectsView
 
-class OConceptListView(LoginRequiredMixin, CustomPermissionRequiredMixin, MultipleObjectsView, ListView):
+class OConceptListView(CustomPermissionRequiredMixin, MultipleObjectsView, ListView):
     model = OConcept
     template_name = "o_concept/o_concept_list.html"
     paginate_by = 10000

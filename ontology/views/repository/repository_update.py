@@ -8,7 +8,7 @@ from ontology.forms.repository.repository_update import RepositoryUpdateForm
 from ontology.models import Repository
 from utils.views.custom import SingleObjectView
 
-class RepositoryUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
+class RepositoryUpdateView(CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
     model = Repository
     template_name = "repository/repository_update.html"
     form_class = RepositoryUpdateForm

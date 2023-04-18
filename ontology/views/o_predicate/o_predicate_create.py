@@ -8,7 +8,7 @@ from ontology.forms.o_predicate.o_predicate_create import OPredicateCreateForm
 from ontology.models import OPredicate
 
 
-class OPredicateCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CreateView):
+class OPredicateCreateView(CustomPermissionRequiredMixin, CreateView):
     model = OPredicate
     template_name = "o_predicate/o_predicate_create.html"
     form_class = OPredicateCreateForm

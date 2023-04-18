@@ -13,7 +13,7 @@ from organisation.models import Organisation, TASK_TYPE_IMPORT, TASK_TYPE_EXPORT
 from ontology.forms import ModelExportForm, ModelImportForm
 from utils.generic import handle_uploaded_file
 
-class ImportView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
+class ImportView(CustomPermissionRequiredMixin, View):
     form_class = ModelImportForm
     template_name = 'model_import.html'
     success_url = reverse_lazy('task_list')
@@ -65,7 +65,7 @@ class ImportView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
         pk = self.kwargs.get('organisation_id')
         return reverse('organisation_detail', kwargs={'pk': self.object.organisation.id})
 
-class ExportView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
+class ExportView(CustomPermissionRequiredMixin, View):
     form_class = ModelExportForm
     template_name = 'model_export.html'
     success_url = reverse_lazy('task_list')

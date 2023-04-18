@@ -6,7 +6,7 @@ from django.core.exceptions import PermissionDenied
 from ontology.models import OConcept, OInstance
 from utils.views.custom import SingleObjectView
 
-class OInstanceDeleteView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
+class OInstanceDeleteView(CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
     model = OInstance
     template_name = "o_instance/o_instance_delete.html"
     #success_url = reverse_lazy('o_instance_list')

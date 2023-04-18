@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.models import OConcept, OInstance, OModel, OPredicate, OSlot
 
 
-class OModelXMLView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
+class OModelXMLView(CustomPermissionRequiredMixin, View):
     permission_required = [('VIEW', OModel.get_object_type(), None)]
 
     def get(self, request, *args, **kwargs):

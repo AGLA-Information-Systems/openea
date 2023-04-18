@@ -14,7 +14,7 @@ from openea.utils import Utils
 from ontology.models import OInstance, OModel, OConcept, ORelation, OPredicate, OReport
 
 
-class OModelDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DetailView):
+class OModelDetailView(CustomPermissionRequiredMixin, SingleObjectView, DetailView):
     model = OModel
     template_name = "o_model/o_model_detail.html"
     paginate_by = 10000

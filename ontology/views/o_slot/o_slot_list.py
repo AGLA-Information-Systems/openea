@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.models import OSlot
 from utils.views.custom import MultipleObjectsView
 
-class OSlotListView(LoginRequiredMixin, CustomPermissionRequiredMixin, MultipleObjectsView, ListView):
+class OSlotListView(CustomPermissionRequiredMixin, MultipleObjectsView, ListView):
     model = OSlot
     template_name = "o_slot/o_slot_list.html"
     paginate_by = 10000

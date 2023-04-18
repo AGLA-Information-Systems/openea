@@ -7,7 +7,7 @@ from ontology.models import OReport
 from utils.views.custom import SingleObjectView
 
 
-class OReportDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DetailView):
+class OReportDetailView(CustomPermissionRequiredMixin, SingleObjectView, DetailView):
     model = OReport
     template_name = "o_report/o_report_detail.html"
     permission_required = [('VIEW', model.get_object_type(), None)]

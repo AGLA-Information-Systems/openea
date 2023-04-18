@@ -7,7 +7,7 @@ from ontology.models import ORelation
 from utils.views.custom import SingleObjectView
 
 
-class ORelationDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DetailView):
+class ORelationDetailView(CustomPermissionRequiredMixin, SingleObjectView, DetailView):
     model = ORelation
     template_name = "o_relation/o_relation_detail.html"
     permission_required = [('VIEW', model.get_object_type(), None)]

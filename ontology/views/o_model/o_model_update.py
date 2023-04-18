@@ -7,7 +7,7 @@ from ontology.forms.o_model.o_model_update import OModelUpdateForm
 from ontology.models import OModel
 from utils.views.custom import SingleObjectView
 
-class OModelUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
+class OModelUpdateView(CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
     model = OModel
     form_class = OModelUpdateForm
     template_name = "o_model/o_model_update.html"

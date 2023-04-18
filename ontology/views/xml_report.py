@@ -7,7 +7,7 @@ from ontology.models import OModel
 from utils.views.custom import SingleObjectView
 
 
-class XMLReportView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, View):
+class XMLReportView(CustomPermissionRequiredMixin, SingleObjectView, View):
     permission_required = [('EXPORT', OModel.get_object_type(), None)]
     
     def get(self, request, *args, **kwargs):

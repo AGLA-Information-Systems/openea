@@ -9,7 +9,7 @@ from ontology.models import OConcept, OInstance, OPredicate, OSlot, OModel
 from utils.generic import handle_errors
 from utils.views.custom import ReferrerView
 
-class OSlotCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, ReferrerView, FormView):
+class OSlotCreateView(CustomPermissionRequiredMixin, ReferrerView, FormView):
     model = OSlot
     template_name = "o_slot/o_slot_create.html"
     form_class = OSlotCreateForm

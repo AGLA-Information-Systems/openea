@@ -11,7 +11,7 @@ from ontology.forms.o_instance.o_instance_create import OInstanceCreateForm
 from ontology.models import OConcept, OInstance, OModel
 
 
-class OInstanceCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, FormView):
+class OInstanceCreateView(CustomPermissionRequiredMixin, FormView):
     model = OInstance
     template_name = "o_instance/o_instance_create.html"
     form_class = OInstanceCreateForm

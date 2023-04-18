@@ -8,7 +8,7 @@ from ontology.forms.repository.repository_create import RepositoryCreateForm
 from ontology.models import Repository
 from utils.views.custom import SingleObjectView
 
-class RepositoryCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CreateView):
+class RepositoryCreateView(CustomPermissionRequiredMixin, CreateView):
     model = Repository
     template_name = "repository/repository_create.html"
     form_class = RepositoryCreateForm

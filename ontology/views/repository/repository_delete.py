@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.models import Repository
 from utils.views.custom import SingleObjectView
 
-class RepositoryDeleteView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
+class RepositoryDeleteView(CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
     model = Repository
     template_name = "repository/repository_delete.html"
     success_url = reverse_lazy('repository_list')

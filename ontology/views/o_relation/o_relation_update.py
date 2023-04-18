@@ -7,7 +7,7 @@ from ontology.forms.o_relation.o_relation_update import ORelationUpdateForm
 from ontology.models import ORelation
 from utils.views.custom import SingleObjectView
 
-class ORelationUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
+class ORelationUpdateView(CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
     model = ORelation
     form_class = ORelationUpdateForm
     template_name = "o_relation/o_relation_update.html"

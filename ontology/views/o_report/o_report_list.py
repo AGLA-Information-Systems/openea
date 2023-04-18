@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.models import OReport
 from utils.views.custom import MultipleObjectsView
 
-class OReportListView(LoginRequiredMixin, CustomPermissionRequiredMixin, MultipleObjectsView, ListView):
+class OReportListView(CustomPermissionRequiredMixin, MultipleObjectsView, ListView):
     model = OReport
     template_name = "o_report/o_report_list.html"
     paginate_by = 10000

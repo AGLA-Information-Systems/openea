@@ -7,7 +7,7 @@ from django.core.exceptions import PermissionDenied
 from ontology.models import OReport
 from utils.views.custom import SingleObjectView
 
-class OReportDeleteView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
+class OReportDeleteView(CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
     model = OReport
     template_name = "o_report/o_report_delete.html"
     #success_url = reverse_lazy('o_report_list')

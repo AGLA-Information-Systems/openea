@@ -9,7 +9,7 @@ from ontology.models import OInstance, OPredicate, ORelation, OSlot
 from utils.views.custom import SingleObjectView
 
 
-class OInstanceDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DetailView):
+class OInstanceDetailView(CustomPermissionRequiredMixin, SingleObjectView, DetailView):
     model = OInstance
     template_name = "o_instance/o_instance_detail.html"
     permission_required = [('VIEW', model.get_object_type(), None)]

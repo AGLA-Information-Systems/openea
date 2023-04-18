@@ -8,7 +8,7 @@ from ontology.forms.o_model.o_model_create import OModelCreateForm
 from ontology.models import OModel
 
 
-class OModelCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CreateView):
+class OModelCreateView(CustomPermissionRequiredMixin, CreateView):
     model = OModel
     template_name = "o_model/o_model_create.html"
     form_class = OModelCreateForm

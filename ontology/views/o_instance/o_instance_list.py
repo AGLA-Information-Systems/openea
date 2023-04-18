@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.models import OInstance
 from utils.views.custom import MultipleObjectsView
 
-class OInstanceListView(LoginRequiredMixin, CustomPermissionRequiredMixin, MultipleObjectsView, ListView):
+class OInstanceListView(CustomPermissionRequiredMixin, MultipleObjectsView, ListView):
     model = OInstance
     template_name = "o_instance/o_instance_list.html"
     paginate_by = 10000

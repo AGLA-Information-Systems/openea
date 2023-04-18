@@ -10,7 +10,7 @@ from ontology.models import OConcept, OInstance, OModel, OPredicate, OSlot
 from ontology.plugins.json import GenericEncoder
 
 
-class OModelJSONView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
+class OModelJSONView(CustomPermissionRequiredMixin, View):
     permission_required = [('VIEW', OModel.get_object_type(), None)]
 
     def get(self, request, *args, **kwargs):

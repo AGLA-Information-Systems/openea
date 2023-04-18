@@ -9,7 +9,7 @@ from ontology.models import OConcept, OInstance
 from utils.views.custom import SingleObjectView
 
 
-class OConceptDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DetailView):
+class OConceptDetailView(CustomPermissionRequiredMixin, SingleObjectView, DetailView):
     model = OConcept
     template_name = "o_concept/o_concept_detail.html"
     paginate_by = 10000

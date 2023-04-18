@@ -12,7 +12,7 @@ from django.urls import reverse_lazy
 from ..forms import ModelReportForm
 
 
-class ReportView(LoginRequiredMixin, CustomPermissionRequiredMixin, FormView):
+class ReportView(CustomPermissionRequiredMixin, FormView):
     form_class = ModelReportForm
     template_name = 'model_report.html'
     success_url = reverse_lazy('model_report')

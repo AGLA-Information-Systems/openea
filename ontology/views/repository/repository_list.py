@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.models import Repository
 from utils.views.custom import MultipleObjectsView
 
-class RepositoryListView(LoginRequiredMixin, CustomPermissionRequiredMixin, MultipleObjectsView, ListView):
+class RepositoryListView(CustomPermissionRequiredMixin, MultipleObjectsView, ListView):
     model = Repository
     template_name = "repository/repository_list.html"
     paginate_by = 10000

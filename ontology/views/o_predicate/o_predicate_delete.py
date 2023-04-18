@@ -7,7 +7,7 @@ from django.core.exceptions import PermissionDenied
 from ontology.models import OPredicate
 from utils.views.custom import SingleObjectView
 
-class OPredicateDeleteView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
+class OPredicateDeleteView(CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
     model = OPredicate
     template_name = "o_predicate/o_predicate_delete.html"
     #success_url = reverse_lazy('o_predicate_list')

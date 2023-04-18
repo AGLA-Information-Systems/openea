@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.models import OReport
 from utils.views.custom import SingleObjectView
 
-class OReportUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
+class OReportUpdateView(CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
     model = OReport
     fields = ['name', 'description', 'path', 'content', 'model', 'quality_status',  'tags']
     template_name = "o_report/o_report_update.html"

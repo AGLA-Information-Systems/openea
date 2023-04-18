@@ -9,7 +9,7 @@ from django.core.exceptions import PermissionDenied
 from ontology.models import OConcept, OSlot
 from utils.views.custom import SingleObjectView
 
-class OSlotDeleteView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
+class OSlotDeleteView(CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
     model = OSlot
     template_name = "o_slot/o_slot_delete.html"
     #success_url = reverse_lazy('o_slot_list')

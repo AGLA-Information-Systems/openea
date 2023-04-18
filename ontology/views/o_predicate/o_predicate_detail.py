@@ -7,7 +7,7 @@ from ontology.models import OPredicate
 from utils.views.custom import SingleObjectView
 
 
-class OPredicateDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DetailView):
+class OPredicateDetailView(CustomPermissionRequiredMixin, SingleObjectView, DetailView):
     model = OPredicate
     template_name = "o_predicate/o_predicate_detail.html"
     permission_required = [('VIEW', model.get_object_type(), None)]

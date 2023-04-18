@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.models import OReport
 
 
-class OReportCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CreateView):
+class OReportCreateView(CustomPermissionRequiredMixin, CreateView):
     model = OReport
     fields = ['name', 'description', 'path', 'content', 'model', 'quality_status',  'tags']
     template_name = "o_report/o_report_create.html"

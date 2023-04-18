@@ -7,7 +7,7 @@ from ontology.models import Repository, OModel
 from utils.views.custom import SingleObjectView
 
 
-class RepositoryDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DetailView):
+class RepositoryDetailView(CustomPermissionRequiredMixin, SingleObjectView, DetailView):
     model = Repository
     template_name = "repository/repository_detail.html"
     permission_required = [('VIEW', model.get_object_type(), None)]

@@ -8,7 +8,7 @@ from ontology.models import OConcept, OInstance, OModel, OPredicate, ORelation
 from ontology.plugins.json import GenericEncoder
 
 
-class OModelJSONListView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
+class OModelJSONListView(CustomPermissionRequiredMixin, View):
     model = OModel
     paginate_by = 10000
     permission_required = [('LIST', model.get_object_type(), None)]
