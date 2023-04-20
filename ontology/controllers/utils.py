@@ -197,6 +197,52 @@ class KnowledgeBaseUtils:
                     "subject": slot.subject.name
                 }
         return data
+    
+    def instances_to_list(instance_ids):
+        data = []
+        for instance_id in instance_ids:
+            instance = OInstance.objects.get(id=instance_id)
+            instance_data = {
+                "id": str(instance.id),
+                "name": instance.name,
+                'code': instance.code,
+                "description": instance.description,
+                "concept_id": str(instance.concept.id),
+                "concept": instance.concept.name,
+                "ownslots": {},
+                "inslots": {},
+                'url': KnowledgeBaseUtils.get_url('instance', instance.id)
+            }
+            for slot in OSlot.objects.filter(subject=instance).all():
+                instance_data["ownslots"][str(slot.id)] = {
+                    "id": str(slot.id),
+                    "description": slot.description,
+                    "predicate_id": str(slot.predicate.id),
+                    "predicate": slot.predicate.name,
+                    "relation_id": str(slot.predicate.relation.id),
+                    "relation": slot.predicate.relation.name,
+                    "concept_id": str(slot.predicate.object.id),
+                    "concept": slot.predicate.object.name,
+                    "object_id": str(slot.object.id) if slot.object is not None else None,
+                    "object": slot.object.name if slot.object is not None else None,
+                    "value": slot.value
+                }
+            for slot in OSlot.objects.filter(object=instance).all():
+                instance_data["inslots"][str(slot.id)] = {
+                    "id": str(slot.id),
+                    "description": slot.description,
+                    "predicate_id": str(slot.predicate.id),
+                    "predicate": slot.predicate.name,
+                    "relation_id": str(slot.predicate.relation.id),
+                    "relation": slot.predicate.relation.name,
+                    "concept_id": str(slot.predicate.subject.id),
+                    "concept": slot.predicate.subject.name,
+                    "subject_id": str(slot.subject.id),
+                    "subject": slot.subject.name
+                }
+            data.append(instance_data)
+
+        return data
 
     def get_url(object_type, id):
         object_types = {

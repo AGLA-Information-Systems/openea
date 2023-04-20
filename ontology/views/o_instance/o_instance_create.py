@@ -38,7 +38,7 @@ class OInstanceCreateView(CustomPermissionRequiredMixin, FormView):
         return initials
 
     def get_success_url(self):
-        if self.return_url:
-            return self.return_url
+        """ if self.return_url:
+            return self.return_url """
         pk = self.kwargs.get('concept_id')
         return reverse('o_concept_detail', kwargs={'pk': pk})

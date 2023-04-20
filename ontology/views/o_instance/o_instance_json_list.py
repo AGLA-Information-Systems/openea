@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.views import View
 from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
-from django.contrib.auth.mixins import LoginRequiredMixin
+from ontology.controllers.utils import KnowledgeBaseUtils
 
 from ontology.models import OInstance, OSlot
 
@@ -12,8 +12,16 @@ class OInstanceJSONListView(CustomPermissionRequiredMixin, View):
     permission_required = [('LIST', model.get_object_type(), None)]
 
     def get(self, request, *args, **kwargs):
-        concept_id=self.kwargs.get('concept_id')
-        instances = OInstance.objects.filter(concept_id=concept_id)
+        model_id = request.GET.get('model_id', '')
+        concept_id = request.GET.get('concept_id', '')
+
+        if model_id:
+            instances = OInstance.objects.filter(model_id=model_id)
+        elif concept_id:
+            instances = OInstance.objects.filter(concept_id=concept_id)
+        else:
+            instances = OInstance.objects.all()
+
         data = {}
         for instance in instances:
             data[str(instance.id)] = {
