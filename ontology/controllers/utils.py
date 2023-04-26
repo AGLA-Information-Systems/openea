@@ -136,7 +136,7 @@ class KnowledgeBaseUtils:
 
     def instances_to_dict(model, instance_ids=None):
         data = {
-            'id': model.id,
+            'id': str(model.id),
             "type": "model",
             'name': model.name,
             "description": model.description,
@@ -146,12 +146,12 @@ class KnowledgeBaseUtils:
             }
         for predicate in OPredicate.objects.filter(model=model).all():
             data['predicates'][str(predicate.id)] = {
-                "id": predicate.id,
-                "subject_id": predicate.subject.id,
+                "id": str(predicate.id),
+                "subject_id": str(predicate.subject.id),
                 "subject": predicate.subject.name,
-                "relation_id": predicate.relation.id,
+                "relation_id": str(predicate.relation.id),
                 "relation": predicate.relation.name,
-                "object_id": predicate.object.id,
+                "object_id": str(predicate.object.id),
                 "object": predicate.object.name,
                 "cardinality_min": predicate.cardinality_min,
                 "cardinality_max": predicate.cardinality_max,
@@ -165,11 +165,11 @@ class KnowledgeBaseUtils:
 
         for instance in instances:
             data['instances'][str(instance.id)] = {
-                "id": instance.id,
+                "id": str(instance.id),
                 "name": instance.name,
                 'code': instance.code,
                 "description": instance.description,
-                "concept_id": instance.concept.id,
+                "concept_id": str(instance.concept.id),
                 "concept": instance.concept.name,
                 "ownslots": {},
                 "inslots": {},
@@ -177,29 +177,29 @@ class KnowledgeBaseUtils:
             }
             for slot in OSlot.objects.filter(model=model, subject=instance).all():
                 data['instances'][str(instance.id)]["ownslots"][str(slot.id)] = {
-                    "id": slot.id,
+                    "id": str(slot.id),
                     "description": slot.description,
-                    "predicate_id": slot.predicate.id,
+                    "predicate_id": str(slot.predicate.id),
                     "predicate": slot.predicate.name,
-                    "relation_id": slot.predicate.relation.id,
+                    "relation_id": str(slot.predicate.relation.id),
                     "relation": slot.predicate.relation.name,
-                    "concept_id": slot.predicate.object.id,
+                    "concept_id": str(slot.predicate.object.id),
                     "concept": slot.predicate.object.name,
-                    "object_id": slot.object.id if slot.object is not None else None,
+                    "object_id": str(slot.object.id) if slot.object is not None else None,
                     "object": slot.object.name if slot.object is not None else None,
                     "value": slot.value
                 }
             for slot in OSlot.objects.filter(model=model, object=instance).all():
                 data['instances'][str(instance.id)]["inslots"][str(slot.id)] = {
-                    "id": slot.id,
+                    "id": str(slot.id),
                     "description": slot.description,
-                    "predicate_id": slot.predicate.id,
+                    "predicate_id": str(slot.predicate.id),
                     "predicate": slot.predicate.name,
-                    "relation_id": slot.predicate.relation.id,
+                    "relation_id": str(slot.predicate.relation.id),
                     "relation": slot.predicate.relation.name,
-                    "concept_id": slot.predicate.subject.id,
+                    "concept_id": str(slot.predicate.subject.id),
                     "concept": slot.predicate.subject.name,
-                    "subject_id": slot.subject.id,
+                    "subject_id": str(slot.subject.id),
                     "subject": slot.subject.name
                 }
         return data

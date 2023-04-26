@@ -48,17 +48,17 @@ class ImportView(CustomPermissionRequiredMixin, View):
             }
 
             if request.POST.get("_start_import") and import_file:
-                if request.POST.get('import_format') == 'Json':
+                if request.POST.get('import_format') == 'JSON':
                     with open(f"{settings.MEDIA_ROOT}/{import_file}", 'rb') as f:
                         data = f.read()
                         data = json.loads(data)
                         KnowledgeBaseUtils.instances_from_dict(model, data)
 
-                elif request.POST.get('import_format') == 'Excel':
+                elif request.POST.get('import_format') == 'EXCEL':
                     # TODO: implement excel import
                     pass
 
-                return HttpResponseRedirect(reverse('model_detail', kwargs={'pk': model.id}))
+                return HttpResponseRedirect(reverse('o_model_detail', kwargs={'pk': model.id}))
 
             elif request.POST.get("_schedule_import") and import_file:
                 t = Task.objects.create(
@@ -118,7 +118,6 @@ class ExportView(CustomPermissionRequiredMixin, View):
 
                 # create a file-like object from the JSON data
                 instances_json = io.BytesIO(instances_json)
-
 
                 response = FileResponse(instances_json, as_attachment=True, filename='export.json')
                 response["content-type"] = "application/json"
