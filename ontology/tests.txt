@@ -3,3 +3,5 @@ python manage.py test  ontology.tests.EssentialPluginTestCase.test_import_ontolo
 python manage.py test  ontology.tests.EssentialPluginTestCase.test_import_instances
 
 python manage.py test  ontology.tests.KnowledgeBaseControllerTestCase.test_import_essential_export_excel_instances
+
+python manage.py test  ontology.tests.InstanceImportTestCase
