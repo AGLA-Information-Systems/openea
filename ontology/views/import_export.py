@@ -1,9 +1,10 @@
+import io
 import json
 from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.models import OModel
 
-from django.http import HttpResponseRedirect
+from django.http import FileResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
 from django.urls import reverse_lazy, reverse
@@ -12,6 +13,7 @@ from organisation.models import Organisation, TASK_TYPE_IMPORT, TASK_TYPE_EXPORT
 
 from ontology.forms import ModelExportForm, ModelImportForm
 from utils.generic import handle_uploaded_file
+from ontology.controllers.utils import KnowledgeBaseUtils
 
 class ImportView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
     form_class = ModelImportForm
@@ -89,16 +91,44 @@ class ExportView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
                 'knowledge_set': form.cleaned_data.get('knowledge_set'),
             }
             organisation = model.repository.organisation
-            t = Task.objects.create(
-                name='export',
-                description='',
-                type=TASK_TYPE_EXPORT,
-                config=json.dumps(config),
-                user=request.user,
-                organisation=organisation
-            )
-            t.save()
-            return HttpResponseRedirect(self.success_url)
+            
+            if request.POST.get("_start_export"):
+                selected_instances = request.POST.getlist('selected_instances')
+
+                """ instances = []
+                for selected_instance in selected_instances:
+                    instance = OInstance.objects.get(id=selected_instance)
+                    instances.append({
+                        'id': str(instance.id),
+                        'name': instance.name,
+                    })
+                 """
+                instances = KnowledgeBaseUtils.instances_to_list(
+                    selected_instances)
+
+                # serialize data to JSON and convert to bytes
+                instances_json = json.dumps(instances).encode('utf-8')
+
+                # create a file-like object from the JSON data
+                instances_json = io.BytesIO(instances_json)
+
+                response = FileResponse(
+                    instances_json, as_attachment=True, filename='export.json')
+                response["content-type"] = "application/json"
+                return response
+
+                # return render(request, self.template_name, {'form': form})
+            elif request.POST.get("_schedule_export"):
+                t = Task.objects.create(
+                    name='export',
+                    description='',
+                    type=TASK_TYPE_EXPORT,
+                    config=json.dumps(config),
+                    user=request,
+                    organisation=organisation
+                )
+                t.save()
+                return HttpResponseRedirect(self.success_url)
 
         return render(request, self.template_name, {'form': form})
 
