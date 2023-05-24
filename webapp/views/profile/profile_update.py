@@ -1,10 +1,11 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from webapp.models import Profile
 
-class ProfileUpdateView(CustomPermissionRequiredMixin, UpdateView):
+class ProfileUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, UpdateView):
     model = Profile
     fields = ['role', 'description', 'user', 'organisation']
     template_name = "profile/profile_update.html"

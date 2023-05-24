@@ -2,9 +2,10 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy, reverse
 
 from authorization.models import SecurityGroup
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class SecurityGroupDeleteView(CustomPermissionRequiredMixin, DeleteView):
+class SecurityGroupDeleteView(LoginRequiredMixin, CustomPermissionRequiredMixin, DeleteView):
     model = SecurityGroup
     template_name = "security_group/security_group_delete.html"
     #success_url = reverse_lazy('security_group_list')

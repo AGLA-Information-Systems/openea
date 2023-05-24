@@ -1,11 +1,12 @@
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from authorization.models import Permission
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from webapp.models import Organisation
 
 
-class OrganisationListView(CustomPermissionRequiredMixin, ListView):
+class OrganisationListView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
     model = Organisation
     template_name = "organisation/organisation_list.html"
     paginate_by = 10000

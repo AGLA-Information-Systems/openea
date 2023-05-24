@@ -1,10 +1,11 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from webapp.models import Organisation
 
-class OrganisationUpdateView(CustomPermissionRequiredMixin, UpdateView):
+class OrganisationUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, UpdateView):
     model = Organisation
     fields = ['name', 'description', 'location']
     template_name = "organisation/organisation_update.html"

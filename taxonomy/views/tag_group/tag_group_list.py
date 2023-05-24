@@ -1,17 +1,18 @@
 from django.views.generic import ListView
 
 from taxonomy.models import TagGroup
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class TagGroupListView(CustomPermissionRequiredMixin, ListView):
+class TagGroupListView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
     model = TagGroup
     template_name = "tag_group/tag_group_list.html"
     paginate_by = 10000
     permission_required = [('LIST', model.get_object_type(), None)]
 
 
-class TagGroupListUserView(CustomPermissionRequiredMixin, ListView):
+class TagGroupListUserView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
     model = TagGroup
     template_name = "tag_group/tag_group_list.html"
     paginate_by = 10000
@@ -26,7 +27,7 @@ class TagGroupListUserView(CustomPermissionRequiredMixin, ListView):
         return qs.filter(user=self.request.user)
 
 
-class TagGroupListOrganisationView(CustomPermissionRequiredMixin, ListView):
+class TagGroupListOrganisationView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
     model = TagGroup
     template_name = "tag_group/tag_group_list.html"
     paginate_by = 10000

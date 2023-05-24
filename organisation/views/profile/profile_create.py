@@ -1,11 +1,12 @@
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from organisation.models import Profile
 from webapp.forms import ProfileCreateForm
 
-class ProfileCreateView(CustomPermissionRequiredMixin, CreateView):
+class ProfileCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CreateView):
     model = Profile
     # fields = ['role', 'description', 'user', 'organisation']
     template_name = "profile/profile_create.html"

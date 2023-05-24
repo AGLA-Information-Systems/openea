@@ -1,13 +1,14 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.forms.o_relation.o_relation_update import ORelationUpdateForm
 
 from ontology.models import ORelation
 from utils.views.custom import SingleObjectView
 
-class ORelationUpdateView(CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
+class ORelationUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
     model = ORelation
     form_class = ORelationUpdateForm
     template_name = "o_relation/o_relation_update.html"

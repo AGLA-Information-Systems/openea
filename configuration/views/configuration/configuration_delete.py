@@ -2,9 +2,10 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy, reverse
 
 from configuration.models import Configuration
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class ConfigurationDeleteView(CustomPermissionRequiredMixin, DeleteView):
+class ConfigurationDeleteView(LoginRequiredMixin, CustomPermissionRequiredMixin, DeleteView):
     model = Configuration
     template_name = "configuration/configuration_delete.html"
     #success_url = reverse_lazy('configuration_list')

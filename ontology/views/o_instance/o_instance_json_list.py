@@ -1,12 +1,13 @@
 from django.http import JsonResponse
 from django.views import View
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin, create_organisation_admin_security_group
 from ontology.controllers.utils import KnowledgeBaseUtils
 
 from ontology.models import OInstance, OSlot
 
 
-class OInstanceJSONListView(CustomPermissionRequiredMixin, View):
+class OInstanceJSONListView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
     model = OInstance
     paginate_by = 10000
     permission_required = [('LIST', model.get_object_type(), None)]

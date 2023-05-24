@@ -1,6 +1,7 @@
 import io
 import json
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.models import OModel
 
@@ -17,7 +18,7 @@ from ontology.controllers.utils import KnowledgeBaseUtils
 from django.conf import settings
 
 
-class ImportView(CustomPermissionRequiredMixin, View):
+class ImportView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
     form_class = ModelImportForm
     template_name = 'model_import.html'
     success_url = reverse_lazy('task_list')
@@ -83,7 +84,7 @@ class ImportView(CustomPermissionRequiredMixin, View):
         pk = self.kwargs.get('organisation_id')
         return reverse('organisation_detail', kwargs={'pk': self.object.organisation.id})
 
-class ExportView(CustomPermissionRequiredMixin, View):
+class ExportView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
     form_class = ModelExportForm
     template_name = 'model_export.html'
     success_url = reverse_lazy('task_list')

@@ -1,11 +1,12 @@
 from django.http import HttpResponseBadRequest
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from utils.views.custom import SingleObjectView
 from organisation.models import Organisation
 
-class OrganisationDeleteView(CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
+class OrganisationDeleteView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
     model = Organisation
     template_name = "organisation/organisation_delete.html"
     success_url = reverse_lazy('organisation_list')

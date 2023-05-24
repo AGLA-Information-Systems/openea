@@ -1,10 +1,11 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from webapp.models import Task
 
-class TaskUpdateView(CustomPermissionRequiredMixin, UpdateView):
+class TaskUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, UpdateView):
     model = Task
     fields = ['name', 'description', 'attachment', 'organisation']
     template_name = "task/task_update.html"

@@ -4,14 +4,15 @@ from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView, FormView
 
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.controllers.knowledge_base import KnowledgeBaseController
 from ontology.forms.o_instance.o_instance_create import OInstanceCreateForm
 from ontology.models import OConcept, OInstance, OModel
 
 
-class OInstanceCreateView(CustomPermissionRequiredMixin, FormView):
+class OInstanceCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, FormView):
     model = OInstance
     template_name = "o_instance/o_instance_create.html"
     form_class = OInstanceCreateForm

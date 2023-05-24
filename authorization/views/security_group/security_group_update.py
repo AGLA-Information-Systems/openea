@@ -2,9 +2,10 @@ from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
 
 from authorization.models import SecurityGroup
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class SecurityGroupUpdateView(CustomPermissionRequiredMixin, UpdateView):
+class SecurityGroupUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, UpdateView):
     model = SecurityGroup
     fields = ['name', 'description', 'organisation']
     template_name = "security_group/security_group_update.html"

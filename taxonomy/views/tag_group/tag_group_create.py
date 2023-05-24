@@ -3,9 +3,10 @@ from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy, reverse
 
 from taxonomy.models import TagGroup
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class TagGroupCreateView(CustomPermissionRequiredMixin, CreateView):
+class TagGroupCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CreateView):
     model = TagGroup
     fields = ['name', 'description', 'organisation']
     template_name = "tag_group/tag_group_create.html"

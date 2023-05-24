@@ -1,11 +1,12 @@
 from django.views.generic import ListView
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from ontology.models import OInstance
 from utils.views.custom import MultipleObjectsView
 
-class OInstanceListView(CustomPermissionRequiredMixin, MultipleObjectsView, ListView):
+class OInstanceListView(LoginRequiredMixin, CustomPermissionRequiredMixin, MultipleObjectsView, ListView):
     model = OInstance
     template_name = "o_instance/o_instance_list.html"
     paginate_by = 10000

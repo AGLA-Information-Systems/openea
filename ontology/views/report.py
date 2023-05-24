@@ -1,6 +1,7 @@
 from decimal import Decimal
 import json
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.controllers.knowledge_base import KnowledgeBaseController
 from ontology.controllers.utils import KnowledgeBaseUtils
@@ -12,7 +13,7 @@ from django.urls import reverse_lazy
 from ..forms import ModelReportForm
 
 
-class ReportView(CustomPermissionRequiredMixin, FormView):
+class ReportView(LoginRequiredMixin, CustomPermissionRequiredMixin, FormView):
     form_class = ModelReportForm
     template_name = 'model_report.html'
     success_url = reverse_lazy('model_report')

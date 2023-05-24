@@ -1,17 +1,18 @@
 from django.views.generic import ListView
 
 from authorization.models import SecurityGroup
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class SecurityGroupListView(CustomPermissionRequiredMixin, ListView):
+class SecurityGroupListView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
     model = SecurityGroup
     template_name = "security_group/security_group_list.html"
     paginate_by = 10000
     permission_required = [('LIST', model.get_object_type(), None)]
 
 
-class SecurityGroupListUserView(CustomPermissionRequiredMixin, ListView):
+class SecurityGroupListUserView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
     model = SecurityGroup
     template_name = "security_group/security_group_list.html"
     paginate_by = 10000
@@ -26,7 +27,7 @@ class SecurityGroupListUserView(CustomPermissionRequiredMixin, ListView):
         return qs.filter(user=self.request.user)
 
 
-class SecurityGroupListOrganisationView(CustomPermissionRequiredMixin, ListView):
+class SecurityGroupListOrganisationView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
     model = SecurityGroup
     template_name = "security_group/security_group_list.html"
     paginate_by = 10000

@@ -1,9 +1,10 @@
 from django.views.generic import ListView
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from webapp.models import Task
 
-class TaskListView(CustomPermissionRequiredMixin, ListView):
+class TaskListView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
     model = Task
     template_name = "task/task_list.html"
     paginate_by = 10000
@@ -18,7 +19,7 @@ class TaskListView(CustomPermissionRequiredMixin, ListView):
         return qs.all().order_by('-created_at')
 
 
-class TaskListUserView(CustomPermissionRequiredMixin, ListView):
+class TaskListUserView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
     model = Task
     template_name = "task/task_list.html"
     paginate_by = 10000
@@ -29,7 +30,7 @@ class TaskListUserView(CustomPermissionRequiredMixin, ListView):
         return qs.filter(user=self.request.user).order_by('-created_at')
 
 
-class TaskListOrganisationView(CustomPermissionRequiredMixin, ListView):
+class TaskListOrganisationView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
     model = Task
     template_name = "task/task_list.html"
     paginate_by = 10000

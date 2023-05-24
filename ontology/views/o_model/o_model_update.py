@@ -1,13 +1,14 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.forms.o_model.o_model_update import OModelUpdateForm
 
 from ontology.models import OModel
 from utils.views.custom import SingleObjectView
 
-class OModelUpdateView(CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
+class OModelUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
     model = OModel
     form_class = OModelUpdateForm
     template_name = "o_model/o_model_update.html"

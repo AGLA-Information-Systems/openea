@@ -2,9 +2,10 @@ from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy, reverse
 
 from configuration.models import Configuration
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class ConfigurationCreateView(CustomPermissionRequiredMixin, CreateView):
+class ConfigurationCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CreateView):
     model = Configuration
     fields = ['action', 'object_type', 'object_identifier', 'description', 'organisation']
     template_name = "configuration/configuration_create.html"
@@ -27,5 +28,5 @@ class ConfigurationCreateView(CustomPermissionRequiredMixin, CreateView):
         return reverse('organisation_detail', kwargs={'pk': self.object.organisation.id})
 
 
-class ConfigurationRebuildView(CustomPermissionRequiredMixin, CreateView):
+class ConfigurationRebuildView(LoginRequiredMixin, CustomPermissionRequiredMixin, CreateView):
     model = Configuration

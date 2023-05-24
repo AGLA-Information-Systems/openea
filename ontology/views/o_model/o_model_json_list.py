@@ -1,14 +1,15 @@
 import json
 from django.http import HttpResponse
 from django.views.generic import View
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from ontology.models import OConcept, OInstance, OModel, OPredicate, ORelation
 from ontology.plugins.json import GenericEncoder
 
 
-class OModelJSONListView(CustomPermissionRequiredMixin, View):
+class OModelJSONListView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
     model = OModel
     paginate_by = 10000
     permission_required = [('LIST', model.get_object_type(), None)]

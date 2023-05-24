@@ -1,7 +1,8 @@
 from tabnanny import check
 from django.views.generic import DetailView
 from django.core.paginator import Paginator
-from authorization.controllers.utils import CustomPermissionRequiredMixin, check_permission
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin, check_permission
 from configuration.models import Configuration
 from openea.utils import Utils
 from taxonomy.models import Tag, TagGroup
@@ -11,7 +12,7 @@ from ontology.models import Repository
 from authorization.models import SecurityGroup, Permission
 
 
-class OrganisationDetailView(CustomPermissionRequiredMixin, DetailView):
+class OrganisationDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, DetailView):
     model = Organisation
     template_name = "organisation/organisation_detail.html"
     paginate_by = 10000

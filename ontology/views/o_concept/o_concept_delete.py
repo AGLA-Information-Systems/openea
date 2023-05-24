@@ -1,7 +1,8 @@
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import DeleteView
 from django.core.exceptions import PermissionDenied
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.models import OConcept
 from utils.views.custom import SingleObjectView
@@ -15,7 +16,7 @@ __maintainer__ = "Patrick Agbokou"
 __email__ = "patrick.agbokou@aglaglobal.com"
 __status__ = "Development"
 
-class OConceptDeleteView(CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
+class OConceptDeleteView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
     model = OConcept
     template_name = "o_concept/o_concept_delete.html"
     #success_url = reverse_lazy('o_concept_list')

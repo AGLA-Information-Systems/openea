@@ -3,9 +3,10 @@ from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy, reverse
 
 from authorization.models import SecurityGroup
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin, create_organisation_admin_security_group
 
-class SecurityGroupCreateView(CustomPermissionRequiredMixin, CreateView):
+class SecurityGroupCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CreateView):
     model = SecurityGroup
     fields = ['name', 'description', 'organisation']
     template_name = "security_group/security_group_create.html"
@@ -27,7 +28,7 @@ class SecurityGroupCreateView(CustomPermissionRequiredMixin, CreateView):
         pk = self.kwargs.get('organisation_id')
         return reverse('organisation_detail', kwargs={'pk': self.object.organisation.id})
 
-class SecurityGroupAdminCreateView(CustomPermissionRequiredMixin, CreateView):
+class SecurityGroupAdminCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CreateView):
     model = SecurityGroup
     fields = ['name', 'description', 'organisation']
     template_name = "security_group/security_group_create.html"

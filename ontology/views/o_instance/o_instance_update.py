@@ -2,7 +2,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import FormView
 
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.forms.o_instance.o_instance_update import OInstanceUpdateForm
 from ontology.models import OInstance, OPredicate, OSlot
@@ -10,7 +11,7 @@ from openea.utils import Utils
 from utils.views.custom import SingleObjectView
 
 
-class OInstanceUpdateView(CustomPermissionRequiredMixin, SingleObjectView, FormView):
+class OInstanceUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, FormView):
     model = OInstance
     template_name = "o_instance/o_instance_update.html"
     form_class = OInstanceUpdateForm

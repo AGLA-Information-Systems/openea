@@ -2,9 +2,10 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy, reverse
 
 from taxonomy.models import Tag
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class TagDeleteView(CustomPermissionRequiredMixin, DeleteView):
+class TagDeleteView(LoginRequiredMixin, CustomPermissionRequiredMixin, DeleteView):
     model = Tag
     template_name = "tag/tag_delete.html"
     #success_url = reverse_lazy('tag_list')

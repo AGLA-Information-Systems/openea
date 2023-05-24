@@ -2,7 +2,8 @@ from django.http import HttpResponse
 import json
 from django.shortcuts import render
 from django.views.generic import View
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.controllers.utils import KnowledgeBaseUtils
 
@@ -10,7 +11,7 @@ from ontology.models import OConcept, OInstance, OModel, OPredicate, OSlot
 from ontology.plugins.json import GenericEncoder
 
 
-class OModelJSONView(CustomPermissionRequiredMixin, View):
+class OModelJSONView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
     permission_required = [('VIEW', OModel.get_object_type(), None)]
 
     def get(self, request, *args, **kwargs):

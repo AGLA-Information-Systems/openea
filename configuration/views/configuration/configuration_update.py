@@ -2,9 +2,10 @@ from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
 
 from configuration.models import Configuration
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class ConfigurationUpdateView(CustomPermissionRequiredMixin, UpdateView):
+class ConfigurationUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, UpdateView):
     model = Configuration
     fields = ['action', 'object_type', 'object_identifier', 'description', 'organisation']
     template_name = "configuration/configuration_update.html"

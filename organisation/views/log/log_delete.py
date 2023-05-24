@@ -1,10 +1,11 @@
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from organisation.models import Log
 
-class LogDeleteView(CustomPermissionRequiredMixin, DeleteView):
+class LogDeleteView(LoginRequiredMixin, CustomPermissionRequiredMixin, DeleteView):
     model = Log
     template_name = "log/log_delete.html"
     success_url = reverse_lazy('log_list')

@@ -1,9 +1,10 @@
 from django.views.generic import ListView
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from organisation.models import Log
 
-class LogListView(CustomPermissionRequiredMixin, ListView):
+class LogListView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
     model = Log
     template_name = "log/log_list.html"
     paginate_by = 10000
@@ -18,7 +19,7 @@ class LogListView(CustomPermissionRequiredMixin, ListView):
         return qs.all().order_by('-created_at')
 
 
-class LogListUserView(CustomPermissionRequiredMixin, ListView):
+class LogListUserView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
     model = Log
     template_name = "log/log_list.html"
     paginate_by = 10000
@@ -29,7 +30,7 @@ class LogListUserView(CustomPermissionRequiredMixin, ListView):
         return qs.filter(user=self.request.user).order_by('-created_at')
 
 
-class LogListOrganisationView(CustomPermissionRequiredMixin, ListView):
+class LogListOrganisationView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
     model = Log
     template_name = "log/log_list.html"
     paginate_by = 10000

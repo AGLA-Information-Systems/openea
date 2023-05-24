@@ -2,7 +2,8 @@ import json
 from django.views.generic import DetailView
 from django.core.paginator import Paginator
 from authorization.models import Permission
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from authorization.controllers.utils import check_permission
 from ontology.controllers.utils import KnowledgeBaseUtils
@@ -14,7 +15,7 @@ from openea.utils import Utils
 from ontology.models import OInstance, OModel, OConcept, ORelation, OPredicate, OReport
 
 
-class OModelDetailView(CustomPermissionRequiredMixin, SingleObjectView, DetailView):
+class OModelDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DetailView):
     model = OModel
     template_name = "o_model/o_model_detail.html"
     paginate_by = 10000

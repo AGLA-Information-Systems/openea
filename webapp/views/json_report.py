@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.views.generic import View
 
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.models import OModel
 
 
-class JSONReportView(CustomPermissionRequiredMixin, View):
+class JSONReportView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
     permission_required = [('EXPORT', OModel.get_object_type(), None)]
 
     def get(self, request, *args, **kwargs):

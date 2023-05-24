@@ -1,7 +1,8 @@
 from django.db.models import Q
 from django.http import Http404
 from django.views.generic import DetailView
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.controllers.utils import KnowledgeBaseUtils
 
@@ -9,7 +10,7 @@ from ontology.models import OInstance, OPredicate, ORelation, OSlot
 from utils.views.custom import SingleObjectView
 
 
-class OInstanceDetailView(CustomPermissionRequiredMixin, SingleObjectView, DetailView):
+class OInstanceDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DetailView):
     model = OInstance
     template_name = "o_instance/o_instance_detail.html"
     permission_required = [('VIEW', model.get_object_type(), None)]

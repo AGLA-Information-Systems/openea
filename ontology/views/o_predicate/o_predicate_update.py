@@ -1,13 +1,14 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.forms.o_predicate.o_predicate_update import OPredicateUpdateForm
 
 from ontology.models import OPredicate
 from utils.views.custom import SingleObjectView
 
-class OPredicateUpdateView(CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
+class OPredicateUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
     model = OPredicate
     template_name = "o_predicate/o_predicate_update.html"
     form_class = OPredicateUpdateForm

@@ -5,7 +5,8 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from django.core import serializers
 import lxml.etree as ET
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -14,7 +15,7 @@ from ontology.models import OModel, OConcept, ORelation, OPredicate
 
 
 
-class OModelReportView(CustomPermissionRequiredMixin, DetailView):
+class OModelReportView(LoginRequiredMixin, CustomPermissionRequiredMixin, DetailView):
     model = OModel
     #template_name = "o_model/o_model_report.xml"
     paginate_by = 10000

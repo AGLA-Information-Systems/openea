@@ -1,4 +1,5 @@
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from webapp.models import Profile
 
 from django.http import HttpResponseRedirect
@@ -7,7 +8,7 @@ from django.urls import reverse_lazy, reverse
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
 
-class ProfileActivateView(CustomPermissionRequiredMixin, View):
+class ProfileActivateView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
     model = Profile
     permission_required = []
     success_url = reverse_lazy('profile_list')

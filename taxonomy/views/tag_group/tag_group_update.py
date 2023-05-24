@@ -2,9 +2,10 @@ from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
 
 from taxonomy.models import TagGroup
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class TagGroupUpdateView(CustomPermissionRequiredMixin, UpdateView):
+class TagGroupUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, UpdateView):
     model = TagGroup
     fields = ['name', 'description', 'organisation']
     template_name = "tag_group/tag_group_update.html"

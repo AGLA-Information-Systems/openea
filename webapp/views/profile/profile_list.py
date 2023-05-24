@@ -1,17 +1,18 @@
 from django.views.generic import ListView
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from webapp.models import Profile
 
 
-class ProfileListView(CustomPermissionRequiredMixin, ListView):
+class ProfileListView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
     model = Profile
     template_name = "profile/profile_list.html"
     paginate_by = 10000
     permission_required = [('LIST', model.get_object_type(), None)]
 
 
-class ProfileListUserView(CustomPermissionRequiredMixin, ListView):
+class ProfileListUserView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
     model = Profile
     template_name = "profile/profile_list.html"
     paginate_by = 10000
@@ -26,7 +27,7 @@ class ProfileListUserView(CustomPermissionRequiredMixin, ListView):
         return qs.filter(user=self.request.user)
 
 
-class ProfileListOrganisationView(CustomPermissionRequiredMixin, ListView):
+class ProfileListOrganisationView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
     model = Profile
     template_name = "profile/profile_list.html"
     paginate_by = 10000

@@ -1,13 +1,14 @@
 from django.http import Http404
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from authorization.controllers.utils import CustomPermissionRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from ontology.models import ORelation
 from utils.views.custom import SingleObjectView
 
-class ORelationDeleteView(CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
+class ORelationDeleteView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
     model = ORelation
     template_name = "o_relation/o_relation_delete.html"
     #success_url = reverse_lazy('o_relation_list')
