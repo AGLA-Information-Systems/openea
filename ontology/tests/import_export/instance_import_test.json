@@ -1,0 +1,59 @@
+{
+    "id": "4278497f-141f-4be5-9570-3c1e8a2cfba1",
+    "type": "model",
+    "name": "mod33",
+    "description": "",
+    "predicates": {
+        "83773a91-b060-45a2-b59d-9102ef9c5761": {
+            "id": "83773a91-b060-45a2-b59d-9102ef9c5761",
+            "subject_id": "db3ed8e4-2b7b-4f11-a059-ab4725e9f8d8",
+            "subject": "coo1",
+            "relation_id": "949717b9-9151-4798-b14c-ad07e350b6a9",
+            "relation": "rel1",
+            "object_id": "44c7d61c-bf16-413b-92a8-9f3fb847cf22",
+            "object": "coo2",
+            "cardinality_min": 0,
+            "cardinality_max": 0,
+            "url": "/o_predicate/detail/83773a91-b060-45a2-b59d-9102ef9c5761"
+        },
+        "8c7be4f8-5225-4a76-b8cc-b6ff38d895d4": {
+            "id": "8c7be4f8-5225-4a76-b8cc-b6ff38d895d4",
+            "subject_id": "44c7d61c-bf16-413b-92a8-9f3fb847cf22",
+            "subject": "coo2",
+            "relation_id": "7d054fd2-b4d3-463e-b43a-8912aa08e461",
+            "relation": "rel2",
+            "object_id": "db3ed8e4-2b7b-4f11-a059-ab4725e9f8d8",
+            "object": "coo1",
+            "cardinality_min": 0,
+            "cardinality_max": 0,
+            "url": "/o_predicate/detail/8c7be4f8-5225-4a76-b8cc-b6ff38d895d4"
+        }
+    },
+    "instances": {
+        "418fae8d-6ade-4ccc-8ebc-010fe1f11edd": {
+            "id": "418fae8d-6ade-4ccc-8ebc-010fe1f11edd",
+            "name": "inst12",
+            "code": "",
+            "description": "",
+            "concept_id": "db3ed8e4-2b7b-4f11-a059-ab4725e9f8d8",
+            "concept": "coo1",
+            "ownslots": {},
+            "inslots": {
+                "e666e9cc-3197-4d7d-8c7c-c19d62d4a23c": {
+                    "id": "e666e9cc-3197-4d7d-8c7c-c19d62d4a23c",
+                    "description": null,
+                    "predicate_id": "8c7be4f8-5225-4a76-b8cc-b6ff38d895d4",
+                    "predicate": "coo2 rel2 coo1",
+                    "relation_id": "7d054fd2-b4d3-463e-b43a-8912aa08e461",
+                    "relation": "rel2",
+                    "concept_id": "44c7d61c-bf16-413b-92a8-9f3fb847cf22",
+                    "concept": "coo2",
+                    "subject_id": "d01f883e-9c8c-486e-8efd-4476803dda3e",
+                    "subject": "collee"
+                }
+            },
+            "url": "/o_instance/detail/418fae8d-6ade-4ccc-8ebc-010fe1f11edd"
+        }
+    },
+    "url": "/o_model/detail/4278497f-141f-4be5-9570-3c1e8a2cfba1"
+}

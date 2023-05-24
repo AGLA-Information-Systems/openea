@@ -14,6 +14,7 @@ from organisation.models import Organisation, TASK_TYPE_IMPORT, TASK_TYPE_EXPORT
 from ontology.forms import ModelExportForm, ModelImportForm
 from utils.generic import handle_uploaded_file
 from ontology.controllers.utils import KnowledgeBaseUtils
+from django.conf import settings
 
 class ImportView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
     form_class = ModelImportForm
@@ -45,16 +46,30 @@ class ImportView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
                 'knowledge_set': form.cleaned_data.get('knowledge_set'),
             }
 
-            t = Task.objects.create(
-                name='import',
-                description='',
-                type=TASK_TYPE_IMPORT,
-                attachment=import_file,
-                config=json.dumps(config),
-                user=request.user,
-                organisation=organisation)
-            t.save()
-            return HttpResponseRedirect(self.success_url)
+            if request.POST.get("_start_import") and import_file:
+                if request.POST.get('import_format') == 'JSON':
+                    with open(f"{settings.MEDIA_ROOT}/{import_file}", 'rb') as f:
+                        data = f.read()
+                        data = json.loads(data)
+                        KnowledgeBaseUtils.instances_from_dict(model, data)
+
+                elif request.POST.get('import_format') == 'EXCEL':
+                    # TODO: implement excel import
+                    pass
+
+                    return HttpResponseRedirect(reverse('o_model_detail', kwargs={'pk': model.id}))
+
+            elif request.POST.get("_schedule_import") and import_file:
+                t = Task.objects.create(
+                    name='import',
+                    description='',
+                    type=TASK_TYPE_IMPORT,
+                    attachment=import_file,
+                    config=json.dumps(config),
+                    user=request.user,
+                    organisation=organisation)
+                t.save()
+                return HttpResponseRedirect(self.success_url)
 
         return render(request, self.template_name, {'form': form})
 
@@ -95,16 +110,7 @@ class ExportView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
             if request.POST.get("_start_export"):
                 selected_instances = request.POST.getlist('selected_instances')
 
-                """ instances = []
-                for selected_instance in selected_instances:
-                    instance = OInstance.objects.get(id=selected_instance)
-                    instances.append({
-                        'id': str(instance.id),
-                        'name': instance.name,
-                    })
-                 """
-                instances = KnowledgeBaseUtils.instances_to_list(
-                    selected_instances)
+                instances = KnowledgeBaseUtils.instances_to_dict(model, selected_instances)
 
                 # serialize data to JSON and convert to bytes
                 instances_json = json.dumps(instances).encode('utf-8')
@@ -112,12 +118,10 @@ class ExportView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
                 # create a file-like object from the JSON data
                 instances_json = io.BytesIO(instances_json)
 
-                response = FileResponse(
-                    instances_json, as_attachment=True, filename='export.json')
+                response = FileResponse(instances_json, as_attachment=True, filename='export.json')
                 response["content-type"] = "application/json"
                 return response
 
-                # return render(request, self.template_name, {'form': form})
             elif request.POST.get("_schedule_export"):
                 t = Task.objects.create(
                     name='export',
