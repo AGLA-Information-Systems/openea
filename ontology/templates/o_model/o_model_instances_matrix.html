@@ -54,7 +54,7 @@
     async function getConceptInstances(concept_id) {
         try {
             const data = await $.ajax({
-                url: "/o_instance/json_list/" + concept_id,
+                url: "/o_instance/json_list/?concept_id=" + concept_id,
                 type: "GET",
             });
             return data;

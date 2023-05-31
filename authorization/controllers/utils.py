@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponse
 from django.core.exceptions import PermissionDenied
 from openea.utils import Utils
@@ -56,7 +56,7 @@ def create_organisation_admin_security_group(organisation, admin_security_group_
     return admin_security_group
 
 
-class CustomPermissionRequiredMixin(LoginRequiredMixin, PermissionRequiredMixin):
+class CustomPermissionRequiredMixin(PermissionRequiredMixin):
     """Verify that the current user has all specified permissions."""
     login_url = '/user/login/'
     redirect_field_name = 'redirect_to'
