@@ -14,7 +14,7 @@ class OModelJSONListView(LoginRequiredMixin, CustomPermissionRequiredMixin, View
     permission_required = [('LIST', model.get_object_type(), None)]
 
     def get(self, request, *args, **kwargs):
-        models = OModel.objects.all()
+        models = OModel.objects.order_by('name')
         data = {}
         for model in models:
             data[str(model.id)] = {
@@ -25,24 +25,24 @@ class OModelJSONListView(LoginRequiredMixin, CustomPermissionRequiredMixin, View
                 "predicates": {},
                 "instances": {},
             }
-            for concept in OConcept.objects.filter(model=model).all():
+            for concept in OConcept.objects.filter(model=model).order_by('name'):
                 data[str(model.id)]["concepts"][str(concept.id)] = {
                     "id": concept.id,
                     "name": concept.name,
                 }
-            for relation in ORelation.objects.filter(model=model).all():
+            for relation in ORelation.objects.filter(model=model).order_by('name'):
                 data[str(model.id)]["relations"][str(relation.id)] = {
                     "id": relation.id,
                     "name": relation.name,
                 }
-            for predicate in OPredicate.objects.filter(model=model).all():
+            for predicate in OPredicate.objects.filter(model=model).order_by('object__name').order_by('relation__name').order_by('subject__name'):
                 data[str(model.id)]["predicates"][str(predicate.id)] = {
                     "id": predicate.id,
                     "subject": predicate.subject.name,
                     "relation": predicate.relation.name,
                     "object": predicate.object.name,
                 }
-            for instance in OInstance.objects.filter(model=model).all():
+            for instance in OInstance.objects.filter(model=model).order_by('name'):
                 data[str(model.id)]["instances"][str(instance.id)] = {
                     "id": instance.id,
                     "name": instance.name,

@@ -2,9 +2,23 @@
 {% load crispy_forms_tags %}
 {% load i18n %}
 {% load mkd %}
+{% load static %}
 
 {% block meta %}<meta name="description" content="{% trans "Model detail" %}">{% endblock meta %}
 {% block title %}{% trans "Model detail" %}{% endblock title %}
+
+
+{% block script_extras %}
+    <script src="{% static '/js/custom.js' %}"></script>
+    <script type="text/javascript">
+        var ontology_data = {{ ontology_data | safe }};
+        var concepts = {};
+        var relations = {};
+        var predicates = {};
+        var instances = {};
+    </script>
+{% endblock script_extras %}
+
 {% block content %}
 <div class="d-flex flex-column flex-md-row align-items-center pb-2">
     <div>
@@ -52,16 +66,25 @@
   {% endfor %}
 </p>
 
+<dl class="row">
+    <dt class="col-sm-3 text-muted">{% trans "Created" %}</dt>
+    <dd class="col-sm-9 text-muted">{{object.created_at}} - {{object.created_by.username}}</dd>
+
+    <dt class="col-sm-3 text-muted">{% trans "Modified" %}</dt>
+    <dd class="col-sm-9 text-muted">{{object.modified_at}} - {{object.modified_by.username}}</dd>
+</dl>
+
 <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
         {% if show_reports %}<button class="nav-link" id="nav-reports-tab" data-bs-toggle="tab" data-bs-target="#nav-reports" type="button" role="tab" aria-controls="nav-reports" aria-selected="false">{% trans "Reports" %}</button>{% endif %}
         {% if show_concepts %}<button class="nav-link" id="nav-entities-tab" data-bs-toggle="tab" data-bs-target="#nav-entities" type="button" role="tab" aria-controls="nav-entities" aria-selected="false">{% trans "Concepts" %}</button>{% endif %}
         {% if show_relations %}<button class="nav-link" id="nav-relations-tab" data-bs-toggle="tab" data-bs-target="#nav-relations" type="button" role="tab" aria-controls="nav-relations" aria-selected="false">{% trans "Relations" %}</button>{% endif %}
         {% if show_predicates %}<button class="nav-link" id="nav-predicates-tab" data-bs-toggle="tab" data-bs-target="#nav-predicates" type="button" role="tab" aria-controls="nav-predicates" aria-selected="true">{% trans "Ontology" %}</button>{% endif %}     
-        {% if show_predicates %}<button class="nav-link" id="nav-ontology-diagram-tab" data-bs-toggle="tab" data-bs-target="#nav-ontology-diagram" type="button" role="tab" aria-controls="nav-ontology-diagram" aria-selected="false">{% trans "Ontology Diagram" %}</button>{% endif %}
-        {% if show_predicates %}<button class="nav-link" id="nav-ontology-matrix-tab" data-bs-toggle="tab" data-bs-target="#nav-ontology-matrix" type="button" role="tab" aria-control="nav-ontology-matrix" aria-selected="false">{% trans "Ontology Matrix" %}</button>{% endif %}
-        {% if show_instances %}<button class="nav-link" id="nav-instance-matrix-tab" data-bs-toggle="tab" data-bs-target="#nav-instance-matrix" type="button" role="tab" aria-control="nav-instance-matrix" aria-selected="false">{% trans "Instance Matrix" %}</button>{% endif %}
-        {% if show_gap_analysis %}<button class="nav-link" id="nav-gap-analysis-tab" data-bs-toggle="tab" data-bs-target="#nav-gap-analysis" type="button" role="tab" aria-control="nav-gap-analysis" aria-selected="false">{% trans "Model Gap Analysis"%}</button>{% endif %}
+        {% if show_all %}<button class="nav-link" id="nav-graph-tab" data-bs-toggle="tab" data-bs-target="#nav-graph" type="button" role="tab" aria-control="nav-graph" aria-selected="false">{% trans "Graph"%}</button>{% endif %}
+        {% if show_all %}<button class="nav-link" id="nav-matrix-tab" data-bs-toggle="tab" data-bs-target="#nav-matrix" type="button" role="tab" aria-control="nav-matrix" aria-selected="false">{% trans "Matrix"%}</button>{% endif %}
+        {% if show_all %}<button class="nav-link" id="nav-impact-analysis-tab" data-bs-toggle="tab" data-bs-target="#nav-impact-analysis" type="button" role="tab" aria-control="nav-impact-analysis" aria-selected="false">{% trans "Impact Analysis"%}</button>{% endif %}
+        {% if show_all %}<button class="nav-link" id="nav-gap-analysis-tab" data-bs-toggle="tab" data-bs-target="#nav-gap-analysis" type="button" role="tab" aria-control="nav-gap-analysis" aria-selected="false">{% trans "Gap Analysis"%}</button>{% endif %}
+        {% if show_all %}<button class="nav-link" id="nav-pathfinder-tab" data-bs-toggle="tab" data-bs-target="#nav-pathfinder" type="button" role="tab" aria-control="nav-pathfinder" aria-selected="false">{% trans "Path Finder" %}</button>{% endif %}
     </div>
 </nav>
 
@@ -164,38 +187,44 @@
     </div>
 
     {% endif %}
-    {% if show_predicates %}
 
-    <div class="tab-pane fade" id="nav-ontology-diagram" role="tabpanel" aria-labelledby="nav-ontology-diagram-tab">
+    {% if show_all %}
+    <div class="tab-pane fade" id="nav-graph" role="tabpanel" aria-labelledby="nav-graph-tab">
         <br>
-        {% include "o_model/o_model_ontology_diagram.html" %}
-    </div>
-
-    {% endif %}
-
-    {% if show_predicates %}
-    <div class="tab-pane fade" id="nav-ontology-matrix" role="tabpanel" aria-labelledby="nav-ontology-matrix-tab">
-        <br>
-        {% include "o_model/o_model_ontology_matrix.html" %}
-    </div>
-    
-    {% endif %}
-
-    {% if show_instances %}
-     <div class="tab-pane fade" id="nav-instance-matrix" role="tabpanel" aria-labelledby="nav-instance-matrix-tab">
-        <br>
-        {% include "o_model/o_model_instances_matrix.html" %}
+        {% include "o_model/o_model_graph.html" %}
     </div>
     {% endif %}
 
-    {% if show_gap_analysis %}
+    {% if show_all %}
+    <div class="tab-pane fade" id="nav-matrix" role="tabpanel" aria-labelledby="nav-matrix-tab">
+        <br>
+        {% include "o_model/o_model_matrix.html" %}
+    </div>
+    {% endif %}
+
+    {% if show_all %}
+    <div class="tab-pane fade" id="nav-impact-analysis" role="tabpanel" aria-labelledby="nav-impact-analysis-tab">
+        <br>
+        {% include "o_model/o_model_impact_analysis.html" %}
+    </div>
+    {% endif %}
+
+    {% if show_all %}
     <div class="tab-pane fade" id="nav-gap-analysis" role="tabpanel" aria-labelledby="nav-gap-analysis-tab">
         <br>
         {% include "o_model/o_model_gap_analysis.html" %}
     </div>
     {% endif %}
 
+    {% if show_all %}
+    <div class="tab-pane fade" id="nav-pathfinder" role="tabpanel" aria-labelledby="nav-pathfinder-tab">
+        <br>
+        {% include "o_model/o_model_pathfinder.html" %}
+    </div>
+    {% endif %}
+
 </div>
+
 <script>
     $(document).ready(function(){
         $('button[data-bs-toggle="tab"]').on('show.bs.tab', function(e) {
@@ -208,6 +237,8 @@
     });
 </script>
 <script>
+    const modelId = window.location.pathname.split('/')[3];
+
     $(document).ready(function(){
         $("#search-reports").on("keyup", function() {
           var value = $(this).val().toLowerCase();
@@ -234,22 +265,7 @@
           });
         });
 
-        $('#diagram-concepts').select2();
-        $('#diagram-concepts-relations').select2();
-
-        $('#concepts-matrix-select-rows').select2();
-        $('#concepts-matrix-select-columns').select2();
-        generateConceptMatrix();
-
-        $('#instances-matrix-rows-concept').select2();
-        $('#instances-matrix-columns-concept').select2();
-
-        $('#instances-matrix-rows').select2();
-        $('#instances-matrix-columns').select2();
-        generateInstancesMatrix()
-
         $('#model-gap-select').select2();
-        getModelsData();
     });
 </script>
 {% endblock content %}

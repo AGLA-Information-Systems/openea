@@ -1,0 +1,222 @@
+{% load static %}
+{% load i18n %}
+{% load js %}
+{% load i18n %}
+
+<div class="container">
+  <div class="border p-3">
+    <div class="row">
+      <div class="col-sm">
+        <div>
+          <h4>{% trans "Root Instance" %}</h4> 
+          <dl>
+            <dt>
+              {% trans "Concept" %}
+            </dt>
+            <dd>
+              <select id="impact-analysis-root-concept" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+
+          <dl>
+            <dt>
+              {% trans "Instance" %}
+            </dt>
+            <dd>
+              <select id="impact-analysis-root-instance" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+
+        </div>
+      </div>
+      <div class="col-lg">
+        <div>
+        <h4>{% trans "Filters" %}</h4>
+          <dl>
+            <dt>
+              {% trans "Predicates" %} <input id="all-predicates-impact-analysis-checkbox" type="checkbox"/>
+            </dt>
+            <dd>
+              <select id="impact-analysis-predicates" multiple="multiple" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+
+          <dl>
+            <dt>
+              {% trans "Level" %}
+            </dt>
+            <dd>
+              <input id="impact-analysis-level" type="text" class="form-control" style="width: 100%" placeholder="3"/>
+            </dd>
+          </dl>
+
+        </div>
+      </div>
+      
+    </div>
+    <div class="text-center">
+      <input id="impact-analysis-btn" class="btn btn-primary" type="button" value="{% trans 'Analyze' %}" />
+    </div>
+  </div>
+
+    <div id="model-impact-analysis-container" class="" max-width="100%"></div>
+</div>
+{% csrf_token %}
+
+<script type="text/javascript">
+
+  var impact_analysis_root_concept = document.getElementById('impact-analysis-root-concept');
+  for (const [concept_id, concept] of Object.entries(ontology_data['concepts'])){
+    var option = document.createElement("option");
+    option.value = concept_id;
+    option.text = concept.name;
+    impact_analysis_root_concept.appendChild(option);
+  }
+
+  var impact_analysis_predicates = document.getElementById('impact-analysis-predicates');
+  for (const [predicate_id, predicate] of Object.entries(ontology_data['predicates'])){
+    predicates[predicate_id] = predicate;
+    var predicate_name = predicate.subject + ' ' + predicate.relation + ' ' + predicate.object;
+    var option = document.createElement("option");
+    option.value = predicate_id;
+    option.text = predicate_name;
+    impact_analysis_predicates.appendChild(option);
+  }
+
+</script>
+
+<script type="text/javascript">
+
+  function modify_impact_analysis_buttons(action){
+    if (action == 'disable'){
+      $("#impact-analysis-btn").attr("disabled", true);
+    }else{
+      $("#impact-analysis-btn").attr("disabled", false);
+    }
+  }
+
+  $(document).ready(function(){
+
+    $('#impact-analysis-root-concept').select2({
+      maximumSelectionSize: 1,
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+    $('#impact-analysis-root-instance').select2({
+      maximumSelectionSize: 1,
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+    $('#impact-analysis-predicates').select2({
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+
+    $('#all-predicates-impact-analysis-checkbox').click(function() {
+      toggle_checkbox('impact-analysis-predicates', 'all-predicates-impact-analysis-checkbox');
+    });
+    
+    $('#impact-analysis-predicates').change(function() {
+      uncheck_all_checkbox('impact-analysis-predicates', 'all-predicates-impact-analysis-checkbox');
+    });
+    $('#impact-analysis-root-concept').change(function() {
+      uncheck_all_checkbox('impact-analysis-root-concept', 'all-concept-impact-analysis-root-checkbox');
+      debounce(fetch_impact_analysis_instance(null, 'root'));
+    });
+    $('#impact-analysis-root-instance').change(function() {
+      uncheck_all_checkbox('impact-analysis-root-instance', 'all-instance-impact-analysis-root-checkbox');
+    });
+
+
+    $('#impact-analysis-btn').on('click', function() {
+      analyze_impact();
+    });
+
+  });
+</script>
+
+<script>
+
+  function build_impact_analysis_results(results){
+    console.log(results);
+
+    impact_analysis_graph = "<div>"+ atob(results['graph'])+"</div>";
+    impact_analysis_data = "<div><dl class='row'>";
+    for (const [level, level_data] of Object.entries(results['data'])){
+
+      impact_analysis_data += "<dt class='col-sm-1'>"+ '{% trans "Level" %}' + ' ' + level +"</dt>";
+
+      concepts_data = {};
+      for (slot_data of level_data){
+        if (! (slot_data[1].concept in concepts_data)) {
+          concepts_data[slot_data[1].concept] = [];
+        }
+        concepts_data[slot_data[1].concept].push(slot_data[1]);
+      }
+     
+      impact_analysis_data += "<dd class='col-sm-11'>";
+      for (const [concept_name, instances_data] of Object.entries(concepts_data)){
+        impact_analysis_data += "<div> <strong>"+ concept_name +"</strong> </div>";
+        impact_analysis_data += "<ul>";
+        for (instance_data of instances_data){
+          console.log(instance_data);
+          impact_analysis_data += "<li><a class='link-dark' href='"+instance_data.url+"'>"+ instance_data.name +"</a></li>";
+        }
+        impact_analysis_data += "</ul>";
+      }
+      
+      impact_analysis_data += "</dd>";
+    }
+    impact_analysis_data += "</dl></div>";
+
+    $('#model-impact-analysis-container').html(impact_analysis_graph + '<hr/>'+ impact_analysis_data);
+
+  }
+
+  async function analyze_impact() {
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+      modify_graph_buttons('disable');
+      $("#impact-analysis-btn").attr("disabled", true);
+      try {
+          const result_data = await $.ajax({
+              url: '/o_model/' + modelId +'/impact_analysis/',
+              type: 'POST',
+              headers: {'X-CSRFToken': csrftoken},
+              contentType : 'application/json',
+              success: function (result) {
+                build_impact_analysis_results(result);
+                $("#impact-analysis-btn").attr("disabled", false);
+              },
+              data: JSON.stringify({
+                'model_id': modelId, 
+                'root_instance_id': $('#impact-analysis-root-instance').val(),
+                'predicate_ids': $('#impact-analysis-predicates').val(),
+                'level': $('#impact-analysis-level').val()||3
+              })
+          });
+          modify_graph_buttons('enable');
+          return result_data;
+      } catch (error) {
+          console.error("Error: ", error);
+          modify_graph_buttons('enable');
+      }
+  }
+
+
+  function fetch_impact_analysis_instance(instance_ids, axis) {
+    filter_data = {'target': 'instance',
+                   'model_id': modelId,
+                   'concept_ids': $('#impact-analysis-'+ axis +'-concept').val(),
+                   'instance_ids': instance_ids}
+    return filter_model_data(filter_data, update_impact_analysis_instances_choices, {})
+  }
+
+  function update_impact_analysis_instances_choices(result, params){
+    var $instance_select = $('#impact-analysis-root-instance');
+    $instance_select.empty();
+    for (var i = 0; i < result['instances'].length; i++) {
+        $instance_select.append('<option value=' + result['instances'][i].id + '>' + result['instances'][i].name + '</option>');
+        //populate instance cache
+        instances[result['instances'][i].id] = result['instances'][i];
+    }
+  }
+
+
+</script>

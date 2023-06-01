@@ -1,17 +1,20 @@
 import json
-from django.views.generic import DetailView
-from django.core.paginator import Paginator
-from authorization.models import Permission
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
-from django.contrib.auth.mixins import LoginRequiredMixin
-from authorization.controllers.utils import check_permission
-from ontology.controllers.utils import KnowledgeBaseUtils
-from django.http import Http404
-from ontology.plugins.json import GenericEncoder
-from utils.views.custom import SingleObjectView
-from openea.utils import Utils
 
-from ontology.models import OInstance, OModel, OConcept, ORelation, OPredicate, OReport
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
+from django.http import Http404
+from django.views.generic import DetailView
+
+from authorization.controllers.utils import (
+    CustomPermissionRequiredMixin, check_permission,
+    create_organisation_admin_security_group)
+from authorization.models import Permission
+from ontology.controllers.utils import KnowledgeBaseUtils
+from ontology.models import (OConcept, OInstance, OModel, OPredicate,
+                             ORelation, OReport)
+from ontology.plugins.json import GenericEncoder
+from openea.utils import Utils
+from utils.views.custom import SingleObjectView
 
 
 class OModelDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DetailView):
@@ -66,6 +69,8 @@ class OModelDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, Single
             model_paginator = Paginator(model_list, self.paginate_by)
             model_page_number = self.request.GET.get('model_page')
             context['models'] = model_paginator.get_page(model_page_number)
+
+        context['show_all'] = context['show_predicates'] and context['show_concepts'] and context['show_instances']
 
         context['ontology_data'] = json.dumps(KnowledgeBaseUtils.ontology_to_dict(model=model), cls=GenericEncoder)
         #context['instances_data'] = json.dumps(KnowledgeBaseUtils.instances_to_dict(model=model), cls=GenericEncoder)

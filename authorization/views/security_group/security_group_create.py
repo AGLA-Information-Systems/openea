@@ -1,11 +1,12 @@
 from unicodedata import name
-from django.views.generic.edit import CreateView
+from utils.views.custom import CustomCreateView
 from django.urls import reverse_lazy, reverse
 
 from authorization.models import SecurityGroup
 from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class SecurityGroupCreateView(CustomPermissionRequiredMixin, CreateView):
+class SecurityGroupCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CustomCreateView):
     model = SecurityGroup
     fields = ['name', 'description', 'organisation']
     template_name = "security_group/security_group_create.html"
@@ -27,7 +28,7 @@ class SecurityGroupCreateView(CustomPermissionRequiredMixin, CreateView):
         pk = self.kwargs.get('organisation_id')
         return reverse('organisation_detail', kwargs={'pk': self.object.organisation.id})
 
-class SecurityGroupAdminCreateView(CustomPermissionRequiredMixin, CreateView):
+class SecurityGroupAdminCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CustomCreateView):
     model = SecurityGroup
     fields = ['name', 'description', 'organisation']
     template_name = "security_group/security_group_create.html"
@@ -35,7 +36,10 @@ class SecurityGroupAdminCreateView(CustomPermissionRequiredMixin, CreateView):
     permission_required = [('CREATE', model.get_object_type(), None)]
 
     def form_valid(self, form):
+        raise NotImplementedError #TOFO Fix error
         if self.request.user.is_authenticated:
             form.instance.created_by = self.request.user
-            create_organisation_admin_security_group(organisation=None, admin_security_group_name='', superadmin=False)
+            create_organisation_admin_security_group(organisation=None, admin_security_group_name=form.cleaned_data['name'], superadmin=False)
         return super().form_valid(form)
+    
+    

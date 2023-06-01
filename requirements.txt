@@ -29,3 +29,5 @@ async-timeout==4.0.2
 django-redis==5.2.0
 redis==4.5.2
 six==1.16.0
+graphviz==0.20.1
+beautifulsoup4==4.12.2

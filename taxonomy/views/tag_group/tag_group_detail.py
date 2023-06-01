@@ -1,12 +1,13 @@
 from django.views.generic import DetailView
 from django.core.paginator import Paginator
 
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
 from taxonomy.models import TagGroup, Tag
 from organisation.models import Profile
 
 
-class TagGroupDetailView(CustomPermissionRequiredMixin, DetailView):
+class TagGroupDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, DetailView):
     model = TagGroup
     template_name = "tag_group/tag_group_detail.html"
     paginate_by = 10000

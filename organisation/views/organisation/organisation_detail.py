@@ -1,9 +1,13 @@
 from tabnanny import check
+from django.conf import settings
 from django.views.generic import DetailView
 from django.core.paginator import Paginator
-from authorization.controllers.utils import CustomPermissionRequiredMixin, check_permission
+from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
+from authorization.controllers.utils import check_permission
 from configuration.models import Configuration
 from openea.utils import Utils
+
 from taxonomy.models import Tag, TagGroup
 from utils.views.custom import SingleObjectView
 
@@ -12,7 +16,7 @@ from ontology.models import Repository
 from authorization.models import SecurityGroup, Permission
 
 
-class OrganisationDetailView(CustomPermissionRequiredMixin, SingleObjectView, DetailView):
+class OrganisationDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DetailView):
     model = Organisation
     template_name = "organisation/organisation_detail.html"
     paginate_by = 10000
@@ -20,12 +24,11 @@ class OrganisationDetailView(CustomPermissionRequiredMixin, SingleObjectView, De
 
     def get_context_data(self, **kwargs):
         context = super(OrganisationDetailView, self).get_context_data(**kwargs)
-
-
+            
         context['show_repositories'] = check_permission(user=self.request.user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_REPOSITORY)
         if context['show_repositories']:
             object_list_qs = Repository.objects.filter(organisation=self.object)
-            repository_list = self.get_object_list_qs(object_list_qs=object_list_qs).order_by('-created_at').all()
+            repository_list = self.get_object_list_qs(object_list_qs=object_list_qs).order_by('name').all()
             repository_paginator = Paginator(repository_list, self.paginate_by)
             repository_page_number = self.request.GET.get('repository_page')
             context['repositories'] = repository_paginator.get_page(repository_page_number)

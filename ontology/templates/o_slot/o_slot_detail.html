@@ -29,4 +29,11 @@
     <dd class="col-sm-9">{{object.description | markdown | safe}}</dd>
 </dl>
 
+<dl class="row">
+    <dt class="col-sm-3 text-muted">{% trans "Created" %}</dt>
+    <dd class="col-sm-9 text-muted">{{object.created_at}} - {{object.created_by.username}}</dd>
+
+    <dt class="col-sm-3 text-muted">{% trans "Modified" %}</dt>
+    <dd class="col-sm-9 text-muted">{{object.modified_at}} - {{object.modified_by.username}}</dd>
+</dl>
 {% endblock content %}

@@ -1,11 +1,12 @@
-from django.views.generic.edit import CreateView
+from utils.views.custom import CustomCreateView
 from django.urls import reverse_lazy, reverse
 from authorization.forms.permission.o_permission_create import OPermissionCreateForm
 
 from authorization.models import Permission
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class PermissionCreateView(CustomPermissionRequiredMixin, CreateView):
+class PermissionCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CustomCreateView):
     model = Permission
     template_name = "permission/permission_create.html"
     form_class = OPermissionCreateForm

@@ -1,3 +1,8 @@
+from queue import PriorityQueue
+from uuid import UUID
+
+from django.db.models import Q
+
 from ontology.models import OConcept, OInstance, OPredicate, ORelation, OSlot
 
 __author__ = "Patrick Agbokou"
@@ -66,6 +71,56 @@ class KnowledgeBaseUtils:
                 level=level + 1, concept=x.subject, predicate_ids=predicate_ids, max_level=max_level)
         return [(x.subject, level) for x in predicates] + results
 
+
+    def get_instances_paths(start_instance, end_instance):
+        q = PriorityQueue(maxsize=5)
+        path = []
+        for x in OSlot.objects.filter((Q(subject=start_instance)|Q(object=start_instance))):
+            new_path = list(path)
+            new_path.append(x)
+            KnowledgeBaseUtils.get_instances_path_recursive(slot=x, end_instance=end_instance, path=new_path, paths=q, level=0, max_level=DEFAULT_MAX_LEVEL)
+        return q;
+
+
+    def get_instances_path_recursive(slot, end_instance, path, paths, level=0, max_level=DEFAULT_MAX_LEVEL):
+        if end_instance == slot.object or end_instance == slot.subject:
+            paths.put((len(path), list(path)))
+            return None
+        
+        if level >= max_level:
+            return None
+        
+        for x in OSlot.objects.filter((Q(subject=slot.object)|Q(object=slot.subject)|Q(subject=slot.subject)|Q(object=slot.object))):
+            if x not in path:
+                new_path = list(path)
+                new_path.append(x)
+                KnowledgeBaseUtils.get_instances_path_recursive(slot=x, end_instance=end_instance, path=new_path, paths=paths, level=level + 1, max_level=max_level)
+        
+     
+    def get_related_instances(root_instance, predicate_ids, level):
+        results = {}
+        already_found = []
+        predicates = OPredicate.objects.filter(model=root_instance.model)
+        if predicate_ids and isinstance(predicate_ids, list):
+            predicates = predicates.filter(id__in=predicate_ids)
+        
+        results[0] = [(None, root_instance)]
+        already_found = [root_instance]
+        KnowledgeBaseUtils.get_related_instances_recusrsive(results=results, already_found=already_found, instance=root_instance, predicates=predicates, level=1, max_level=level)
+        return results
+
+    def get_related_instances_recusrsive(results, already_found, instance, predicates, level, max_level):
+        if level >= max_level:
+            return None
+        found = [(x, x.object) for x in OSlot.objects.filter(subject=instance, predicate__in=predicates).all() if x.object not in already_found] + [(x, x.subject) for x in OSlot.objects.filter(object=instance, predicate__in=predicates).all() if x.subject not in already_found]
+        if len(found) > 0:
+            results[level] = found
+            already_found = already_found + [x[1] for x in found]
+            print(already_found)
+            for x in results[level]:
+                KnowledgeBaseUtils.get_related_instances_recusrsive(results=results, already_found=already_found, instance=x[1], predicates=predicates, level=level + 1, max_level=max_level)
+
+
     def ontology_from_dict(model, data=None):
         for concept_id, concept_data in data['concepts'].items():
             OConcept.get_or_create(
@@ -80,6 +135,7 @@ class KnowledgeBaseUtils:
             OPredicate.get_or_create(id=predicate_data['id'],  model=model, name=predicate_data['name'], description=predicate_data['description'], subject=subject,
                                      relation=relation, object=object, cardinality_min=predicate_data['cardinality_min'], cardinality_max=predicate_data['cardinality_max'])
 
+
     def ontology_to_dict(model):
         data = {
             'id': model.id,
@@ -90,8 +146,8 @@ class KnowledgeBaseUtils:
             "relations": {},
             "predicates": {},
             'url': KnowledgeBaseUtils.get_url('model', model.id)
-        }
-        for concept in OConcept.objects.filter(model=model).all():
+            }
+        for concept in OConcept.objects.filter(model=model).order_by('name'):
             parents = KnowledgeBaseUtils.get_parent_concepts(concept=concept)
             children = KnowledgeBaseUtils.get_child_concepts(concept=concept)
             data['concepts'][str(concept.id)] = {
@@ -102,7 +158,7 @@ class KnowledgeBaseUtils:
                 "children": {str(x[0].id): x[0].name for x in children},
                 'url': KnowledgeBaseUtils.get_url('concept', concept.id)
             }
-        for relation in ORelation.objects.filter(model=model).all():
+        for relation in ORelation.objects.filter(model=model).order_by('name'):
             data['relations'][str(relation.id)] = {
                 "id": relation.id,
                 "name": relation.name,
@@ -110,7 +166,7 @@ class KnowledgeBaseUtils:
                 "type": relation.type,
                 'url': KnowledgeBaseUtils.get_url('relation', relation.id)
             }
-        for predicate in OPredicate.objects.filter(model=model).all():
+        for predicate in OPredicate.objects.filter(model=model).order_by('subject__name').order_by('relation__name').order_by('object__name'):
             data['predicates'][str(predicate.id)] = {
                 "id": predicate.id,
                 "subject_id": predicate.subject.id,

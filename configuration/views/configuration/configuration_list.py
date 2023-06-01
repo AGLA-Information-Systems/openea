@@ -1,17 +1,18 @@
 from django.views.generic import ListView
 
 from configuration.models import Configuration
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ConfigurationListView(CustomPermissionRequiredMixin, ListView):
+class ConfigurationListView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
     model = Configuration
     template_name = "configuration/configuration_list.html"
     paginate_by = 10000
     configuration_required = [('LIST', model.get_object_type(), None)]
 
 
-class ConfigurationListUserView(CustomPermissionRequiredMixin, ListView):
+class ConfigurationListUserView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
     model = Configuration
     template_name = "configuration/configuration_list.html"
     paginate_by = 10000
@@ -26,7 +27,7 @@ class ConfigurationListUserView(CustomPermissionRequiredMixin, ListView):
         return qs.filter(user=self.request.user)
 
 
-class ConfigurationListOrganisationView(CustomPermissionRequiredMixin, ListView):
+class ConfigurationListOrganisationView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
     model = Configuration
     template_name = "configuration/configuration_list.html"
     paginate_by = 10000

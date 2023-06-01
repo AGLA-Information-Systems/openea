@@ -1,6 +1,6 @@
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic.edit import CreateView
+from utils.views.custom import CustomCreateView
 
 from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -16,7 +16,7 @@ __maintainer__ = "Patrick Agbokou"
 __email__ = "patrick.agbokou@aglaglobal.com"
 __status__ = "Development"
 
-class OConceptCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CreateView):
+class OConceptCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CustomCreateView):
     model = OConcept
     form_class = OConceptCreateForm
     template_name = "o_concept/o_concept_create.html"

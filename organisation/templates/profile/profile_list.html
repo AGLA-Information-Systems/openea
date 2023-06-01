@@ -21,7 +21,7 @@
             <td><a class="link-dark" href="{% url "profile_detail" Profile.id %}">{{ Profile }}</a></td>
             <td><a href="{% url "organisation_detail" Profile.organisation.id %}">{{ Profile.organisation.name }}</a></td>
             {% if Profile.is_active %}
-            <td>active</td>
+            <td>{% trans "active" %}</td>
             {% else %}
             <td><a href="{% url "profile_activate" Profile.id %}">{% trans "activate" %}</a></td>
             {% endif %}

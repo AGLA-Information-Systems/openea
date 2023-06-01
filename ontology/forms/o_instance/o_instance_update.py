@@ -79,7 +79,7 @@ class OInstanceUpdateForm(forms.ModelForm):
             )
             slots = OSlot.objects.filter(model=model, predicate=x, subject=instance)
             self.fields[x.name].initial = [s.object.id for s in slots if s.object is not None]
-            
+            self.fields[x.name].required = False
 
 
             

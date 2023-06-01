@@ -21,7 +21,9 @@ DEFAULT_PERMISSIONS = {
     Utils.OBJECT_TAG_GROUP: [Permission.PERMISSION_ACTION_CREATE, Permission.PERMISSION_ACTION_LIST, Permission.PERMISSION_ACTION_VIEW, Permission.PERMISSION_ACTION_UPDATE, Permission.PERMISSION_ACTION_DELETE],
     Utils.OBJECT_TAG: [Permission.PERMISSION_ACTION_CREATE, Permission.PERMISSION_ACTION_LIST, Permission.PERMISSION_ACTION_VIEW, Permission.PERMISSION_ACTION_UPDATE, Permission.PERMISSION_ACTION_DELETE],
     Utils.OBJECT_LOG: [Permission.PERMISSION_ACTION_CREATE, Permission.PERMISSION_ACTION_LIST, Permission.PERMISSION_ACTION_VIEW, Permission.PERMISSION_ACTION_UPDATE, Permission.PERMISSION_ACTION_DELETE],
-    Utils.OBJECT_CONFIG: [Permission.PERMISSION_ACTION_CREATE, Permission.PERMISSION_ACTION_LIST, Permission.PERMISSION_ACTION_VIEW, Permission.PERMISSION_ACTION_UPDATE, Permission.PERMISSION_ACTION_DELETE]
+    Utils.OBJECT_CONFIG: [Permission.PERMISSION_ACTION_CREATE, Permission.PERMISSION_ACTION_LIST, Permission.PERMISSION_ACTION_VIEW, Permission.PERMISSION_ACTION_UPDATE, Permission.PERMISSION_ACTION_DELETE],
+    Utils.OBJECT_POST: [Permission.PERMISSION_ACTION_CREATE, Permission.PERMISSION_ACTION_LIST, Permission.PERMISSION_ACTION_VIEW, Permission.PERMISSION_ACTION_UPDATE, Permission.PERMISSION_ACTION_DELETE],
+    Utils.OBJECT_SUBSCRIPTION: [Permission.PERMISSION_ACTION_CREATE, Permission.PERMISSION_ACTION_LIST, Permission.PERMISSION_ACTION_VIEW, Permission.PERMISSION_ACTION_UPDATE]
 }
 
 def authorization_required(function, action, object_type):
@@ -74,15 +76,15 @@ class CustomPermissionRequiredMixin(PermissionRequiredMixin):
                 f"{self.__class__.__name__}.permission_required, or override "
                 f"{self.__class__.__name__}.get_permission_required()."
             )
-        
+        #TODO: Remove because Referrer view has the same function get_current_organisation
         object_id = None
         organisation = None
         if hasattr(self, 'object') and self.object is not None:
             organisation = self.object.get_organsiation()
             object_id = str(self.object.id)
-        if organisation is None and self.request.user.active_profile is not None:
+        if organisation is None and self.request.user.is_authenticated and self.request.user.active_profile is not None:
             organisation = self.request.user.active_profile.organisation
-            
+        
         perms = []
         for perm in self.permission_required:
             try:

@@ -134,7 +134,11 @@ def populate_test_env(x):
     x.model_1_slot_1 = create_slot(model=x.org_1_model_1, subject=x.org_1_instance_1, predicate=x.org_1_predicate_1, object=x.org_1_instance_2)
     x.model_1_slot_2 = create_slot(model=x.org_1_model_1, subject=x.org_1_instance_2, predicate=x.org_1_predicate_2, object=x.org_1_instance_3)
     x.model_1_slot_3 = create_slot(model=x.org_1_model_1, subject=x.org_1_instance_1, predicate=x.org_1_predicate_3, object=x.org_1_instance_4)
+    x.model_1_slot_4 = create_slot(model=x.org_1_model_1, subject=x.org_1_instance_1, predicate=x.org_1_predicate_4, object=x.org_1_instance_0)
 
     x.org_1_model_2 = create_model(repository=x.org_1_repo_1, name='org_1_model_2')
     
     return x
+
+def populate_test_env_with_products():
+    return populate_products()

@@ -115,6 +115,9 @@ class Profile(models.Model):
 
     def get_organisation(self):
         return self.organisation
+    
+    def filter_by_organisation(organisation):
+        return Profile.objects.filter(organisation=organisation)
 
     def get_object_type():
         return Utils.OBJECT_PROFILE
@@ -153,6 +156,9 @@ class Task(models.Model):
 
     def get_organisation(self):
         return self.organisation
+    
+    def filter_by_organisation(organisation):
+        return Profile.objects.filter(organisation=organisation)
 
     def get_object_type():
         return Utils.OBJECT_TASK
@@ -176,6 +182,9 @@ class Log(models.Model):
 
     def get_organisation(self):
         return self.organisation
+    
+    def filter_by_organisation(organisation):
+        return Profile.objects.filter(organisation=organisation)
 
     def get_object_type():
         return Utils.OBJECT_LOG

@@ -1,34 +1,46 @@
 from django.urls import path
 
-from ontology.views import (
-    OPredicateDeleteView, OPredicateUpdateView, OPredicateDetailView, OPredicateCreateView, OPredicateListView,
-    ORelationDeleteView, ORelationUpdateView, ORelationDetailView, ORelationCreateView, ORelationListView,
-    OConceptDeleteView, OConceptUpdateView, OConceptDetailView, OConceptCreateView, OConceptListView,
-    OModelDeleteView, OModelUpdateView, OModelDetailView, OModelCreateView, OModelListView, OModelReportView,
-    RepositoryDeleteView, RepositoryUpdateView, RepositoryDetailView, RepositoryCreateView, RepositoryListView
-)
+from ontology.views import (OConceptCreateView, OConceptDeleteView,
+                            OConceptDetailView, OConceptListView,
+                            OConceptUpdateView, OModelCreateView,
+                            OModelDeleteView, OModelDetailView, OModelListView,
+                            OModelReportView, OModelUpdateView,
+                            OPredicateCreateView, OPredicateDeleteView,
+                            OPredicateDetailView, OPredicateListView,
+                            OPredicateUpdateView, ORelationCreateView,
+                            ORelationDeleteView, ORelationDetailView,
+                            ORelationListView, ORelationUpdateView,
+                            RepositoryCreateView, RepositoryDeleteView,
+                            RepositoryDetailView, RepositoryListView,
+                            RepositoryUpdateView)
 from ontology.views.import_export import ExportView, ImportView
 from ontology.views.json_report import JSONReportView
 from ontology.views.o_instance.o_instance_create import OInstanceCreateView
 from ontology.views.o_instance.o_instance_delete import OInstanceDeleteView
 from ontology.views.o_instance.o_instance_detail import OInstanceDetailView
-from ontology.views.o_instance.o_instance_json_list import OInstanceJSONListView
+from ontology.views.o_instance.o_instance_json_list import \
+    OInstanceJSONListView
 from ontology.views.o_instance.o_instance_list import OInstanceListView
 from ontology.views.o_instance.o_instance_update import OInstanceUpdateView
-from ontology.views.o_model.o_model_json import OModelJSONView
+from ontology.views.o_model.o_model_graph import OModelGraphView
+from ontology.views.o_model.o_model_impact_analysis import \
+    OModelImpactAnalysisView
+from ontology.views.o_model.o_model_json import (OModelJSONFilterView,
+                                                 OModelJSONView)
 from ontology.views.o_model.o_model_json_list import OModelJSONListView
+from ontology.views.o_model.o_model_pathfinder import OModelPathFinderView
 from ontology.views.o_model.o_model_xml import OModelXMLView
-from ontology.views.o_report.o_report_run import OReportRunView
-from ontology.views.o_slot.o_slot_list import OSlotListView
-from ontology.views.o_slot.o_slot_create import OSlotCreateView
-from ontology.views.o_slot.o_slot_update import OSlotUpdateView
-from ontology.views.o_slot.o_slot_delete import OSlotDeleteView
-from ontology.views.o_slot.o_slot_detail import OSlotDetailView
 from ontology.views.o_report.o_report_create import OReportCreateView
 from ontology.views.o_report.o_report_delete import OReportDeleteView
 from ontology.views.o_report.o_report_detail import OReportDetailView
 from ontology.views.o_report.o_report_list import OReportListView
+from ontology.views.o_report.o_report_run import OReportRunView
 from ontology.views.o_report.o_report_update import OReportUpdateView
+from ontology.views.o_slot.o_slot_create import OSlotCreateView
+from ontology.views.o_slot.o_slot_delete import OSlotDeleteView
+from ontology.views.o_slot.o_slot_detail import OSlotDetailView
+from ontology.views.o_slot.o_slot_list import OSlotListView
+from ontology.views.o_slot.o_slot_update import OSlotUpdateView
 from ontology.views.report import ReportView
 from ontology.views.xml_report import XMLReportView
 
@@ -60,7 +72,7 @@ urlpatterns = [
     path('o_predicate/update/<uuid:pk>/', OPredicateUpdateView.as_view(), name='o_predicate_update'),
     path('o_predicate/delete/<uuid:pk>/', OPredicateDeleteView.as_view(), name='o_predicate_delete'),
     path('o_instance/list/<uuid:concept_id>/', OInstanceListView.as_view(), name='o_instance_list'),
-    path('o_instance/json_list/', OInstanceJSONListView.as_view(), name='o_instance_json_list'),
+     path('o_instance/json_list/', OInstanceJSONListView.as_view(), name='o_instance_json_list'),
     path('o_instance/create/<uuid:concept_id>/', OInstanceCreateView.as_view(), name='o_instance_create'),
     path('o_instance/detail/<uuid:pk>/', OInstanceDetailView.as_view(), name='o_instance_detail'),
     path('o_instance/update/<uuid:pk>/', OInstanceUpdateView.as_view(), name='o_instance_update'),
@@ -81,6 +93,10 @@ urlpatterns = [
     path('o_model_xml/<uuid:model_id>/', OModelXMLView.as_view(), name='o_model_xml'),
     path('o_model_json/<uuid:model_id>/', OModelJSONView.as_view(), name='o_model_json'),
     path('o_model/json_list/', OModelJSONListView.as_view(), name='o_model_json_list'),
+    path('o_model/graph/<uuid:model_id>/', OModelGraphView.as_view(), name='o_model_graph'),
+    path('o_model/filter/<uuid:model_id>/json', OModelJSONFilterView.as_view(), name='o_model_filter_json'),
+    path('o_model/<uuid:model_id>/pathfinder/', OModelPathFinderView.as_view(), name='o_model_pathfinder'),
+    path('o_model/<uuid:model_id>/impact_analysis/', OModelImpactAnalysisView.as_view(), name='o_model_impact_analysis'),
 
     path('model_import/<uuid:model_id>/', ImportView.as_view(), name='model_import'),
     path('model_export/<uuid:model_id>/', ExportView.as_view(), name='model_export'),

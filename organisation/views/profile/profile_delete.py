@@ -1,11 +1,12 @@
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
 from utils.views.custom import SingleObjectView
 
 from organisation.models import Profile
 
-class ProfileDeleteView(CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
+class ProfileDeleteView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DeleteView):
     model = Profile
     template_name = "profile/profile_delete.html"
     #success_url = reverse_lazy('profile_list')

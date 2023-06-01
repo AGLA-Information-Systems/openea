@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block content %}
-<h2 class="form-title">{% trans "Import" %}</h2>
+<h2 class="form-title">Import</h2>
 
 <form id="import_form" method="post" enctype="multipart/form-data">
   {% csrf_token %}
@@ -27,7 +27,8 @@
         {{ form.import_format.errors }}
         {{ form.import_format|as_crispy_field }}
       </div>
-      <button type="submit" class="btn btn-primary mb-3">{% trans "Start Import" %}</button>
+      <button type="submit" name="_start_import" value="_start_import" class="btn btn-primary my-3 mx-2">{% trans "Start Import" %}</button>
+      <button type="submit" name="_schedule_import" value="_schedule_import" class="btn btn-outline-primary my-3 mx-2">{% trans "Schedule Import" %}</button>
     </div>
   </div>
 </form>

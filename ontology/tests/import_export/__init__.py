@@ -1,0 +1,2 @@
+from instance_import_test import InstanceImportTestCase
+from instance_export_test import InstanceExportTestCase

@@ -33,7 +33,7 @@ from organisation.views.task import (
 urlpatterns = [
 
     path('organisation/list/', OrganisationListView.as_view(), name='organisation_list'),
-    path('organisation/list/<int:user_id>/', TaskListUserView.as_view(), name='organisation_list_user'),
+    path('organisation/list/<int:user_id>/', OrganisationListUserView.as_view(), name='organisation_list_user'),
     path('organisation/create/', OrganisationCreateView.as_view(), name='organisation_create'),
     path('organisation/detail/<uuid:pk>/', OrganisationDetailView.as_view(), name='organisation_detail'),
     path('organisation/update/<uuid:pk>/', OrganisationUpdateView.as_view(), name='organisation_update'),

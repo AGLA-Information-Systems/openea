@@ -76,7 +76,7 @@ class OSlotCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, Referre
         return initials
 
     def get_success_url(self):
-        if self.return_url:
+        if hasattr(self, 'return_url') and self.return_url:
             return self.return_url
         pk = self.kwargs.get('instance_id')
         return reverse('o_instance_detail', kwargs={'pk': pk})

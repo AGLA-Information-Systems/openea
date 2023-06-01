@@ -1,11 +1,12 @@
 from unicodedata import name
-from django.views.generic.edit import CreateView
+from utils.views.custom import CustomCreateView
 from django.urls import reverse_lazy, reverse
 
 from taxonomy.models import TagGroup
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class TagGroupCreateView(CustomPermissionRequiredMixin, CreateView):
+class TagGroupCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CustomCreateView):
     model = TagGroup
     fields = ['name', 'description', 'organisation']
     template_name = "tag_group/tag_group_create.html"

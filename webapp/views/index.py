@@ -24,7 +24,11 @@ def index(request, year=date.today().year, month=date.today().month):
     month_name = calendar.month_name[month]
     title = "OpenEA - %s %s" % (month_name, year)
     cal = HTMLCalendar().formatmonth(year, month)
-    return render(request, 'frontpage.'+settings.ENVIRONMENT+'.html', {'title': title, 'cal': cal, 'contact_email': settings.CONTACT_EMAIL})
+    return render(request, 'frontpage.'+settings.ENVIRONMENT+'.html', 
+                  {'title': title,
+                    'cal': cal,
+                    'contact_email': settings.CONTACT_EMAIL,
+                    'deployment': settings.DEPLOYMENT})
 
 def register(request):
     if request.method == 'POST':  

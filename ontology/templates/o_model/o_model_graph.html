@@ -1,0 +1,253 @@
+{% load static %}
+{% load i18n %}
+{% load js %}
+{% load i18n %}
+
+<div class="container">
+  <div class="border p-3">
+    <div class="row">
+      <div class="col-sm">
+        <div>
+          <dl>
+            <dt>
+              {% trans "Relations" %} <input id="all-relations-checkbox" type="checkbox"/>
+            </dt>
+            <dd>
+              <select id="graph-relations" multiple="multiple" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+
+          <dl>
+            <dt>
+              {% trans "Concepts" %} <input id="all-concepts-checkbox" type="checkbox"/>
+            </dt>
+            <dd>
+              <select id="graph-concepts" multiple="multiple" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="col-lg">
+        <div>
+          <dl>
+            <dt>
+              {% trans "Predicates" %} <input id="all-predicates-checkbox" type="checkbox"/>
+            </dt>
+            <dd>
+              <select id="graph-predicates" multiple="multiple" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+
+          <dl>
+            <dt>
+              {% trans "Instances" %} <input id="all-instances-checkbox" type="checkbox"/>
+            </dt>
+            <dd>
+              <select id="graph-instances" multiple="multiple" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+
+        </div>
+      </div>
+      
+    </div>
+    <div class="text-center">
+      <input id="generate-ontology-graph-btn" class="btn btn-primary" type="button" value="{% trans 'Generate Ontology Graph' %}" /> 
+      <input id="generate-instances-graph-btn" class="btn btn-primary" type="button" value="{% trans 'Generate Instances Graph' %}" />
+      <input id="download-graph-btn" class="btn btn-primary" type="button" value="{% trans 'Download Graph' %}" />
+    </div>
+  </div>
+
+    <div id="modelgraph-container" class="text-center" max-width="100%"></div>
+</div>
+{% csrf_token %}
+
+<script type="text/javascript">
+
+  // add concepts to the concept select
+  var graphConcepts = document.getElementById('graph-concepts');
+  for (const [concept_id, concept] of Object.entries(ontology_data['concepts'])){
+    concepts[concept_id] = concept;
+    var option = document.createElement("option");
+    option.value = concept_id;
+    option.text = concept.name;
+    graphConcepts.appendChild(option);
+  }
+
+  // add relations to the relation select
+  var graphConceptsRelations = document.getElementById('graph-relations');
+  for (const [relation_id, relation] of Object.entries(ontology_data['relations'])){
+    relations[relation_id] = relation;
+    var option = document.createElement("option");
+    option.value = relation_id;
+    option.text = relation.name;
+    graphConceptsRelations.appendChild(option);
+  }
+
+</script>
+
+<script type="text/javascript">
+
+  function modify_graph_buttons(action){
+    if (action == 'disable'){
+      $("#generate-ontology-graph-btn").attr("disabled", true);
+      $("#generate-instances-graph-btn").attr("disabled", true);
+    }else{
+      $("#generate-ontology-graph-btn").attr("disabled", false);
+      $("#generate-instances-graph-btn").attr("disabled", false);
+    }
+  }
+
+  $(document).ready(function(){
+    $('#all-concepts-checkbox').prop( "checked", false );
+    $('#all-relations-checkbox').prop( "checked", false );
+    $('#all-predicates-checkbox').prop( "checked", false );
+    $('#all-instances-checkbox').prop( "checked", false );
+
+    $('#graph-concepts').select2({
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+    $('#graph-relations').select2({
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+    $('#graph-predicates').select2({
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+    $('#graph-instances').select2({
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+
+    $('#all-concepts-checkbox').click(function() {
+        toggle_checkbox('graph-concepts', 'all-concepts-checkbox');
+    });
+    $('#all-relations-checkbox').click(function() {
+        toggle_checkbox('graph-relations', 'all-relations-checkbox');
+    });
+    $('#all-predicates-checkbox').click(function() {
+        toggle_checkbox('graph-predicates', 'all-predicates-checkbox');
+    });
+    $('#all-instances-checkbox').click(function() {
+        toggle_checkbox('graph-instances', 'all-instances-checkbox');
+    });
+
+    
+    $('#graph-relations').change(function() {
+      uncheck_all_checkbox('graph-relations', 'all-relations-checkbox');
+      debounce(update_graph_predicates());
+    });
+    $('#graph-predicates').change(function() {
+      uncheck_all_checkbox('graph-predicates', 'all-predicates-checkbox');
+    });
+    $('#graph-concepts').change(function() {
+      uncheck_all_checkbox('graph-concepts', 'all-concepts-checkbox');
+      debounce(fetch_graph_instances(null));
+    });
+    $('#graph-instances').change(function() {
+      uncheck_all_checkbox('graph-instances', 'all-instances-checkbox');
+    });
+
+    $('#generate-ontology-graph-btn').on('click', function() {
+      getModelGraphData('ontology');
+    });
+    $('#generate-instances-graph-btn').on('click', function() {
+      getModelGraphData('instances');
+    });
+    $("#download-graph-btn").attr("disabled", true);
+    $('#download-graph-btn').on('click', function() {
+      svgEl = document.getElementById('modelgraph')
+      name = 'graph'
+      saveSvg(svgEl, name)
+    });
+  });
+</script>
+
+<script>
+
+  async function getModelGraphData(knowledge_set) {
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+      modify_graph_buttons('disable');
+      $("#download-graph-btn").attr("disabled", true);
+      try {
+          const result_data = await $.ajax({
+              url: '/o_model/graph/' + modelId +'/',
+              type: 'POST',
+              headers: {'X-CSRFToken': csrftoken},
+              contentType : 'application/json',
+              success: function (result) {
+                $("#modelgraph-container").html(result);
+                $("#download-graph-btn").attr("disabled", false);
+              },
+              data: JSON.stringify({
+                'knowledge_set': knowledge_set,
+                'model_id': modelId, 
+                'concept_ids': $('#graph-concepts').val(),
+                'relation_ids': $('#graph-relations').val(),
+                'predicate_ids': $('#graph-predicates').val(),
+                'instance_ids': $('#graph-instances').val()
+              })
+          });
+          modify_graph_buttons('enable');
+          return result_data;
+      } catch (error) {
+        modify_graph_buttons('enable');
+        console.error("Error: ", error);
+      }
+  }
+
+  function fetch_graph_instances(instance_ids) {
+    filter_data = {'target': 'instances',
+                   'model_id': modelId,
+                   'concept_ids': $('#graph-concepts').val(),
+                   'relation_ids': $('#graph-relations').val(),
+                   'predicate_ids': $('#graph-predicates').val(),
+                   'instance_ids': instance_ids}
+    return filter_model_data(filter_data, update_graph_instances_select_boxes, {})
+  }
+
+  function update_graph_predicates() {
+    var new_predicates = {'predicates': []};
+    var selected_predicates = $('#graph-relations').val();
+    for (const [predicate_id, predicate] of Object.entries(ontology_data['predicates'])){
+      if (selected_predicates.includes(predicate.relation_id)){
+        new_predicates['predicates'].push(predicate);
+      }
+    }
+    update_graph_predicates_select_box(new_predicates, {});
+  }
+
+  function update_graph_predicates_select_box(result, params){
+    var $predicates_select = $("#graph-predicates");
+    $predicates_select.empty();
+    for (var i = 0; i < result['predicates'].length; i++) {
+        var predicate_name = result['predicates'][i].subject + ' ' + result['predicates'][i].relation + ' ' + result['predicates'][i].object;
+        $predicates_select.append('<option value=' + result['predicates'][i].id + '>' + predicate_name + '</option>');
+    }
+  }
+
+  function update_graph_instances_select_boxes(result, params){
+    var $instances_select = $("#graph-instances");
+    $instances_select.empty();
+    for (var i = 0; i < result['instances'].length; i++) {
+        $instances_select.append('<option value=' + result['instances'][i].id + '>' + result['instances'][i].name + '</option>');
+    }
+  }
+
+  async function filterModelData(filter_data, select_id) {
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+      try {
+          const result_data = await $.ajax({
+              url: '/o_model/filter/'+modelId+'/json',
+              type: 'POST',
+              headers: {'X-CSRFToken': csrftoken},
+              contentType : 'application/json',
+              success: function (result) {
+                update_graph_select_boxes(result);
+              },
+              data: JSON.stringify(filter_data)
+          });
+          return result_data;
+      } catch (error) {
+          console.error("Error: ", error);
+      }
+  }
+</script>

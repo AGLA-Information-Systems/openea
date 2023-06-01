@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic.edit import CreateView
+from utils.views.custom import CustomCreateView
 
 from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,7 +8,7 @@ from ontology.forms.o_predicate.o_predicate_create import OPredicateCreateForm
 from ontology.models import OPredicate
 
 
-class OPredicateCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CreateView):
+class OPredicateCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CustomCreateView):
     model = OPredicate
     template_name = "o_predicate/o_predicate_create.html"
     form_class = OPredicateCreateForm

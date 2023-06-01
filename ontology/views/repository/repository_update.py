@@ -4,7 +4,7 @@ from authorization.controllers.utils import CustomPermissionRequiredMixin, creat
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from ontology.forms.repository.repository_update import RepositoryUpdateForm
-
+from datetime import datetime
 from ontology.models import Repository
 from utils.views.custom import SingleObjectView
 
@@ -17,6 +17,7 @@ class RepositoryUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, Si
 
     def form_valid(self, form):
         form.instance.modified_by = self.request.user
+        form.instance.modified_at = datetime.now()
         return super().form_valid(form)
     
     def get_initial(self):

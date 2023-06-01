@@ -4,9 +4,17 @@
 {% load mkd %}
 
 {% block content %}
+<p><a class="link-dark" href="{% url "organisation_detail" pk=object.organisation.id %}" href="#"> {{ object.organisation.name }} > </a></p>
+
 <h2>{{object.name}} ({% trans "Repository" %})</h2>
 <p>{{object.description | markdown | safe}}</p>
-<p><a class="link-dark" href="{% url "organisation_detail" pk=object.organisation.id %}" href="#"> {{ object.organisation.name }} > </a></p>
+<dl class="row">
+    <dt class="col-sm-3 text-muted">{% trans "Created" %}</dt>
+    <dd class="col-sm-9 text-muted">{{object.created_at}} - {{object.created_by.username}}</dd>
+
+    <dt class="col-sm-3 text-muted">{% trans "Modified" %}</dt>
+    <dd class="col-sm-9 text-muted">{{object.modified_at}} - {{object.modified_by.username}}</dd>
+</dl>
 
 <a class="btn btn-primary" href="{% url "o_model_create" repository_id=object.id %}">{% trans "New Model" %}</a>
 

@@ -6,7 +6,7 @@ from openea.utils import Utils
 class ConfigutationController():
     def get_tag_groups_configurations(organisation):
         default_tag_group_configs = []
-        for object_type in Utils.ADMIN_OBJECT_TYPE:
+        for object_type in Utils.DEFAULT_OBJECT_TYPE:
             default_tag_group_configs.append('tag_group__' + object_type[0])
         for concept in OConcept.objects.filter(organisation):
             default_tag_group_configs.append('tag_group__' + Utils.OBJECT_CONCEPT + '__' + concept.id)

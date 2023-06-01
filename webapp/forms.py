@@ -17,13 +17,4 @@ class RegisterForm(UserCreationForm):
         model = User
         fields = ["username", "email", "password1", "password2"]
 
-class ProfileCreateForm(forms.ModelForm):
-    class Meta:
-        model = Profile
-        fields = ['role', 'description', 'user', 'organisation']
-        widgets = {
-            'user': s2forms.ModelSelect2Widget(
-                model=User,
-                search_fields=['username__icontains']
-            ),
-        }
+

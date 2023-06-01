@@ -6,8 +6,17 @@
 {% block content %}
 <h2>{{object.name}} ({% trans "Profile" %})</h2>
 <p>{{object.description | markdown | safe}}</p>
-<p>{{object.organisation.name}}</p>
-{% endblock content %}
+
+<dl class="row">
+    <dt class="col-sm-3">{% trans "Organisation" %}</dt>
+    <dd class="col-sm-9">{{object.organisation.name}}</dd>
+
+    <dt class="col-sm-3 text-muted">{% trans "Created" %}</dt>
+    <dd class="col-sm-9 text-muted">{{object.created_at}} - {{object.created_by.username}}</dd>
+
+    <dt class="col-sm-3 text-muted">{% trans "Modified" %}</dt>
+    <dd class="col-sm-9 text-muted">{{object.modified_at}} - {{object.modified_by.username}}</dd>
+</dl>
 
 <hr/>
 <table class="table table-fluid">
@@ -20,12 +29,14 @@
         </tr>
     </thead>
     <tbody>
-        {% for security_group in object.security_groups %}
+        {% for security_group in object.security_groups.all %}
         <tr>
-            <td><a class="link-dark" href="{% url "o_security_group_detail" security_group.id %}">{{ security_group.name }}</a></td>
+            <td><a class="link-dark" href="{% url "security_group_detail" security_group.id %}">{{ security_group.name }}</a></td>
             <td>{{ security_group.description }}</td>
-            <td><a href="{% url "o_security_group_update" security_group.id %}">{% trans "edit" %}</a></td>
-            <td><a href="{% url "o_security_group_delete" security_group.id %}">{% trans "delete" %}</a></td>
+            <td><a href="{% url "security_group_update" security_group.id %}">{% trans "edit" %}</a></td>
+            <td><a href="{% url "security_group_delete" security_group.id %}">{% trans "delete" %}</a></td>
         </tr>
         {% endfor %}
     </tbody>
+
+    {% endblock content %}

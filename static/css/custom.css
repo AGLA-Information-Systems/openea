@@ -55,3 +55,11 @@ a:hover {
     margin-right: 0%;
     width: 100%;
 }
+
+dt.text-muted {
+    font-size: 0.8rem;
+}
+
+dd.text-muted {
+    font-size: 0.8rem;
+}

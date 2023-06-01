@@ -1,0 +1,214 @@
+{% load static %}
+{% load i18n %}
+{% load js %}
+{% load i18n %}
+
+<div class="container">
+  <div class="border p-3">
+    <div class="row">
+      <div class="col-sm">
+        <div>
+          <h4>{% trans "Start" %}</h4>
+          <dl>
+            <dt>
+              {% trans "Concept" %}
+            </dt>
+            <dd>
+              <select id="pathfinder-start-concept" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+
+          <dl>
+            <dt>
+              {% trans "Instance" %}
+            </dt>
+            <dd>
+              <select id="pathfinder-start-instance" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+
+        </div>
+      </div>
+      <div class="col-lg">
+        <div>
+        <h4>{% trans "End" %}</h4>
+          <dl>
+            <dt>
+              {% trans "Concept" %}
+            </dt>
+            <dd>
+              <select id="pathfinder-end-concept" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+
+          <dl>
+            <dt>
+              {% trans "Instance" %}
+            </dt>
+            <dd>
+              <select id="pathfinder-end-instance" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+
+        </div>
+      </div>
+      
+    </div>
+    <div class="text-center">
+      <input id="find-pathfinder-btn" class="btn btn-primary" type="button" value="{% trans 'Find Path' %}" />
+    </div>
+  </div>
+    <div id="modelpathfinder-container" class="" max-width="100%"></div>
+</div>
+{% csrf_token %}
+
+<script type="text/javascript">
+
+  var pathfinder_start_concept = document.getElementById('pathfinder-start-concept');
+  var pathfinder_end_concept = document.getElementById('pathfinder-end-concept');
+  for (const [concept_id, concept] of Object.entries(ontology_data['concepts'])){
+    var option = document.createElement("option");
+    option.value = concept_id;
+    option.text = concept.name;
+    pathfinder_start_concept.appendChild(option);
+    var option = document.createElement("option");
+    option.value = concept_id;
+    option.text = concept.name;
+    pathfinder_end_concept.appendChild(option);
+  }
+
+  // add relations to the relation select
+
+
+
+</script>
+
+<script type="text/javascript">
+
+  function modify_pathfinder_buttons(action){
+    if (action == 'disable'){
+      $("#find-pathfinder-btn").attr("disabled", true);
+      $("#generate-instance-pathfinder-btn").attr("disabled", true);
+    }else{
+      $("#find-pathfinder-btn").attr("disabled", false);
+      $("#generate-instance-pathfinder-btn").attr("disabled", false);
+    }
+  }
+
+  $(document).ready(function(){
+
+    $('#pathfinder-start-concept').select2({
+      maximumSelectionSize: 1,
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+    $('#pathfinder-start-instance').select2({
+      maximumSelectionSize: 1,
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+    $('#pathfinder-end-concept').select2({
+      maximumSelectionSize: 1,
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+    $('#pathfinder-end-instance').select2({
+      maximumSelectionSize: 1,
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+
+    
+    $('#pathfinder-relations').change(function() {
+      uncheck_all_checkbox('pathfinder-relations', 'all-relations-pathfinder-checkbox');
+      debounce(fetch_pathfinder_predicates());
+    });
+    $('#pathfinder-predicates').change(function() {
+      uncheck_all_checkbox('pathfinder-predicates', 'all-predicates-pathfinder-checkbox');
+    });
+    $('#pathfinder-start-concept').change(function() {
+      uncheck_all_checkbox('pathfinder-start-concept', 'all-concept-pathfinder-start-checkbox');
+      debounce(fetch_pathfinder_instance(null, 'start'));
+    });
+    $('#pathfinder-start-instance').change(function() {
+      uncheck_all_checkbox('pathfinder-start-instance', 'all-instance-pathfinder-start-checkbox');
+    });
+    $('#pathfinder-end-concept').change(function() {
+      uncheck_all_checkbox('pathfinder-end-concept', 'all-concept-pathfinder-end-checkbox');
+      debounce(fetch_pathfinder_instance(null, 'end'));
+    });
+    $('#pathfinder-end-instance').change(function() {
+      uncheck_all_checkbox('pathfinder-end-instance', 'all-instance-pathfinder-end-checkbox');
+    });
+
+
+    $('#find-pathfinder-btn').on('click', function() {
+      find_instance_path();
+    });
+
+  });
+</script>
+
+<script>
+
+  function build_pathfinder_results(results){
+    console.log(results);
+
+    if(results.length > 0){
+      path = results[0];
+      cell_data = '<ul>';
+      for (slot of path){
+        console.log(path);
+        cell_data = cell_data + '<li> <strong>' +  slot.subject + '</strong> ' + slot.relation + ' <strong>' + slot.object + '</strong> </li>';
+      }
+      cell_data += '</ul>';
+      $('#modelpathfinder-container').html(cell_data);
+    }
+
+  }
+
+  async function find_instance_path() {
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+      modify_graph_buttons('disable');
+      $("#find-pathfinder-btn").attr("disabled", true);
+      try {
+          const result_data = await $.ajax({
+              url: '/o_model/' + modelId +'/pathfinder/',
+              type: 'POST',
+              headers: {'X-CSRFToken': csrftoken},
+              contentType : 'application/json',
+              success: function (result) {
+                build_pathfinder_results(result);
+                $("#find-pathfinder-btn").attr("disabled", false);
+              },
+              data: JSON.stringify({
+                'model_id': modelId, 
+                'start_instance_id': $('#pathfinder-start-instance').val(),
+                'end_instance_id': $('#pathfinder-end-instance').val()
+              })
+          });
+          modify_graph_buttons('enable');
+          return result_data;
+      } catch (error) {
+          modify_graph_buttons('enable');
+          console.error("Error: ", error);
+      }
+  }
+
+
+  function fetch_pathfinder_instance(instance_ids, axis) {
+    filter_data = {'target': 'instance',
+                   'model_id': modelId,
+                   'concept_ids': $('#pathfinder-'+ axis +'-concept').val(),
+                   'instance_ids': instance_ids}
+    return filter_model_data(filter_data, update_pathfinder_instances_choices, {'axis': axis})
+  }
+
+  function update_pathfinder_instances_choices(result, params){
+    axis = params['axis'];
+    var $instance_select = $('#pathfinder-'+axis+'-instance');
+    $instance_select.empty();
+    for (var i = 0; i < result['instances'].length; i++) {
+        $instance_select.append('<option value=' + result['instances'][i].id + '>' + result['instances'][i].name + '</option>');
+        //populate instance cache
+        instances[result['instances'][i].id] = result['instances'][i];
+    }
+  }
+
+</script>

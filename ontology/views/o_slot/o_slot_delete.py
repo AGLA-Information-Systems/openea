@@ -25,7 +25,7 @@ class OSlotDeleteView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleO
         return super(OSlotDeleteView, self).form_valid(request, *args, **kwargs)
     
     def get_success_url(self):
-        if self.return_url:
+        if hasattr(self, 'return_url') and self.return_url:
             return self.return_url
         pk = self.object.model.id
         return reverse('o_model_detail', kwargs={'pk': pk})

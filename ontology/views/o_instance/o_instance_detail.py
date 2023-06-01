@@ -30,22 +30,22 @@ class OInstanceDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, Sin
         all_predicates = [{'predicate':p, 
                            'kind':'inherited_as_subject', 
                            'sort_key':p.object.name, 
-                           'slots': OSlot.objects.filter(model=model, predicate=p, subject=instance).all(),
+                           'slots': OSlot.objects.filter(model=model, predicate=p, subject=instance).order_by('object__name'),
                            'possible_concepts': [x[0] for x in KnowledgeBaseUtils.get_child_concepts(concept=p.object)] + [p.object]} for p in inherited_predicates_as_subject] + \
                          [{'predicate':p,
                            'kind':'inherited_as_object',
                            'sort_key':p.subject.name,
-                           'slots': OSlot.objects.filter(model=model, predicate=p, object=instance).all(),
+                           'slots': OSlot.objects.filter(model=model, predicate=p, object=instance).order_by('subject__name'),
                            'possible_concepts': [x[0] for x in KnowledgeBaseUtils.get_child_concepts(concept=p.subject)] + [p.subject]} for p in inherited_predicates_as_object] + \
                          [{'predicate':p,
                            'kind':'own_as_subject',
                            'sort_key':p.object.name,
-                           'slots':OSlot.objects.filter(model=model, predicate=p, subject=instance).all(),
+                           'slots':OSlot.objects.filter(model=model, predicate=p, subject=instance).order_by('object__name'),
                            'possible_concepts': [x[0] for x in KnowledgeBaseUtils.get_child_concepts(concept=p.object)] + [p.object]} for p in own_predicates_as_subject] + \
                          [{'predicate':p,
                            'kind':'own_as_object',
                            'sort_key':p.subject.name,
-                           'slots': OSlot.objects.filter(model=model, predicate=p, object=instance).all(),
+                           'slots': OSlot.objects.filter(model=model, predicate=p, object=instance).order_by('subject__name'),
                            'possible_concepts': [x[0] for x in KnowledgeBaseUtils.get_child_concepts(concept=p.subject)] + [p.subject]} for p in own_predicates_as_object]
         context['all_predicates'] = sorted(all_predicates, key=lambda x: x['sort_key'])
 

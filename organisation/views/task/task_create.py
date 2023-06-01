@@ -1,10 +1,11 @@
-from django.views.generic.edit import CreateView
+from utils.views.custom import CustomCreateView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from organisation.models import Task
 
-class TaskCreateView(CustomPermissionRequiredMixin, CreateView):
+class TaskCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CustomCreateView):
     model = Task
     fields = ['name', 'description', 'attachment', 'organisation']
     template_name = "task/task_create.html"

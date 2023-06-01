@@ -17,19 +17,24 @@
         </div>
     </div>
 </div>
+<p>{{object.description | markdown | safe}}</p>
+<p>{% for tag in object.tags.all %}
+    {{ tag.name }}
+  {% endfor %}
+</p>
 <dl class="row">
     <dt class="col-sm-3">{% trans "Code" %}</dt>
     <dd class="col-sm-9">{{object.code}}</dd>
 
     <dt class="col-sm-3">{% trans "Quality Status" %}</dt>
     <dd class="col-sm-9">{% trans object.get_quality_status_display %}</dd>
-</dl>
-<p>{{object.description | markdown | safe}}</p>
-<p>{% for tag in object.tags.all %}
-    {{ tag.name }}
-  {% endfor %}
-</p>
 
+    <dt class="col-sm-3 text-muted">{% trans "Created" %}</dt>
+    <dd class="col-sm-9 text-muted">{{object.created_at}} - {{object.created_by.username}}</dd>
+
+    <dt class="col-sm-3 text-muted">{% trans "Modified" %}</dt>
+    <dd class="col-sm-9 text-muted">{{object.modified_at}} - {{object.modified_by.username}}</dd>
+</dl>
 <hr>
 
 {% for p in all_predicates  %}
@@ -38,6 +43,7 @@
         <ul>
             {% for slot_value in p.slots|dictsort:"order" %}
                 {% if p.kind == "inherited_as_subject" or p.kind == "own_as_subject" %}
+                    <li>
                     {% if slot_value.object %}
                         <a class="link-dark" href="{% url "o_instance_detail" slot_value.object.id %}">{{ slot_value.object.name }}</a>
                     {% else %}

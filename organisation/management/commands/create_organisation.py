@@ -24,13 +24,13 @@ class Command(BaseCommand):
                 print('org_name=', org_name)
                 print('superadmin=', superadmin)
                 print('users=', users)
-                organisation = Organisation.get_or_create(name=org_name, description='')
+                organisation, created = Organisation.objects.get_or_create(name=org_name, defaults={'description': ''})
                 admin_security_group_name = org_name + ' Admin Sec Group'
                 admin_security_group = create_organisation_admin_security_group(organisation=organisation, admin_security_group_name=admin_security_group_name, superadmin=superadmin)
                 self.stdout.write(self.style.SUCCESS('Successfully created organisation "%s"' % org_name))
                 for username in users:
                     user = User.objects.get(username=username)
-                    user_profile = Profile.get_or_create(organisation=organisation, user=user, role='employé')
+                    user_profile, created = Profile.objects.get_or_create(organisation=organisation, user=user, defaults={'role': 'employee'})
                     user_profile.is_active = True
                     user_profile.save()
                     admin_security_group.profiles.add(user_profile)

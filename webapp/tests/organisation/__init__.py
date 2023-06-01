@@ -1,5 +1,0 @@
-from .organisation_delete_test import OrganisationDeleteTestCase
-from .organisation_update_test import OrganisationUpdateTestCase
-from .organisation_detail_test import OrganisationDetailTestCase
-from .organisation_create_test import OrganisationCreateTestCase
-from .organisation_list_test import OrganisationListTestCase

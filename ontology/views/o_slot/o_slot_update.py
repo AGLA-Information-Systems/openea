@@ -35,7 +35,7 @@ class OSlotUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleO
         return initials
 
     def get_success_url(self):
-        if self.return_url:
+        if hasattr(self, 'return_url') and self.return_url:
             return self.return_url
         pk = self.object.id
         return reverse('o_slot_detail', kwargs={'pk': pk})

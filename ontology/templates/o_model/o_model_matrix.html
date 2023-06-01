@@ -1,0 +1,357 @@
+{% load static %}
+{% load i18n %}
+{% load js %}
+{% load i18n %}
+
+<div class="container">
+  <div class="border p-3">
+    <div class="row">
+      <div class="col-sm">
+        <div>
+          <dl>
+            <dt>
+              {% trans "Relations" %} <input id="all-relations-matrix-checkbox" type="checkbox"/>
+            </dt>
+            <dd>
+              <select id="matrix-relations" multiple="multiple" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="col-lg">
+        <div>
+          <dl>
+            <dt>
+              {% trans "Predicates" %} <input id="all-predicates-matrix-checkbox" type="checkbox"/>
+            </dt>
+            <dd>
+              <select id="matrix-predicates" multiple="multiple" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      
+    </div>
+  
+    <div class="row">
+      <div class="col-sm">
+        <div>
+          <h4>{% trans "Columns" %}</h4>
+          <dl>
+            <dt>
+              {% trans "Concepts" %} <input id="all-concepts-matrix-columns-checkbox" type="checkbox"/>
+            </dt>
+            <dd>
+              <select id="matrix-columns-concepts" multiple="multiple" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+
+          <dl>
+            <dt>
+              {% trans "Instances" %} <input id="all-instances-matrix-columns-checkbox" type="checkbox"/>
+            </dt>
+            <dd>
+              <select id="matrix-columns-instances" multiple="multiple" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+
+        </div>
+      </div>
+      <div class="col-lg">
+        <div>
+        <h4>{% trans "Rows" %}</h4>
+          <dl>
+            <dt>
+              {% trans "Concepts" %} <input id="all-concepts-matrix-rows-checkbox" type="checkbox"/>
+            </dt>
+            <dd>
+              <select id="matrix-rows-concepts" multiple="multiple" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+
+          <dl>
+            <dt>
+              {% trans "Instances" %} <input id="all-instances-matrix-rows-checkbox" type="checkbox"/>
+            </dt>
+            <dd>
+              <select id="matrix-rows-instances" multiple="multiple" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+
+        </div>
+      </div>
+      
+    </div>
+  
+    <div class="text-center">
+      <input id="generate-ontology-matrix-btn" class="btn btn-primary" type="button" value="{% trans 'Generate Ontology Matrix' %}" /> 
+      <input id="generate-instances-matrix-btn" class="btn btn-primary" type="button" value="{% trans 'Generate Instances Matrix' %}" />
+    </div>
+  </div>
+
+    <div id="modelmatrix-container" class="text-center" max-width="100%"></div>
+</div>
+{% csrf_token %}
+
+<script type="text/javascript">
+
+  var matrix_relations = document.getElementById('matrix-relations');
+  for (const [relation_id, relation] of Object.entries(ontology_data['relations'])){
+    var option = document.createElement("option");
+    option.value = relation_id;
+    option.text = relation.name;
+    matrix_relations.appendChild(option);
+  }
+
+  var matrix_predicates = document.getElementById('matrix-predicates');
+  for (const [predicate_id, predicate] of Object.entries(ontology_data['predicates'])){
+    var option = document.createElement("option");
+    option.value = predicate_id;
+    option.text = predicate.subject + ' ' + predicate.relation + ' ' + predicate.object;
+    matrix_predicates.appendChild(option);
+  }
+
+  var matrix_columns_concepts = document.getElementById('matrix-columns-concepts');
+  var matrix_rows_concepts = document.getElementById('matrix-rows-concepts');
+  for (const [concept_id, concept] of Object.entries(ontology_data['concepts'])){
+    var option = document.createElement("option");
+    option.value = concept_id;
+    option.text = concept.name;
+    matrix_columns_concepts.appendChild(option);
+    var option = document.createElement("option");
+    option.value = concept_id;
+    option.text = concept.name;
+    matrix_rows_concepts.appendChild(option);
+  }
+
+  // add relations to the relation select
+
+
+
+</script>
+
+<script type="text/javascript">
+
+  function modify_matrix_buttons(action){
+    if (action == 'disable'){
+      $("#generate-ontology-matrix-btn").attr("disabled", true);
+      $("#generate-instances-matrix-btn").attr("disabled", true);
+    }else{
+      $("#generate-ontology-matrix-btn").attr("disabled", false);
+      $("#generate-instances-matrix-btn").attr("disabled", false);
+    }
+  }
+
+  $(document).ready(function(){
+    $('#all-relations-matrix-checkbox').prop( "checked", false );
+    $('#all-predicates-matrix-checkbox').prop( "checked", false );
+    $('#all-concepts-matrix-columns-checkbox').prop( "checked", false );
+    $('#all-instances-matrix-columns-checkbox').prop( "checked", false );
+    $('#all-concepts-matrix-rows-checkbox').prop( "checked", false );
+    $('#all-instances-matrix-rows-checkbox').prop( "checked", false );
+
+    
+    $('#matrix-relations').select2({
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+    $('#matrix-predicates').select2({
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+    $('#matrix-columns-concepts').select2({
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+    $('#matrix-columns-instances').select2({
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+    $('#matrix-rows-concepts').select2({
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+    $('#matrix-rows-instances').select2({
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+
+    
+    $('#all-relations-matrix-checkbox').click(function() {
+        toggle_checkbox('matrix-relations', 'all-relations-matrix-checkbox');
+    });
+    $('#all-predicates-matrix-checkbox').click(function() {
+        toggle_checkbox('matrix-predicates', 'all-predicates-matrix-checkbox');
+    });
+    $('#all-concepts-matrix-columns-checkbox').click(function() {
+        toggle_checkbox('matrix-columns-concepts', 'all-concepts-matrix-columns-checkbox');
+    });
+    $('#all-instances-matrix-columns-checkbox').click(function() {
+        toggle_checkbox('matrix-columns-instances', 'all-instances-matrix-columns-checkbox');
+    });
+    $('#all-concepts-matrix-rows-checkbox').click(function() {
+        toggle_checkbox('matrix-rows-concepts', 'all-concepts-matrix-rows-checkbox');
+    });
+    $('#all-instances-matrix-rows-checkbox').click(function() {
+        toggle_checkbox('matrix-rows-instances', 'all-instances-matrix-rows-checkbox');
+    });
+
+    
+    $('#matrix-relations').change(function() {
+      uncheck_all_checkbox('matrix-relations', 'all-relations-matrix-checkbox');
+      debounce(update_matrix_predicates());
+    });
+    $('#matrix-predicates').change(function() {
+      uncheck_all_checkbox('matrix-predicates', 'all-predicates-matrix-checkbox');
+    });
+    $('#matrix-columns-concepts').change(function() {
+      uncheck_all_checkbox('matrix-columns-concepts', 'all-concepts-matrix-columns-checkbox');
+      debounce(fetch_matrix_instances(null, 'columns'));
+    });
+    $('#matrix-columns-instances').change(function() {
+      uncheck_all_checkbox('matrix-columns-instances', 'all-instances-matrix-columns-checkbox');
+    });
+    $('#matrix-rows-concepts').change(function() {
+      uncheck_all_checkbox('matrix-rows-concepts', 'all-concepts-matrix-rows-checkbox');
+      debounce(fetch_matrix_instances(null, 'rows'));
+    });
+    $('#matrix-rows-instances').change(function() {
+      uncheck_all_checkbox('matrix-rows-instances', 'all-instances-matrix-rows-checkbox');
+    });
+
+
+    $('#generate-ontology-matrix-btn').on('click', function() {
+      generate_ontology_matrix();
+    });
+    $('#generate-instances-matrix-btn').on('click', function() {
+      generate_instances_matrix();
+    });
+
+  });
+</script>
+
+<script>
+
+  // get the realtion between two concepts
+  function getRelation(concept_id, other_concept_id) {
+    for (const [predicate_id, predicate] of Object.entries(ontology_data['predicates'])){
+      if (predicate["subject_id"] == concept_id && predicate["object_id"] == other_concept_id) {
+        return predicate;
+      }
+    }
+    return "---";
+  }
+
+  // get relation between instances
+  function getInstancesRelation(instance_id_1, instance_id_2) {
+    instance_1 = instances[instance_id_1];
+    instance_2 = instances[instance_id_2];
+    for (const [slot_id, slot] of Object.entries(instance_1.ownslots)) {
+      if (slot.object_id == instance_2.id) {
+        return slot;
+      }
+    }
+    return "----";
+  }
+
+  function generate_ontology_matrix() {
+    const selected_rows = $('#matrix-rows-concepts').val();
+    const selected_columns = $('#matrix-columns-concepts').val();
+    generate_matrix(ontology_data['concepts'], selected_rows, selected_columns, getRelation);
+  }
+
+  function generate_instances_matrix() {
+    const selected_rows = $('#matrix-rows-instances').val();
+    const selected_columns = $('#matrix-columns-instances').val();
+    generate_matrix(instances, selected_rows, selected_columns, getInstancesRelation);
+  }
+
+  function generate_matrix(items, selected_rows_items, selected_columns_items, link_finder) {
+    const matrix_table_div = document.getElementById("modelmatrix-container");
+
+    // Clear the div
+    while (matrix_table_div.firstChild) {
+      matrix_table_div.removeChild(matrix_table_div.firstChild);
+    }
+
+    // Create the table
+    var matrix_table = document.createElement("table");
+    matrix_table.className = "table table-striped table-bordered table-hover";
+
+    // Create the table head
+    var matrix_table_head = document.createElement("thead");
+    var matrix_table_head_row = document.createElement("tr");
+
+    var matrix_table_head_cell = document.createElement("th");
+    matrix_table_head_cell.appendChild(document.createTextNode(""));
+    matrix_table_head_row.appendChild(matrix_table_head_cell);
+    
+    for  (item_id of selected_columns_items) {
+        var matrix_table_head_cell = document.createElement("th");
+        matrix_table_head_cell.appendChild(create_link_node(items[item_id], 'name', 'url'));
+        matrix_table_head_row.appendChild(matrix_table_head_cell);
+    }
+    matrix_table_head.appendChild(matrix_table_head_row);
+
+    // Create the table body
+    var matrix_table_body = document.createElement("tbody");
+
+    for  (item_id of selected_rows_items) {
+      item = items[item_id];
+
+        var matrix_table_body_row = document.createElement("tr");
+
+        var matrix_table_body_cell = document.createElement("th");
+        matrix_table_body_cell.appendChild(create_link_node(item, 'name', 'url'));
+        matrix_table_body_row.appendChild(matrix_table_body_cell);
+        
+        for  (other_item_id of selected_columns_items) {
+          other_item = items[other_item_id];
+            var matrix_table_body_cell = document.createElement("td");
+            matrix_table_body_cell.appendChild(create_link_node(link_finder(item_id, other_item_id), 'relation', 'url'));
+            matrix_table_body_row.appendChild(matrix_table_body_cell);
+        }
+        matrix_table_body.appendChild(matrix_table_body_row);
+      
+    }
+
+    // Append the table to the div
+    matrix_table.appendChild(matrix_table_head);
+    matrix_table.appendChild(matrix_table_body);
+    matrix_table_div.appendChild(matrix_table);
+  }
+
+  function update_matrix_predicates() {
+    var new_predicates = {'predicates': []};
+    var selected_predicates = $('#matrix-relations').val();
+    for (const [predicate_id, predicate] of Object.entries(ontology_data['predicates'])){
+      if (selected_predicates.includes(predicate.relation_id)){
+        new_predicates['predicates'].push(predicate);
+      }
+    }
+    update_predicates_select_box(new_predicates, {});
+  }
+
+  function fetch_matrix_instances(instance_ids, axis) {
+    filter_data = {'target': 'instances',
+                   'model_id': modelId,
+                   'concept_ids': $('#matrix-'+ axis +'-concepts').val(),
+                   'instance_ids': instance_ids}
+    return filter_model_data(filter_data, update_instances_select_boxes, {'axis': axis})
+  }
+
+  function update_predicates_select_box(result, params){
+    var $predicates_select = $("#matrix-predicates");
+    $predicates_select.empty();
+    for (var i = 0; i < result['predicates'].length; i++) {
+        var predicate_name = result['predicates'][i].subject + ' ' + result['predicates'][i].relation + ' ' + result['predicates'][i].object;
+        $predicates_select.append('<option value=' + result['predicates'][i].id + '>' + predicate_name + '</option>');
+    }
+  }
+
+  function update_instances_select_boxes(result, params){
+    axis = params['axis'];
+    var $instances_select = $('#matrix-'+axis+'-instances');
+    $instances_select.empty();
+    for (var i = 0; i < result['instances'].length; i++) {
+        $instances_select.append('<option value=' + result['instances'][i].id + '>' + result['instances'][i].name + '</option>');
+        //populate instance cache
+        instances[result['instances'][i].id] = result['instances'][i]
+    }
+  }
+
+</script>

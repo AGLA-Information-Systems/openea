@@ -3,7 +3,7 @@ from django.urls import reverse_lazy, reverse
 from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.forms.o_concept.o_concept_update import OConceptUpdateForm
-
+from datetime import datetime
 from ontology.models import OConcept
 from utils.views.custom import SingleObjectView
 
@@ -15,8 +15,8 @@ class OConceptUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, Sing
     permission_required = [('UPDATE', model.get_object_type(), None)]
 
     def form_valid(self, form):
-        if self.request.user.is_authenticated:
-            form.instance.modified_by = self.request.user
+        form.instance.modified_by = self.request.user
+        form.instance.modified_at = datetime.now()
         return super().form_valid(form)
 
     def get_initial(self):

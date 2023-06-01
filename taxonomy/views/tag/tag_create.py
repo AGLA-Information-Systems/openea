@@ -1,9 +1,10 @@
-from django.views.generic.edit import CreateView
+from utils.views.custom import CustomCreateView
 from django.urls import reverse_lazy, reverse
 from taxonomy.models import Tag
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class TagCreateView(CustomPermissionRequiredMixin, CreateView):
+class TagCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CustomCreateView):
     model = Tag
     fields = ['name', 'description', 'tag_group']
     template_name = "tag/tag_create.html"

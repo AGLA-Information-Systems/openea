@@ -3,18 +3,20 @@
 {% load i18n %}
 
 <div class="container">
-    <div class="row">
-        <div class="col-sm" style="margin-bottom: 40px">
-            <strong>{% trans "Other Model" %}</strong> 
-            <br/> <br/>
-            <select id="model-gap-select" style="width: 80%">
-                <option value="">----</option>
-            </select>
-        </div>
-        <div class="col-lg">
-            <div id="model-gap" style="min-width: 700px"></div>
+    <div class="border p-3">
+        <div class="row">
+            <div class="col-sm">
+                <strong>{% trans "Other Model" %}</strong> 
+                <br/> <br/>
+                <select id="model-gap-select" style="width: 80%">
+                    <option value="">----</option>
+                </select>
+            </div>
+            
         </div>
     </div>
+
+    <div id="model-gap" style="min-width: 700px"></div>
 </div>
 
 
@@ -149,11 +151,13 @@
             tableBodyRow.appendChild(tableBodyRowCell);
 
             var tableBodyFirstRowCell = document.createElement("td");
-            tableBodyFirstRowCell.appendChild(document.createTextNode(modelGap.first.join(", ")));
+            tableBodyFirstRowCell.setAttribute("style","white-space:pre-wrap; word-wrap:break-word");
+            tableBodyFirstRowCell.appendChild(document.createTextNode(modelGap.first.join("\n")));
             tableBodyRow.appendChild(tableBodyFirstRowCell);
 
             var tableBodySecondRowCell = document.createElement("td");
-            tableBodySecondRowCell.appendChild(document.createTextNode(modelGap.second.join(", ")));
+            tableBodySecondRowCell.setAttribute("style","white-space:pre-wrap; word-wrap:break-word");
+            tableBodySecondRowCell.appendChild(document.createTextNode(modelGap.second.join("\n")));
             tableBodyRow.appendChild(tableBodySecondRowCell);
 
             tableBody.appendChild(tableBodyRow);
@@ -167,5 +171,9 @@
 
     $('#model-gap-select').change(function () {
         generateModelGapAnalysis();
+    });
+
+    $(document).ready(function(){
+        getModelsData();
     });
 </script>

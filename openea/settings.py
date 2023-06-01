@@ -17,7 +17,10 @@ ini_config = configparser.ConfigParser()
 ini_config.read('config.ini')
 
 ENVIRONMENT = ini_config.get('DEFAULT', "ENVIRONMENT", fallback='dev')
+DEPLOYMENT = ini_config.get('DEFAULT', "DEPLOYMENT", fallback='local')
 CONTACT_EMAIL = ini_config.get('DEFAULT', "CONTACT_EMAIL", fallback='email@email.com')
+DOMAIN_URL = ini_config.get('DEFAULT', "DOMAIN_URL", fallback='http://localhost:8000/')
+DEFAULT_CURRENCY = ini_config.get('DEFAULT', "DEFAULT_CURRENCY", fallback='')
 RESOURCE_CONCEPT = ini_config.get('DEFAULT', "RESOURCE_CONCEPT", fallback='{Resource}')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -36,8 +39,15 @@ DEBUG = ini_config.getboolean('DEFAULT', "DEBUG", fallback=True)
 ALLOWED_HOSTS = ini_config.get('DEFAULT', "DJANGO_ALLOWED_HOSTS", fallback='*').split(" ")
 
 # Application definition
+INSTALLED_APPS = ['webapp.apps.WebappConfig']
+INSTALLED_APPS += [
+    'organisation.apps.OrganisationConfig',
+    'authorization.apps.AuthorizationConfig',
+    'authentication.apps.AuthenticationConfig',
+    'ontology.apps.OntologyConfig',
+    'taxonomy.apps.TaxonomyConfig',
+    'configuration.apps.ConfigurationConfig',
 
-INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,19 +55,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'webapp.apps.WebappConfig',
-    'organisation.apps.OrganisationConfig',
-    'authorization.apps.AuthorizationConfig',
-    'authentication.apps.AuthenticationConfig',
-    'ontology.apps.OntologyConfig',
-    
-    'taxonomy.apps.TaxonomyConfig',
-    'configuration.apps.ConfigurationConfig',
     'crispy_forms',
     "crispy_bootstrap5",
     'pagedown',
-
-    'django_select2',
+    'django_select2'
 ]
 
 MIDDLEWARE = [
@@ -223,6 +224,9 @@ CACHES = {
 
 # Tell select2 which cache configuration to use:
 SELECT2_CACHE_BACKEND = "select2"
+
+MAX_GRAPH_NODES = ini_config.getint('Graph', "MAX_GRAPH_NODES", fallback='50')
+MAX_LENGTH_GRAPH_NODE_TEXT = ini_config.getint('Graph', "MAX_LENGTH_GRAPH_NODE_TEXT", fallback='30')
 
 EMAIL_BACKEND = ini_config.get('Email', "EMAIL_BACKEND", fallback='django.core.mail.backends.smtp.EmailBackend')
 EMAIL_HOST = ini_config.get('Email', "EMAIL_HOST", fallback='localhost')

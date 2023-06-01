@@ -1,5 +1,7 @@
 import io
 import json
+
+from django.conf import settings
 from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.models import OModel
@@ -14,7 +16,7 @@ from organisation.models import Organisation, TASK_TYPE_IMPORT, TASK_TYPE_EXPORT
 from ontology.forms import ModelExportForm, ModelImportForm
 from utils.generic import handle_uploaded_file
 from ontology.controllers.utils import KnowledgeBaseUtils
-from django.conf import settings
+
 
 class ImportView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
     form_class = ModelImportForm

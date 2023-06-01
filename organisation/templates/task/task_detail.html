@@ -6,12 +6,36 @@
 {% block content %}
 <h2>{{object.name}} ({% trans "Task" %})</h2>
 <p>{{object.description | markdown | safe}}</p>
-<p>{{object.type}}</p>
-<p>{{object.status}}</p>
-<p>{{object.user}}</p>
-<p>{{object.organisation.name}}</p>
-<p>{{object.attachment.name}}</p>
-<p>{{object.config}}</p>
-<p>{{object.started_at}}</p>
-<p>{{object.ended_at}}</p>
+
+<dl class="row">
+    <dt class="col-sm-3">{% trans "Type" %}</dt>
+    <dd class="col-sm-9">{{object.type}}</dd>
+
+    <dt class="col-sm-3">{% trans "Status" %}</dt>
+    <dd class="col-sm-9">{{object.get_status_display}}</dd>
+
+    <dt class="col-sm-3">{% trans "Submitted by" %}</dt>
+    <dd class="col-sm-9">{{object.user}}</dd>
+
+    <dt class="col-sm-3">{% trans "Organisation" %}</dt>
+    <dd class="col-sm-9">{{object.organisation.name}}</dd>
+
+    <dt class="col-sm-3">{% trans "Attachment" %}</dt>
+    <dd class="col-sm-9">{{object.attachment.name}}</dd>
+
+    <dt class="col-sm-3">{% trans "Config" %}</dt>
+    <dd class="col-sm-9">{{object.config}}</dd>
+
+    <dt class="col-sm-3">{% trans "Started" %}</dt>
+    <dd class="col-sm-9">{{object.started_at}}</dd>
+
+    <dt class="col-sm-3">{% trans "End" %}</dt>
+    <dd class="col-sm-9">{{object.ended_at}}</dd>
+
+    <dt class="col-sm-3 text-muted">{% trans "Created" %}</dt>
+    <dd class="col-sm-9 text-muted">{{object.created_at}} - {{object.created_by.username}}</dd>
+
+    <dt class="col-sm-3 text-muted">{% trans "Modified" %}</dt>
+    <dd class="col-sm-9 text-muted">{{object.modified_at}} - {{object.modified_by.username}}</dd>
+</dl>
 {% endblock content %}

@@ -69,6 +69,36 @@ class KnowledgeBaseUtilsTestCase(TestCase):
         self.assertEqual(len(concepts), 1, concepts)
         self.assertIn((self.org_1_concept_1, 0), concepts, concepts)
 
+    def test_get_instances_paths(self):
+        paths = KnowledgeBaseUtils.get_instances_paths(start_instance=self.org_1_instance_1, end_instance=self.org_1_instance_3)
+        best_path = (100, [])
+        if not paths.empty():
+            best_path = paths.get()
+        self.assertEqual(best_path[0], 2, best_path[1])
+
+        paths = KnowledgeBaseUtils.get_instances_paths(start_instance=self.org_1_instance_1, end_instance=self.org_1_instance_8)
+        best_path = (100, [])
+        if not paths.empty():
+            best_path = paths.get()
+        self.assertEqual(best_path[0], 100, best_path[1])
+
+        paths = KnowledgeBaseUtils.get_instances_paths(start_instance=self.org_1_instance_0, end_instance=self.org_1_instance_4)
+        best_path = (100, [])
+        if not paths.empty():
+            best_path = paths.get()
+        self.assertEqual(best_path[0], 2, best_path[1])
+
+    def test_get_related_instances(self):
+        results = KnowledgeBaseUtils.get_related_instances(root_instance=self.org_1_instance_1, predicate_ids=None, level=2)
+        self.assertEqual(len(results), 2, results)
+        self.assertEqual(len(results[0]), 3, results)
+
+        KnowledgeBaseUtils.get_related_instances(root_instance=self.org_1_instance_1, predicate_ids=None, level=10)
+        self.assertEqual(len(results[0]), 3, results)
+
+        predicate_ids = []
+        KnowledgeBaseUtils.get_related_instances(root_instance=self.org_1_instance_1, predicate_ids=predicate_ids, level=10)
+        self.assertEqual(len(results[0]), 3, results)
 
 
     def test_ontology_from_dict(self, model, data=None):
@@ -85,3 +115,4 @@ class KnowledgeBaseUtilsTestCase(TestCase):
 
     def test_get_url(self, object_type, id):
         pass
+

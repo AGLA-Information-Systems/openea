@@ -20,7 +20,10 @@ class Utils:
     OBJECT_CONFIG = 'CONF'
     OBJECT_LOG = 'LOG'
 
-    ADMIN_OBJECT_TYPE = [
+    OBJECT_SUBSCRIPTION = 'SUBS'
+    OBJECT_POST = 'POST'
+
+    DEFAULT_OBJECT_TYPE = [
         (OBJECT_PROFILE, 'Profile'),
         (OBJECT_TASK, 'Task'),
         (OBJECT_SECURITY_GROUP, 'Security Group'),
@@ -38,9 +41,10 @@ class Utils:
         (OBJECT_LOG, 'Log')
     ]
 
-    SUPERADMIN_OBJECT_TYPE = [
-        (OBJECT_ORGANISATION, 'Organisation')
+    ROOT_OBJECT_TYPE = [
+        (OBJECT_ORGANISATION, 'Organisation'),
+        (OBJECT_POST, 'Post'),
+        (OBJECT_SUBSCRIPTION, 'Subscription')
     ]
 
-    OBJECT_TYPE = SUPERADMIN_OBJECT_TYPE + ADMIN_OBJECT_TYPE
-
+    OBJECT_TYPE = ROOT_OBJECT_TYPE + DEFAULT_OBJECT_TYPE

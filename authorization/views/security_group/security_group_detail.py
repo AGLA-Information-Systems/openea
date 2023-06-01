@@ -2,11 +2,12 @@ from django.views.generic import DetailView
 from django.core.paginator import Paginator
 
 from authorization.models import Permission, SecurityGroup
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
 from organisation.models import Profile
 
 
-class SecurityGroupDetailView(CustomPermissionRequiredMixin, DetailView):
+class SecurityGroupDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, DetailView):
     model = SecurityGroup
     template_name = "security_group/security_group_detail.html"
     paginate_by = 10000

@@ -1,6 +1,6 @@
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic.edit import CreateView
+from utils.views.custom import CustomCreateView
 
 from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,7 +8,7 @@ from ontology.forms.o_relation.o_relation_create import ORelationCreateForm
 from ontology.models import ORelation
 
 
-class ORelationCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CreateView):
+class ORelationCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CustomCreateView):
     model = ORelation
     form_class = ORelationCreateForm
     template_name = "o_relation/o_relation_create.html"

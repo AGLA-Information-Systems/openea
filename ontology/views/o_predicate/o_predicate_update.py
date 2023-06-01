@@ -3,7 +3,7 @@ from django.urls import reverse_lazy, reverse
 from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.forms.o_predicate.o_predicate_update import OPredicateUpdateForm
-
+from datetime import datetime
 from ontology.models import OPredicate
 from utils.views.custom import SingleObjectView
 
@@ -15,8 +15,8 @@ class OPredicateUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, Si
     permission_required = [('UPDATE', model.get_object_type(), None)]
 
     def form_valid(self, form):
-        if self.request.user.is_authenticated:
-            form.instance.modified_by = self.request.user
+        form.instance.modified_by = self.request.user
+        form.instance.modified_at = datetime.now()
         return super().form_valid(form)
     
     def get_initial(self):

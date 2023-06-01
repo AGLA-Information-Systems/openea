@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% load i18n %}
+{% block content %}
+
+<h2>403</h2>
+
+{% if exception %}
+    <p>{{ exception }}</p>
+{% else %}
+  <p>{% trans "Access Denied" %}</p>
+{% endif %}
+
+
+{% endblock content %}

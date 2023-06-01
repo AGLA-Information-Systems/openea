@@ -5,8 +5,8 @@ from django.db import models
 from django.utils.translation import gettext as _
 
 from openea.utils import Utils
-from taxonomy.models import Tag, TagGroup
 from organisation.models import Organisation
+from taxonomy.models import Tag, TagGroup
 
 __author__ = "Patrick Agbokou"
 __copyright__ = "Copyright 2021, OpenEA"
@@ -56,6 +56,9 @@ class Repository(models.Model):
     
     def get_organisation(self):
         return self.organisation
+    
+    def filter_by_organisation(organisation):
+        return Repository.objects.filter(organisation=organisation)
 
     def get_object_type():
         return Utils.OBJECT_REPOSITORY
@@ -115,6 +118,9 @@ class OModel(models.Model):
     
     def get_organisation(self):
         return self.repository.organisation
+    
+    def filter_by_organisation(organisation):
+        return OModel.objects.filter(repository__organisation=organisation)
 
     def get_object_type():
         return Utils.OBJECT_MODEL
@@ -157,6 +163,9 @@ class OConcept(models.Model):
     
     def get_organisation(self):
         return self.model.repository.organisation
+    
+    def filter_by_organisation(organisation):
+        return OConcept.objects.filter(model__repository__organisation=organisation)
 
     def get_object_type():
         return Utils.OBJECT_CONCEPT
@@ -219,6 +228,9 @@ class ORelation(models.Model):
     
     def get_organisation(self):
         return self.model.repository.organisation
+    
+    def filter_by_organisation(organisation):
+        return ORelation.objects.filter(model__repository__organisation=organisation)
 
     def get_object_type():
         return Utils.OBJECT_RELATION
@@ -282,6 +294,9 @@ class OPredicate(models.Model):
     
     def get_organisation(self):
         return self.model.repository.organisation
+    
+    def filter_by_organisation(organisation):
+        return OPredicate.objects.filter(model__repository__organisation=organisation)
 
     def get_object_type():
         return Utils.OBJECT_PREDICATE
@@ -335,6 +350,9 @@ class OInstance(models.Model):
     
     def get_organisation(self):
         return self.model.repository.organisation
+    
+    def filter_by_organisation(organisation):
+        return OInstance.objects.filter(model__repository__organisation=organisation)
 
     def get_object_type():
         return Utils.OBJECT_INSTANCE
@@ -349,7 +367,7 @@ class OSlot(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     description = models.TextField(blank=True, null=True)
     value = models.CharField(max_length=1024, blank=True, null=True)
-    order = models.CharField(max_length=1024, blank=True, null=True)
+    order = models.CharField(max_length=100, default='0')
     subject = models.ForeignKey(OInstance, on_delete=models.CASCADE, null=True, related_name='slot_subject')
     object = models.ForeignKey(OInstance, on_delete=models.CASCADE, null=True, related_name='slot_object')
     predicate = models.ForeignKey(OPredicate, on_delete=models.CASCADE, null=True, related_name='used_in')
@@ -395,6 +413,9 @@ class OSlot(models.Model):
     
     def get_organisation(self):
         return self.model.repository.organisation
+    
+    def filter_by_organisation(organisation):
+        return OConcept.objects.filter(model__repository__organisation=organisation)
 
     def get_object_type():
         return Utils.OBJECT_INSTANCE
@@ -407,6 +428,9 @@ class OSlot(models.Model):
         if self.object is not None:
             object_name = self.object.name
         return "{} {} {}".format(subject_name, self.name, object_name)
+    
+    def __lt__(self, other):
+        return True
 
 class OReport(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -445,6 +469,9 @@ class OReport(models.Model):
     
     def get_organisation(self):
         return self.model.repository.organisation
+    
+    def filter_by_organisation(organisation):
+        return OConcept.objects.filter(model__repository__organisation=organisation)
     
     def get_object_type():
         return Utils.OBJECT_REPORT

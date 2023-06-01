@@ -27,6 +27,9 @@ class TagGroup(models.Model):
 
     def get_organisation(self):
         return self.organisation
+    
+    def filter_by_organisation(organisation):
+        return TagGroup.objects.filter(organisation=organisation)
 
     def get_object_type():
         return Utils.OBJECT_TAG_GROUP
@@ -57,6 +60,9 @@ class Tag(models.Model):
 
     def get_organisation(self):
         return self.organisation
+    
+    def filter_by_organisation(organisation):
+        return Tag.objects.filter(organisation=organisation)
 
     def get_object_type():
         return Utils.OBJECT_TAG

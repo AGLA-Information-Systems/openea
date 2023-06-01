@@ -25,8 +25,89 @@
           {{ form.export_format.errors }}
           {{ form.export_format|as_crispy_field }}
       </div>
-      <button type="submit" class="btn btn-primary mb-3">{% trans "Start Export" %}</button>
+      <div id="model-export-instances-container" style="display: none">
+        <label for="model-export-instances" style="margin-bottom: 8px;">Instances*</label>
+        <br>
+        <select id="model-export-instances" multiple="multiple" style="width: 80%;" name="selected_instances"></select>
+      </div>
+    </div>
+
+    <div>
+       <button type="submit" name="_start_export" value="_start_export" class="btn btn-primary my-3 mx-2">{% trans "Start Export" %}</button>
+      <button type="submit" name="_schedule_export" value="_schedule_export" class="btn btn-outline-primary my-3 mx-2">{% trans "Schedule Export" %}</button>
     </div>
   </div>
 </form>
+
+<script>
+  $(document).ready(function() {
+    console.log("ready!!!!!");
+    $("#model-export-instances").select2({
+      allowClear: true,
+    });
+    $("#id_model").select2();
+
+    updateModelExportInstances();
+  })
+
+  async function getModelInstances(modelId) {
+    try {
+        const data = await $.ajax({
+            url: "/o_instance/json_list/?model_id=" + modelId,
+            type: "GET",
+        });
+        return data;
+    } catch (error) {
+        return null;
+    }
+  }
+
+  var modelExportInstances = document.getElementById("model-export-instances");
+
+  async function addInstancesToSelect(modelId) {
+      try {
+        const instances = await getModelInstances(modelId).then((data) => {
+          if (data == null) {
+            return;
+          }
+
+          while (modelExportInstances.firstChild) {
+            modelExportInstances.removeChild(modelExportInstances.firstChild);
+          }
+          for (const [instanceId, instance] of Object.entries(data)) {
+            var option = document.createElement("option");
+            option.value = instanceId;
+            option.text = instance.name;
+            modelExportInstances.appendChild(option);
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+  }
+
+  async function updateModelExportInstances() {
+    const modelId = document.getElementById("id_model").value;
+    await addInstancesToSelect(modelId);
+  }
+
+  var knowledgeSet = document.querySelectorAll("input[name='knowledge_set']");
+  for (var i = 0; i < knowledgeSet.length; i++) {
+    knowledgeSet[i].addEventListener("change", function() {
+      if (this.value == "INSTANCES") {
+        console.log("instances");
+        document.getElementById("model-export-instances-container").style.display = "block";
+      } else {
+        console.log("not instances");
+        document.getElementById("model-export-instances-container").style.display = "none";
+      }
+    });
+  }
+
+  $("#id_model").change(function() {
+    updateModelExportInstances();
+  });
+
+</script>
+
 {% endblock content %}

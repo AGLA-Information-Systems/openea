@@ -1,10 +1,11 @@
-from django.views.generic.edit import CreateView
+from utils.views.custom import CustomCreateView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from organisation.models import Log
 
-class LogCreateView(CustomPermissionRequiredMixin, CreateView):
+class LogCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CustomCreateView):
     model = Log
     fields = ['name', 'description', 'attachment', 'organisation']
     template_name = "log/log_create.html"

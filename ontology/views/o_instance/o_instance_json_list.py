@@ -21,6 +21,7 @@ class OInstanceJSONListView(LoginRequiredMixin, CustomPermissionRequiredMixin, V
             instances = OInstance.objects.filter(concept_id=concept_id)
         else:
             instances = OInstance.objects.all()
+            
         data = {}
         for instance in instances:
             data[str(instance.id)] = {

@@ -1,11 +1,12 @@
 from django.http import HttpResponseRedirect
-from django.views.generic.edit import CreateView
+from utils.views.custom import CustomCreateView
 from django.urls import reverse_lazy
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group, create_organisation_admin_security_group
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from organisation.models import Organisation
 
-class OrganisationCreateView(CustomPermissionRequiredMixin, CreateView):
+class OrganisationCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CustomCreateView):
     model = Organisation
     fields = ['name', 'description', 'location']
     template_name = "organisation/organisation_create.html"

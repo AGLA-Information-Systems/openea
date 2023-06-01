@@ -21,7 +21,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path('', include('webapp.urls'), name="webapp"),
+    path('', include('webapp.urls'), name="webapp")
 ]
 
 urlpatterns += [

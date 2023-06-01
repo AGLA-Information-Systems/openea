@@ -1,5 +1,0 @@
-from .organisation_delete import OrganisationDeleteView
-from .organisation_update import OrganisationUpdateView
-from .organisation_detail import OrganisationDetailView
-from .organisation_create import OrganisationCreateView
-from .organisation_list import OrganisationListView, OrganisationListUserView
