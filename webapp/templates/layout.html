@@ -12,8 +12,7 @@
         </a>
 
         <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-          <span class="me-3 py-2 fs-10 text-dark text-decoration-none" href="#">{{ deployment_type }} {{ openea_version }}</span>
-          
+
           {% include "language_switcher.html" %}
           {% include "user-menu.html" %}
 
@@ -32,6 +31,7 @@
         <div class="col-12 col-md">
           <a href="/" class="d-flex align-items-center text-dark text-decoration-none">{% trans "OpenEA" %}</a> 
           <small class="d-block mb-3 text-muted">&copy; 2017–2023</small>
+          <span class="d-block mb-3 text-muted" href="#">{% trans "Version" %}: {{ deployment_type }} {{ openea_version }}</span>
         </div>
         <div class="col-6 col-md">
           <h5>{% trans "Features" %} </h5>
