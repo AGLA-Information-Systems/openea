@@ -139,6 +139,3 @@ def populate_test_env(x):
     x.org_1_model_2 = create_model(repository=x.org_1_repo_1, name='org_1_model_2')
     
     return x
-
-def populate_test_env_with_products():
-    return populate_products()

@@ -225,8 +225,8 @@ CACHES = {
 # Tell select2 which cache configuration to use:
 SELECT2_CACHE_BACKEND = "select2"
 
-MAX_GRAPH_NODES = ini_config.getint('Graph', "MAX_GRAPH_NODES", fallback='50')
-MAX_LENGTH_GRAPH_NODE_TEXT = ini_config.getint('Graph', "MAX_LENGTH_GRAPH_NODE_TEXT", fallback='30')
+MAX_GRAPH_NODES = ini_config.getint('Graph', "MAX_GRAPH_NODES", fallback=50)
+MAX_LENGTH_GRAPH_NODE_TEXT = ini_config.getint('Graph', "MAX_LENGTH_GRAPH_NODE_TEXT", fallback=30)
 
 EMAIL_BACKEND = ini_config.get('Email', "EMAIL_BACKEND", fallback='django.core.mail.backends.smtp.EmailBackend')
 EMAIL_HOST = ini_config.get('Email', "EMAIL_HOST", fallback='localhost')

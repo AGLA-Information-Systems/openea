@@ -151,10 +151,10 @@ let table = `
 <table class="table table-fluid" id = "myTable">
   <thead>
     <tr>
-      <th scope="col">Année" %}</th>
-      <th scope="col">Coûts" %}</th>
-      <th scope="col">Bénéfices" %}</th>
-      <th scope="col">Valeur" %}</th>
+      <th scope="col">Année</th>
+      <th scope="col">Coûts</th>
+      <th scope="col">Bénéfices</th>
+      <th scope="col">Valeur</th>
     </tr>
   </thead>
   <tbody>
@@ -163,7 +163,7 @@ let table = `
 for (const [year_index, year] of Object.entries(years)){
     table = table +
     `<tr>
-      <th scope="row">${year_index}" %}</th>
+      <th scope="row">${year_index}</th>
       <td>${totaux_par_an[year_index]['couts'].toFixed(0)}</td>
       <td>${totaux_par_an[year_index]['benefices'].toFixed(0)}</td>
       <td>${totaux_par_an[year_index]['benefices'].toFixed(0) - totaux_par_an[year_index]['couts'].toFixed(0)}</td>
@@ -184,11 +184,11 @@ let table = `
 <table class="table table-fluid" id = "myTable">
   <thead>
     <tr>
-      <th scope="col">type" %}</th>
-      <th scope="col">Nom" %}</th>
-      <th scope="col">Montant" %}</th>
-      <th scope="col">Durée" %}</th>
-      <th scope="col">Total" %}</th>
+      <th scope="col">type</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Montant</th>
+      <th scope="col">Durée</th>
+      <th scope="col">Total</th>
     </tr>
   </thead>
   <tbody>

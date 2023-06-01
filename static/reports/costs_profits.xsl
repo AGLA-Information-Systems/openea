@@ -125,9 +125,9 @@
   <table class="table table-fluid"  id='cb_table'>
     <thead>
         <tr>
-            <th>{% trans "Cout Total" %}</th>
-            <th>{% trans "Bénéfice Total" %}</th>
-            <th>{% trans "Valeur" %}</th>
+            <th>Cout Total</th>
+            <th>Bénéfice Total</th>
+            <th>Valeur</th>
         </tr>
     </thead>
     <tbody>
@@ -142,10 +142,10 @@
   <table class="table table-fluid"  id='cb_detail_table_3'>
     <thead>
         <tr>
-            <th>{% trans "Benefice" %}</th>
-            <th>{% trans "Cout" %}</th>
-            <th>{% trans "Montant" %}</th>
-            <th>{% trans "Unité de temps" %}</th>
+            <th>Benefice</th>
+            <th>Cout</th>
+            <th>Montant</th>
+            <th>Unité de temps</th>
         </tr>
     </thead>
     <tbody>
