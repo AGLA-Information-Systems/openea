@@ -22,6 +22,7 @@ from ontology.views.o_instance.o_instance_json_list import \
     OInstanceJSONListView
 from ontology.views.o_instance.o_instance_list import OInstanceListView
 from ontology.views.o_instance.o_instance_update import OInstanceUpdateView
+from ontology.views.o_model.o_model_gap_analysis import OModelGapAnalysisView
 from ontology.views.o_model.o_model_graph import OModelGraphView
 from ontology.views.o_model.o_model_impact_analysis import \
     OModelImpactAnalysisView
@@ -96,6 +97,7 @@ urlpatterns = [
     path('o_model/graph/<uuid:model_id>/', OModelGraphView.as_view(), name='o_model_graph'),
     path('o_model/filter/<uuid:model_id>/json', OModelJSONFilterView.as_view(), name='o_model_filter_json'),
     path('o_model/<uuid:model_id>/pathfinder/', OModelPathFinderView.as_view(), name='o_model_pathfinder'),
+    path('o_model/<uuid:model_id>/gap_analysis/', OModelGapAnalysisView.as_view(), name='o_model_gap_analysis'),
     path('o_model/<uuid:model_id>/impact_analysis/', OModelImpactAnalysisView.as_view(), name='o_model_impact_analysis'),
 
     path('model_import/<uuid:model_id>/', ImportView.as_view(), name='model_import'),

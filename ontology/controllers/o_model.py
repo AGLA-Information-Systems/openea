@@ -119,6 +119,7 @@ class ModelUtils:
             'id': model.id,
             "type": "model",
             'name': model.name,
+            'version': model.version,
             "description": model.description,
             "concepts": {},
             "relations": {},
@@ -249,3 +250,68 @@ class ModelUtils:
                     slot_data = ModelUtils.slot_to_dict(x[0])
                 dictified_results[level].append((slot_data, ModelUtils.instance_to_dict(x[1])))
         return dictified_results
+    
+    def model_diff(model_1, model_2, filters):
+        result = {
+            'relations': [],
+            'predicates': [],
+            'concepts': [],
+            'instances': [],
+            'slots': [],
+        }
+
+        if 'relations' in filters:
+            ModelUtils.compare(result, ORelation, 'relations', model_1, model_2)
+        if 'predicates' in filters:
+            ModelUtils.compare(result, OPredicate, 'predicates', model_1, model_2)
+        if 'concepts' in filters:
+            ModelUtils.compare(result, OConcept, 'concepts', model_1, model_2)
+        if 'instances' in filters:
+            ModelUtils.compare(result, OInstance, 'instances', model_1, model_2)
+        if 'slots' in filters:
+            ModelUtils.compare(result, OSlot, 'slots', model_1, model_2)
+
+        return result
+
+    def compare(result, class_name, key, model_1, model_2):
+        if key == 'predicates':
+            model_1_query = class_name.objects.filter(model=model_1).order_by('subject__name').order_by('relation__name').order_by('object__name')
+            model_2_query = class_name.objects.filter(model=model_2).order_by('subject__name').order_by('relation__name').order_by('object__name')
+        elif key == 'slots':
+            model_1_query = class_name.objects.filter(model=model_1).order_by('subject__name').order_by('predicate__relation__name').order_by('object__name')
+            model_2_query = class_name.objects.filter(model=model_2).order_by('subject__name').order_by('predicate__relation__name').order_by('object__name')
+        else:
+            model_1_query = class_name.objects.filter(model=model_1).order_by('name')
+            model_2_query = class_name.objects.filter(model=model_2).order_by('name')
+
+        model_1_item_list = [x for x in model_1_query.all()]
+        model_2_item_list = [x for x in model_2_query.all()]
+        is_model_1_larger_than_model_2 = len(model_1_item_list) > len(model_2_item_list)
+
+        smaller_list = model_1_item_list
+        larger_list = model_2_item_list
+        if is_model_1_larger_than_model_2:
+            smaller_list = model_2_item_list
+            larger_list = model_1_item_list
+        
+        i = 0
+        while i < len(larger_list):
+            if i < len(smaller_list):
+                ModelUtils.compare_objects(result, key, model_1_item_list[i], model_2_item_list[i])
+            else:
+                if is_model_1_larger_than_model_2:
+                    result[key].append( (None, {"id": str(larger_list[i].id), "name": larger_list[i].name}) )
+                else:
+                    result[key].append( ({"id": str(larger_list[i].id), "name": larger_list[i].name}, None) )
+            i = i + 1
+
+        #tuples.sort(key=lambda x: x[0], reverse=True)
+    
+    def compare_objects(result, key, item_1, item_2):
+        if item_1.name == item_2.name:
+            result[key].append( ({"id": str(item_1.id), "name": item_1.name}, {"id": str(item_2.id), "name": item_2.name}) )
+        else:
+            if item_1.name < item_2.name:
+                result[key].append( ({"id": str(item_1.id), "name": item_1.name}, None) )
+            else:
+                result[key].append( (None, {"id": str(item_2.id), "name": item_2.name}) )

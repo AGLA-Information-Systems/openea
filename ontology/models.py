@@ -292,6 +292,10 @@ class OPredicate(models.Model):
     def organisation(self):
         return self.model.repository.organisation
     
+    @property
+    def name(self):
+        return self.subject.name + '->' + self.relation.name + '->' + self.object.name 
+    
     def get_organisation(self):
         return self.model.repository.organisation
     
@@ -389,7 +393,13 @@ class OSlot(models.Model):
 
     @property
     def name(self):
-        return self.predicate.name
+        subject_name = ''
+        if self.subject is not None:
+            subject_name = self.subject.name
+        object_name = self.value
+        if self.object is not None:
+            object_name = self.object.name
+        return subject_name + '->' + self.predicate.relation.name + '->' + object_name 
 
     def get_or_create(model, predicate, description='', order='0', subject=None, object=None, value=None, id=None):
         try:
@@ -421,13 +431,7 @@ class OSlot(models.Model):
         return Utils.OBJECT_INSTANCE
 
     def __str__(self):
-        subject_name = ''
-        if self.subject is not None:
-            subject_name = self.subject.name
-        object_name = self.value
-        if self.object is not None:
-            object_name = self.object.name
-        return "{} {} {}".format(subject_name, self.name, object_name)
+        return self.name
     
     def __lt__(self, other):
         return True

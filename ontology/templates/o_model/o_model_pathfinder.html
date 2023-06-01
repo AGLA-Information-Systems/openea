@@ -148,19 +148,15 @@
 <script>
 
   function build_pathfinder_results(results){
-    console.log(results);
-
     if(results.length > 0){
       path = results[0];
       cell_data = '<ul>';
       for (slot of path){
-        console.log(path);
         cell_data = cell_data + '<li> <strong>' +  slot.subject + '</strong> ' + slot.relation + ' <strong>' + slot.object + '</strong> </li>';
       }
       cell_data += '</ul>';
       $('#modelpathfinder-container').html(cell_data);
     }
-
   }
 
   async function find_instance_path() {

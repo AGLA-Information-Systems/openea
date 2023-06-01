@@ -12,7 +12,39 @@
                     <option value="">----</option>
                 </select>
             </div>
-            
+            <div class="col-sm">
+                <fieldset>
+                    <legend>{% trans "Filters" %}</legend>
+                    <div>
+                        <input type="checkbox" id="model-gap-filter-concepts" name="model-gap-filter" value="concepts" checked>
+                        <label for="model-gap-filter-concepts">{% trans "Concepts" %}</label>
+                    </div>
+                
+                    <div>
+                        <input type="checkbox" id="model-gap-filter-instances" name="model-gap-filter" value="instances">
+                        <label for="model-gap-filter-instances">{% trans "Instances" %}</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" id="model-gap-filter-slots" name="model-gap-filter" value="slots">
+                        <label for="model-gap-filter-slots">{% trans "Slots" %}</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" id="model-gap-filter-predicates" name="model-gap-filter" value="predicates">
+                        <label for="model-gap-filter-predicates">{% trans "Predicates" %}</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" id="model-gap-filter-relations" name="model-gap-filter" value="relations">
+                        <label for="model-gap-filter-relations">{% trans "Relations" %}</label>
+                    </div>
+
+                </fieldset>
+            </div>
+        </div>
+        <div class="text-center">
+            <input id="gap-analysis-btn" class="btn btn-primary" type="button" value="{% trans 'Analyze' %}" />
         </div>
     </div>
 
@@ -52,71 +84,53 @@
         }
     }
 
+    $('#gap-analysis-btn').on('click', function() {
+       debounce(analyze_gap());
+    });
+
 </script>
 
 <script>
-    function getModelsOrder(model_1, model_2) {
-        model_1 = models[model_1];
-        model_2 = models[model_2];
-
-        const modelsOrder = {
-            first: model_1.name.localeCompare(model_2.name) < 0 ? model_1.id : model_2.id,
-            second: model_1.name.localeCompare(model_2.name) < 0 ? model_2.id : model_1.id,
-        };
-
-        return modelsOrder;
-    }
-
-    function getModelGap(modelsOrder, compareOn) {
-        const modelGap = {
-            first: [],
-            second: [],
-        };
-
-        const firstModel = models[modelsOrder.first];
-        const secondModel = models[modelsOrder.second];
-
-        var firstModelItems = [];
-        var secondModelItems = [];
-
-       if (compareOn === "predicates") {
-            for (const [item_id, item] of Object.entries(firstModel[compareOn])) {
-                firstModelItems.push(`${item.subject}::${item.relation}::${item.object}`);
-            }
-            for (const [item_id, item] of Object.entries(secondModel[compareOn])) {
-                secondModelItems.push(`${item.subject}::${item.relation}::${item.object}`);
-            }
-        } else {
-            for (const [item_id, item] of Object.entries(firstModel[compareOn])) {
-                firstModelItems.push(item.name);
-            }
-            for (const [item_id, item] of Object.entries(secondModel[compareOn])) {
-                secondModelItems.push(item.name);
-            }
+    async function analyze_gap() {
+        if (! $('#model-gap-select').val()){
+            return
         }
-        
-        modelGap.first = firstModelItems.filter(item => !secondModelItems.includes(item));
-        modelGap.second = secondModelItems.filter(item => !firstModelItems.includes(item));
 
-        return modelGap;
+        $("#gap-analysis-btn").attr("disabled", true);
+
+        var selected_filters = [];
+        $("input:checkbox[name='model-gap-filter']:checked").each(function(){
+            selected_filters.push($(this).val());
+        });
+
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+      try {
+          const result_data = await $.ajax({
+              url: '/o_model/' + modelId +'/gap_analysis/',
+              type: 'POST',
+              headers: {'X-CSRFToken': csrftoken},
+              contentType : 'application/json',
+              success: function (result) {
+                build_gap_analysis_results(result);
+                $("#gap-analysis-btn").attr("disabled", false);
+              },
+              data: JSON.stringify({
+                'model_1_id': modelId, 
+                'model_2_id': $('#model-gap-select').val(),
+                'filters': selected_filters
+              })
+          });
+          return result_data;
+      } catch (error) {
+        $("#gap-analysis-btn").attr("disabled", false);
+          console.error("Error: ", error);
+      }
     }
 
-    function generateModelGapAnalysis() {
+    
+    function build_gap_analysis_results(results){
+
         var modelGap = document.getElementById('model-gap');
-
-        const otherModel = $('#model-gap-select').val();
-
-        if (!otherModel) {
-            return;
-        }
-
-        const modelsOrder = getModelsOrder(currentModelId, otherModel);
-
-        // clear the container
-        while (modelGap.firstChild) {
-            modelGap.removeChild(modelGap.firstChild);
-        }
-
         // create the table
         const table = document.createElement('table');
         table.className = "table table-striped table-bordered table-hover table-sm";
@@ -131,47 +145,63 @@
         tableHeadRow.appendChild(tableHeadCell);
 
         // add column names
-        for (const model of Object.values(modelsOrder)) {
-            var tableHeadCell = document.createElement("th");
-            tableHeadCell.innerHTML = models[model].name;
-            tableHeadRow.appendChild(tableHeadCell);
-        }
+        var tableHeadCell = document.createElement("th");
+        tableHeadCell.innerHTML = results['model_1'].name + ' ' + results['model_1'].version;
+        tableHeadRow.appendChild(tableHeadCell);
+
+        var tableHeadCell = document.createElement("th");
+        tableHeadCell.innerHTML = results['model_2'].name+ ' ' + results['model_2'].version;
+        tableHeadRow.appendChild(tableHeadCell);
+
 
         // create the table body
         var tableBody = document.createElement("tbody");
 
-        // add rows
-        const compareOn = ["concepts", "relations", "predicates", "instances"];
-        for (const item of compareOn) {
-            const modelGap = getModelGap(modelsOrder, item);
+        for (const [criterion, compare_data] of Object.entries(results['results'])){
+            var index = 0;
+            var max_rows = compare_data.length;
+            for (const item of compare_data){
 
-            var tableBodyRow = document.createElement("tr");
-            var tableBodyRowCell = document.createElement("td");
-            tableBodyRowCell.innerHTML = item.charAt(0).toUpperCase() + item.slice(1);
-            tableBodyRow.appendChild(tableBodyRowCell);
+                var tableBodyRow = document.createElement("tr");
 
-            var tableBodyFirstRowCell = document.createElement("td");
-            tableBodyFirstRowCell.setAttribute("style","white-space:pre-wrap; word-wrap:break-word");
-            tableBodyFirstRowCell.appendChild(document.createTextNode(modelGap.first.join("\n")));
-            tableBodyRow.appendChild(tableBodyFirstRowCell);
+                if (index == 0){
+                    var tableBodyRowCell = document.createElement("td");
+                    tableBodyRowCell.innerHTML = criterion.charAt(0).toUpperCase() + criterion.slice(1);
+                    tableBodyRowCell.setAttribute("rowspan", "" + max_rows);
+                    tableBodyRow.appendChild(tableBodyRowCell);
+                }
+                
+                var tableBodyFirstRowCell = document.createElement("td");
+                tableBodyFirstRowCell.setAttribute("style","white-space:pre-wrap; word-wrap:break-word");
+                var cell_text = ""
+                if (item[0]){
+                    cell_text = item[0].name;
+                }
+                tableBodyFirstRowCell.appendChild(document.createTextNode(cell_text));
+                tableBodyRow.appendChild(tableBodyFirstRowCell);
 
-            var tableBodySecondRowCell = document.createElement("td");
-            tableBodySecondRowCell.setAttribute("style","white-space:pre-wrap; word-wrap:break-word");
-            tableBodySecondRowCell.appendChild(document.createTextNode(modelGap.second.join("\n")));
-            tableBodyRow.appendChild(tableBodySecondRowCell);
+                var tableBodySecondRowCell = document.createElement("td");
+                tableBodySecondRowCell.setAttribute("style","white-space:pre-wrap; word-wrap:break-word");
+                var cell_text = ""
+                if (item[1]){
+                    cell_text = item[1].name;
+                }
+                tableBodySecondRowCell.appendChild(document.createTextNode(cell_text));
+                tableBodyRow.appendChild(tableBodySecondRowCell);
 
-            tableBody.appendChild(tableBodyRow);
+                tableBody.appendChild(tableBodyRow);
+                index = index + 1;
+                
+            }
         }
 
         tableHead.appendChild(tableHeadRow);
         table.appendChild(tableHead);
         table.appendChild(tableBody);
+
+        modelGap.innerHTML = '';
         modelGap.appendChild(table);
     }
-
-    $('#model-gap-select').change(function () {
-        generateModelGapAnalysis();
-    });
 
     $(document).ready(function(){
         getModelsData();

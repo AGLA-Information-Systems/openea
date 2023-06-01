@@ -135,7 +135,6 @@
 <script>
 
   function build_impact_analysis_results(results){
-    console.log(results);
 
     impact_analysis_graph = "<div>"+ atob(results['graph'])+"</div>";
     impact_analysis_data = "<div><dl class='row'>";
@@ -156,7 +155,6 @@
         impact_analysis_data += "<div> <strong>"+ concept_name +"</strong> </div>";
         impact_analysis_data += "<ul>";
         for (instance_data of instances_data){
-          console.log(instance_data);
           impact_analysis_data += "<li><a class='link-dark' href='"+instance_data.url+"'>"+ instance_data.name +"</a></li>";
         }
         impact_analysis_data += "</ul>";
@@ -172,7 +170,6 @@
 
   async function analyze_impact() {
       const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-      modify_graph_buttons('disable');
       $("#impact-analysis-btn").attr("disabled", true);
       try {
           const result_data = await $.ajax({
@@ -191,11 +188,11 @@
                 'level': $('#impact-analysis-level').val()||3
               })
           });
-          modify_graph_buttons('enable');
+          $("#impact-analysis-btn").attr("disabled", false);
           return result_data;
       } catch (error) {
-          console.error("Error: ", error);
-          modify_graph_buttons('enable');
+        $("#impact-analysis-btn").attr("disabled", false);
+        console.error("Error: ", error);
       }
   }
 

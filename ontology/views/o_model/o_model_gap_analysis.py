@@ -20,44 +20,32 @@ from ontology.plugins.json import GenericEncoder
 from openea.utils import Utils
 
 
-class OModelImpactAnalysisView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
+class OModelGapAnalysisView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
     permission_required = [('VIEW', OModel.get_object_type(), None)]
 
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body)
-        model_id = kwargs.pop('model_id')
-        model = OModel.objects.get(id=model_id)
 
-        root_instance_id = ModelUtils.version_uuid(data.get('root_instance_id'))
-        root_instance = OInstance.objects.get(id=root_instance_id)
-        predicate_ids = data.get('predicate_ids', [])
-        if isinstance(predicate_ids, str):
-            predicate_ids = [predicate_ids]
-        level = int(data.get('level', 10)) + 1
-        
+        model_1_id = ModelUtils.version_uuid(data.get('model_1_id'))
+        model_1 = OModel.objects.get(id=model_1_id)
+        model_2_id = ModelUtils.version_uuid(data.get('model_2_id'))
+        model_2 = OModel.objects.get(id=model_2_id)
+        filters = data.get('filters', [])
+
+        show_model = check_permission(user=self.request.user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_MODEL)
         show_relations = check_permission(user=self.request.user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_RELATION)
         show_concepts = check_permission(user=self.request.user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_CONCEPT)
         show_predicates = check_permission(user=self.request.user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_PREDICATE)
         show_instances = check_permission(user=self.request.user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_INSTANCE)
 
-        if not (show_relations and show_concepts and show_predicates and show_instances):
+        if not (show_model and show_relations and show_concepts and show_predicates and show_instances):
             raise PermissionDenied('Permission Denied')
         
-        results = ModelUtils.analyze_impact(root_instance=root_instance, predicate_ids=predicate_ids, level=level)
-        dictified_results = ModelUtils.dictify_impact_analysis(results)
+        results = {
+            'results': ModelUtils.model_diff(model_1=model_1, model_2=model_2, filters=filters),
+            'model_1': ModelUtils.model_to_dict(model_1),
+            'model_2': ModelUtils.model_to_dict(model_2)
+        }
         
-        graph_data = {
-            'model': model,
-            'nodes': results
-        }
-        svg_str = GraphvizController.render_impact_analysis(format='svg', data=graph_data)
-        xmlSoup = BeautifulSoup(svg_str, 'html.parser')
-        graph = xmlSoup.find('svg')
-
-        result = {
-            'data': dictified_results,
-            'graph': base64.b64encode(graph.encode('ascii')).decode("utf-8")
-        }
-
-        return HttpResponse(json.dumps(result, cls=GenericEncoder), content_type="application/json")
+        return HttpResponse(json.dumps(results, cls=GenericEncoder), content_type="application/json")
     
