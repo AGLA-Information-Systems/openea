@@ -27,8 +27,7 @@ def index(request, year=date.today().year, month=date.today().month):
     return render(request, 'frontpage.'+settings.ENVIRONMENT+'.html', 
                   {'title': title,
                     'cal': cal,
-                    'contact_email': settings.CONTACT_EMAIL,
-                    'deployment': settings.DEPLOYMENT})
+                    'contact_email': settings.CONTACT_EMAIL})
 
 def register(request):
     if request.method == 'POST':  
