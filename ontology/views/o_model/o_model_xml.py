@@ -13,7 +13,7 @@ class OModelXMLView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
         model_id = kwargs.pop('model_id')
         model = OModel.objects.get(id=model_id)
         predicates = OPredicate.objects.filter(model=model).order_by('-subject').all()
-        entities = OConcept.objects.filter(model=model).order_by('-name').all()
+        concepts = OConcept.objects.filter(model=model).order_by('-name').all()
         instances = OInstance.objects.filter(model=model).order_by('-name').all()
         ownslots = {}
         for x in instances:
@@ -26,7 +26,7 @@ class OModelXMLView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
                         {
                             'model': model,
                             'predicates': predicates,
-                            'entities': entities,
+                            'concepts': concepts,
                             'instances': instances,
                             'ownslots': ownslots,
                             'inslots': inslots

@@ -13,7 +13,6 @@ from ontology.views import (OConceptCreateView, OConceptDeleteView,
                             RepositoryCreateView, RepositoryDeleteView,
                             RepositoryDetailView, RepositoryListView,
                             RepositoryUpdateView)
-from ontology.views.import_export import ExportView, ImportView
 from ontology.views.json_report import JSONReportView
 from ontology.views.o_instance.o_instance_create import OInstanceCreateView
 from ontology.views.o_instance.o_instance_delete import OInstanceDeleteView
@@ -22,10 +21,13 @@ from ontology.views.o_instance.o_instance_json_list import \
     OInstanceJSONListView
 from ontology.views.o_instance.o_instance_list import OInstanceListView
 from ontology.views.o_instance.o_instance_update import OInstanceUpdateView
+from ontology.views.o_model.o_model_copy import OModelCopyView
+from ontology.views.o_model.o_model_export import ModelExportView
 from ontology.views.o_model.o_model_gap_analysis import OModelGapAnalysisView
 from ontology.views.o_model.o_model_graph import OModelGraphView
 from ontology.views.o_model.o_model_impact_analysis import \
     OModelImpactAnalysisView
+from ontology.views.o_model.o_model_import import ModelImportView
 from ontology.views.o_model.o_model_json import (OModelJSONFilterView,
                                                  OModelJSONView)
 from ontology.views.o_model.o_model_json_list import OModelJSONListView
@@ -99,9 +101,10 @@ urlpatterns = [
     path('o_model/<uuid:model_id>/pathfinder/', OModelPathFinderView.as_view(), name='o_model_pathfinder'),
     path('o_model/<uuid:model_id>/gap_analysis/', OModelGapAnalysisView.as_view(), name='o_model_gap_analysis'),
     path('o_model/<uuid:model_id>/impact_analysis/', OModelImpactAnalysisView.as_view(), name='o_model_impact_analysis'),
+    path('o_model/<uuid:model_id>/copy/', OModelCopyView.as_view(), name='o_model_copy'),
+    path('o_model/<uuid:model_id>/import', ModelImportView.as_view(), name='o_model_import'),
+    path('o_model/<uuid:model_id>/export', ModelExportView.as_view(), name='o_model_export'),
 
-    path('model_import/<uuid:model_id>/', ImportView.as_view(), name='model_import'),
-    path('model_export/<uuid:model_id>/', ExportView.as_view(), name='model_export'),
     path('model_report/<uuid:model_id>/', ReportView.as_view(), name='model_report'),
     path('xml_report/<uuid:model_id>/', XMLReportView.as_view(), name='xml_report'),
     path('json_report/<uuid:model_id>/', JSONReportView.as_view(), name='json_report')

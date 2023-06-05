@@ -1,10 +1,10 @@
 from decimal import Decimal
-import json
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+
+from authorization.controllers.utils import CustomPermissionRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.controllers.knowledge_base import KnowledgeBaseController
 from ontology.controllers.utils import KnowledgeBaseUtils
-from ontology.models import OInstance, OModel, OPredicate, OSlot
+from ontology.models import OInstance, OSlot
 
 from django.shortcuts import render
 from django.views.generic.edit import FormView

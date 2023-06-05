@@ -163,7 +163,7 @@ class ExcelPluginTestCase(TestCase):
         ExcelPlugin.export_ontology(model=model, path=path, filename=filename)
         result = False
         wb = load_workbook(os.path.join(path, filename), read_only=True)
-        ws = wb['entities']
+        ws = wb['concepts']
         for row in ws.rows:
             for cell in row:
                 if cell.value == ':FACET':
@@ -190,7 +190,7 @@ class ExcelPluginTestCase(TestCase):
         model = KnowledgeBaseController.create_model(repository=repository, name='Metamodel de Test', version='2.3')
         KnowledgeBaseController.ontology_from_dict(model=model, data=BASIC_ONTOLOGY)
         KnowledgeBaseController.ontology_from_dict(model=model, data=EXAMPLE_ONTOLOGY)
-        KnowledgeBaseController.instances_from_dict(model=model, data=EXAMPLE_INSTANCES)
+        ModelUtils.instances_from_dict(model=model, data=EXAMPLE_INSTANCES)
 
         ExcelPlugin.export_instances(model=model, path=path, filename=filename)
         result = False

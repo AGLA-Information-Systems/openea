@@ -9,7 +9,7 @@ from uuid import UUID
 
 from django.db import transaction
 
-from ontology.controllers.utils import KnowledgeBaseUtils
+from ontology.controllers.o_model import ModelUtils
 from ontology.plugins.plugin import ACTION_EXPORT, ACTION_IMPORT, Plugin
 
 __author__ = "Patrick Agbokou"
@@ -43,20 +43,20 @@ class JSONPlugin(Plugin):
         with transaction.atomic():
             with open(os.path.join(path, filename), 'r') as f:
                 data = json.load(f)
-                KnowledgeBaseUtils.ontology_from_dict(model, data=data)
+                ModelUtils.ontology_from_dict(model, data=data)
 
-    def export_ontology(model, path, filename='ontology.json'):
+    def export_ontology(model, path, filename='ontology.json', filters=None):
         with transaction.atomic():
             with open(os.path.join(path, filename), 'w') as f:
-                json.dump(KnowledgeBaseUtils.ontology_to_dict(model), f, cls=GenericEncoder, ensure_ascii=False)
+                json.dump(ModelUtils.ontology_to_dict(model, filters=filters), f, cls=GenericEncoder, ensure_ascii=False)
 
     def import_instances(model, path, filename='instances.json'):
         with transaction.atomic():
             with open(os.path.join(path, filename), 'r') as f:
                 data = json.load(f)
-                KnowledgeBaseUtils.instances_from_dict(model, data=data)
+                ModelUtils.instances_from_dict(model, data=data)
 
-    def export_instances(model, path, filename='instances.json'):
+    def export_instances(model, path, filename='instances.json', filters=None):
         with transaction.atomic():
             with open(os.path.join(path, filename), 'w') as f:
-                json.dump(KnowledgeBaseUtils.instances_to_dict(model), f, cls=GenericEncoder, ensure_ascii=False)
+                json.dump(ModelUtils.instances_to_dict(model, filters=filters), f, cls=GenericEncoder, ensure_ascii=False)

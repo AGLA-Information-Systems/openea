@@ -56,7 +56,7 @@
 
     <div class="tab-pane fade show active" id="nav-repositories" role="tabpanel" aria-labelledby="nav-repositories-tab">
         <div class="mt-3"><a class="btn btn-primary" href="{% url "repository_create_organisation" organisation_id=object.id %}">{% trans "New Repository" %}</a></div>
-        <table class="table table-fluid">
+        <table class="table table-fluid table-hover">
             <thead>
                 <tr>
                     <th>{% trans "Repository" %}</th>
@@ -95,7 +95,7 @@
 
     <div class="tab-pane fade" id="nav-profiles" role="tabpanel" aria-labelledby="nav-profiles-tab">
         <div class="mt-3"><a class="btn btn-primary" href="{% url "profile_create" organisation_id=object.id %}">{% trans "New Profile" %}</a></div>
-        <table class="table table-fluid">
+        <table class="table table-fluid table-hover">
             <thead>
                 <tr>
                     <th>{% trans "Profile" %}</th>
@@ -136,7 +136,7 @@
 
     <div class="tab-pane fade" id="nav-security-groups" role="tabpanel" aria-labelledby="nav-security-groups-tab">
         <div class="mt-3"><a class="btn btn-primary" href="{% url "security_group_create" organisation_id=object.id %}">{% trans "New Security Group" %}</a></div>
-        <table class="table table-fluid">
+        <table class="table table-fluid table-hover">
             <thead>
                 <tr>
                     <th>{% trans "Security Group" %}</th>
@@ -175,7 +175,7 @@
 
     <div class="tab-pane fade" id="nav-permissions" role="tabpanel" aria-labelledby="nav-permissions-tab">
         <div class="mt-3"><a class="btn btn-primary" href="{% url "permission_create" organisation_id=object.id %}">{% trans "New Permission" %}</a></div>
-        <table class="table table-fluid">
+        <table class="table table-fluid table-hover">
             <thead>
                 <tr>
                     <th>{% trans "Permission" %}</th>

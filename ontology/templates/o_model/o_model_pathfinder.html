@@ -161,7 +161,7 @@
 
   async function find_instance_path() {
       const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-      modify_graph_buttons('disable');
+      modify_pathfinder_buttons('disable');
       $("#find-pathfinder-btn").attr("disabled", true);
       try {
           const result_data = await $.ajax({
@@ -179,10 +179,10 @@
                 'end_instance_id': $('#pathfinder-end-instance').val()
               })
           });
-          modify_graph_buttons('enable');
+          modify_pathfinder_buttons('enable');
           return result_data;
       } catch (error) {
-          modify_graph_buttons('enable');
+          modify_pathfinder_buttons('enable');
           console.error("Error: ", error);
       }
   }

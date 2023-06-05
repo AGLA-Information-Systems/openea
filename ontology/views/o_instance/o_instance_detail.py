@@ -1,7 +1,7 @@
-from django.db.models import Q
+
 from django.http import Http404
 from django.views.generic import DetailView
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from authorization.controllers.utils import CustomPermissionRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.controllers.utils import KnowledgeBaseUtils
 

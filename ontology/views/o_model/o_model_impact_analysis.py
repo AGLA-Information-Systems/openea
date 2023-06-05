@@ -14,8 +14,7 @@ from authorization.controllers.utils import (
 from authorization.models import Permission
 from ontology.controllers.graphviz import GraphvizController
 from ontology.controllers.o_model import ModelUtils
-from ontology.controllers.utils import KnowledgeBaseUtils
-from ontology.models import OConcept, OInstance, OModel, OPredicate, OSlot
+from ontology.models import  OInstance, OModel
 from ontology.plugins.json import GenericEncoder
 from openea.utils import Utils
 

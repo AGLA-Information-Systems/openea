@@ -3,7 +3,7 @@ import textwrap as tr
 import graphviz
 from django.conf import settings
 
-from ontology.controllers.utils import KnowledgeBaseUtils
+from ontology.controllers.o_model import ModelUtils
 
 
 class GraphvizController:
@@ -53,19 +53,21 @@ class GraphvizController:
     def render_ontology (dot, predicates_data):
         nbr_nodes = 0
         for predicate in predicates_data:
-            dot.node(str(predicate.subject.id), GraphvizController.wrap(predicate.subject.name), href=KnowledgeBaseUtils.get_url('concept', predicate.subject.id))
-            dot.node(str(predicate.object.id), GraphvizController.wrap(predicate.object.name), href=KnowledgeBaseUtils.get_url('concept', predicate.object.id))
-            dot.edge(str(predicate.subject.id), str(predicate.object.id), label=predicate.relation.name, constraint='false', href=KnowledgeBaseUtils.get_url('predicate', predicate.id))
+            dot.node(str(predicate.subject.id), GraphvizController.wrap(predicate.subject.name), href=ModelUtils.get_url('concept', predicate.subject.id))
+            dot.node(str(predicate.object.id), GraphvizController.wrap(predicate.object.name), href=ModelUtils.get_url('concept', predicate.object.id))
+            dot.edge(str(predicate.subject.id), str(predicate.object.id), label=predicate.relation.name, constraint='false', href=ModelUtils.get_url('predicate', predicate.id))
             if nbr_nodes >= settings.MAX_GRAPH_NODES:
                 break
 
     def render_instances (dot, slots_data):
         nbr_nodes = 0
         for slot in slots_data:
-            dot.node(str(slot.subject.id), GraphvizController.wrap(slot.subject.name), href=KnowledgeBaseUtils.get_url('instance', slot.subject.id))
+            if slot.subject is not None:
+                dot.node(str(slot.subject.id), GraphvizController.wrap(slot.subject.name), href=ModelUtils.get_url('instance', slot.subject.id))
             if slot.object is not None:
-                dot.node(str(slot.object.id), GraphvizController.wrap(slot.object.name), href=KnowledgeBaseUtils.get_url('instance', slot.object.id))
-                dot.edge(str(slot.subject.id), str(slot.object.id), label=slot.predicate.relation.name, constraint='false', href=KnowledgeBaseUtils.get_url('predicate', slot.predicate.id))
+                dot.node(str(slot.object.id), GraphvizController.wrap(slot.object.name), href=ModelUtils.get_url('instance', slot.object.id))
+            if slot.subject is not None and slot.object is not None:
+                dot.edge(str(slot.subject.id), str(slot.object.id), label=slot.predicate.relation.name, constraint='false', href=ModelUtils.get_url('predicate', slot.predicate.id))
             if nbr_nodes >= settings.MAX_GRAPH_NODES:
                 break
     

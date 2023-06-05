@@ -1,0 +1,252 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load i18n %}
+{% load js %}
+{% load i18n %}
+
+
+{% block script_extras %}
+    <script src="{% static '/js/custom.js' %}"></script>
+    <script type="text/javascript">
+        const modelId = window.location.pathname.split('/')[2];
+        var ontology_data = {{ ontology_data | safe }};
+    </script>
+    
+{% endblock script_extras %}
+
+{% block content %}
+<div class="container">
+  <h2 class="form-title">Export</h2>
+  <div class="border p-3">
+    <form id="export_form" method="post">
+      {% csrf_token %}
+
+    <div class="row">
+      <div class="col-md-6">
+          
+          <div class="form-check">
+            {{ form.knowledge_set.errors }}
+            {{ form.knowledge_set|as_crispy_field }}
+          </div>
+
+          <div class="form-check">
+            {{ form.format.errors }}
+            {{ form.format|as_crispy_field }}
+          </div>
+
+          <div class="form-check">
+            {{ form.time_schedule.errors }}
+            {{ form.time_schedule|as_crispy_field }}
+          </div>
+
+          <div class="form-check">
+            {{ form.model.errors }}
+            {{ form.model|as_crispy_field }}
+          </div>          
+        
+      </div>
+
+      <div class="col-sm">
+        <div>
+          <dl>
+            <dt>
+              {% trans "Relations" %} <input id="all-relations-export-checkbox" type="checkbox"/>
+            </dt>
+            <dd>
+              <select id="export-relations" multiple="multiple" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+
+          <dl>
+            <dt>
+              {% trans "Concepts" %} <input id="all-concepts-export-checkbox" type="checkbox"/>
+            </dt>
+            <dd>
+              <select id="export-concepts" multiple="multiple" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="col-lg">
+        <div>
+          <dl>
+            <dt>
+              {% trans "Predicates" %} <input id="all-predicates-export-checkbox" type="checkbox"/>
+            </dt>
+            <dd>
+              <select id="export-predicates" multiple="multiple" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+
+          <dl>
+            <dt>
+              {% trans "Instances" %} <input id="all-instances-export-checkbox" type="checkbox"/>
+            </dt>
+            <dd>
+              <select id="export-instances" multiple="multiple" class="custom-select2" style="width: 100%"></select>
+            </dd>
+          </dl>
+
+        </div>
+      </div>
+      
+    </div>
+    <div class="text-center">
+      
+      
+
+      <input id="start-export-btn" class="btn btn-primary" type="button" value="{% trans 'Start Export' %}" />
+    </div>
+
+    </form>
+  </div>
+
+    <div id="modelexport-container" class="text-center" max-width="100%"></div>
+</div>
+{% csrf_token %}
+
+<script type="text/javascript">
+
+  // add concepts to the concept select
+  var exportConcepts = document.getElementById('export-concepts');
+  for (const [concept_id, concept] of Object.entries(ontology_data['concepts'])){
+    var option = document.createElement("option");
+    option.value = concept_id;
+    option.text = concept.name;
+    exportConcepts.appendChild(option);
+  }
+
+  // add relations to the relation select
+  var exportConceptsRelations = document.getElementById('export-relations');
+  for (const [relation_id, relation] of Object.entries(ontology_data['relations'])){
+    var option = document.createElement("option");
+    option.value = relation_id;
+    option.text = relation.name;
+    exportConceptsRelations.appendChild(option);
+  }
+
+</script>
+
+<script type="text/javascript">
+
+  function modify_export_buttons(action){
+    if (action == 'disable'){
+      $("#start-export-btn").attr("disabled", true);
+    }else{
+      $("#start-export-btn").attr("disabled", false);
+    }
+  }
+
+  $(document).ready(function(){
+    $('#all-concepts-export-checkbox').prop( "checked", false );
+    $('#all-relations-export-checkbox').prop( "checked", false );
+    $('#all-predicates-export-checkbox').prop( "checked", false );
+    $('#all-instances-export-checkbox').prop( "checked", false );
+
+    $('#export-concepts').select2({
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+    $('#export-relations').select2({
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+    $('#export-predicates').select2({
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+    $('#export-instances').select2({
+      sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+    });
+
+    $('#all-concepts-export-checkbox').click(function() {
+        toggle_checkbox('export-concepts', 'all-concepts-export-checkbox');
+    });
+    $('#all-relations-export-checkbox').click(function() {
+        toggle_checkbox('export-relations', 'all-relations-export-checkbox');
+    });
+    $('#all-predicates-export-checkbox').click(function() {
+        toggle_checkbox('export-predicates', 'all-predicates-export-checkbox');
+    });
+    $('#all-instances-export-checkbox').click(function() {
+        toggle_checkbox('export-instances', 'all-instances-export-checkbox');
+    });
+
+    
+    $('#export-relations').change(function() {
+      uncheck_all_checkbox('export-relations', 'all-relations-export-checkbox');
+      debounce(update_export_predicates());
+    });
+    $('#export-predicates').change(function() {
+      uncheck_all_checkbox('export-predicates', 'all-predicates-export-checkbox');
+    });
+    $('#export-concepts').change(function() {
+      uncheck_all_checkbox('export-concepts', 'all-concepts-export-checkbox');
+      debounce(fetch_export_instances(null));
+    });
+    $('#export-instances').change(function() {
+      uncheck_all_checkbox('export-instances', 'all-instances-export-checkbox');
+    });
+
+    $('#start-export-btn').on('click', function() {
+      build_form_array('export_form', 'export-relations', 'relation_ids');
+      build_form_array('export_form', 'export-concepts', 'concept_ids');
+      build_form_array('export_form', 'export-predicates', 'predicate_ids');
+      build_form_array('export_form', 'export-instances', 'instance_ids');
+      $('#export_form').submit();
+    });
+  });
+</script>
+
+<script>
+
+  function build_form_array(form_id, select_id, input_name){
+    var items = $('#' + select_id ).val();
+      for (const [index, item_id] of items.entries()){
+        var hidden_input = $('<input>');
+        hidden_input.attr('type','hidden');
+        hidden_input.attr('name', input_name + '['+index+']');
+        hidden_input.val(item_id);
+        hidden_input.appendTo('#' + form_id);
+      }
+    return true;
+  }
+
+  function fetch_export_instances(instance_ids) {
+    filter_data = {'target': 'instances',
+                   'model_id': modelId,
+                   'concept_ids': $('#export-concepts').val(),
+                   'relation_ids': $('#export-relations').val(),
+                   'predicate_ids': $('#export-predicates').val(),
+                   'instance_ids': instance_ids}
+    return filter_model_data(filter_data, update_export_instances_select_boxes, {})
+  }
+
+  function update_export_predicates() {
+    var new_predicates = {'predicates': []};
+    var selected_predicates = $('#export-relations').val();
+    for (const [predicate_id, predicate] of Object.entries(ontology_data['predicates'])){
+      if (selected_predicates.includes(predicate.relation_id)){
+        new_predicates['predicates'].push(predicate);
+      }
+    }
+    update_export_predicates_select_box(new_predicates, {});
+  }
+
+  function update_export_predicates_select_box(result, params){
+    var $predicates_select = $("#export-predicates");
+    $predicates_select.empty();
+    for (var i = 0; i < result['predicates'].length; i++) {
+        var predicate_name = result['predicates'][i].subject + ' ' + result['predicates'][i].relation + ' ' + result['predicates'][i].object;
+        $predicates_select.append('<option value=' + result['predicates'][i].id + '>' + predicate_name + '</option>');
+    }
+  }
+
+  function update_export_instances_select_boxes(result, params){
+    var $instances_select = $("#export-instances");
+    $instances_select.empty();
+    for (var i = 0; i < result['instances'].length; i++) {
+        $instances_select.append('<option value=' + result['instances'][i].id + '>' + result['instances'][i].name + '</option>');
+    }
+  }
+
+</script>
+{% endblock content %}

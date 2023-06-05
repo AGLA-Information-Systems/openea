@@ -17,4 +17,4 @@ from .o_slot import (OSlotCreateTestCase, OSlotDeleteTestCase,
 from .repository import (RepositoryCreateTestCase, RepositoryDeleteTestCase,
                          RepositoryDetailTestCase, RepositoryListTestCase,
                          RepositoryUpdateTestCase)
-from .import_export import (ImportExportTestCase, ImportExportXMLTestCase)
+from .import_export import (InstanceImportTestCase, InstanceExportTestCase)

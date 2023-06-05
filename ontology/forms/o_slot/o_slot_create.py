@@ -1,7 +1,7 @@
 from django import forms
 from ontology.controllers.utils import KnowledgeBaseUtils
 
-from ontology.models import OConcept, OInstance, OModel, OPredicate, OSlot
+from ontology.models import OInstance, OModel, OPredicate, OSlot
 
 class OSlotCreateForm(forms.ModelForm):
     new_object_name = forms.CharField(required=False)

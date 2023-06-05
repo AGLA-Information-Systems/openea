@@ -133,7 +133,7 @@ class OConcept(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=1024)
     description = models.TextField(blank=True, null=True)
-    model = models.ForeignKey(OModel, on_delete=models.CASCADE, null=True, related_name='entities')
+    model = models.ForeignKey(OModel, on_delete=models.CASCADE, null=True, related_name='concepts')
     tags = models.ManyToManyField(Tag, blank=True)
     quality_status = models.CharField(max_length=2, choices=QUALITY_STATUS, default=QUALITY_STATUS_PROPOSED)
 
@@ -175,7 +175,7 @@ class OConcept(models.Model):
 
 class ORelation(models.Model):
     """
-    Meta class describing predicates between entities
+    Meta class describing predicates between concepts
     """
     INHERITANCE_SUPER_IS_SUBJECT = 'HESL'
     INHERITANCE_SUPER_IS_OBJECT = 'HESR'
@@ -240,7 +240,7 @@ class ORelation(models.Model):
 
 class OPredicate(models.Model):
     """
-    Meta class describing predicates between entities
+    Meta class describing predicates between concepts
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -311,7 +311,7 @@ class OPredicate(models.Model):
 
 class OInstance(models.Model):
     """
-    Meta class describing instances between entities
+    Meta class describing instances between concepts
     """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=1024)
@@ -366,7 +366,7 @@ class OInstance(models.Model):
 
 class OSlot(models.Model):
     """
-    Meta class describing predicates between entities
+    Meta class describing predicates between concepts
     """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     description = models.TextField(blank=True, null=True)

@@ -1,12 +1,14 @@
 from uuid import UUID
 
+from django.db import transaction
 from django.db.models import Q
+from django.utils.translation import gettext as _
 
 from authorization.controllers.utils import check_permission
 from authorization.models import Permission
 from ontology.controllers.utils import KnowledgeBaseUtils
 from ontology.models import (OConcept, OInstance, OModel, OPredicate,
-                             ORelation, OSlot)
+                             ORelation, OReport, OSlot)
 from openea.utils import Utils
 
 __author__ = "Patrick Agbokou"
@@ -61,8 +63,6 @@ class ModelUtils:
         if not show_instances:
             slot_ids = []
         
-            
-
         filtered_data = {
             'relations': [],
             'concepts': [],
@@ -124,7 +124,7 @@ class ModelUtils:
             "concepts": {},
             "relations": {},
             "predicates": {},
-            'url': KnowledgeBaseUtils.get_url('model', model.id)
+            'url': ModelUtils.get_url('model', model.id)
         }
     
     def concept_to_dict(concept):
@@ -132,7 +132,7 @@ class ModelUtils:
             "id": concept.id,
             "name": concept.name,
             "description": concept.description,
-            'url': KnowledgeBaseUtils.get_url('concept', concept.id)
+            'url': ModelUtils.get_url('concept', concept.id)
         }
     def relation_to_dict(relation):
         return {
@@ -140,7 +140,7 @@ class ModelUtils:
             "name": relation.name,
             "description": relation.description,
             "type": relation.type,
-            'url': KnowledgeBaseUtils.get_url('relation', relation.id)
+            'url': ModelUtils.get_url('relation', relation.id)
         }
     def predicate_to_dict(predicate):
         return {
@@ -153,7 +153,7 @@ class ModelUtils:
             "object": predicate.object.name,
             "cardinality_min": predicate.cardinality_min,
             "cardinality_max": predicate.cardinality_max,
-            'url': KnowledgeBaseUtils.get_url('predicate', predicate.id)
+            'url': ModelUtils.get_url('predicate', predicate.id)
         }
     
     def instance_to_dict(instance):
@@ -166,7 +166,7 @@ class ModelUtils:
             "concept": instance.concept.name,
             "ownslots": {},
             "inslots": {},
-            'url': KnowledgeBaseUtils.get_url('instance', instance.id)
+            'url': ModelUtils.get_url('instance', instance.id)
         }
         for slot in OSlot.objects.filter(subject=instance).all():
             data["ownslots"][str(slot.id)] = {
@@ -192,8 +192,8 @@ class ModelUtils:
                 "relation": slot.predicate.relation.name,
                 "concept_id": slot.predicate.subject.id,
                 "concept": slot.predicate.subject.name,
-                "subject_id": slot.subject.id,
-                "subject": slot.subject.name
+                "subject_id": slot.subject.id if slot.subject is not None else None,
+                "subject": slot.subject.name if slot.subject is not None else None
             }
         return data
     
@@ -315,3 +315,208 @@ class ModelUtils:
                 result[key].append( ({"id": str(item_1.id), "name": item_1.name}, None) )
             else:
                 result[key].append( (None, {"id": str(item_2.id), "name": item_2.name}) )
+
+    def model_copy(model):
+        with transaction.atomic():
+            old_model_id = model.id
+            model_name = model.name + '_' + _('copy')
+            new_model = OModel.objects.get(id=old_model_id)
+            new_model.id = None
+            new_model.name = model_name
+            new_model.save()
+
+            for relation in ORelation.objects.filter(model__id=old_model_id).order_by('name'):
+                try:
+                    ORelation.objects.get(model=new_model, name=relation.name)
+                except ORelation.DoesNotExist:
+                    new_relation = relation
+                    new_relation.id = None
+                    new_relation.model = new_model
+                    new_relation.save()
+
+            for concept in OConcept.objects.filter(model__id=old_model_id).order_by('name'):
+                try:
+                    OConcept.objects.get(model=new_model, name=concept.name)
+                except OConcept.DoesNotExist:
+                    new_concept = concept
+                    new_concept.id = None
+                    new_concept.model = new_model
+                    new_concept.save()
+
+            for instance in OInstance.objects.filter(model__id=old_model_id).order_by('name'):
+                try:
+                    OInstance.objects.get(model=new_model, name=instance.name)
+                except OInstance.DoesNotExist:
+                    new_instance = instance
+                    new_instance.id = None
+                    new_instance.model = new_model
+                    new_instance.concept = new_model.concepts.filter(name=instance.concept.name).first()
+                    new_instance.save()
+            
+            for predicate in OPredicate.objects.filter(model__id=old_model_id).order_by('subject__name').order_by('relation__name').order_by('object__name'): 
+                new_predicate = predicate
+                new_predicate.id = None
+                new_predicate.model = new_model
+                new_predicate.subject = new_model.concepts.filter(name=predicate.subject.name).first()
+                new_predicate.relation = new_model.relations.filter(name=predicate.relation.name).first()
+                new_predicate.object = new_model.concepts.filter(name=predicate.object.name).first()
+                new_predicate.save()
+
+            for slot in OSlot.objects.filter(model__id=old_model_id).order_by('subject__name').order_by('predicate__name').order_by('object__name'): 
+                new_slot = slot
+                new_slot.id = None
+                new_slot.model = new_model
+                new_slot.subject = new_model.model_instances.filter(name=slot.subject.name, concept__name=slot.subject.concept.name).first()
+                new_slot.predicate = new_model.predicates.filter(subject__name=slot.predicate.subject.name, relation__name=slot.predicate.relation.name, object__name=slot.predicate.object.name).first()
+                new_slot.object = new_model.model_instances.filter(name=slot.object.name, concept__name=slot.object.concept.name).first()
+                new_slot.save()
+
+            for report in OReport.objects.filter(model__id=old_model_id).all():
+                new_report = report
+                new_report.id = None
+                new_report.model = new_model
+                new_report.save()
+
+        return new_model
+
+
+    def model_delete():
+        pass
+
+
+    def ontology_from_dict(model, data=None):
+        for concept_id, concept_data in data['concepts'].items():
+            OConcept.get_or_create(
+                id=concept_data['id'], 
+                model=model, 
+                name=concept_data['name'], 
+                description=concept_data['description'])
+        for relation_id, relation_data in data['relations'].items():
+            ORelation.get_or_create(
+                id=relation_data['id'], 
+                model=model, 
+                name=relation_data['name'],
+                description=relation_data['description'])
+        for predicate_id, predicate_data in data['predicates'].items():
+            subject = OConcept.objects.get(id=predicate_data['subject_id'])
+            object = OConcept.objects.get(id=predicate_data['object_id'])
+            relation = ORelation.objects.get(id=predicate_data['relation_id'])
+            OPredicate.get_or_create(id=predicate_data['id'],
+                                     model=model, 
+                                     name=predicate_data['name'], 
+                                     description=predicate_data['description'],
+                                     subject=subject,
+                                     relation=relation,
+                                     object=object, 
+                                     cardinality_min=predicate_data['cardinality_min'],
+                                     cardinality_max=predicate_data['cardinality_max'])
+
+
+    def ontology_to_dict(model, filters=None, compute_inheritance=False):
+        relation_ids = ModelUtils.get_filter(filters, 'relation_ids')
+        concept_ids = ModelUtils.get_filter(filters, 'concept_ids')
+        predicate_ids = ModelUtils.get_filter(filters, 'predicate_ids')
+
+        data = ModelUtils.model_to_dict(model=model)
+
+        concept_query = OConcept.objects.filter(model=model)
+        if concept_ids:
+            concept_query = concept_query.filter(id__in=concept_ids)
+        for concept in concept_query.order_by('name'):
+            data['concepts'][str(concept.id)] = ModelUtils.concept_to_dict(concept=concept)
+            if compute_inheritance:
+                parents = KnowledgeBaseUtils.get_parent_concepts(concept=concept)
+                children = KnowledgeBaseUtils.get_child_concepts(concept=concept)
+                data['concepts'][str(concept.id)]['parents'] = {str(x[0].id): x[0].name for x in parents}
+                data['concepts'][str(concept.id)]['children'] = {str(x[0].id): x[0].name for x in children}
+                
+
+        relation_query = ORelation.objects.filter(model=model)
+        if relation_ids:
+            relation_query = relation_query.filter(id__in=relation_ids)
+        for relation in relation_query.order_by('name'):
+            data['relations'][str(relation.id)] = ModelUtils.relation_to_dict(relation=relation)
+        
+        predicate_query = OPredicate.objects.filter(model=model)
+        if predicate_ids:
+            predicate_query = predicate_query.filter(id__in=predicate_ids)
+        for predicate in predicate_query.order_by('subject__name').order_by('relation__name').order_by('object__name'):
+            data['predicates'][str(predicate.id)] = ModelUtils.predicate_to_dict(predicate=predicate)
+        
+        return data
+
+    def instances_from_dict(model, data=None):
+        # Create all instances
+        for instance_id, instance_data in data['instances'].items():
+            concept = OConcept.objects.get(id=instance_data['concept_id'])
+            instance = OInstance.get_or_create(id=instance_data['id'],  model=model, name=instance_data['name'],
+                                               code=instance_data['code'], description=instance_data['description'], concept=concept)
+        # fill slots
+        for instance_id, instance_data in data['instances'].items():
+            instance = OInstance.objects.get(id=instance_id)
+            for slot_id, slot in instance_data['ownslots'].items():
+                object = OInstance.objects.get(id=slot['object_id'])
+                predicate = OPredicate.objects.get(id=slot['predicate_id'])
+                OSlot.get_or_create(id=slot_id,
+                                    model=model,
+                                    predicate=predicate,
+                                    description=slot['description'],
+                                    subject=instance,
+                                    object=object)
+            for slot_id, slot in instance_data['inslots'].items():
+                subject = OInstance.objects.get(id=slot['subject_id'])
+                predicate = OPredicate.objects.get(id=slot['predicate_id'])
+                OSlot.get_or_create(id=slot_id,
+                                    model=model,
+                                    predicate=predicate,
+                                    description=slot['description'],
+                                    subject=subject,
+                                    object=instance)
+
+    def instances_to_dict(model, filters=None):
+        
+        predicate_ids = ModelUtils.get_filter(filters, 'predicate_ids')
+        instance_ids = ModelUtils.get_filter(filters, 'instance_ids')
+
+        data = ModelUtils.model_to_dict(model=model)
+
+        predicate_query = OPredicate.objects.filter(model=model)
+        if predicate_ids:
+            predicate_query = predicate_query.filter(id__in=predicate_ids)
+        for predicate in predicate_query.order_by('subject__name').order_by('relation__name').order_by('object__name'):
+            data['predicates'][str(predicate.id)] = ModelUtils.predicate_to_dict(predicate=predicate)
+
+        instance_query = OInstance.objects.filter(model=model)
+        if instance_ids:
+            instance_query = instance_query.filter(id__in=instance_ids)
+        for instance in instance_query.order_by('name'):
+            data['instances'][str(instance.id)] = ModelUtils.instance_to_dict(instance=instance)
+
+        return data
+
+    def get_url(object_type, id):
+        object_types = {
+            'model': '/o_model/detail/',
+            'concept': '/o_concept/detail/',
+            'relation': '/o_relation/detail/',
+            'predicate': '/o_predicate/detail/',
+            'instance': '/o_instance/detail/'
+        }
+        return object_types[object_type] + str(id)
+
+
+    def process_POST_array(post_data, variable_name):
+        items = []
+        for variable, value in post_data.items():
+            if variable.startswith(variable_name):
+                items.append(value)
+        return items
+    
+
+    def get_filter(filters, item_name):
+        item_ids = None
+        if filters is not None and item_name in filters:
+            item_ids = filters[item_name]
+            if isinstance(item_ids, str):
+                item_ids = [item_ids]
+        return item_ids

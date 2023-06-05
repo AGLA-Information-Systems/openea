@@ -1,11 +1,10 @@
 import logging
 
-from ontology.plugins.plugin import ACTION_IMPORT, ACTION_EXPORT
 from ontology.plugins.essential import EssentialPlugin
 from ontology.plugins.excel import ExcelPlugin
 from ontology.plugins.json import JSONPlugin
-from webapp.constants import KNOWLEDGE_SET_CHOICES
-
+from ontology.plugins.plugin import ACTION_EXPORT, ACTION_IMPORT
+from organisation.constants import KNOWLEDGE_SET_CHOICES
 
 logger = logging.getLogger(__name__)
 

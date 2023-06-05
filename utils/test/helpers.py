@@ -81,7 +81,7 @@ def create_instance(model, concept, name='Org 1 Instance 1', description=''):
     return org_1_o_instance
 
 def create_slot(model, subject, predicate, object, description=''):
-    org_1_o_predicate = OSlot.objects.create(subject=subject, predicate=predicate, object=object, description=description, model=model)
+    org_1_o_predicate = OSlot.objects.create(subject=subject, predicate=predicate, object=object, description=description, order='1.1', model=model)
     org_1_o_predicate.save()
     return org_1_o_predicate
 

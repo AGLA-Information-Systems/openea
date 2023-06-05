@@ -15,7 +15,7 @@ class ReferrerView:
             object_id = str(self.object.id)
         if self.organisation is None and self.request.user.is_authenticated and self.request.user.active_profile is not None:
             self.organisation = self.request.user.active_profile.organisation
-        return super(ReferrerView, self).post(request, *args, **kwargs)
+        return self.organisation
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

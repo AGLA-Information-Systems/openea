@@ -1,0 +1,126 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load i18n %}
+{% load js %}
+{% load i18n %}
+
+{% block script_extras %}
+    <script src="{% static '/js/custom.js' %}"></script>
+    <script type="text/javascript">
+        const modelId = window.location.pathname.split('/')[2];
+    </script>
+{% endblock script_extras %}
+
+{% block content %}
+<div class="container">
+  <h2 class="form-title">Import</h2>
+  <div class="border p-3">
+    <form id="import_form" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+  
+      <div class="form-check">
+        {{ form.import_file.errors }}
+        {{ form.import_file|as_crispy_field }}
+      </div>
+
+    <div class="row">
+      <div class="col-md-6">
+
+        <div class="form-check">
+          {{ form.knowledge_set.errors }}
+          {{ form.knowledge_set|as_crispy_field }}
+        </div>
+
+        <div class="form-check">
+          {{ form.format.errors }}
+          {{ form.format|as_crispy_field }}
+        </div>
+
+        
+        <div class="form-check">
+          {{ form.model.errors }}
+          {{ form.model|as_crispy_field }}
+        </div>
+        
+      </div>
+
+      <div class="col-sm">
+        
+        <div class="form-check">
+          {{ form.time_schedule.errors }}
+          {{ form.time_schedule|as_crispy_field }}
+        </div>
+
+        <div  class="form-check">
+              <input id="relations-import-checkbox" type="checkbox"/> {% trans "Relations" %}
+
+              <input id="concepts-import-checkbox" type="checkbox"/> {% trans "Concepts" %} 
+
+              <input id="predicates-import-checkbox" type="checkbox"/> {% trans "Predicates" %} 
+
+              <input id="instances-import-checkbox" type="checkbox"/> {% trans "Instances" %} 
+        </div>
+
+        
+        
+      </div>
+      
+    </div>
+    <div class="text-center">
+      <input id="start-import-btn" class="btn btn-primary" type="button" value="{% trans 'Start Import' %}" />
+    </div>
+
+    </form>
+  </div>
+
+    <div id="modelimport-container" class="text-center" max-width="100%"></div>
+</div>
+{% csrf_token %}
+
+
+<script type="text/javascript">
+
+  function modify_import_buttons(action){
+    if (action == 'disable'){
+      $("#start-import-btn").attr("disabled", true);
+    }else{
+      $("#start-import-btn").attr("disabled", false);
+    }
+  }
+
+  $(document).ready(function(){
+    $('#concepts-import-checkbox').prop( "checked", true );
+    $('#relations-import-checkbox').prop( "checked", true );
+    $('#predicates-import-checkbox').prop( "checked", true );
+    $('#instances-import-checkbox').prop( "checked", true );
+
+    $('#start-import-btn').on('click', function() {
+      build_import_filter('import_form', 'concepts-import-checkbox', 'concepts');
+      build_import_filter('import_form', 'relations-import-checkbox', 'relations');
+      build_import_filter('import_form', 'predicates-import-checkbox', 'predicates');
+      build_import_filter('import_form', 'instances-import-checkbox', 'instances');
+      $('#import_form').submit();
+    });
+
+  });
+
+</script>
+
+<script type="text/javascript">
+function build_import_filter(form_id, checkbox_id, input_name){
+  var hidden_input = $('<input>');
+  hidden_input.attr('type','hidden');
+  hidden_input.attr('name', input_name);
+  hidden_input.val('true');
+  hidden_input.appendTo('#' + form_id);
+  if ($('#'+checkbox_id).prop('checked')){
+    hidden_input.val('true');
+  }else{
+    hidden_input.val(null);
+  }
+  return true;
+}
+</script>
+
+{% endblock content %}

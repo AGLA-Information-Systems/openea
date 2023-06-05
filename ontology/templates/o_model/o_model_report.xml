@@ -43,7 +43,7 @@
 <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
         <button class="nav-link active" id="nav-predicates-tab" data-bs-toggle="tab" data-bs-target="#nav-predicates" type="button" role="tab" aria-controls="nav-predicates" aria-selected="true">Ontology</button>
-        <button class="nav-link" id="nav-entities-tab" data-bs-toggle="tab" data-bs-target="#nav-entities" type="button" role="tab" aria-controls="nav-entities" aria-selected="false">Entities</button>
+        <button class="nav-link" id="nav-concepts-tab" data-bs-toggle="tab" data-bs-target="#nav-concepts" type="button" role="tab" aria-controls="nav-concepts" aria-selected="false">Entities</button>
         <button class="nav-link" id="nav-relations-tab" data-bs-toggle="tab" data-bs-target="#nav-relations" type="button" role="tab" aria-controls="nav-relations" aria-selected="false">Relation</button>
     </div>
 </nav>
@@ -51,7 +51,7 @@
 <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-predicates" role="tabpanel" aria-labelledby="nav-predicates-tab">
         <div class="mt-3"><a class="btn btn-primary" href="{% url "o_predicate_create" model_id=object.id %}">{% trans "New Predicate" %}</a></div>
-        <table class="table table-fluid">
+        <table class="table table-fluid table-hover">
             <thead>
                 <tr>
                     <th>{% trans "Predicate" %}</th>
@@ -88,9 +88,9 @@
 
     </div>
 
-    <div class="tab-pane fade" id="nav-entities" role="tabpanel" aria-labelledby="nav-entities-tab">
+    <div class="tab-pane fade" id="nav-concepts" role="tabpanel" aria-labelledby="nav-concepts-tab">
         <div class="mt-3"><a class="btn btn-primary" href="{% url "o_concept_create" model_id=object.id %}">{% trans "New Concept" %}</a></div>
-        <table class="table table-fluid">
+        <table class="table table-fluid table-hover">
             <thead>
                 <tr>
                     <th>{% trans "Concept" %}</th>
@@ -101,7 +101,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for OConcept in entities %}
+                {% for OConcept in concepts %}
                 <tr>
                     <td>{{ OConcept }}</td>
                     <td>{{ OConcept.description }}</td>
@@ -115,14 +115,14 @@
 
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
-                {% if entities.has_previous %}
+                {% if concepts.has_previous %}
                     <li class="page-item"><a class="page-link" href="?concept_page=1">&laquo; first</a></li>
-                    <li class="page-item"><a class="page-link" href="?concept_page={{ entities.previous_page_number }}">{% trans "previous" %}</a></li>
+                    <li class="page-item"><a class="page-link" href="?concept_page={{ concepts.previous_page_number }}">{% trans "previous" %}</a></li>
                 {% endif %}
-                <li class="page-item"><a class="page-link" href="#">{{ entities.number }} of {{ entities.paginator.num_pages }}</a></li>
-                {% if entities.has_next %}
-                    <li class="page-item"><a class="page-link" href="?concept_page={{ entities.next_page_number }}">{% trans "next" %}</a></li>
-                    <li class="page-item"><a class="page-link" href="?concept_page={{ entities.paginator.num_pages }}">{% trans "last" %} &raquo;</a></li>
+                <li class="page-item"><a class="page-link" href="#">{{ concepts.number }} of {{ concepts.paginator.num_pages }}</a></li>
+                {% if concepts.has_next %}
+                    <li class="page-item"><a class="page-link" href="?concept_page={{ concepts.next_page_number }}">{% trans "next" %}</a></li>
+                    <li class="page-item"><a class="page-link" href="?concept_page={{ concepts.paginator.num_pages }}">{% trans "last" %} &raquo;</a></li>
                 {% endif %}
             </ul>
         </nav>
@@ -130,7 +130,7 @@
 
     <div class="tab-pane fade" id="nav-relations" role="tabpanel" aria-labelledby="nav-relations-tab">
         <div class="mt-3"><a class="btn btn-primary" href="{% url "o_relation_create" model_id=object.id %}">{% trans "New Relation" %}</a></div>
-        <table class="table table-fluid">
+        <table class="table table-fluid table-hover">
             <thead>
                 <tr>
                     <th>{% trans "Relation" %}</th>

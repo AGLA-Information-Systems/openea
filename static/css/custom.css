@@ -56,6 +56,9 @@ a:hover {
     width: 100%;
 }
 
+dd {
+    margin-bottom:0;
+}
 dt.text-muted {
     font-size: 0.8rem;
 }

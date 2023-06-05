@@ -1,9 +1,9 @@
 from django import forms
+
 from ontology.models import OConcept, OModel, OPredicate
 from ontology.plugins import EXPORT_FORMAT_CHOICES, IMPORT_FORMAT_CHOICES
-from webapp.constants import KNOWLEDGE_SET_CHOICES
-
-from webapp.controllers.security import SecurityController
+from organisation.constants import KNOWLEDGE_SET_CHOICES, TIME_SCHEDULE_CHOICES
+from organisation.controllers.security import SecurityController
 
 
 class ModelImportForm(forms.Form):
@@ -18,7 +18,8 @@ class ModelImportForm(forms.Form):
     #model_id = forms.CharField(max_length=100, required=True)
     knowledge_set = forms.ChoiceField(choices=KNOWLEDGE_SET_CHOICES, widget=forms.RadioSelect)
     import_file = forms.FileField(required=True)
-    import_format = forms.ChoiceField(choices=IMPORT_FORMAT_CHOICES, widget=forms.RadioSelect)
+    format = forms.ChoiceField(choices=IMPORT_FORMAT_CHOICES, widget=forms.RadioSelect)
+    time_schedule = forms.ChoiceField(choices=TIME_SCHEDULE_CHOICES, widget=forms.RadioSelect)
 
 
 class ModelExportForm(forms.Form):
@@ -31,7 +32,8 @@ class ModelExportForm(forms.Form):
 
     #model_id = forms.CharField(max_length=100, required=True)
     knowledge_set = forms.ChoiceField(choices=KNOWLEDGE_SET_CHOICES, widget=forms.RadioSelect)
-    export_format = forms.ChoiceField(choices=EXPORT_FORMAT_CHOICES, widget=forms.RadioSelect)
+    format = forms.ChoiceField(choices=EXPORT_FORMAT_CHOICES, widget=forms.RadioSelect)
+    time_schedule = forms.ChoiceField(choices=TIME_SCHEDULE_CHOICES, widget=forms.RadioSelect)
 
 
 class ModelReportForm(forms.Form):

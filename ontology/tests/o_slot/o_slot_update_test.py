@@ -103,6 +103,7 @@ class OSlotUpdateTestCase(TestCase):
                                     data={'subject': self.org_1_instance_1.id,
                                         'predicate':self.org_1_predicate_1.id,
                                         'object':self.org_1_instance_5.id,
+                                        'order': '1.1',
                                         'model':self.org_1_model_1.id})
         self.assertEqual(response.status_code, 302, response.content) #response.context["form"].errors
 

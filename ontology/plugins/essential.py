@@ -11,7 +11,8 @@ from django.db import transaction
 
 from ontology.controllers.knowledge_base import KnowledgeBaseController
 from ontology.plugins.plugin import ACTION_IMPORT, Plugin
-from webapp.constants import KNOWLEDGE_SET_INSTANCES, KNOWLEDGE_SET_ONTOLOGY
+from organisation.constants import (KNOWLEDGE_SET_INSTANCES,
+                                    KNOWLEDGE_SET_ONTOLOGY)
 
 __author__ = "Patrick Agbokou"
 __copyright__ = "Copyright 2021, OpenEA"

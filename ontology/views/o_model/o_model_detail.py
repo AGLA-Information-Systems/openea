@@ -9,7 +9,7 @@ from authorization.controllers.utils import (
     CustomPermissionRequiredMixin, check_permission,
     create_organisation_admin_security_group)
 from authorization.models import Permission
-from ontology.controllers.utils import KnowledgeBaseUtils
+from ontology.controllers.o_model import ModelUtils
 from ontology.models import (OConcept, OInstance, OModel, OPredicate,
                              ORelation, OReport)
 from ontology.plugins.json import GenericEncoder
@@ -72,7 +72,7 @@ class OModelDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, Single
 
         context['show_all'] = context['show_predicates'] and context['show_concepts'] and context['show_instances']
 
-        context['ontology_data'] = json.dumps(KnowledgeBaseUtils.ontology_to_dict(model=model), cls=GenericEncoder)
-        #context['instances_data'] = json.dumps(KnowledgeBaseUtils.instances_to_dict(model=model), cls=GenericEncoder)
+        context['ontology_data'] = json.dumps(ModelUtils.ontology_to_dict(model=model), cls=GenericEncoder)
+        #context['instances_data'] = json.dumps(ModelUtils.instances_to_dict(model=model), cls=GenericEncoder)
 
         return context

@@ -25,7 +25,7 @@ class OModelReportView(LoginRequiredMixin, CustomPermissionRequiredMixin, Detail
     def get_context_data(self, **kwargs):
         context = super(OModelReportView, self).get_context_data(**kwargs)
         
-        context['entities'] = serializers.serialize('json', OConcept.objects.filter(model=context.get('object')).order_by('-created_at').all())
+        context['concepts'] = serializers.serialize('json', OConcept.objects.filter(model=context.get('object')).order_by('-created_at').all())
         context['relations'] = serializers.serialize('json', ORelation.objects.filter(model=context.get('object')).order_by('-created_at').all())
         context['predicates'] = serializers.serialize('json', OPredicate.objects.filter(model=context.get('object')).order_by('-created_at').all())
 
@@ -60,8 +60,8 @@ class OModelReportView(LoginRequiredMixin, CustomPermissionRequiredMixin, Detail
         # self.content_type = 'text/json'
 
         # data = {}
-        # data.update(KnowledgeBaseController.ontology_to_dict(self.object))
-        # data.update(KnowledgeBaseController.instances_to_dict(self.object))
+        # data.update(ModelUtils.ontology_to_dict(self.object))
+        # data.update(ModelUtils.instances_to_dict(self.object))
         
         # # if self.request.GET:
         # #     data__ = JsonForm(request.GET)

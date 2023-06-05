@@ -24,7 +24,7 @@ class OrganisationDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, 
 
     def get_context_data(self, **kwargs):
         context = super(OrganisationDetailView, self).get_context_data(**kwargs)
-            
+              
         context['show_repositories'] = check_permission(user=self.request.user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_REPOSITORY)
         if context['show_repositories']:
             object_list_qs = Repository.objects.filter(organisation=self.object)

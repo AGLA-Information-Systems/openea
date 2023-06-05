@@ -3,16 +3,15 @@ import json
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
-from django.shortcuts import render
+
 from django.views.generic import View
 
 from authorization.controllers.utils import (
-    CustomPermissionRequiredMixin, check_permission,
-    create_organisation_admin_security_group)
+    CustomPermissionRequiredMixin, check_permission)
 from authorization.models import Permission
 from ontology.controllers.o_model import ModelUtils
-from ontology.controllers.utils import KnowledgeBaseUtils
-from ontology.models import OConcept, OInstance, OModel, OPredicate, OSlot
+
+from ontology.models import OInstance, OModel
 from ontology.plugins.json import GenericEncoder
 from openea.utils import Utils
 

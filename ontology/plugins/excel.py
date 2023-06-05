@@ -7,6 +7,7 @@ from openpyxl.styles import (Alignment, Border, Font, PatternFill, Protection,
 from openpyxl.worksheet.table import Table, TableStyleInfo
 
 from ontology.controllers.knowledge_base import KnowledgeBaseController
+from ontology.controllers.o_model import ModelUtils
 from ontology.models import OConcept, OInstance, OPredicate, ORelation, OSlot
 from ontology.plugins.plugin import ACTION_EXPORT, ACTION_IMPORT, Plugin
 
@@ -30,13 +31,13 @@ class ExcelPlugin(Plugin):
     def get_file_extension(knowledge_set):
         return 'xlsx'
 
-    def import_ontology(model, path, filename='ontology.xlsx'):
+    def import_ontology(model, path, filename='ontology.xlsx', filters=None):
 
         with transaction.atomic():
             wb = load_workbook(os.path.join(path, filename), read_only=True)
             sheet_names = wb.get_sheet_names()                        
 
-            if 'concepts' in sheet_names:
+            if 'concepts' in sheet_names and get_boolean_filter(filters, 'concepts'):
                 ws = wb['concepts']
                 max_row=ws.max_row
                 for index in range(2, max_row+1):
@@ -49,7 +50,7 @@ class ExcelPlugin(Plugin):
                         oconcept.save()
 
                     
-            if 'relations' in sheet_names:
+            if 'relations' in sheet_names and get_boolean_filter(filters, 'relations'):
                 ws = wb['relations']
                 max_row=ws.max_row
                 for index in range(2, max_row+1):
@@ -64,7 +65,7 @@ class ExcelPlugin(Plugin):
                         relation.save()
 
 
-            if 'ontology' in sheet_names:
+            if 'ontology' in sheet_names and get_boolean_filter(filters, 'predicates'):
                 ws = wb['ontology']
                 max_row=ws.max_row
                 for index in range(2, max_row+1):
@@ -78,7 +79,7 @@ class ExcelPlugin(Plugin):
                     cardinality_min = ws['H' + str(index)].value or 0
                     cardinality_max = ws['I' + str(index)].value or 0
 
-                    print(id,' ',subject_id,' ',subject_name,' ',predicate_id,' ',predicate_name,' ',object_id,' ',object_name)
+                    #print(id,' ',subject_id,' ',subject_name,' ',predicate_id,' ',predicate_name,' ',object_id,' ',object_name)
                     if predicate_name:
                         relation = ORelation.get_or_create(model=model, name=predicate_name)
                         subject = OConcept.get_or_create(model=model, name=subject_name, id=subject_id)
@@ -90,7 +91,11 @@ class ExcelPlugin(Plugin):
             # Close the workbook after reading
             wb.close()
 
-    def export_ontology(model, path, filename='ontology.xlsx'):
+    def export_ontology(model, path, filename='ontology.xlsx', filters=None):
+        relation_ids = ModelUtils.get_filter(filters, 'relation_ids')
+        concept_ids = ModelUtils.get_filter(filters, 'concept_ids')
+        predicate_ids = ModelUtils.get_filter(filters, 'predicate_ids')
+
         wb = Workbook()
         
         sheet_names = ['ontology', 'concepts', 'relations']
@@ -99,7 +104,7 @@ class ExcelPlugin(Plugin):
 
         # Write ontology
         sheet = wb['ontology']
-        sheet.append(['Entry ID', 'Concept ID', 'Concept', 'Relation ID', 'Relation', 'Related Concept ID', 'Related Concept'])
+        sheet.append(['Entry ID', 'Concept ID', 'Concept', 'Relation ID', 'Relation', 'Related Concept ID', 'Related Concept', 'Cardinality Minimal', 'Cardinality Maximal'])
         count = 1
         sheet.column_dimensions['A'].hidden = True
 
@@ -115,18 +120,20 @@ class ExcelPlugin(Plugin):
         sheet.column_dimensions['H'].width = 10
         sheet.column_dimensions['I'].width = 10
 
-        for relation in ORelation.objects.filter(model=model).order_by('name'):
-            for predicate in OPredicate.objects.filter(relation=relation).all():
-                count = count + 1
-                sheet.append([str(predicate.id),
-                            str(predicate.subject.id),
-                            name_to_excel(predicate.subject.name),
-                            str(relation.id),
-                            name_to_excel(relation.name),
-                            str(predicate.object.id),
-                            name_to_excel(predicate.object.name),
-                            predicate.cardinality_min,
-                            predicate.cardinality_max])
+        predicate_query = OPredicate.objects.filter(model=model)
+        if predicate_ids:
+            predicate_query = predicate_query.filter(id__in=predicate_ids)
+        for predicate in predicate_query.order_by('subject__name').order_by('relation__name').order_by('object__name'):
+            count = count + 1
+            sheet.append([str(predicate.id),
+                        str(predicate.subject.id),
+                        name_to_excel(predicate.subject.name),
+                        str(relation.id),
+                        name_to_excel(relation.name),
+                        str(predicate.object.id),
+                        name_to_excel(predicate.object.name),
+                        predicate.cardinality_min,
+                        predicate.cardinality_max])
 
         table = Table(displayName="ontology", ref="A1:G{}".format(count))
         StyleController.apply_table_style(table)
@@ -140,10 +147,13 @@ class ExcelPlugin(Plugin):
         sheet.column_dimensions['C'].width = 60
         count = 1
 
-        for oconcept in OConcept.objects.filter(model=model).order_by('name'):
-            sheet.append([str(oconcept.id),
-                          name_to_excel(oconcept.name),
-                          oconcept.description])
+        concept_query = OConcept.objects.filter(model=model)
+        if concept_ids:
+            concept_query = concept_query.filter(id__in=concept_ids)
+        for concept in concept_query.order_by('name'):
+            sheet.append([str(concept.id),
+                          name_to_excel(concept.name),
+                          concept.description])
             count = count + 1
         sheet.append(['', '', ''])
         count = count + 1
@@ -152,16 +162,19 @@ class ExcelPlugin(Plugin):
         StyleController.apply_table_style(table)
         sheet.add_table(table)
 
-        # Write predicates
+        # Write relations
         sheet = wb['relations']
         sheet.append(['ID', 'Name', 'Description', 'Type'])
         sheet.column_dimensions['A'].hidden = True
         sheet.column_dimensions['B'].width = 25
         sheet.column_dimensions['C'].width = 60
-        sheet.column_dimensions['C'].width = 25
+        sheet.column_dimensions['D'].width = 25
         count = 1
 
-        for relation in ORelation.objects.filter(model=model).order_by('name'):
+        relation_query = ORelation.objects.filter(model=model)
+        if relation_ids:
+            relation_query = relation_query.filter(id__in=relation_ids)
+        for relation in relation_query.order_by('name'):
             sheet.append([str(relation.id),
                           name_to_excel(relation.name),
                           relation.description,
@@ -179,13 +192,13 @@ class ExcelPlugin(Plugin):
         wb.save(os.path.join(path, filename))
 
 
-    def import_instances(model, path, filename='instances.xlsx'):
+    def import_instances(model, path, filename='instances.xlsx', filters=None):
          
         with transaction.atomic():
             wb = load_workbook(os.path.join(path, filename), read_only=True)
             sheet_names = wb.get_sheet_names()                        
 
-            if 'instances' in sheet_names:
+            if 'instances' in sheet_names  and get_boolean_filter(filters, 'instances'):
                 ws = wb['instances']
                 max_row=ws.max_row
                 for index in range(2, max_row+1):
@@ -231,7 +244,10 @@ class ExcelPlugin(Plugin):
             # Close the workbook after reading
             wb.close()
 
-    def export_instances(model, path, filename='instances.xlsx'):
+    def export_instances(model, path, filename='instances.xlsx', filters=None):
+        predicate_ids = ModelUtils.get_filter(filters, 'predicate_ids')
+        instance_ids = ModelUtils.get_filter(filters, 'instance_ids')
+        
         wb = Workbook()
         
         sheet_names = ['instances']
@@ -276,7 +292,11 @@ class ExcelPlugin(Plugin):
         sheet.column_dimensions['U'].hidden = True
         
         count = 1
-        for instance in OInstance.objects.filter(model=model).all():
+        instance_query = OInstance.objects.filter(model=model)
+        if instance_ids:
+            instance_query = instance_query.filter(id__in=instance_ids)
+
+        for instance in instance_query.order_by('name'):
             for slot in OSlot.objects.filter(model=model, subject=instance).all():
                 sheet.append([str(instance.id), name_to_excel(instance.name), name_to_excel(instance.code), instance.description,
                               str(instance.concept.id), name_to_excel(instance.concept.name),
@@ -363,3 +383,8 @@ def name_to_excel(name):
     if name:
         return name.replace('_', ' ')
     return None
+
+def get_boolean_filter(filters, varname):
+    if varname in filters and not filters[varname]:
+        return False
+    return True

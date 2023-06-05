@@ -1,8 +1,9 @@
 {% load i18n %}
-<table class="table table-fluid">
+<table class="table table-fluid table-hover">
     <thead>
         <tr>
             <th>{% trans "Model" %}</th>
+            <th></th>
             <th></th>
             <th></th>
         </tr>
@@ -13,6 +14,7 @@
             <td><a class="link-dark" href="{% url "o_model_detail" OModel.id %}">{{ OModel.name }} {{ OModel.version }}</a></td>
             <td><a href="{% url "o_model_update" OModel.id %}">{% trans "edit" %}</a></td>
             <td><a href="{% url "o_model_delete" OModel.id %}">{% trans "delete" %}</a></td>
+            <td><a href="{% url "o_model_copy" OModel.id %}">{% trans "copy" %}</a></td>
         </tr>
         {% endfor %}
     </tbody>

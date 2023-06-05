@@ -2,7 +2,7 @@
 Enterprise-grade Enterprise Architecture tool based on ontology engine
 
 
-![Default Home View](webapp/static/img/image_1_diagram.png?raw=true "Diagram view")
+![Default Home View](webapp/static/img/openea.svg?raw=true "Diagram view")
 
 ## Main features
 
@@ -16,8 +16,17 @@ Enterprise-grade Enterprise Architecture tool based on ontology engine
 
 * SQLite by default if no env variable is set
 
+### Graph View
+![Graph View](webapp/static/img/OpenEA_graph.png?raw=true "Graph view")
+
+### Impact Analysis View
+![Impact Analysis View](webapp/static/img/OpenEA_impact_analysis.png?raw=true "Impact Analysis view")
+
 ### Matrix View
-![Matrix View](webapp/static/img/image_2_matrix.png?raw=true "Diagram view")
+![Matrix View](webapp/static/img/OpenEA_matrix.png?raw=true "Matrix view")
+
+### Custom HTML/Javascript Reports
+![Custom Report](webapp/static/img/OpenEA_map.png?raw=true "Custom Reporting")
 
 # Usage
 

@@ -8,7 +8,7 @@ from ontology.models import QUALITY_STATUS_PROPOSED, OConcept
 from utils.test.helpers import (add_object_type_permissions_to_security_group,
                                 create_model, create_organisation,
                                 create_repository, create_security_group,
-                                create_user, create_user_profile)
+                                create_user, create_user_profile, populate_test_env_with_products)
 
 
 class OConceptCreateTestCase(TestCase):

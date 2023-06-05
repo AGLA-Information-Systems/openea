@@ -1,11 +1,6 @@
 from datetime import datetime
 from django.http import HttpResponse
 
-def handle_uploaded_file(organisation, f):
-    with open('some/file/name.txt', 'wb+') as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
-
 
 def set_system_fields(instance, user):
     if instance is not None and user is not None:

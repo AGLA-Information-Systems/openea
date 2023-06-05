@@ -148,7 +148,7 @@ function get_slot_values(model, subjet, slot_concept){
 function build_report_table(totaux_par_an){
     //set header of table
 let table = `
-<table class="table table-fluid" id = "myTable">
+<table class="table table-fluid table-hover " id = "myTable">
   <thead>
     <tr>
       <th scope="col">Année</th>
@@ -181,7 +181,7 @@ table = table +
 function build_list_table(totaux){
     //set header of table
 let table = `
-<table class="table table-fluid" id = "myTable">
+<table class="table table-fluid table-hover " id = "myTable">
   <thead>
     <tr>
       <th scope="col">type</th>

@@ -1,11 +1,11 @@
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from authorization.controllers.utils import CustomPermissionRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.controllers.utils import KnowledgeBaseUtils
 from ontology.forms.o_slot.o_slot_create import OSlotCreateForm
 from django.views.generic.edit import FormView
 
-from ontology.models import OConcept, OInstance, OPredicate, OSlot, OModel
+from ontology.models import OConcept, OInstance, OPredicate, OSlot
 from utils.generic import handle_errors
 from utils.views.custom import ReferrerView
 

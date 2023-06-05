@@ -3,33 +3,33 @@ import json
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 from django.views.generic import View
 
 from authorization.controllers.utils import (
-    CustomPermissionRequiredMixin, check_permission,
-    create_organisation_admin_security_group)
+    CustomPermissionRequiredMixin, check_permission)
 from authorization.models import Permission
-
 from ontology.controllers.o_model import ModelUtils
 
-from ontology.models import OModel
-from ontology.plugins.json import GenericEncoder
+from ontology.models import  OModel
+
 from openea.utils import Utils
 
+from utils.views.custom import ReferrerView
 
-class OModelGapAnalysisView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
-    permission_required = [('VIEW', OModel.get_object_type(), None)]
+
+class OModelCopyView(LoginRequiredMixin, CustomPermissionRequiredMixin, ReferrerView, View):
+    model = OModel
+    permission_required = [(Permission.PERMISSION_ACTION_CREATE, model.get_object_type(), None)]
 
     def post(self, request, *args, **kwargs):
-        data = json.loads(request.body)
-
-        model_1_id = ModelUtils.version_uuid(data.get('model_1_id'))
-        model_1 = OModel.objects.get(id=model_1_id)
-        model_2_id = ModelUtils.version_uuid(data.get('model_2_id'))
-        model_2 = OModel.objects.get(id=model_2_id)
-        filters = data.get('filters', [])
+        
+        model_id = kwargs.pop('model_id')
+        model_1 = OModel.objects.get(id=model_id)
+        
+        self.get_current_organisation(request=request, args=args, kwargs=kwargs)
 
         show_model = check_permission(user=self.request.user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_MODEL)
         show_relations = check_permission(user=self.request.user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_RELATION)
@@ -40,11 +40,12 @@ class OModelGapAnalysisView(LoginRequiredMixin, CustomPermissionRequiredMixin, V
         if not (show_model and show_relations and show_concepts and show_predicates and show_instances):
             raise PermissionDenied('Permission Denied')
         
-        results = {
-            'results': ModelUtils.model_diff(model_1=model_1, model_2=model_2, filters=filters),
-            'model_1': ModelUtils.model_to_dict(model_1),
-            'model_2': ModelUtils.model_to_dict(model_2)
-        }
+        new_model = ModelUtils.model_copy(model_1)
         
-        return HttpResponse(json.dumps(results, cls=GenericEncoder), content_type="application/json")
+        return HttpResponseRedirect(reverse('o_model_detail', kwargs={'pk': new_model.id}))
     
+    def get(self, request, *args, **kwargs):
+        model_id = kwargs.pop('model_id')
+        self.object = OModel.objects.get(id=model_id)
+        context = {"object": self.object}
+        return render(request, "o_model/o_model_copy.html", context)

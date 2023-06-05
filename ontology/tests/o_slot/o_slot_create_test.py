@@ -81,6 +81,7 @@ class OSlotCreateTestCase(TestCase):
         response = self.client.post(reverse('o_slot_create', kwargs={'instance_id': self.org_1_instance_1.id, 'predicate_id': self.org_1_predicate_1.id, 'concept_id': self.org_1_concept_2.id, 'is_subject': 0}), 
                                     data={'subject': self.org_1_instance_1.id,
                                           'object': self.org_1_instance_2.id,
+                                          'order': '1.1',
                                           'model': self.org_1_model_1.id})
         self.assertEqual(response.status_code, 302, response.content)
         slot = OSlot.objects.get(predicate=self.org_1_predicate_1, subject=self.org_1_instance_1, object=self.org_1_instance_2)
@@ -90,6 +91,7 @@ class OSlotCreateTestCase(TestCase):
                                           'object': '',
                                           'new_object_name': 'org_1_instance_3',
                                           'new_object_description': '',
+                                          'order': '1.1',
                                           'model': self.org_1_model_1.id})
         self.assertEqual(response.status_code, 302, response.content)
         instance_3 = OInstance.objects.get(name='org_1_instance_3')
@@ -100,6 +102,7 @@ class OSlotCreateTestCase(TestCase):
                                           'object': self.org_1_instance_2.id,
                                           'new_object_name': 'org_1_instance_4',
                                           'new_object_description': '',
+                                          'order': '1.1',
                                           'model': self.org_1_model_1.id})
         self.assertEqual(response.status_code, 302, response.content)
         instance_4 = OInstance.objects.get(name='org_1_instance_4')
