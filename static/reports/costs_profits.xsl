@@ -122,7 +122,7 @@
 <div id="results_table">
   
 
-  <table class="table table-fluid"  id='cb_table'>
+  <table class="table table-fluid table-hover "  id='cb_table'>
     <thead>
         <tr>
             <th>Cout Total</th>
@@ -139,7 +139,7 @@
     </tbody>
   </table>
   <hr/>
-  <table class="table table-fluid"  id='cb_detail_table_3'>
+  <table class="table table-fluid table-hover "  id='cb_detail_table_3'>
     <thead>
         <tr>
             <th>Benefice</th>

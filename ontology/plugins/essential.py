@@ -10,7 +10,7 @@ import urllib.parse
 from django.db import transaction
 
 from ontology.controllers.knowledge_base import KnowledgeBaseController
-from ontology.plugins.plugin import ACTION_IMPORT, Plugin
+from ontology.plugins.plugin import CAPABILITY_IMPORT, Plugin_v1
 from organisation.constants import (KNOWLEDGE_SET_INSTANCES,
                                     KNOWLEDGE_SET_ONTOLOGY)
 
@@ -101,10 +101,10 @@ ESSENTIAL_ONTOLOGY = {
 }
 
 
-class EssentialPlugin(Plugin):
+class EssentialPlugin(Plugin_v1):
 
-    def available_actions():
-        return {ACTION_IMPORT}
+    def capabilities():
+        return {CAPABILITY_IMPORT}
 
     def get_format():
         return ('ESSENTIAL', 'Essential')

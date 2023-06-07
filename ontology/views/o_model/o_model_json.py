@@ -1,23 +1,13 @@
-from django.http import HttpResponse
 import json
 
-from django.views.generic import View
-from authorization.controllers.utils import CustomPermissionRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from ontology.controllers.o_model import ModelUtils
+from django.http import HttpResponse
+from django.views.generic import View
 
+from authorization.controllers.utils import CustomPermissionRequiredMixin
+from ontology.controllers.o_model import ModelUtils
 from ontology.models import OModel
 from ontology.plugins.json import GenericEncoder
-
-
-class OModelJSONView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
-    permission_required = [('VIEW', OModel.get_object_type(), None)]
-
-    def get(self, request, *args, **kwargs):
-        model_id = kwargs.pop('model_id')
-        model = OModel.objects.get(id=model_id)
-        model_dict = ModelUtils.instances_to_dict(model=model)
-        return HttpResponse(json.dumps(model_dict, cls=GenericEncoder), content_type="application/json")
 
 
 class OModelJSONFilterView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):

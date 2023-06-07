@@ -3,17 +3,14 @@ from xml.etree import ElementTree as ET
 
 from bs4 import BeautifulSoup
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import Http404, HttpResponse, HttpResponseBadRequest
+from django.http import Http404, HttpResponse
 from django.views import View
 
-from authorization.controllers.utils import (
-    CustomPermissionRequiredMixin, check_permission,
-    create_organisation_admin_security_group)
+from authorization.controllers.utils import CustomPermissionRequiredMixin
 from authorization.models import Permission
 from ontology.controllers.graphviz import GraphvizController
 from ontology.controllers.o_model import ModelUtils
-from ontology.models import OInstance, OModel
-from openea.utils import Utils
+from ontology.models import OModel
 from utils.views.custom import SingleObjectView
 
 

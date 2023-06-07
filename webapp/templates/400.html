@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% load i18n %}
+{% block content %}
+
+<h2>400</h2>
+
+<p>{% trans "Bad request" %}</p>
+{% if exception %}
+  <p>{{ exception }}</p>
+{% endif %}
+
+{% endblock content %}

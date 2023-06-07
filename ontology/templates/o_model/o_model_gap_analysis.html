@@ -15,24 +15,25 @@
             <div class="col-sm">
                 <fieldset>
                     <legend>{% trans "Filters" %}</legend>
+                    
                     <div>
-                        <input type="checkbox" id="model-gap-filter-concepts" name="model-gap-filter" value="concepts" checked>
-                        <label for="model-gap-filter-concepts">{% trans "Concepts" %}</label>
-                    </div>
-                
-                    <div>
-                        <input type="checkbox" id="model-gap-filter-instances" name="model-gap-filter" value="instances">
+                        <input type="checkbox" id="model-gap-filter-instances" name="model-gap-filter" value="instances" checked>
                         <label for="model-gap-filter-instances">{% trans "Instances" %}</label>
                     </div>
 
                     <div>
-                        <input type="checkbox" id="model-gap-filter-slots" name="model-gap-filter" value="slots">
+                        <input type="checkbox" id="model-gap-filter-slots" name="model-gap-filter" value="slots" checked>
                         <label for="model-gap-filter-slots">{% trans "Slots" %}</label>
                     </div>
 
                     <div>
                         <input type="checkbox" id="model-gap-filter-predicates" name="model-gap-filter" value="predicates">
                         <label for="model-gap-filter-predicates">{% trans "Predicates" %}</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" id="model-gap-filter-concepts" name="model-gap-filter" value="concepts">
+                        <label for="model-gap-filter-concepts">{% trans "Concepts" %}</label>
                     </div>
 
                     <div>
@@ -174,19 +175,33 @@
                 var tableBodyFirstRowCell = document.createElement("td");
                 tableBodyFirstRowCell.setAttribute("style","white-space:pre-wrap; word-wrap:break-word");
                 var cell_text = ""
+                var cell_url = ""
                 if (item[0]){
                     cell_text = item[0].name;
+                    cell_url = ''; //url coming
                 }
-                tableBodyFirstRowCell.appendChild(document.createTextNode(cell_text));
+                var tableBodyFirstRowCellLink = document.createElement("a");
+                tableBodyFirstRowCellLink.title = cell_text; 
+                tableBodyFirstRowCellLink.href = cell_url;
+                tableBodyFirstRowCellLink.className += " link-dark";
+                tableBodyFirstRowCellLink.appendChild(document.createTextNode(cell_text))
+                tableBodyFirstRowCell.appendChild(tableBodyFirstRowCellLink);
                 tableBodyRow.appendChild(tableBodyFirstRowCell);
 
                 var tableBodySecondRowCell = document.createElement("td");
                 tableBodySecondRowCell.setAttribute("style","white-space:pre-wrap; word-wrap:break-word");
                 var cell_text = ""
+                var cell_url = ""
                 if (item[1]){
                     cell_text = item[1].name;
+                    cell_url = '';
                 }
-                tableBodySecondRowCell.appendChild(document.createTextNode(cell_text));
+                var tableBodySecondRowCellLink = document.createElement("a");
+                tableBodySecondRowCellLink.title = cell_text; 
+                tableBodySecondRowCellLink.href = cell_url;
+                tableBodySecondRowCellLink.className += " link-dark";
+                tableBodySecondRowCellLink.appendChild(document.createTextNode(cell_text))
+                tableBodySecondRowCell.appendChild(tableBodySecondRowCellLink);
                 tableBodyRow.appendChild(tableBodySecondRowCell);
 
                 tableBody.appendChild(tableBodyRow);

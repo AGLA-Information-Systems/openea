@@ -294,7 +294,7 @@ class OPredicate(models.Model):
     
     @property
     def name(self):
-        return self.subject.name + '->' + self.relation.name + '->' + self.object.name 
+        return self.subject.name + ' ' + self.relation.name + ' ' + self.object.name 
     
     def get_organisation(self):
         return self.model.repository.organisation
@@ -393,13 +393,13 @@ class OSlot(models.Model):
 
     @property
     def name(self):
-        subject_name = ''
+        subject_name = self.value or ''
         if self.subject is not None:
             subject_name = self.subject.name
-        object_name = self.value
+        object_name = self.value or ''
         if self.object is not None:
             object_name = self.object.name
-        return subject_name + '->' + self.predicate.relation.name + '->' + object_name 
+        return subject_name + ' -> ' + self.predicate.relation.name + ' -> ' + object_name 
 
     def get_or_create(model, predicate, description='', order='0', subject=None, object=None, value=None, id=None):
         try:

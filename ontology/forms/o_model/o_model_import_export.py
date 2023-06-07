@@ -18,7 +18,7 @@ class ModelImportForm(forms.Form):
     #model_id = forms.CharField(max_length=100, required=True)
     knowledge_set = forms.ChoiceField(choices=KNOWLEDGE_SET_CHOICES, widget=forms.RadioSelect)
     import_file = forms.FileField(required=True)
-    format = forms.ChoiceField(choices=IMPORT_FORMAT_CHOICES, widget=forms.RadioSelect)
+    format = forms.ChoiceField(choices=IMPORT_FORMAT_CHOICES, widget=forms.Select)
     time_schedule = forms.ChoiceField(choices=TIME_SCHEDULE_CHOICES, widget=forms.RadioSelect)
 
 
@@ -32,7 +32,7 @@ class ModelExportForm(forms.Form):
 
     #model_id = forms.CharField(max_length=100, required=True)
     knowledge_set = forms.ChoiceField(choices=KNOWLEDGE_SET_CHOICES, widget=forms.RadioSelect)
-    format = forms.ChoiceField(choices=EXPORT_FORMAT_CHOICES, widget=forms.RadioSelect)
+    format = forms.ChoiceField(choices=EXPORT_FORMAT_CHOICES, widget=forms.Select)
     time_schedule = forms.ChoiceField(choices=TIME_SCHEDULE_CHOICES, widget=forms.RadioSelect)
 
 

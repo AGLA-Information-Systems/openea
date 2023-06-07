@@ -8,13 +8,11 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import View
 
-from authorization.controllers.utils import (
-    CustomPermissionRequiredMixin, check_permission)
+from authorization.controllers.utils import (CustomPermissionRequiredMixin,
+                                             check_permission)
 from authorization.models import Permission
 from ontology.controllers.o_model import ModelUtils
-
-from ontology.models import  OModel
-
+from ontology.models import OModel
 from openea.utils import Utils
 
 from utils.views.custom import ReferrerView

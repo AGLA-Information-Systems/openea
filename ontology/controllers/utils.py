@@ -116,7 +116,6 @@ class KnowledgeBaseUtils:
         if len(found) > 0:
             results[level] = found
             already_found = already_found + [x[1] for x in found]
-            print(already_found)
             for x in results[level]:
                 KnowledgeBaseUtils.get_related_instances_recusrsive(results=results, already_found=already_found, instance=x[1], predicates=predicates, level=level + 1, max_level=max_level)
 

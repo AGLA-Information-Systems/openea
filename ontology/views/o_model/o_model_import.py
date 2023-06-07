@@ -3,13 +3,13 @@ import json
 
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseBadRequest, HttpResponseRedirect
+from django.core.exceptions import SuspiciousOperation
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views import View
 
-from authorization.controllers.utils import (
-    CustomPermissionRequiredMixin, create_organisation_admin_security_group)
+from authorization.controllers.utils import CustomPermissionRequiredMixin
 from ontology.controllers.o_model import ModelUtils
 from ontology.forms import ModelExportForm, ModelImportForm
 from ontology.models import OModel
@@ -74,12 +74,12 @@ class ModelImportView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
                 if t.status == TASK_STATUS_SUCCESS:
                     return HttpResponseRedirect(reverse('task_detail', kwargs={'pk': t.id}))
                 else:
-                    return HttpResponseBadRequest('Unable to process the task %s: %s' %(str(t.id), str(t.error)))
+                    raise SuspiciousOperation('Unable to process the task %s: %s' %(str(t.id), str(t.error)))
                 
             elif config.get("time_schedule") == TIME_SCHEDULE_SCHEDULED:
                 return HttpResponseRedirect(reverse('task_detail', kwargs={'pk': t.id}))
             else:
-                return HttpResponseBadRequest('Unknown time_schedule: '+ config.get("time_schedule"))
+                raise SuspiciousOperation('Unknown time_schedule: '+ config.get("time_schedule"))
 
         return render(request, self.template_name, {'form': form, 'ontology_data': json.dumps(ModelUtils.ontology_to_dict(model=model), cls=GenericEncoder)})
 

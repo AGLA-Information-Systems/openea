@@ -2,8 +2,8 @@ import io
 import json
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import (FileResponse, HttpResponseBadRequest,
-                         HttpResponseRedirect)
+from django.core.exceptions import SuspiciousOperation
+from django.http import FileResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
@@ -75,12 +75,12 @@ class ModelExportView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
                         response["content-type"] = 'text/plain'
                     return response
                 else:
-                    return HttpResponseBadRequest('Unable to process the task %s: %s' %(str(t.id), str(t.error)))
+                    raise SuspiciousOperation('Unable to process the task %s: %s' %(str(t.id), str(t.error)))
 
             elif config.get("time_schedule") == TIME_SCHEDULE_SCHEDULED:
                 return HttpResponseRedirect(self.success_url)
             else:
-                return HttpResponseBadRequest('Unknown time_schedule: '+ config.get("time_schedule"))
+                raise SuspiciousOperation('Unknown time_schedule: '+ config.get("time_schedule"))
 
         return render(request, self.template_name, {'form': form, 'ontology_data': json.dumps(ModelUtils.ontology_to_dict(model=model), cls=GenericEncoder)})
 

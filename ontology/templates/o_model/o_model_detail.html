@@ -30,11 +30,10 @@
 
             <a class="btn btn-secondary" href="{% url "o_model_update" object.id %}" class="dropdown-item" href="#">{% trans "Edit" %}</a>
             <a class="btn btn-secondary" href="{% url "o_model_copy" model_id=object.id %}" class="dropdown-item" href="#">{% trans "Copy" %}</a>
+            <a class="btn btn-secondary" href="{% url "o_model_delete" pk=object.id %}" class="dropdown-item" href="#">{% trans "Delete" %}</a>
             <a class="btn btn-secondary" href="{% url "o_model_import" model_id=object.id %}" class="dropdown-item" href="#">{% trans "Import" %}</a>
             <a class="btn btn-secondary" href="{% url "o_model_export" model_id=object.id %}" class="dropdown-item" href="#">{% trans "Export" %}</a>
             <a class="btn btn-secondary" href="{% url "json_report" model_id=object.id %}" class="dropdown-item" href="#">{% trans "Report" %}</a>
-            <a class="btn btn-secondary" href="{% url "o_model_json" model_id=object.id %}" class="dropdown-item" href="#">JSON</a>
-            <a class="btn btn-secondary" href="{% url "o_model_xml" model_id=object.id %}" class="dropdown-item" href="#">XML</a>
             <!--
             <div class="btn-group" role="group">
                 <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

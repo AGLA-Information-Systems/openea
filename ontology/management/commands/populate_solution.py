@@ -1,7 +1,11 @@
-from django.core.management.base import BaseCommand
 import imp
 from unicodedata import name
-from ontology.models import OModel, OConcept, OInstance, OPredicate, ORelation, Repository
+
+from django.core.management.base import BaseCommand
+
+from ontology.models import (OConcept, OInstance, OModel, OPredicate,
+                             ORelation, Repository)
+
 
 class Command(BaseCommand):
     def handle(self, **options):
@@ -105,12 +109,9 @@ class Command(BaseCommand):
         ]
 
         repository = Repository.objects.get_or_create(name=orepository)[0]
-        print(repository)
         model = OModel.objects.get_or_create(repository=repository, name=omodel)[0]
-        print(model)
 
         for p in ontology_defs:
-            print(p)
             c1 = OConcept.objects.get_or_create(model=model, name=p[0])[0]
             r1 = ORelation.objects.get_or_create(model=model, name=p[1])[0]
             c2 = OConcept.objects.get_or_create(model=model, name=p[2])[0]

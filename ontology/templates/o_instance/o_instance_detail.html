@@ -53,7 +53,12 @@
                         <a href="{% url "o_slot_delete" slot_value.id %}">{% trans "delete" %}</a>
                     </li>
                 {% elif p.kind == "inherited_as_object" or p.kind == "own_as_object" %}
-                    <li><a class="link-dark" href="{% url "o_instance_detail" slot_value.subject.id %}">{{ slot_value.subject.name }}</a> 
+                    <li>
+                    {% if slot_value.subject %}
+                        <a class="link-dark" href="{% url "o_instance_detail" slot_value.subject.id %}">{{ slot_value.subject.name }}</a>
+                    {% else %}
+                        <span class="link-dark" >{{ slot_value.value }}</span>
+                    {% endif %}
                         <a href="{% url "o_slot_update" slot_value.id %}">{% trans "edit" %}</a>
                         <a href="{% url "o_slot_delete" slot_value.id %}">{% trans "delete" %}</a>
                     </li>   

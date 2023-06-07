@@ -9,7 +9,7 @@ from openpyxl.worksheet.table import Table, TableStyleInfo
 from ontology.controllers.knowledge_base import KnowledgeBaseController
 from ontology.controllers.o_model import ModelUtils
 from ontology.models import OConcept, OInstance, OPredicate, ORelation, OSlot
-from ontology.plugins.plugin import ACTION_EXPORT, ACTION_IMPORT, Plugin
+from ontology.plugins.plugin import CAPABILITY_EXPORT, CAPABILITY_IMPORT, Plugin_v1
 
 __author__ = "Patrick Agbokou"
 __copyright__ = "Copyright 2021, OpenEA"
@@ -21,9 +21,9 @@ __email__ = "patrick.agbokou@aglaglobal.com"
 __status__ = "Development"
 
 
-class ExcelPlugin(Plugin):
-    def available_actions():
-        return {ACTION_IMPORT, ACTION_EXPORT}
+class ExcelPlugin(Plugin_v1):
+    def capabilities():
+        return {CAPABILITY_IMPORT, CAPABILITY_EXPORT}
 
     def get_format():
         return ('EXCEL', 'Excel')

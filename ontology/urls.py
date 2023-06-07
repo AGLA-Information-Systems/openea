@@ -28,11 +28,9 @@ from ontology.views.o_model.o_model_graph import OModelGraphView
 from ontology.views.o_model.o_model_impact_analysis import \
     OModelImpactAnalysisView
 from ontology.views.o_model.o_model_import import ModelImportView
-from ontology.views.o_model.o_model_json import (OModelJSONFilterView,
-                                                 OModelJSONView)
+from ontology.views.o_model.o_model_json import OModelJSONFilterView
 from ontology.views.o_model.o_model_json_list import OModelJSONListView
 from ontology.views.o_model.o_model_pathfinder import OModelPathFinderView
-from ontology.views.o_model.o_model_xml import OModelXMLView
 from ontology.views.o_report.o_report_create import OReportCreateView
 from ontology.views.o_report.o_report_delete import OReportDeleteView
 from ontology.views.o_report.o_report_detail import OReportDetailView
@@ -75,7 +73,7 @@ urlpatterns = [
     path('o_predicate/update/<uuid:pk>/', OPredicateUpdateView.as_view(), name='o_predicate_update'),
     path('o_predicate/delete/<uuid:pk>/', OPredicateDeleteView.as_view(), name='o_predicate_delete'),
     path('o_instance/list/<uuid:concept_id>/', OInstanceListView.as_view(), name='o_instance_list'),
-     path('o_instance/json_list/', OInstanceJSONListView.as_view(), name='o_instance_json_list'),
+    path('o_instance/json_list/', OInstanceJSONListView.as_view(), name='o_instance_json_list'),
     path('o_instance/create/<uuid:concept_id>/', OInstanceCreateView.as_view(), name='o_instance_create'),
     path('o_instance/detail/<uuid:pk>/', OInstanceDetailView.as_view(), name='o_instance_detail'),
     path('o_instance/update/<uuid:pk>/', OInstanceUpdateView.as_view(), name='o_instance_update'),
@@ -93,8 +91,7 @@ urlpatterns = [
     path('o_report/run/<uuid:pk>/', OReportRunView.as_view(), name='o_report_run'),
 
     path('o_model/report/<uuid:pk>/', OModelReportView.as_view(), name='o_model_report'),
-    path('o_model_xml/<uuid:model_id>/', OModelXMLView.as_view(), name='o_model_xml'),
-    path('o_model_json/<uuid:model_id>/', OModelJSONView.as_view(), name='o_model_json'),
+
     path('o_model/json_list/', OModelJSONListView.as_view(), name='o_model_json_list'),
     path('o_model/graph/<uuid:model_id>/', OModelGraphView.as_view(), name='o_model_graph'),
     path('o_model/filter/<uuid:model_id>/json', OModelJSONFilterView.as_view(), name='o_model_filter_json'),
