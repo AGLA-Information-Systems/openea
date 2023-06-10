@@ -22,7 +22,7 @@ psycopg2-binary==2.9.4
 django-pagedown==2.2.1
 Markdown==3.3.4
 requests==2.28.2
-#django-rosetta==0.9.8
+django-rosetta==0.9.9
 django-select2==8.1.1
 django-appconf==1.0.5
 async-timeout==4.0.2

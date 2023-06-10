@@ -2,6 +2,7 @@ import uuid
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.translation import gettext as _
 
 from openea.utils import Utils
 
@@ -54,12 +55,12 @@ class Organisation(models.Model):
         deferrable=models.Deferrable.DEFERRED,
     )
 
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='organisation_created')
-    modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='organisation_modified')
-    deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='organisation_deleted')
+    created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='organisation_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='organisation_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='organisation_deleted')
 
     def get_or_create(name, description=''):
         try:
@@ -94,12 +95,12 @@ class Profile(models.Model):
     #     deferrable=models.Deferrable.DEFERRED,
     # )
 
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='profile_created')
-    modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='profile_modified')
-    deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='profile_deleted')
+    created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='profile_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='profile_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='profile_deleted')
 
     @property
     def name(self):
@@ -139,12 +140,12 @@ class Task(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='tasks')
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE, null=True, related_name='organisation_tasks')
 
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='task_created')
-    modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='task_modified')
-    deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='task_deleted')
+    created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='task_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='task_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='task_deleted')
 
     def get_or_create(name, version=None, description=''):
         try:

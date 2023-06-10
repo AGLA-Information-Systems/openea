@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-16 21:13-0400\n"
+"POT-Creation-Date: 2023-06-09 20:19-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,10 +18,101 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: authorization/models.py:24 authorization/models.py:76 help/models.py:18
+#: ontology/models.py:37 ontology/models.py:92 ontology/models.py:144
+#: ontology/models.py:202 ontology/models.py:261 ontology/models.py:329
+#: ontology/models.py:384 ontology/models.py:453 organisation/models.py:58
+#: organisation/models.py:98 organisation/models.py:143 payment/models.py:71
+#: saas/models.py:25 taxonomy/models.py:17 taxonomy/models.py:50
+msgid "Created at"
+msgstr "Erstellt am"
+
+#: authorization/models.py:25 authorization/models.py:77 help/models.py:19
+#: ontology/models.py:38 ontology/models.py:93 ontology/models.py:145
+#: ontology/models.py:203 ontology/models.py:262 ontology/models.py:330
+#: ontology/models.py:385 ontology/models.py:454 organisation/models.py:59
+#: organisation/models.py:99 organisation/models.py:144 payment/models.py:72
+#: taxonomy/models.py:18 taxonomy/models.py:51
+msgid "Created by"
+msgstr "Erstellt von"
+
+#: authorization/models.py:26 authorization/models.py:78 help/models.py:20
+#: ontology/models.py:39 ontology/models.py:94 ontology/models.py:146
+#: ontology/models.py:204 ontology/models.py:263 ontology/models.py:331
+#: ontology/models.py:386 ontology/models.py:455 organisation/models.py:60
+#: organisation/models.py:100 organisation/models.py:145 payment/models.py:73
+#: taxonomy/models.py:19 taxonomy/models.py:52
+msgid "Modified at"
+msgstr ""
+
+#: authorization/models.py:27 authorization/models.py:79 help/models.py:21
+#: ontology/models.py:40 ontology/models.py:95 ontology/models.py:147
+#: ontology/models.py:205 ontology/models.py:264 ontology/models.py:332
+#: ontology/models.py:387 ontology/models.py:456 organisation/models.py:61
+#: organisation/models.py:101 organisation/models.py:146 payment/models.py:74
+#: taxonomy/models.py:20 taxonomy/models.py:53
+msgid "Modified by"
+msgstr ""
+
+#: authorization/models.py:28 authorization/models.py:29
+#: authorization/models.py:80 authorization/models.py:81 help/models.py:22
+#: help/models.py:23 ontology/models.py:41 ontology/models.py:42
+#: ontology/models.py:96 ontology/models.py:97 ontology/models.py:148
+#: ontology/models.py:149 ontology/models.py:206 ontology/models.py:207
+#: ontology/models.py:265 ontology/models.py:266 ontology/models.py:333
+#: ontology/models.py:334 ontology/models.py:388 ontology/models.py:389
+#: ontology/models.py:457 ontology/models.py:458 organisation/models.py:62
+#: organisation/models.py:63 organisation/models.py:102
+#: organisation/models.py:103 organisation/models.py:147
+#: organisation/models.py:148 payment/models.py:75 payment/models.py:76
+#: taxonomy/models.py:21 taxonomy/models.py:22 taxonomy/models.py:54
+#: taxonomy/models.py:55
+#, fuzzy
+#| msgid "Delete Tag"
+msgid "Deleted at"
+msgstr "Tag löschen"
+
 #: authorization/templates/permission/permission_create.html:6
 #: authorization/templates/security_group/security_group_detail.html:17
 msgid "Add Permission"
 msgstr "Berechtigung hinzufügen"
+
+#: authorization/templates/permission/permission_create.html:10
+#: authorization/templates/permission/permission_update.html:10
+#: authorization/templates/security_group/security_group_create.html:10
+#: authorization/templates/security_group/security_group_update.html:10
+#: configuration/templates/configuration/configuration_create.html:12
+#: configuration/templates/configuration/configuration_update.html:10
+#: help/templates/post/post_create.html:10
+#: help/templates/post/post_update.html:10
+#: ontology/templates/o_concept/o_concept_create.html:11
+#: ontology/templates/o_concept/o_concept_update.html:11
+#: ontology/templates/o_instance/o_instance_create.html:12
+#: ontology/templates/o_instance/o_instance_update.html:12
+#: ontology/templates/o_model/o_model_create.html:10
+#: ontology/templates/o_model/o_model_update.html:10
+#: ontology/templates/o_predicate/o_predicate_create.html:10
+#: ontology/templates/o_predicate/o_predicate_update.html:10
+#: ontology/templates/o_relation/o_relation_create.html:10
+#: ontology/templates/o_relation/o_relation_update.html:10
+#: ontology/templates/o_report/o_report_create.html:10
+#: ontology/templates/o_report/o_report_update.html:10
+#: ontology/templates/o_slot/o_slot_create.html:33
+#: ontology/templates/o_slot/o_slot_update.html:11
+#: ontology/templates/repository/repository_create.html:10
+#: ontology/templates/repository/repository_update.html:10
+#: organisation/templates/organisation/organisation_create.html:10
+#: organisation/templates/organisation/organisation_update.html:10
+#: organisation/templates/profile/profile_create.html:10
+#: organisation/templates/profile/profile_update.html:10
+#: organisation/templates/task/task_create.html:10
+#: organisation/templates/task/task_update.html:10
+#: taxonomy/templates/tag/tag_create.html:10
+#: taxonomy/templates/tag/tag_update.html:10
+#: taxonomy/templates/tag_group/tag_group_create.html:10
+#: taxonomy/templates/tag_group/tag_group_update.html:10
+msgid "Submit"
+msgstr "Senden"
 
 #: authorization/templates/permission/permission_delete.html:6
 msgid "Delete Permission"
@@ -30,6 +121,7 @@ msgstr "Berechtigung löschen"
 #: authorization/templates/permission/permission_delete.html:8
 #: authorization/templates/security_group/security_group_delete.html:8
 #: configuration/templates/configuration/configuration_delete.html:8
+#: help/templates/post/post_delete.html:8
 #: ontology/templates/o_concept/o_concept_delete.html:8
 #: ontology/templates/o_instance/o_instance_delete.html:9
 #: ontology/templates/o_model/o_model_delete.html:8
@@ -38,29 +130,54 @@ msgstr "Berechtigung löschen"
 #: ontology/templates/o_report/o_report_delete.html:8
 #: ontology/templates/o_slot/o_slot_delete.html:8
 #: ontology/templates/repository/repository_delete.html:8
+#: organisation/templates/organisation/organisation_delete.html:8
+#: organisation/templates/profile/profile_delete.html:8
+#: organisation/templates/task/task_delete.html:8
 #: taxonomy/templates/tag/tag_delete.html:8
 #: taxonomy/templates/tag_group/tag_group_delete.html:8
-#: webapp/templates/organisation/organisation_delete.html:8
-#: webapp/templates/profile/profile_delete.html:8
-#: webapp/templates/task/task_delete.html:8
 msgid "Are you sure you want to delete"
 msgstr "Sind Sie sicher, dass Sie löschen möchten?"
+
+#: authorization/templates/permission/permission_delete.html:9
+#: authorization/templates/security_group/security_group_delete.html:9
+#: configuration/templates/configuration/configuration_delete.html:9
+#: help/templates/post/post_delete.html:9
+#: ontology/templates/o_concept/o_concept_delete.html:9
+#: ontology/templates/o_instance/o_instance_delete.html:10
+#: ontology/templates/o_model/o_model_copy.html:9
+#: ontology/templates/o_model/o_model_delete.html:9
+#: ontology/templates/o_predicate/o_predicate_delete.html:9
+#: ontology/templates/o_relation/o_relation_delete.html:9
+#: ontology/templates/o_report/o_report_delete.html:9
+#: ontology/templates/o_slot/o_slot_delete.html:10
+#: ontology/templates/repository/repository_delete.html:9
+#: organisation/templates/organisation/organisation_delete.html:9
+#: organisation/templates/profile/profile_delete.html:9
+#: organisation/templates/task/task_delete.html:9
+#: taxonomy/templates/tag/tag_delete.html:9
+#: taxonomy/templates/tag_group/tag_group_delete.html:9
+#, fuzzy
+#| msgid "Configuration"
+msgid "Confirm"
+msgstr "Konfiguration"
 
 #: authorization/templates/permission/permission_detail.html:7
 #: authorization/templates/permission/permission_list.html:6
 #: authorization/templates/permission/permission_list.html:11
 #: authorization/templates/security_group/security_group_detail.html:22
-#: webapp/templates/organisation/organisation_detail.html:162
+#: organisation/templates/organisation/organisation_detail.html:181
 msgid "Permission"
 msgstr "Erlaubnis"
 
 #: authorization/templates/permission/permission_list.html:12
 #: authorization/templates/security_group/security_group_detail.html:11
 #: authorization/templates/security_group/security_group_list.html:12
-#: webapp/templates/organisation/organisation_detail.html:8
-#: webapp/templates/organisation/organisation_list.html:6
-#: webapp/templates/organisation/organisation_list.html:11
-#: webapp/templates/profile/profile_list.html:12
+#: organisation/templates/organisation/organisation_detail.html:9
+#: organisation/templates/organisation/organisation_list.html:6
+#: organisation/templates/organisation/organisation_list.html:13
+#: organisation/templates/profile/profile_detail.html:11
+#: organisation/templates/profile/profile_list.html:12
+#: organisation/templates/task/task_detail.html:20
 msgid "Organisation"
 msgstr ""
 
@@ -80,32 +197,29 @@ msgstr "Ansicht"
 #: authorization/templates/security_group/security_group_detail.html:35
 #: authorization/templates/security_group/security_group_detail.html:74
 #: authorization/templates/security_group/security_group_list.html:24
-#: configuration/templates/configuration/configuration_detail.html:54
+#: configuration/templates/configuration/configuration_detail.html:53
 #: configuration/templates/configuration/configuration_table.html:16
-#: ontology/templates/o_concept/o_concept_detail.html:55
 #: ontology/templates/o_concept/o_concept_table.html:20
-#: ontology/templates/o_instance/o_instance_detail.html:66
+#: ontology/templates/o_instance/o_instance_detail.html:52
+#: ontology/templates/o_instance/o_instance_detail.html:62
 #: ontology/templates/o_instance/o_instance_table.html:22
-#: ontology/templates/o_model/o_model_table.html:14
+#: ontology/templates/o_model/o_model_table.html:15
 #: ontology/templates/o_predicate/o_predicate_table.html:18
 #: ontology/templates/o_relation/o_relation_table.html:22
 #: ontology/templates/o_report/o_report_table.html:24
-#: ontology/templates/o_slot/o_slot_detail.html:27
-#: ontology/templates/o_slot/o_slot_detail.html:39
 #: ontology/templates/o_slot/o_slot_list.html:22
-#: ontology/templates/repository/repository_list.html:24
+#: ontology/templates/repository/repository_list.html:26
+#: organisation/templates/organisation/organisation_detail.html:71
+#: organisation/templates/organisation/organisation_detail.html:112
+#: organisation/templates/organisation/organisation_detail.html:151
+#: organisation/templates/organisation/organisation_detail.html:192
+#: organisation/templates/organisation/organisation_list.html:22
+#: organisation/templates/profile/profile_detail.html:36
+#: organisation/templates/profile/profile_list.html:28
+#: organisation/templates/task/task_table.html:26
+#: payment/templates/subscription/subscription_table.html:26
 #: taxonomy/templates/tag/tag_table.html:16
 #: taxonomy/templates/tag_group/tag_group_table.html:16
-#: webapp/templates/organisation/organisation_detail.html:48
-#: webapp/templates/organisation/organisation_detail.html:91
-#: webapp/templates/organisation/organisation_detail.html:93
-#: webapp/templates/organisation/organisation_detail.html:132
-#: webapp/templates/organisation/organisation_detail.html:173
-#: webapp/templates/organisation/organisation_detail.html:175
-#: webapp/templates/organisation/organisation_list.html:20
-#: webapp/templates/profile/profile_detail.html:27
-#: webapp/templates/profile/profile_list.html:28
-#: webapp/templates/task/task_table.html:26
 msgid "edit"
 msgstr "bearbeiten"
 
@@ -113,47 +227,41 @@ msgstr "bearbeiten"
 #: authorization/templates/security_group/security_group_detail.html:36
 #: authorization/templates/security_group/security_group_detail.html:75
 #: authorization/templates/security_group/security_group_list.html:25
-#: configuration/templates/configuration/configuration_detail.html:55
+#: configuration/templates/configuration/configuration_detail.html:54
 #: configuration/templates/configuration/configuration_table.html:17
-#: ontology/templates/o_concept/o_concept_detail.html:56
 #: ontology/templates/o_concept/o_concept_table.html:21
-#: ontology/templates/o_instance/o_instance_detail.html:41
-#: ontology/templates/o_instance/o_instance_detail.html:67
-#: ontology/templates/o_instance/o_instance_detail.html:96
-#: ontology/templates/o_instance/o_instance_detail.html:121
+#: ontology/templates/o_instance/o_instance_detail.html:53
+#: ontology/templates/o_instance/o_instance_detail.html:63
 #: ontology/templates/o_instance/o_instance_table.html:23
-#: ontology/templates/o_model/o_model_table.html:15
+#: ontology/templates/o_model/o_model_table.html:16
 #: ontology/templates/o_predicate/o_predicate_table.html:19
 #: ontology/templates/o_relation/o_relation_table.html:23
 #: ontology/templates/o_report/o_report_table.html:25
-#: ontology/templates/o_slot/o_slot_detail.html:27
-#: ontology/templates/o_slot/o_slot_detail.html:39
 #: ontology/templates/o_slot/o_slot_list.html:23
-#: ontology/templates/repository/repository_list.html:25
+#: ontology/templates/repository/repository_list.html:27
+#: organisation/templates/organisation/organisation_detail.html:72
+#: organisation/templates/organisation/organisation_detail.html:113
+#: organisation/templates/organisation/organisation_detail.html:152
+#: organisation/templates/organisation/organisation_detail.html:193
+#: organisation/templates/organisation/organisation_list.html:23
+#: organisation/templates/profile/profile_detail.html:37
+#: organisation/templates/profile/profile_list.html:29
+#: organisation/templates/task/task_table.html:27
 #: taxonomy/templates/tag/tag_table.html:17
 #: taxonomy/templates/tag_group/tag_group_table.html:17
-#: webapp/templates/organisation/organisation_detail.html:49
-#: webapp/templates/organisation/organisation_detail.html:92
-#: webapp/templates/organisation/organisation_detail.html:94
-#: webapp/templates/organisation/organisation_detail.html:133
-#: webapp/templates/organisation/organisation_detail.html:174
-#: webapp/templates/organisation/organisation_detail.html:176
-#: webapp/templates/organisation/organisation_list.html:21
-#: webapp/templates/profile/profile_detail.html:28
-#: webapp/templates/profile/profile_list.html:29
-#: webapp/templates/task/task_table.html:27
 msgid "delete"
 msgstr "löschen"
 
 #: authorization/templates/permission/permission_list.html:31
 #: authorization/templates/security_group/security_group_list.html:31
 #: configuration/templates/configuration/configuration_list.html:10
-#: ontology/templates/repository/repository_list.html:31
+#: help/templates/post/post_list.html:25
+#: ontology/templates/repository/repository_list.html:8
+#: organisation/templates/organisation/organisation_list.html:8
+#: organisation/templates/profile/profile_list.html:35
+#: organisation/templates/task/task_list.html:10
 #: taxonomy/templates/tag/tag_list.html:11
 #: taxonomy/templates/tag_group/tag_group_list.html:11
-#: webapp/templates/organisation/organisation_list.html:27
-#: webapp/templates/profile/profile_list.html:35
-#: webapp/templates/task/task_list.html:10
 msgid "New"
 msgstr "Neu"
 
@@ -177,112 +285,112 @@ msgstr "Sicherheitsgruppe"
 
 #: authorization/templates/security_group/security_group_detail.html:23
 #: authorization/templates/security_group/security_group_detail.html:64
-#: configuration/templates/configuration/configuration_detail.html:44
-#: ontology/templates/o_concept/o_concept_detail.html:45
+#: configuration/templates/configuration/configuration_detail.html:43
+#: ontology/templates/o_slot/o_slot_detail.html:28
+#: organisation/templates/profile/profile_detail.html:26
+#: payment/templates/subscription/subscription_detail.html:28
 #: taxonomy/templates/tag_group/tag_group_table.html:6
-#: webapp/templates/profile/profile_detail.html:17
 msgid "Description"
 msgstr "Beschreibung"
 
 #: authorization/templates/security_group/security_group_detail.html:45
 #: authorization/templates/security_group/security_group_detail.html:84
-#: configuration/templates/configuration/configuration_detail.html:64
-#: ontology/templates/o_concept/o_concept_detail.html:65
-#: ontology/templates/o_model/o_model_detail.html:101
+#: configuration/templates/configuration/configuration_detail.html:63
+#: ontology/templates/o_concept/o_concept_detail.html:62
 #: ontology/templates/o_model/o_model_detail.html:125
 #: ontology/templates/o_model/o_model_detail.html:149
 #: ontology/templates/o_model/o_model_detail.html:173
-#: webapp/templates/organisation/organisation_detail.html:103
-#: webapp/templates/organisation/organisation_detail.html:142
-#: webapp/templates/organisation/organisation_detail.html:185
-#: webapp/templates/organisation/organisation_detail.html:207
-#: webapp/templates/organisation/organisation_detail.html:228
-#: webapp/templates/organisation/organisation_detail.html:248
-#: webapp/templates/organisation/organisation_detail.html:270
+#: organisation/templates/organisation/organisation_detail.html:43
+#: organisation/templates/organisation/organisation_detail.html:122
+#: organisation/templates/organisation/organisation_detail.html:161
+#: organisation/templates/organisation/organisation_detail.html:202
+#: organisation/templates/organisation/organisation_detail.html:224
+#: organisation/templates/organisation/organisation_detail.html:245
+#: organisation/templates/organisation/organisation_detail.html:265
+#: organisation/templates/organisation/organisation_detail.html:287
 msgid "first"
 msgstr "zuerst"
 
 #: authorization/templates/security_group/security_group_detail.html:46
 #: authorization/templates/security_group/security_group_detail.html:85
-#: configuration/templates/configuration/configuration_detail.html:65
-#: ontology/templates/o_concept/o_concept_detail.html:66
-#: ontology/templates/o_model/o_model_detail.html:78
-#: ontology/templates/o_model/o_model_detail.html:102
+#: configuration/templates/configuration/configuration_detail.html:64
+#: ontology/templates/o_concept/o_concept_detail.html:63
+#: ontology/templates/o_model/o_model_detail.html:101
 #: ontology/templates/o_model/o_model_detail.html:126
 #: ontology/templates/o_model/o_model_detail.html:150
 #: ontology/templates/o_model/o_model_detail.html:174
-#: webapp/templates/organisation/organisation_detail.html:59
-#: webapp/templates/organisation/organisation_detail.html:104
-#: webapp/templates/organisation/organisation_detail.html:143
-#: webapp/templates/organisation/organisation_detail.html:186
-#: webapp/templates/organisation/organisation_detail.html:208
-#: webapp/templates/organisation/organisation_detail.html:229
-#: webapp/templates/organisation/organisation_detail.html:249
-#: webapp/templates/organisation/organisation_detail.html:271
+#: organisation/templates/organisation/organisation_detail.html:44
+#: organisation/templates/organisation/organisation_detail.html:82
+#: organisation/templates/organisation/organisation_detail.html:123
+#: organisation/templates/organisation/organisation_detail.html:162
+#: organisation/templates/organisation/organisation_detail.html:203
+#: organisation/templates/organisation/organisation_detail.html:225
+#: organisation/templates/organisation/organisation_detail.html:246
+#: organisation/templates/organisation/organisation_detail.html:266
+#: organisation/templates/organisation/organisation_detail.html:288
 msgid "previous"
 msgstr "zurück"
 
 #: authorization/templates/security_group/security_group_detail.html:48
 #: authorization/templates/security_group/security_group_detail.html:87
-#: webapp/templates/organisation/organisation_detail.html:61
-#: webapp/templates/organisation/organisation_detail.html:145
-#: webapp/templates/organisation/organisation_detail.html:188
-#: webapp/templates/organisation/organisation_detail.html:273
+#: organisation/templates/organisation/organisation_detail.html:46
+#: organisation/templates/organisation/organisation_detail.html:84
+#: organisation/templates/organisation/organisation_detail.html:164
+#: organisation/templates/organisation/organisation_detail.html:205
+#: organisation/templates/organisation/organisation_detail.html:290
 msgid "of"
 msgstr "von"
 
 #: authorization/templates/security_group/security_group_detail.html:50
 #: authorization/templates/security_group/security_group_detail.html:89
-#: configuration/templates/configuration/configuration_detail.html:69
-#: ontology/templates/o_concept/o_concept_detail.html:70
-#: ontology/templates/o_model/o_model_detail.html:82
-#: ontology/templates/o_model/o_model_detail.html:106
+#: configuration/templates/configuration/configuration_detail.html:68
+#: ontology/templates/o_concept/o_concept_detail.html:67
+#: ontology/templates/o_model/o_model_detail.html:105
 #: ontology/templates/o_model/o_model_detail.html:130
 #: ontology/templates/o_model/o_model_detail.html:154
 #: ontology/templates/o_model/o_model_detail.html:178
-#: webapp/templates/organisation/organisation_detail.html:63
-#: webapp/templates/organisation/organisation_detail.html:65
-#: webapp/templates/organisation/organisation_detail.html:108
-#: webapp/templates/organisation/organisation_detail.html:147
-#: webapp/templates/organisation/organisation_detail.html:190
-#: webapp/templates/organisation/organisation_detail.html:212
-#: webapp/templates/organisation/organisation_detail.html:233
-#: webapp/templates/organisation/organisation_detail.html:253
-#: webapp/templates/organisation/organisation_detail.html:275
+#: organisation/templates/organisation/organisation_detail.html:48
+#: organisation/templates/organisation/organisation_detail.html:86
+#: organisation/templates/organisation/organisation_detail.html:127
+#: organisation/templates/organisation/organisation_detail.html:166
+#: organisation/templates/organisation/organisation_detail.html:207
+#: organisation/templates/organisation/organisation_detail.html:229
+#: organisation/templates/organisation/organisation_detail.html:250
+#: organisation/templates/organisation/organisation_detail.html:270
+#: organisation/templates/organisation/organisation_detail.html:292
 msgid "next"
 msgstr "weiter"
 
 #: authorization/templates/security_group/security_group_detail.html:51
 #: authorization/templates/security_group/security_group_detail.html:90
-#: configuration/templates/configuration/configuration_detail.html:70
-#: ontology/templates/o_concept/o_concept_detail.html:71
-#: ontology/templates/o_model/o_model_detail.html:83
-#: ontology/templates/o_model/o_model_detail.html:107
+#: configuration/templates/configuration/configuration_detail.html:69
+#: ontology/templates/o_concept/o_concept_detail.html:68
+#: ontology/templates/o_model/o_model_detail.html:106
 #: ontology/templates/o_model/o_model_detail.html:131
 #: ontology/templates/o_model/o_model_detail.html:155
 #: ontology/templates/o_model/o_model_detail.html:179
-#: webapp/templates/organisation/organisation_detail.html:64
-#: webapp/templates/organisation/organisation_detail.html:66
-#: webapp/templates/organisation/organisation_detail.html:109
-#: webapp/templates/organisation/organisation_detail.html:148
-#: webapp/templates/organisation/organisation_detail.html:191
-#: webapp/templates/organisation/organisation_detail.html:213
-#: webapp/templates/organisation/organisation_detail.html:234
-#: webapp/templates/organisation/organisation_detail.html:254
-#: webapp/templates/organisation/organisation_detail.html:276
+#: organisation/templates/organisation/organisation_detail.html:49
+#: organisation/templates/organisation/organisation_detail.html:87
+#: organisation/templates/organisation/organisation_detail.html:128
+#: organisation/templates/organisation/organisation_detail.html:167
+#: organisation/templates/organisation/organisation_detail.html:208
+#: organisation/templates/organisation/organisation_detail.html:230
+#: organisation/templates/organisation/organisation_detail.html:251
+#: organisation/templates/organisation/organisation_detail.html:271
+#: organisation/templates/organisation/organisation_detail.html:293
 msgid "last"
 msgstr "zuletzt"
 
 #: authorization/templates/security_group/security_group_detail.html:58
-#: webapp/templates/profile/profile_create.html:6
+#: organisation/templates/profile/profile_create.html:6
 msgid "Add Profile"
 msgstr "Profil hinzufügen"
 
 #: authorization/templates/security_group/security_group_detail.html:63
-#: webapp/templates/organisation/organisation_detail.html:80
-#: webapp/templates/profile/profile_detail.html:7
-#: webapp/templates/profile/profile_list.html:6
-#: webapp/templates/profile/profile_list.html:11
+#: organisation/templates/organisation/organisation_detail.html:101
+#: organisation/templates/profile/profile_detail.html:7
+#: organisation/templates/profile/profile_list.html:6
+#: organisation/templates/profile/profile_list.html:11
 msgid "Profile"
 msgstr "Profil"
 
@@ -291,7 +399,7 @@ msgid "Update SecurityGroup"
 msgstr "Sicherheitsgruppe aktualisieren"
 
 #: configuration/templates/configuration/configuration_create.html:8
-#: webapp/templates/organisation/organisation_detail.html:263
+#: organisation/templates/organisation/organisation_detail.html:280
 msgid "Add Configuration"
 msgstr "Konfiguration hinzufügen"
 
@@ -300,10 +408,9 @@ msgid "Delete Configuration"
 msgstr "Konfiguration löschen"
 
 #: configuration/templates/configuration/configuration_detail.html:10
-#: configuration/templates/configuration/configuration_detail.html:11
 #: ontology/templates/o_concept/o_concept_detail.html:14
 #: ontology/templates/o_instance/o_instance_detail.html:15
-#: ontology/templates/o_instance/o_instance_detail.html:16
+#: ontology/templates/o_model/o_model_detail.html:31
 #: ontology/templates/o_predicate/o_predicate_detail.html:14
 #: ontology/templates/o_relation/o_relation_detail.html:14
 #: ontology/templates/o_report/o_report_detail.html:14
@@ -312,10 +419,11 @@ msgstr "Konfiguration löschen"
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: configuration/templates/configuration/configuration_detail.html:16
+#: configuration/templates/configuration/configuration_detail.html:15
+#: ontology/templates/json_report.html:9
 #: ontology/templates/o_concept/o_concept_detail.html:9
 #: ontology/templates/o_instance/o_instance_detail.html:10
-#: ontology/templates/o_model/o_model_detail.html:10
+#: ontology/templates/o_model/o_model_detail.html:26
 #: ontology/templates/o_model/o_model_list.html:6
 #: ontology/templates/o_model/o_model_table.html:5
 #: ontology/templates/o_predicate/o_predicate_detail.html:9
@@ -324,35 +432,37 @@ msgstr "Bearbeiten"
 #: ontology/templates/o_report/o_report_run.html:11
 #: ontology/templates/o_report/o_report_run.old.html:10
 #: ontology/templates/o_slot/o_slot_detail.html:9
-#: webapp/templates/json_report.html:9
 msgid "Model"
 msgstr "Modell"
 
-#: configuration/templates/configuration/configuration_detail.html:17
+#: configuration/templates/configuration/configuration_detail.html:16
 #: configuration/templates/configuration/configuration_list.html:6
 #: configuration/templates/configuration/configuration_table.html:5
-#: webapp/templates/organisation/organisation_detail.html:26
+#: organisation/templates/organisation/organisation_detail.html:28
 msgid "Configuration"
 msgstr "Konfiguration"
 
-#: configuration/templates/configuration/configuration_detail.html:25
-#: ontology/templates/o_concept/o_concept_detail.html:26
+#: configuration/templates/configuration/configuration_detail.html:24
+#: ontology/templates/o_concept/o_concept_detail.html:37
 msgid "New Instance"
 msgstr "Neue Instanz"
 
-#: configuration/templates/configuration/configuration_detail.html:28
-#: ontology/templates/o_concept/o_concept_detail.html:29
+#: configuration/templates/configuration/configuration_detail.html:27
+#: ontology/templates/o_concept/o_concept_detail.html:41
 msgid "Parents"
 msgstr "Eltern"
 
-#: configuration/templates/configuration/configuration_detail.html:34
+#: configuration/templates/configuration/configuration_detail.html:33
+#: ontology/templates/o_concept/o_concept_detail.html:46
 msgid "Children"
 msgstr "Kinder"
 
-#: configuration/templates/configuration/configuration_detail.html:43
-#: ontology/templates/o_concept/o_concept_detail.html:44
+#: configuration/templates/configuration/configuration_detail.html:42
 #: ontology/templates/o_instance/o_instance_list.html:8
 #: ontology/templates/o_instance/o_instance_table.html:5
+#: ontology/templates/o_model/o_model_impact_analysis.html:23
+#: ontology/templates/o_model/o_model_pathfinder.html:23
+#: ontology/templates/o_model/o_model_pathfinder.html:46
 msgid "Instance"
 msgstr "Instanz"
 
@@ -360,33 +470,83 @@ msgstr "Instanz"
 msgid "Update Configuration"
 msgstr "Konfiguration aktualisieren"
 
-#: ontology/models.py:37
-msgid "Created at"
-msgstr "Erstellt am"
+#: help/templates/post/post_create.html:6
+#, fuzzy
+#| msgid "Add Slot"
+msgid "Add Post"
+msgstr "Steckplatz hinzufügen"
 
-#: ontology/models.py:38
-msgid "Created by"
-msgstr "Erstellt von"
+#: help/templates/post/post_delete.html:6
+#, fuzzy
+#| msgid "Delete Slot"
+msgid "Delete Post"
+msgstr "Steckplatz löschen"
 
-#: ontology/models.py:73
+#: help/templates/post/post_list.html:6 saas/templates/layout.html:52
+msgid "Help"
+msgstr ""
+
+#: help/templates/post/post_list.html:11
+msgid "Post"
+msgstr ""
+
+#: help/templates/post/post_list.html:12
+msgid "Author"
+msgstr ""
+
+#: help/templates/post/post_update.html:6
+#, fuzzy
+#| msgid "Update Slot"
+msgid "Update Post"
+msgstr "Update-Steckplatz"
+
+#: ontology/controllers/o_model.py:325
+#: ontology/templates/o_model/o_model_table.html:17
+msgid "copy"
+msgstr ""
+
+#: ontology/models.py:70 ontology/templates/repository/repository_detail.html:9
+#: ontology/templates/repository/repository_list.html:6
+#: ontology/templates/repository/repository_list.html:13
+#: organisation/templates/organisation/organisation_detail.html:62
+msgid "Repository"
+msgstr "Aufbewahrungsort"
+
+#: ontology/models.py:71
+#: organisation/templates/organisation/organisation_detail.html:21
+#: saas/templates/user-menu.html:7 webapp/templates/user-menu.html:7
+msgid "Repositories"
+msgstr "Repositorien"
+
+#: ontology/models.py:80
 msgid "Proposed"
 msgstr "Vorgeschlagen"
 
-#: ontology/models.py:74
+#: ontology/models.py:81
 msgid "Approved"
 msgstr "Genehmigt"
 
-#: ontology/models.py:167
+#: ontology/models.py:188
 msgid "Property"
 msgstr "Eigentum"
 
-#: ontology/models.py:168
+#: ontology/models.py:189
 msgid "Inheritance (Parent=Subject)"
 msgstr "Vererbung (Eltern=Subjekt)"
 
-#: ontology/models.py:169
+#: ontology/models.py:190
 msgid "Inheritance (Parent=Object)"
 msgstr "Vererbung (Parent=Objekt)"
+
+#: ontology/templates/model_report.html:8
+msgid "Cost - Benefit Report"
+msgstr "Kosten-Nutzen-Bericht"
+
+#: ontology/templates/model_report.html:35
+#: ontology/templates/o_model/o_model_gap_analysis.html:48
+#: ontology/templates/o_model/o_model_impact_analysis.html:58
+msgid "Analyze"
+msgstr "Analysieren"
 
 #: ontology/templates/o_concept/o_concept_create.html:7
 msgid "Add Concept"
@@ -400,8 +560,71 @@ msgstr "Konzept löschen"
 #: ontology/templates/o_concept/o_concept_list.html:7
 #: ontology/templates/o_concept/o_concept_table.html:5
 #: ontology/templates/o_instance/o_instance_table.html:6
+#: ontology/templates/o_model/o_model_impact_analysis.html:14
+#: ontology/templates/o_model/o_model_pathfinder.html:14
+#: ontology/templates/o_model/o_model_pathfinder.html:37
 msgid "Concept"
 msgstr "Konzept"
+
+#: ontology/templates/o_concept/o_concept_detail.html:15
+#: ontology/templates/o_instance/o_instance_detail.html:16
+#: ontology/templates/o_model/o_model_detail.html:33
+#: ontology/templates/o_predicate/o_predicate_detail.html:15
+#: ontology/templates/o_relation/o_relation_detail.html:15
+#: ontology/templates/o_report/o_report_detail.html:15
+#, fuzzy
+#| msgid "delete"
+msgid "Delete"
+msgstr "löschen"
+
+#: ontology/templates/o_concept/o_concept_detail.html:22
+#: ontology/templates/o_instance/o_instance_detail.html:29
+#: ontology/templates/o_predicate/o_predicate_detail.html:33
+#, fuzzy
+#| msgid "Status"
+msgid "Quality Status"
+msgstr "Zustand"
+
+#: ontology/templates/o_concept/o_concept_detail.html:24
+#: organisation/templates/organisation/organisation_detail.html:26
+msgid "Tags"
+msgstr ""
+
+#: ontology/templates/o_concept/o_concept_detail.html:30
+#: ontology/templates/o_instance/o_instance_detail.html:32
+#: ontology/templates/o_model/o_model_detail.html:67
+#: ontology/templates/o_predicate/o_predicate_detail.html:38
+#: ontology/templates/o_relation/o_relation_detail.html:28
+#: ontology/templates/o_report/o_report_detail.html:29
+#: ontology/templates/o_slot/o_slot_detail.html:33
+#: ontology/templates/repository/repository_detail.html:12
+#: organisation/templates/profile/profile_detail.html:14
+#: organisation/templates/task/task_detail.html:35
+#, fuzzy
+#| msgid "Created at"
+msgid "Created"
+msgstr "Erstellt am"
+
+#: ontology/templates/o_concept/o_concept_detail.html:33
+#: ontology/templates/o_instance/o_instance_detail.html:35
+#: ontology/templates/o_model/o_model_detail.html:70
+#: ontology/templates/o_predicate/o_predicate_detail.html:41
+#: ontology/templates/o_relation/o_relation_detail.html:31
+#: ontology/templates/o_report/o_report_detail.html:32
+#: ontology/templates/o_slot/o_slot_detail.html:36
+#: ontology/templates/repository/repository_detail.html:15
+#: organisation/templates/profile/profile_detail.html:17
+#: organisation/templates/task/task_detail.html:38
+msgid "Modified"
+msgstr ""
+
+#: ontology/templates/o_concept/o_concept_detail.html:55
+#: ontology/templates/o_model/o_model_detail.html:94
+#: ontology/templates/o_model/o_model_detail.html:119
+#: ontology/templates/o_model/o_model_detail.html:143
+#: ontology/templates/o_model/o_model_detail.html:167
+msgid "Filter"
+msgstr ""
 
 #: ontology/templates/o_concept/o_concept_update.html:7
 msgid "Update Concept"
@@ -415,9 +638,25 @@ msgstr "Instanz hinzufügen"
 msgid "Delete Instance"
 msgstr "Instanz löschen"
 
+#: ontology/templates/o_instance/o_instance_detail.html:26
+msgid "Code"
+msgstr ""
+
 #: ontology/templates/o_instance/o_instance_update.html:8
 msgid "Update Instance"
 msgstr "Instanz aktualisieren"
+
+#: ontology/templates/o_model/o_model_copy.html:6
+#, fuzzy
+#| msgid "Model"
+msgid "Copy Model"
+msgstr "Modell"
+
+#: ontology/templates/o_model/o_model_copy.html:8
+#, fuzzy
+#| msgid "Are you sure you want to delete"
+msgid "Are you sure you duplicate"
+msgstr "Sind Sie sicher, dass Sie löschen möchten?"
 
 #: ontology/templates/o_model/o_model_create.html:6
 msgid "Add Model"
@@ -427,56 +666,88 @@ msgstr "Modell hinzufügen"
 msgid "Delete Model"
 msgstr "Modell löschen"
 
-#: ontology/templates/o_model/o_model_detail.html:16
-#: webapp/templates/model_import.html:6
+#: ontology/templates/o_model/o_model_detail.html:7
+#: ontology/templates/o_model/o_model_detail.html:8
+#, fuzzy
+#| msgid "Model exchange"
+msgid "Model detail"
+msgstr "Modellaustausch"
+
+#: ontology/templates/o_model/o_model_detail.html:32
+msgid "Copy"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_detail.html:34
 msgid "Import"
 msgstr "Importieren"
 
-#: ontology/templates/o_model/o_model_detail.html:17
-#: webapp/templates/model_export.html:6
+#: ontology/templates/o_model/o_model_detail.html:35
 msgid "Export"
 msgstr "Exportieren"
 
-#: ontology/templates/o_model/o_model_detail.html:18
+#: ontology/templates/o_model/o_model_detail.html:36
 #: ontology/templates/o_report/o_report_detail.html:10
 #: ontology/templates/o_report/o_report_list.html:6
 #: ontology/templates/o_report/o_report_table.html:5
 msgid "Report"
 msgstr "Bericht"
 
-#: ontology/templates/o_model/o_model_detail.html:55
+#: ontology/templates/o_model/o_model_detail.html:76
 msgid "Reports"
 msgstr "Berichte"
 
-#: ontology/templates/o_model/o_model_detail.html:56
-#: ontology/templates/o_model/o_model_instances_diagram.html:16
-msgid "Instances"
-msgstr "Instanzen"
-
-#: ontology/templates/o_model/o_model_detail.html:57
-msgid "Instances Diagram"
-msgstr "Instanzdiagramm"
-
-#: ontology/templates/o_model/o_model_detail.html:58
+#: ontology/templates/o_model/o_model_detail.html:77
+#: ontology/templates/o_model/o_model_export.html:63
+#: ontology/templates/o_model/o_model_gap_analysis.html:36
+#: ontology/templates/o_model/o_model_graph.html:22
+#: ontology/templates/o_model/o_model_import.html:58
+#: ontology/templates/o_model/o_model_matrix.html:42
+#: ontology/templates/o_model/o_model_matrix.html:65
 #: ontology/templates/o_model/o_model_ontology_diagram.html:16
 msgid "Concepts"
 msgstr "Konzepte"
 
-#: ontology/templates/o_model/o_model_detail.html:59
+#: ontology/templates/o_model/o_model_detail.html:78
+#: ontology/templates/o_model/o_model_export.html:54
+#: ontology/templates/o_model/o_model_gap_analysis.html:41
+#: ontology/templates/o_model/o_model_graph.html:13
+#: ontology/templates/o_model/o_model_import.html:56
 #: ontology/templates/o_model/o_model_instances_diagram.html:18
-#: ontology/templates/o_model/o_model_ontology_diagram.html:18
+#: ontology/templates/o_model/o_model_matrix.html:13
+#: ontology/templates/o_model/o_model_ontology_diagram.html:24
 msgid "Relations"
 msgstr "Beziehungen"
 
-#: ontology/templates/o_model/o_model_detail.html:60
+#: ontology/templates/o_model/o_model_detail.html:79
 msgid "Ontology"
 msgstr "Ontologie"
 
-#: ontology/templates/o_model/o_model_detail.html:61
-msgid "Ontology Diagram"
-msgstr "Ontologiediagramm"
+#: ontology/templates/o_model/o_model_detail.html:80
+#: saas/templates/carousel.html:14
+msgid "Graph"
+msgstr ""
 
-#: ontology/templates/o_model/o_model_detail.html:69
+#: ontology/templates/o_model/o_model_detail.html:81
+#: saas/templates/carousel.html:28
+msgid "Matrix"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_detail.html:82
+#: saas/templates/carousel.html:21
+msgid "Impact Analysis"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_detail.html:83
+#, fuzzy
+#| msgid "Analyser"
+msgid "Gap Analysis"
+msgstr "Analysator"
+
+#: ontology/templates/o_model/o_model_detail.html:84
+msgid "Path Finder"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_detail.html:92
 msgid "New Report"
 msgstr "Neuer Bericht"
 
@@ -491,6 +762,136 @@ msgstr "Neue Beziehung"
 #: ontology/templates/o_model/o_model_detail.html:165
 msgid "New Predicate"
 msgstr "Neues Prädikat"
+
+#: ontology/templates/o_model/o_model_export.html:75
+#: ontology/templates/o_model/o_model_gap_analysis.html:31
+#: ontology/templates/o_model/o_model_graph.html:34
+#: ontology/templates/o_model/o_model_impact_analysis.html:37
+#: ontology/templates/o_model/o_model_import.html:60
+#: ontology/templates/o_model/o_model_matrix.html:25
+#, fuzzy
+#| msgid "Predicate"
+msgid "Predicates"
+msgstr "Prädikat"
+
+#: ontology/templates/o_model/o_model_export.html:84
+#: ontology/templates/o_model/o_model_gap_analysis.html:21
+#: ontology/templates/o_model/o_model_graph.html:43
+#: ontology/templates/o_model/o_model_import.html:62
+#: ontology/templates/o_model/o_model_instances_diagram.html:16
+#: ontology/templates/o_model/o_model_matrix.html:51
+#: ontology/templates/o_model/o_model_matrix.html:74
+msgid "Instances"
+msgstr "Instanzen"
+
+#: ontology/templates/o_model/o_model_export.html:99
+msgid "Start Export"
+msgstr "Export starten"
+
+#: ontology/templates/o_model/o_model_gap_analysis.html:9
+#, fuzzy
+#| msgid "New Model"
+msgid "Other Model"
+msgstr "Neues Modell"
+
+#: ontology/templates/o_model/o_model_gap_analysis.html:17
+#: ontology/templates/o_model/o_model_impact_analysis.html:34
+msgid "Filters"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_gap_analysis.html:26
+#, fuzzy
+#| msgid "Slot"
+msgid "Slots"
+msgstr "Steckplatz"
+
+#: ontology/templates/o_model/o_model_graph.html:55
+msgid "Generate Ontology Graph"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_graph.html:56
+#, fuzzy
+#| msgid "Delete Instance"
+msgid "Generate Instances Graph"
+msgstr "Instanz löschen"
+
+#: ontology/templates/o_model/o_model_graph.html:57
+msgid "Download Graph"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_impact_analysis.html:11
+#, fuzzy
+#| msgid "Instance"
+msgid "Root Instance"
+msgstr "Instanz"
+
+#: ontology/templates/o_model/o_model_impact_analysis.html:46
+#: ontology/templates/o_model/o_model_impact_analysis.html:143
+msgid "Level"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_import.html:71
+msgid "Start Import"
+msgstr "Import starten"
+
+#: ontology/templates/o_model/o_model_instances_matrix.html:10
+#: ontology/templates/o_model/o_model_ontology_matrix.html:15
+#, fuzzy
+#| msgid "Concepts"
+msgid "Concepts on Rows"
+msgstr "Konzepte"
+
+#: ontology/templates/o_model/o_model_instances_matrix.html:15
+#, fuzzy
+#| msgid "Instances"
+msgid "Subject Instances"
+msgstr "Instanzen"
+
+#: ontology/templates/o_model/o_model_instances_matrix.html:20
+#: ontology/templates/o_model/o_model_ontology_matrix.html:24
+msgid "Concepts on Columns"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_instances_matrix.html:27
+#, fuzzy
+#| msgid "Instances"
+msgid "Object Instances"
+msgstr "Instanzen"
+
+#: ontology/templates/o_model/o_model_matrix.html:39
+msgid "Columns"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_matrix.html:62
+msgid "Rows"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_matrix.html:87
+msgid "Generate Ontology Matrix"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_matrix.html:88
+#, fuzzy
+#| msgid "Delete Instance"
+msgid "Generate Instances Matrix"
+msgstr "Instanz löschen"
+
+#: ontology/templates/o_model/o_model_pathfinder.html:11
+#: organisation/templates/task/task_table.html:8
+#: payment/templates/subscription/subscription_detail.html:34
+msgid "Start"
+msgstr ""
+
+#: ontology/templates/o_model/o_model_pathfinder.html:34
+#: organisation/templates/task/task_detail.html:32
+#: organisation/templates/task/task_table.html:9
+#: payment/templates/subscription/subscription_detail.html:37
+msgid "End"
+msgstr "Ende"
+
+#: ontology/templates/o_model/o_model_pathfinder.html:58
+msgid "Find Path"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_update.html:6
 msgid "Update OModel"
@@ -509,6 +910,14 @@ msgstr "Prädikat löschen"
 #: ontology/templates/o_predicate/o_predicate_table.html:5
 msgid "Predicate"
 msgstr "Prädikat"
+
+#: ontology/templates/o_predicate/o_predicate_detail.html:27
+msgid "Cardinality Min"
+msgstr ""
+
+#: ontology/templates/o_predicate/o_predicate_detail.html:30
+msgid "Cardinality Max"
+msgstr ""
 
 #: ontology/templates/o_predicate/o_predicate_update.html:6
 msgid "Update Predicate"
@@ -529,6 +938,7 @@ msgid "Relation"
 msgstr "Beziehung"
 
 #: ontology/templates/o_relation/o_relation_table.html:6
+#: organisation/templates/task/task_detail.html:11
 msgid "Type"
 msgstr "Typ"
 
@@ -546,7 +956,7 @@ msgstr "Bericht löschen"
 
 #: ontology/templates/o_report/o_report_run.html:37
 #: ontology/templates/o_report/o_report_run.old.html:32
-#: webapp/templates/xml_report.html:59
+#: ontology/templates/xml_report.html:59
 msgid "Analyser"
 msgstr "Analysator"
 
@@ -558,19 +968,19 @@ msgstr "lauf"
 msgid "Update Report"
 msgstr "Bericht aktualisieren"
 
-#: ontology/templates/o_slot/o_slot_create.html:6
+#: ontology/templates/o_slot/o_slot_create.html:7
 msgid "Add Slot"
 msgstr "Steckplatz hinzufügen"
 
-#: ontology/templates/o_slot/o_slot_create.html:14
+#: ontology/templates/o_slot/o_slot_create.html:15
 msgid "Select an existing instance"
 msgstr "Wählen Sie eine vorhandene Instanz aus"
 
-#: ontology/templates/o_slot/o_slot_create.html:19
+#: ontology/templates/o_slot/o_slot_create.html:20
 msgid "Or"
 msgstr "Oder"
 
-#: ontology/templates/o_slot/o_slot_create.html:22
+#: ontology/templates/o_slot/o_slot_create.html:23
 msgid "Create a new instance"
 msgstr "Erstellen Sie eine neue Instanz"
 
@@ -584,10 +994,17 @@ msgstr "Steckplatz löschen"
 msgid "Slot"
 msgstr "Steckplatz"
 
-#: ontology/templates/o_slot/o_slot_detail.html:24
-#: ontology/templates/o_slot/o_slot_detail.html:36
-msgid "Slot Value"
-msgstr "Slot-Wert"
+#: ontology/templates/o_slot/o_slot_detail.html:19
+msgid "Subject"
+msgstr ""
+
+#: ontology/templates/o_slot/o_slot_detail.html:22
+msgid "Object"
+msgstr ""
+
+#: ontology/templates/o_slot/o_slot_detail.html:25
+msgid "Order"
+msgstr ""
 
 #: ontology/templates/o_slot/o_slot_update.html:6
 msgid "Update Slot"
@@ -601,20 +1018,1009 @@ msgstr "Repository hinzufügen"
 msgid "Delete Repository"
 msgstr "Speicher löschen"
 
-#: ontology/templates/repository/repository_detail.html:7
-#: ontology/templates/repository/repository_list.html:6
-#: ontology/templates/repository/repository_list.html:11
-#: webapp/templates/organisation/organisation_detail.html:39
-msgid "Repository"
-msgstr "Aufbewahrungsort"
-
-#: ontology/templates/repository/repository_detail.html:11
+#: ontology/templates/repository/repository_detail.html:19
 msgid "New Model"
 msgstr "Neues Modell"
 
 #: ontology/templates/repository/repository_update.html:6
 msgid "Update Repository"
 msgstr "Repository aktualisieren"
+
+#: organisation/templates/organisation/organisation_create.html:6
+msgid "Add Organisation"
+msgstr "Organisation hinzufügen"
+
+#: organisation/templates/organisation/organisation_delete.html:6
+msgid "Delete Organisation"
+msgstr "Organisation löschen"
+
+#: organisation/templates/organisation/organisation_detail.html:5
+#: organisation/templates/organisation/organisation_detail.html:6
+#, fuzzy
+#| msgid "Add Organisation"
+msgid "Organisation detail"
+msgstr "Organisation hinzufügen"
+
+#: organisation/templates/organisation/organisation_detail.html:12
+msgid "Rebuild Permissions"
+msgstr "Berechtigungen neu aufbauen"
+
+#: organisation/templates/organisation/organisation_detail.html:20
+#, fuzzy
+#| msgid "Description"
+msgid "Subscriptions"
+msgstr "Beschreibung"
+
+#: organisation/templates/organisation/organisation_detail.html:22
+#: saas/templates/user-menu.html:8 webapp/templates/user-menu.html:8
+msgid "Profiles"
+msgstr "Profile"
+
+#: organisation/templates/organisation/organisation_detail.html:23
+msgid "Security Groups"
+msgstr "Sicherheitsgruppen"
+
+#: organisation/templates/organisation/organisation_detail.html:24
+msgid "Permissions"
+msgstr "Berechtigungen"
+
+#: organisation/templates/organisation/organisation_detail.html:25
+msgid "Tag Groups"
+msgstr "Tag-Gruppen"
+
+#: organisation/templates/organisation/organisation_detail.html:27
+#: saas/templates/user-menu.html:9 webapp/templates/user-menu.html:9
+msgid "Tasks"
+msgstr "Aufgaben"
+
+#: organisation/templates/organisation/organisation_detail.html:37
+#, fuzzy
+#| msgid "Description"
+msgid "Add Subscription"
+msgstr "Beschreibung"
+
+#: organisation/templates/organisation/organisation_detail.html:58
+msgid "New Repository"
+msgstr "Neues Repository"
+
+#: organisation/templates/organisation/organisation_detail.html:97
+msgid "New Profile"
+msgstr "Neues Profil"
+
+#: organisation/templates/organisation/organisation_detail.html:102
+msgid "User"
+msgstr "Benutzer"
+
+#: organisation/templates/organisation/organisation_detail.html:138
+msgid "New Security Group"
+msgstr "Neue Sicherheitsgruppe"
+
+#: organisation/templates/organisation/organisation_detail.html:142
+#: organisation/templates/profile/profile_detail.html:25
+msgid "Security Group"
+msgstr "Sicherheitsgruppe"
+
+#: organisation/templates/organisation/organisation_detail.html:177
+msgid "New Permission"
+msgstr "Neue Berechtigung"
+
+#: organisation/templates/organisation/organisation_detail.html:218
+msgid "New Task"
+msgstr "Neue Aufgabe"
+
+#: organisation/templates/organisation/organisation_detail.html:239
+msgid "New Tag Group"
+msgstr "Neue Tag-Gruppe"
+
+#: organisation/templates/organisation/organisation_detail.html:281
+msgid "Rebuild"
+msgstr "Wiederaufbau"
+
+#: organisation/templates/organisation/organisation_update.html:6
+msgid "Update Organisation"
+msgstr "Organisation aktualisieren"
+
+#: organisation/templates/profile/profile_delete.html:6
+msgid "Delete Profile"
+msgstr "Profil löschen"
+
+#: organisation/templates/profile/profile_list.html:24
+#, fuzzy
+#| msgid "activate"
+msgid "active"
+msgstr "aktivieren"
+
+#: organisation/templates/profile/profile_list.html:26
+msgid "activate"
+msgstr "aktivieren"
+
+#: organisation/templates/profile/profile_update.html:6
+msgid "Update Profile"
+msgstr "Profil aktualisieren"
+
+#: organisation/templates/task/task_create.html:6
+msgid "Add Task"
+msgstr "Aufgabe hinzufügen"
+
+#: organisation/templates/task/task_delete.html:6
+msgid "Delete Task"
+msgstr "Aufgabe löschen"
+
+#: organisation/templates/task/task_detail.html:7
+#: organisation/templates/task/task_list.html:6
+#: organisation/templates/task/task_table.html:5
+msgid "Task"
+msgstr "Aufgabe"
+
+#: organisation/templates/task/task_detail.html:14
+#: organisation/templates/task/task_table.html:6
+#: payment/templates/subscription/subscription_detail.html:31
+msgid "Status"
+msgstr "Zustand"
+
+#: organisation/templates/task/task_detail.html:17
+#, fuzzy
+#| msgid "Submit"
+msgid "Submitted by"
+msgstr "Senden"
+
+#: organisation/templates/task/task_detail.html:23
+#: organisation/templates/task/task_table.html:7
+msgid "Attachment"
+msgstr "Anhang"
+
+#: organisation/templates/task/task_detail.html:26
+#, fuzzy
+#| msgid "Configuration"
+msgid "Config"
+msgstr "Konfiguration"
+
+#: organisation/templates/task/task_detail.html:29
+msgid "Started"
+msgstr ""
+
+#: organisation/templates/task/task_update.html:6
+msgid "Update Task"
+msgstr "Task aktualisieren"
+
+#: payment/templates/product/product_card.html:13
+msgid "Free"
+msgstr ""
+
+#: payment/templates/product/product_card.html:14
+msgid "as long as we can"
+msgstr ""
+
+#: payment/templates/product/product_card.html:17
+msgid "per month"
+msgstr ""
+
+#: payment/templates/product/product_card.html:22
+msgid "No setup or hidden fees"
+msgstr ""
+
+#: payment/templates/product/product_card.html:33
+msgid "Unlimited"
+msgstr ""
+
+#: payment/templates/product/product_card.html:46
+msgid "Select"
+msgstr ""
+
+#: payment/templates/subscription/subscription_create.html:18
+#, fuzzy
+#| msgid "Request a private instance"
+msgid "Need something custom like a private instance"
+msgstr "Fordern Sie eine private Instanz an"
+
+#: payment/templates/subscription/subscription_create.html:18
+#: saas/templates/frontpage.dev.html:34
+#, fuzzy
+#| msgid "Tailored service"
+msgid "Tailored Service"
+msgstr "Maßgeschneiderter Service"
+
+#: payment/templates/subscription/subscription_create.html:18
+msgid "reach out to us"
+msgstr ""
+
+#: payment/templates/subscription/subscription_detail.html:21
+msgid "Pay"
+msgstr ""
+
+#: payment/templates/subscription/subscription_detail.html:40
+msgid "Product"
+msgstr ""
+
+#: payment/templates/subscription/subscription_detail.html:43
+#, fuzzy
+#| msgid "Delete Configuration"
+msgid "Payment Confirmation"
+msgstr "Konfiguration löschen"
+
+#: payment/templates/subscription/subscription_table.html:21
+msgid "paid"
+msgstr ""
+
+#: payment/templates/subscription/subscription_table.html:23
+msgid "pending payment"
+msgstr ""
+
+#: saas/templates/400.html:7 webapp/templates/400.html:7
+msgid "Bad request"
+msgstr ""
+
+#: saas/templates/403.html:10
+msgid "Please, consider upgrading your subscription"
+msgstr ""
+
+#: saas/templates/403.html:13 webapp/templates/403.html:10
+msgid "Access Denied"
+msgstr ""
+
+#: saas/templates/404.html:5 webapp/templates/404.html:5
+msgid "Not found"
+msgstr ""
+
+#: saas/templates/500.html:7 webapp/templates/500.html:7
+msgid "Something unexpected happened."
+msgstr ""
+
+#: saas/templates/carousel.html:35
+#, fuzzy
+#| msgid "Reports"
+msgid "Custom Reports"
+msgstr "Berichte"
+
+#: saas/templates/carousel.html:42
+#, fuzzy
+#| msgid "previous"
+msgid "Previous"
+msgstr "zurück"
+
+#: saas/templates/carousel.html:46
+msgid "Next"
+msgstr ""
+
+#: saas/templates/frontpage.dev.html:11 webapp/templates/frontpage.dev.html:9
+msgid "Mission"
+msgstr ""
+
+#: saas/templates/frontpage.dev.html:12 webapp/templates/frontpage.dev.html:10
+msgid ""
+"The mission of OpenEA (Open Enterprise Architect) is to provide an open "
+"source enterprise-grade Enterprise Architecture tool, for governments, and "
+"researchers."
+msgstr ""
+
+#: saas/templates/frontpage.dev.html:18
+msgid "Request a private instance"
+msgstr "Fordern Sie eine private Instanz an"
+
+#: saas/templates/frontpage.dev.html:19
+msgid ""
+"For increased privacy, private instances are offered on site or in the cloud."
+msgstr ""
+
+#: saas/templates/frontpage.dev.html:20
+msgid "Private Instance"
+msgstr "Private Instanz"
+
+#: saas/templates/frontpage.dev.html:25
+msgid "Register organisation in SaaS platform"
+msgstr "Organisation in der SaaS-Plattform registrieren"
+
+#: saas/templates/frontpage.dev.html:26
+msgid "Oragnisations are created in the current SaaS, free of charge."
+msgstr "Organisationen werden kostenlos im aktuellen SaaS erstellt."
+
+#: saas/templates/frontpage.dev.html:27
+msgid "Register Organisation"
+msgstr "Organisation registrieren"
+
+#: saas/templates/frontpage.dev.html:32
+msgid "Select a tailored support plan"
+msgstr "Wählen Sie einen maßgeschneiderten Supportplan aus"
+
+#: saas/templates/frontpage.dev.html:33
+msgid "Need a service plan tailored to your needs, let us know."
+msgstr ""
+"Benötigen Sie einen auf Ihre Bedürfnisse zugeschnittenen Serviceplan, lassen "
+"Sie es uns wissen."
+
+#: saas/templates/frontpage.dev.html:34
+msgid "Tailored service"
+msgstr "Maßgeschneiderter Service"
+
+#: saas/templates/frontpage.dev.html:41 webapp/templates/frontpage.dev.html:15
+msgid "Already have an organisation, Start here"
+msgstr "Sie haben bereits eine Organisation, beginnen Sie hier"
+
+#: saas/templates/frontpage.dev.html:42 webapp/templates/frontpage.dev.html:16
+msgid ""
+"The entry point for defining an ontology is the repository. A repository may "
+"contain one or more versioned models/metamodels"
+msgstr ""
+
+#: saas/templates/frontpage.dev.html:43 webapp/templates/frontpage.dev.html:17
+msgid "Browse Organisations"
+msgstr "Organisationen durchsuchen"
+
+#: saas/templates/frontpage.dev.html:44 webapp/templates/frontpage.dev.html:18
+msgid "Browse Repositories"
+msgstr "Repositories durchsuchen"
+
+#: saas/templates/frontpage.dev.html:51 webapp/templates/frontpage.dev.html:25
+msgid "Join the team"
+msgstr "Tritt dem Team bei"
+
+#: saas/templates/frontpage.dev.html:52 webapp/templates/frontpage.dev.html:26
+msgid "Get aboard by contributing and/or joining the "
+msgstr "Steigen Sie ein, indem Sie einen Beitrag leisten und/oder beitreten"
+
+#: saas/templates/frontpage.dev.html:52 webapp/templates/frontpage.dev.html:26
+msgid "team"
+msgstr "Team"
+
+#: saas/templates/frontpage.dev.html:52 webapp/templates/frontpage.dev.html:26
+msgid "or if you are already on keybase"
+msgstr "oder wenn Sie bereits auf Keybase sind"
+
+#: saas/templates/frontpage.dev.html:52 webapp/templates/frontpage.dev.html:26
+msgid "Team OpenEA"
+msgstr ""
+
+#: saas/templates/frontpage.dev.html:58 webapp/templates/frontpage.dev.html:32
+msgid "Get help"
+msgstr "Hol Hilfe"
+
+#: saas/templates/frontpage.dev.html:59 webapp/templates/frontpage.dev.html:33
+msgid "The source is available here."
+msgstr "Die Quelle ist hier verfügbar."
+
+#: saas/templates/frontpage.dev.html:60 webapp/templates/frontpage.dev.html:34
+msgid "Open Source"
+msgstr "Offene Quelle"
+
+#: saas/templates/layout.html:25 webapp/templates/layout.html:25
+msgid "Placeholder for page content."
+msgstr "Platzhalter für Seiteninhalt."
+
+#: saas/templates/layout.html:32 webapp/templates/layout.html:32
+msgid "OpenEA"
+msgstr ""
+
+#: saas/templates/layout.html:35 webapp/templates/layout.html:34
+#, fuzzy
+#| msgid "Permission"
+msgid "Version"
+msgstr "Erlaubnis"
+
+#: saas/templates/layout.html:38 webapp/templates/layout.html:37
+msgid "Features"
+msgstr "Eigenschaften"
+
+#: saas/templates/layout.html:40 saas/templates/others/features.html:8
+#: webapp/templates/layout.html:39
+msgid "Web based enterprise architecture tool"
+msgstr "Webbasiertes Unternehmensarchitekturtool"
+
+#: saas/templates/layout.html:41 saas/templates/others/features.html:10
+#: webapp/templates/layout.html:40
+msgid "Ontology engine and research tool"
+msgstr "Ontologie-Engine und Forschungswerkzeug"
+
+#: saas/templates/layout.html:42 saas/templates/others/features.html:12
+#: webapp/templates/layout.html:41
+msgid "Tailored metamodel for your organisation"
+msgstr "Maßgeschneidertes Metamodell für Ihre Organisation"
+
+#: saas/templates/layout.html:43 saas/templates/others/features.html:14
+#: webapp/templates/layout.html:42
+msgid "Dynamic visualization"
+msgstr "Dynamische Visualisierung"
+
+#: saas/templates/layout.html:44 saas/templates/others/features.html:16
+#: webapp/templates/layout.html:43
+msgid "Custom reports on knowledge base"
+msgstr "Benutzerdefinierte Berichte in der Wissensdatenbank"
+
+#: saas/templates/layout.html:45 saas/templates/others/features.html:18
+#: webapp/templates/layout.html:44
+msgid "Model exchange"
+msgstr "Modellaustausch"
+
+#: saas/templates/layout.html:46 saas/templates/others/features.html:20
+#: webapp/templates/layout.html:45
+msgid "Custom Plugin development"
+msgstr "Benutzerdefinierte Plugin-Entwicklung"
+
+#: saas/templates/layout.html:50 webapp/templates/layout.html:49
+msgid "Resources"
+msgstr "Ressourcen"
+
+#: saas/templates/layout.html:53 webapp/templates/layout.html:60
+msgid "Terms"
+msgstr "Bedingungen"
+
+#: saas/templates/layout.html:54 webapp/templates/layout.html:61
+msgid "Privacy Policy"
+msgstr "Datenschutzerklärung"
+
+#: saas/templates/layout.html:58 webapp/templates/layout.html:56
+msgid "About"
+msgstr "Ungefähr"
+
+#: saas/templates/layout.html:60 webapp/templates/layout.html:58
+msgid "Contact us"
+msgstr "Kontaktieren Sie uns"
+
+#: saas/templates/layout.html:61 webapp/templates/layout.html:59
+msgid "Team"
+msgstr "Mannschaft"
+
+#: saas/templates/others/terms.html:7 webapp/templates/others/terms.html:7
+msgid "Terms of Use"
+msgstr "Nutzungsbedingungen"
+
+#: saas/templates/others/terms.html:9 webapp/templates/others/terms.html:9
+msgid "Version 1.0"
+msgstr ""
+
+#: saas/templates/others/terms.html:11 webapp/templates/others/terms.html:11
+msgid ""
+"The 1 website located at 1 is a copyrighted work belonging to OpenEA. "
+"Certain features of the Site may be subject to additional guidelines, terms, "
+"or rules, which will be posted on the Site in connection with such features."
+msgstr ""
+
+#: saas/templates/others/terms.html:13 webapp/templates/others/terms.html:13
+msgid ""
+"All such additional terms, guidelines, and rules are incorporated by "
+"reference into these Terms."
+msgstr ""
+
+#: saas/templates/others/terms.html:15 webapp/templates/others/terms.html:15
+msgid ""
+"These Terms of Use described the legally binding terms and conditions that "
+"oversee your use of the Site. BY LOGGING INTO THE SITE, YOU ARE BEING "
+"COMPLIANT THAT THESE TERMS and you represent that you have the authority and "
+"capacity to enter into these Terms. YOU SHOULD BE AT LEAST 18 YEARS OF AGE "
+"TO ACCESS THE SITE. IF YOU DISAGREE WITH ALL OF THE PROVISION OF THESE "
+"TERMS, DO NOT LOG INTO AND/OR USE THE SITE.</p>"
+msgstr ""
+
+#: saas/templates/others/terms.html:17 webapp/templates/others/terms.html:17
+msgid ""
+"These terms require the use of arbitration Section 10.2 on an individual "
+"basis to resolve disputes and also limit the remedies available to you in "
+"the event of a dispute."
+msgstr ""
+
+#: saas/templates/others/terms.html:22 webapp/templates/others/terms.html:22
+msgid ""
+"<strong>Subject to these Terms.</strong> Company grants you a non-"
+"transferable, non-exclusive, revocable, limited license to access the Site "
+"solely for your own personal, noncommercial use."
+msgstr ""
+
+#: saas/templates/others/terms.html:24 webapp/templates/others/terms.html:24
+msgid ""
+"<strong>Certain Restrictions.</strong> The rights approved to you in these "
+"Terms are subject to the following restrictions: (a) you shall not sell, "
+"rent, lease, transfer, assign, distribute, host, or otherwise commercially "
+"exploit the Site; (b) you shall not change, make derivative works of, "
+"disassemble, reverse compile or reverse engineer any part of the Site; (c) "
+"you shall not access the Site in order to build a similar or competitive "
+"website; and (d) except as expressly stated herein, no part of the Site may "
+"be copied, reproduced, distributed, republished, downloaded, displayed, "
+"posted or transmitted in any form or by any means unless otherwise "
+"indicated, any future release, update, or other addition to functionality of "
+"the Site shall be subject to these Terms.  All copyright and other "
+"proprietary notices on the Site must be retained on all copies thereof."
+msgstr ""
+
+#: saas/templates/others/terms.html:26 webapp/templates/others/terms.html:26
+msgid ""
+"Company reserves the right to change, suspend, or cease the Site with or "
+"without notice to you.  You approved that Company will not be held liable to "
+"you or any third-party for any change, interruption, or termination of the "
+"Site or any part."
+msgstr ""
+
+#: saas/templates/others/terms.html:28 webapp/templates/others/terms.html:28
+msgid ""
+"<strong>No Support or Maintenance.</strong> You agree that Company will have "
+"no obligation to provide you with any support in connection with the Site."
+msgstr ""
+
+#: saas/templates/others/terms.html:30 webapp/templates/others/terms.html:30
+msgid ""
+"Excluding any User Content that you may provide, you are aware that all the "
+"intellectual property rights, including copyrights, patents, trademarks, and "
+"trade secrets, in the Site and its content are owned by Company or Company’s "
+"suppliers. Note that these Terms and access to the Site do not give you any "
+"rights, title or interest in or to any intellectual property rights, except "
+"for the limited access rights expressed in Section 2.1. Company and its "
+"suppliers reserve all rights not granted in these Terms."
+msgstr ""
+
+#: saas/templates/others/terms.html:34 webapp/templates/others/terms.html:34
+msgid "<strong>User Content.</strong> "
+msgstr "<strong>Benutzerinhalt.</strong>"
+
+#: saas/templates/others/terms.html:36 webapp/templates/others/terms.html:36
+msgid ""
+"You hereby grant to Company an irreversible, nonexclusive, royalty-free and "
+"fully paid, worldwide license to reproduce, distribute, publicly display and "
+"perform, prepare derivative works of, incorporate into other works, and "
+"otherwise use and exploit your User Content, and to grant sublicenses of the "
+"foregoing rights, solely for the purposes of including your User Content in "
+"the Site.  You hereby irreversibly waive any claims and assertions of moral "
+"rights or attribution with respect to your User Content."
+msgstr ""
+
+#: saas/templates/others/terms.html:41 webapp/templates/others/terms.html:41
+msgid ""
+"In addition, you agree not to: (i) upload, transmit, or distribute to or "
+"through the Site any software intended to damage or alter a computer system "
+"or data; (ii) send through the Site unsolicited or unauthorized advertising, "
+"promotional materials, junk mail, spam, chain letters, pyramid schemes, or "
+"any other form of duplicative or unsolicited messages; (iii) use the Site to "
+"harvest, collect, gather or assemble information or data regarding other "
+"users without their consent; (iv) interfere with, disrupt, or create an "
+"undue burden on servers or networks connected to the Site, or violate the "
+"regulations, policies or procedures of such networks; (v) attempt to gain "
+"unauthorized access to the Site, whether through password mining or any "
+"other means; (vi) harass or interfere with any other user’s use and "
+"enjoyment of the Site; or (vi) use software or automated agents or scripts "
+"to produce multiple accounts on the Site, or to generate automated searches, "
+"requests, or queries to the Site."
+msgstr ""
+
+#: saas/templates/others/terms.html:43 webapp/templates/others/terms.html:43
+msgid ""
+"We reserve the right to review any User Content, and to investigate and/or "
+"take appropriate action against you in our sole discretion if you violate "
+"the Acceptable Use Policy or any other provision of these Terms or otherwise "
+"create liability for us or any other person. Such action may include "
+"removing or modifying your User Content, terminating your Account in "
+"accordance with Section 8, and/or reporting you to law enforcement "
+"authorities."
+msgstr ""
+
+#: saas/templates/others/terms.html:45 webapp/templates/others/terms.html:45
+msgid ""
+"If you provide Company with any feedback or suggestions regarding the Site, "
+"you hereby assign to Company all rights in such Feedback and agree that "
+"Company shall have the right to use and fully exploit such Feedback and "
+"related information in any manner it believes appropriate.  Company will "
+"treat any Feedback you provide to Company as non-confidential and non-"
+"proprietary."
+msgstr ""
+
+#: saas/templates/others/terms.html:47 webapp/templates/others/terms.html:47
+msgid ""
+"You agree to indemnify and hold Company and its officers, employees, and "
+"agents harmless, including costs and attorneys’ fees, from any claim or "
+"demand made by any third-party due to or arising out of (a) your use of the "
+"Site, (b) your violation of these Terms, (c) your violation of applicable "
+"laws or regulations or (d) your User Content.  Company reserves the right to "
+"assume the exclusive defense and control of any matter for which you are "
+"required to indemnify us, and you agree to cooperate with our defense of "
+"these claims.  You agree not to settle any matter without the prior written "
+"consent of Company.  Company will use reasonable efforts to notify you of "
+"any such claim, action or proceeding upon becoming aware of it."
+msgstr ""
+
+#: saas/templates/others/terms.html:51 webapp/templates/others/terms.html:51
+msgid ""
+"<strong>Third-Party Links & Ads.</strong> The Site may contain links to "
+"third-party websites and services, and/or display advertisements for third-"
+"parties.  Such Third-Party Links & Ads are not under the control of Company, "
+"and Company is not responsible for any Third-Party Links & Ads.  Company "
+"provides access to these Third-Party Links & Ads only as a convenience to "
+"you, and does not review, approve, monitor, endorse, warrant, or make any "
+"representations with respect to Third-Party Links & Ads.  You use all Third-"
+"Party Links & Ads at your own risk, and should apply a suitable level of "
+"caution and discretion in doing so. When you click on any of the Third-Party "
+"Links & Ads, the applicable third party’s terms and policies apply, "
+"including the third party’s privacy and data gathering practices."
+msgstr ""
+
+#: saas/templates/others/terms.html:53 webapp/templates/others/terms.html:53
+msgid ""
+"<strong>Other Users.</strong> Each Site user is solely responsible for any "
+"and all of its own User Content.  Because we do not control User Content, "
+"you acknowledge and agree that we are not responsible for any User Content, "
+"whether provided by you or by others.  You agree that Company will not be "
+"responsible for any loss or damage incurred as the result of any such "
+"interactions.  If there is a dispute between you and any Site user, we are "
+"under no obligation to become involved."
+msgstr ""
+
+#: saas/templates/others/terms.html:55 webapp/templates/others/terms.html:55
+msgid ""
+"You hereby release and forever discharge the Company and our officers, "
+"employees, agents, successors, and assigns from, and hereby waive and "
+"relinquish, each and every past, present and future dispute, claim, "
+"controversy, demand, right, obligation, liability, action and cause of "
+"action of every kind and nature, that has arisen or arises directly or "
+"indirectly out of, or that relates directly or indirectly to, the Site. If "
+"you are a California resident, you hereby waive California civil code "
+"section 1542 in connection with the foregoing, which states: "
+msgstr ""
+
+#: saas/templates/others/terms.html:57 webapp/templates/others/terms.html:57
+msgid ""
+"<strong>Cookies and Web Beacons.</strong> Like any other website, 1 uses "
+"‘cookies’. These cookies are used to store information including visitors’ "
+"preferences, and the pages on the website that the visitor accessed or "
+"visited. The information is used to optimize the users’ experience by "
+"customizing our web page content based on visitors’ browser type and/or "
+"other information."
+msgstr ""
+
+#: saas/templates/others/terms.html:63 webapp/templates/others/terms.html:63
+msgid "The site is provided on an "
+msgstr "Die Website wird auf einer bereitgestellt"
+
+#: saas/templates/others/terms.html:65 webapp/templates/others/terms.html:65
+msgid ""
+"Some jurisdictions do not allow the exclusion of implied warranties, so the "
+"above exclusion may not apply to you.  Some jurisdictions do not allow "
+"limitations on how long an implied warranty lasts, so the above limitation "
+"may not apply to you."
+msgstr ""
+
+#: saas/templates/others/terms.html:69 webapp/templates/others/terms.html:69
+msgid ""
+"To the maximum extent permitted by law, in no event shall company or our "
+"suppliers be liable to you or any third-party for any lost profits, lost "
+"data, costs of procurement of substitute products, or any indirect, "
+"consequential, exemplary, incidental, special or punitive damages arising "
+"from or relating to these terms or your use of, or incapability to use the "
+"site even if company has been advised of the possibility of such damages.  "
+"Access to and use of the site is at your own discretion and risk, and you "
+"will be solely responsible for any damage to your device or computer system, "
+"or loss of data resulting therefrom."
+msgstr ""
+
+#: saas/templates/others/terms.html:71 webapp/templates/others/terms.html:71
+msgid ""
+"To the maximum extent permitted by law, notwithstanding anything to the "
+"contrary contained herein, our liability to you for any damages arising from "
+"or related to this agreement, will at all times be limited to a maximum of "
+"fifty U.S. dollars (u.s. $50). The existence of more than one claim will not "
+"enlarge this limit.  You agree that our suppliers will have no liability of "
+"any kind arising from or relating to this agreement."
+msgstr ""
+
+#: saas/templates/others/terms.html:73 webapp/templates/others/terms.html:73
+msgid ""
+"Some jurisdictions do not allow the limitation or exclusion of liability for "
+"incidental or consequential damages, so the above limitation or exclusion "
+"may not apply to you."
+msgstr ""
+
+#: saas/templates/others/terms.html:75 webapp/templates/others/terms.html:75
+msgid ""
+"<strong>Term and Termination.</strong> Subject to this Section, these Terms "
+"will remain in full force and effect while you use the Site.  We may suspend "
+"or terminate your rights to use the Site at any time for any reason at our "
+"sole discretion, including for any use of the Site in violation of these "
+"Terms.  Upon termination of your rights under these Terms, your Account and "
+"right to access and use the Site will terminate immediately.  You understand "
+"that any termination of your Account may involve deletion of your User "
+"Content associated with your Account from our live databases.  Company will "
+"not have any liability whatsoever to you for any termination of your rights "
+"under these Terms.  Even after your rights under these Terms are terminated, "
+"the following provisions of these Terms will remain in effect: Sections 2 "
+"through 2.5, Section 3 and Sections 4 through 10."
+msgstr ""
+
+#: saas/templates/others/terms.html:79 webapp/templates/others/terms.html:79
+msgid ""
+"Company respects the intellectual property of others and asks that users of "
+"our Site do the same.  In connection with our Site, we have adopted and "
+"implemented a policy respecting copyright law that provides for the removal "
+"of any infringing materials and for the termination of users of our online "
+"Site who are repeated infringers of intellectual property rights, including "
+"copyrights.  If you believe that one of our users is, through the use of our "
+"Site, unlawfully infringing the copyright(s) in a work, and wish to have the "
+"allegedly infringing material removed, the following information in the form "
+"of a written notification (pursuant to 17 U.S.C. § 512(c)) must be provided "
+"to our designated Copyright Agent:"
+msgstr ""
+
+#: saas/templates/others/terms.html:91 webapp/templates/others/terms.html:91
+msgid ""
+"Please note that, pursuant to 17 U.S.C. § 512(f), any misrepresentation of "
+"material fact in a written notification automatically subjects the "
+"complaining party to liability for any damages, costs and attorney’s fees "
+"incurred by us in connection with the written notification and allegation of "
+"copyright infringement."
+msgstr ""
+
+#: saas/templates/others/terms.html:98 webapp/templates/others/terms.html:98
+msgid ""
+"<strong>Applicability of Arbitration Agreement.</strong> All claims and "
+"disputes in connection with the Terms or the use of any product or service "
+"provided by the Company that cannot be resolved informally or in small "
+"claims court shall be resolved by binding arbitration on an individual basis "
+"under the terms of this Arbitration Agreement.  Unless otherwise agreed to, "
+"all arbitration proceedings shall be held in English.  This Arbitration "
+"Agreement applies to you and the Company, and to any subsidiaries, "
+"affiliates, agents, employees, predecessors in interest, successors, and "
+"assigns, as well as all authorized or unauthorized users or beneficiaries of "
+"services or goods provided under the Terms."
+msgstr ""
+
+#: saas/templates/others/terms.html:100 webapp/templates/others/terms.html:100
+msgid ""
+"<strong>Notice Requirement and Informal Dispute Resolution.</strong> Before "
+"either party may seek arbitration, the party must first send to the other "
+"party a written Notice of Dispute describing the nature and basis of the "
+"claim or dispute, and the requested relief.  A Notice to the Company should "
+"be sent to: 1. After the Notice is received, you and the Company may attempt "
+"to resolve the claim or dispute informally.  If you and the Company do not "
+"resolve the claim or dispute within thirty (30) days after the Notice is "
+"received, either party may begin an arbitration proceeding.  The amount of "
+"any settlement offer made by any party may not be disclosed to the "
+"arbitrator until after the arbitrator has determined the amount of the award "
+"to which either party is entitled."
+msgstr ""
+
+#: saas/templates/others/terms.html:102 webapp/templates/others/terms.html:102
+msgid ""
+"<strong>Arbitration Rules.</strong> Arbitration shall be initiated through "
+"the American Arbitration Association, an established alternative dispute "
+"resolution provider that offers arbitration as set forth in this section.  "
+"If AAA is not available to arbitrate, the parties shall agree to select an "
+"alternative ADR Provider.  The rules of the ADR Provider shall govern all "
+"aspects of the arbitration except to the extent such rules are in conflict "
+"with the Terms.  The AAA Consumer Arbitration Rules governing the "
+"arbitration are available online at adr.org or by calling the AAA at "
+"1-800-778-7879.  The arbitration shall be conducted by a single, neutral "
+"arbitrator.  Any claims or disputes where the total amount of the award "
+"sought is less than Ten Thousand U.S. Dollars (US $10,000.00) may be "
+"resolved through binding non-appearance-based arbitration, at the option of "
+"the party seeking relief.  For claims or disputes where the total amount of "
+"the award sought is Ten Thousand U.S. Dollars (US $10,000.00) or more, the "
+"right to a hearing will be determined by the Arbitration Rules.  Any hearing "
+"will be held in a location within 100 miles of your residence, unless you "
+"reside outside of the United States, and unless the parties agree "
+"otherwise.  If you reside outside of the U.S., the arbitrator shall give the "
+"parties reasonable notice of the date, time and place of any oral hearings. "
+"Any judgment on the award rendered by the arbitrator may be entered in any "
+"court of competent jurisdiction.  If the arbitrator grants you an award that "
+"is greater than the last settlement offer that the Company made to you prior "
+"to the initiation of arbitration, the Company will pay you the greater of "
+"the award or $2,500.00.  Each party shall bear its own costs and "
+"disbursements arising out of the arbitration and shall pay an equal share of "
+"the fees and costs of the ADR Provider."
+msgstr ""
+
+#: saas/templates/others/terms.html:104 webapp/templates/others/terms.html:104
+msgid ""
+"<strong>Additional Rules for Non-Appearance Based Arbitration.</strong> If "
+"non-appearance based arbitration is elected, the arbitration shall be "
+"conducted by telephone, online and/or based solely on written submissions; "
+"the specific manner shall be chosen by the party initiating the "
+"arbitration.  The arbitration shall not involve any personal appearance by "
+"the parties or witnesses unless otherwise agreed by the parties."
+msgstr ""
+
+#: saas/templates/others/terms.html:106 webapp/templates/others/terms.html:106
+msgid ""
+"<strong>Time Limits.</strong> If you or the Company pursues arbitration, the "
+"arbitration action must be initiated and/or demanded within the statute of "
+"limitations and within any deadline imposed under the AAA Rules for the "
+"pertinent claim."
+msgstr ""
+
+#: saas/templates/others/terms.html:108 webapp/templates/others/terms.html:108
+msgid ""
+"<strong>Authority of Arbitrator.</strong> If arbitration is initiated, the "
+"arbitrator will decide the rights and liabilities of you and the Company, "
+"and the dispute will not be consolidated with any other matters or joined "
+"with any other cases or parties.  The arbitrator shall have the authority to "
+"grant motions dispositive of all or part of any claim.  The arbitrator shall "
+"have the authority to award monetary damages, and to grant any non-monetary "
+"remedy or relief available to an individual under applicable law, the AAA "
+"Rules, and the Terms.  The arbitrator shall issue a written award and "
+"statement of decision describing the essential findings and conclusions on "
+"which the award is based.  The arbitrator has the same authority to award "
+"relief on an individual basis that a judge in a court of law would have.  "
+"The award of the arbitrator is final and binding upon you and the Company."
+msgstr ""
+
+#: saas/templates/others/terms.html:110 webapp/templates/others/terms.html:110
+msgid ""
+"<strong>Waiver of Jury Trial.</strong> THE PARTIES HEREBY WAIVE THEIR "
+"CONSTITUTIONAL AND STATUTORY RIGHTS TO GO TO COURT AND HAVE A TRIAL IN FRONT "
+"OF A JUDGE OR A JURY, instead electing that all claims and disputes shall be "
+"resolved by arbitration under this Arbitration Agreement.  Arbitration "
+"procedures are typically more limited, more efficient and less expensive "
+"than rules applicable in a court and are subject to very limited review by a "
+"court.  In the event any litigation should arise between you and the Company "
+"in any state or federal court in a suit to vacate or enforce an arbitration "
+"award or otherwise, YOU AND THE COMPANY WAIVE ALL RIGHTS TO A JURY TRIAL, "
+"instead electing that the dispute be resolved by a judge."
+msgstr ""
+
+#: saas/templates/others/terms.html:112 webapp/templates/others/terms.html:112
+msgid ""
+"<strong>Waiver of Class or Consolidated Actions.</strong> All claims and "
+"disputes within the scope of this arbitration agreement must be arbitrated "
+"or litigated on an individual basis and not on a class basis, and claims of "
+"more than one customer or user cannot be arbitrated or litigated jointly or "
+"consolidated with those of any other customer or user."
+msgstr ""
+
+#: saas/templates/others/terms.html:114 webapp/templates/others/terms.html:114
+msgid ""
+"<strong>Confidentiality.</strong> All aspects of the arbitration proceeding "
+"shall be strictly confidential.  The parties agree to maintain "
+"confidentiality unless otherwise required by law.  This paragraph shall not "
+"prevent a party from submitting to a court of law any information necessary "
+"to enforce this Agreement, to enforce an arbitration award, or to seek "
+"injunctive or equitable relief."
+msgstr ""
+
+#: saas/templates/others/terms.html:116 webapp/templates/others/terms.html:116
+msgid ""
+"<strong>Severability.</strong> If any part or parts of this Arbitration "
+"Agreement are found under the law to be invalid or unenforceable by a court "
+"of competent jurisdiction, then such specific part or parts shall be of no "
+"force and effect and shall be severed and the remainder of the Agreement "
+"shall continue in full force and effect."
+msgstr ""
+
+#: saas/templates/others/terms.html:118 webapp/templates/others/terms.html:118
+msgid ""
+"<strong>Right to Waive.</strong> Any or all of the rights and limitations "
+"set forth in this Arbitration Agreement may be waived by the party against "
+"whom the claim is asserted.  Such waiver shall not waive or affect any other "
+"portion of this Arbitration Agreement."
+msgstr ""
+
+#: saas/templates/others/terms.html:120 webapp/templates/others/terms.html:120
+msgid ""
+"<strong>Survival of Agreement.</strong> This Arbitration Agreement will "
+"survive the termination of your relationship with Company."
+msgstr ""
+
+#: saas/templates/others/terms.html:122 webapp/templates/others/terms.html:122
+msgid ""
+"<strong>Small Claims Court.</strong> Nonetheless the foregoing, either you "
+"or the Company may bring an individual action in small claims court."
+msgstr ""
+
+#: saas/templates/others/terms.html:124 webapp/templates/others/terms.html:124
+msgid ""
+"<strong>Emergency Equitable Relief.</strong> Anyhow the foregoing, either "
+"party may seek emergency equitable relief before a state or federal court in "
+"order to maintain the status quo pending arbitration.  A request for interim "
+"measures shall not be deemed a waiver of any other rights or obligations "
+"under this Arbitration Agreement."
+msgstr ""
+
+#: saas/templates/others/terms.html:126 webapp/templates/others/terms.html:126
+msgid ""
+"<strong>Claims Not Subject to Arbitration.</strong> Notwithstanding the "
+"foregoing, claims of defamation, violation of the Computer Fraud and Abuse "
+"Act, and infringement or misappropriation of the other party’s patent, "
+"copyright, trademark or trade secrets shall not be subject to this "
+"Arbitration Agreement."
+msgstr ""
+
+#: saas/templates/others/terms.html:128 webapp/templates/others/terms.html:128
+msgid ""
+"In any circumstances where the foregoing Arbitration Agreement permits the "
+"parties to litigate in court, the parties hereby agree to submit to the "
+"personal jurisdiction of the courts located within Netherlands County, "
+"California, for such purposes."
+msgstr ""
+
+#: saas/templates/others/terms.html:130 webapp/templates/others/terms.html:130
+msgid ""
+"The Site may be subject to U.S. export control laws and may be subject to "
+"export or import regulations in other countries. You agree not to export, re-"
+"export, or transfer, directly or indirectly, any U.S. technical data "
+"acquired from Company, or any products utilizing such data, in violation of "
+"the United States export laws or regulations."
+msgstr ""
+
+#: saas/templates/others/terms.html:132 webapp/templates/others/terms.html:132
+msgid ""
+"Company is located at the address in Section 10.8. If you are a California "
+"resident, you may report complaints to the Complaint Assistance Unit of the "
+"Division of Consumer Product of the California Department of Consumer "
+"Affairs by contacting them in writing at 400 R Street, Sacramento, CA 95814, "
+"or by telephone at (800) 952-5210."
+msgstr ""
+
+#: saas/templates/others/terms.html:134 webapp/templates/others/terms.html:134
+msgid ""
+"<strong>Electronic Communications.</strong> The communications between you "
+"and Company use electronic means, whether you use the Site or send us "
+"emails, or whether Company posts notices on the Site or communicates with "
+"you via email. For contractual purposes, you (a) consent to receive "
+"communications from Company in an electronic form; and (b) agree that all "
+"terms and conditions, agreements, notices, disclosures, and other "
+"communications that Company provides to you electronically satisfy any legal "
+"obligation that such communications would satisfy if it were be in a hard "
+"copy writing."
+msgstr ""
+
+#: saas/templates/others/terms.html:136 webapp/templates/others/terms.html:136
+msgid ""
+"<strong>Entire Terms.</strong> These Terms constitute the entire agreement "
+"between you and us regarding the use of the Site. Our failure to exercise or "
+"enforce any right or provision of these Terms shall not operate as a waiver "
+"of such right or provision. The section titles in these Terms are for "
+"convenience only and have no legal or contractual effect. The word "
+msgstr ""
+
+#: saas/templates/others/terms.html:138 webapp/templates/others/terms.html:138
+msgid "<strong>Your Privacy.</strong> Please read our Privacy Policy."
+msgstr ""
+"<strong>Ihre Privatsphäre.</strong> Bitte lesen Sie unsere "
+"Datenschutzrichtlinie."
+
+#: saas/templates/others/terms.html:140 webapp/templates/others/terms.html:140
+msgid ""
+"<strong>Copyright/Trademark Information.</strong> Copyright ©. All rights "
+"reserved.  All trademarks, logos and service marks displayed on the Site are "
+"our property or the property of other third-parties. You are not permitted "
+"to use these Marks without our prior written consent or the consent of such "
+"third party which may own the Marks."
+msgstr ""
+
+#: saas/templates/registration/login.html:5
+#: saas/templates/registration/login.html:8 saas/templates/user-menu.html:19
+#: webapp/templates/registration/login.html:5
+#: webapp/templates/user-menu.html:17
+msgid "Sign in"
+msgstr "Anmelden"
+
+#: saas/templates/registration/login.html:23
+#: webapp/templates/registration/login.html:12
+msgid "Sign In"
+msgstr "Anmelden"
+
+#: saas/templates/registration/login.html:23
+msgid "ou"
+msgstr ""
+
+#: saas/templates/registration/login.html:23
+#: saas/templates/registration/register.html:11
+#: webapp/templates/registration/login.html:12
+#: webapp/templates/registration/register.html:11
+msgid "Register"
+msgstr "Registrieren"
+
+#: saas/templates/registration/register.html:5
+#: webapp/templates/registration/register.html:5
+msgid "Create an Account"
+msgstr "Erstellen Sie ein Konto"
+
+#: saas/templates/user-menu.html:14 webapp/templates/user-menu.html:12
+msgid "Sign out"
+msgstr "Abmelden"
+
+#: saas/templates/user-menu.html:18 webapp/templates/user-menu.html:16
+msgid "Request a Demo"
+msgstr "Fordern Sie eine Demo an"
+
+#: stripepay/templates/cancel.html:7 stripepay/templates/success.html:7
+msgid "Return to profile"
+msgstr ""
+
+#: stripepay/templates/success.html:6
+msgid "You have successfully subscribed!"
+msgstr ""
 
 #: taxonomy/templates/tag/tag_create.html:6
 msgid "Add Tag"
@@ -656,899 +2062,23 @@ msgstr "Neues Etikett"
 msgid "Update Tag Group"
 msgstr "Tag-Gruppe aktualisieren"
 
-#: webapp/templates/frontpage.dev.html:49
-#: webapp/templates/frontpage.prod.html:8
-#: webapp/templates/frontpage.saas.html:8
-msgid "Mission"
-msgstr ""
-
-#: webapp/templates/frontpage.dev.html:50
-#: webapp/templates/frontpage.prod.html:9
-#: webapp/templates/frontpage.saas.html:9
-msgid ""
-"The mission of OpenEA (Open Enterprise Architect) is to provide an open "
-"source enterprise-grade Enterprise Architecture tool, for governments, and "
-"researchers."
-msgstr ""
-
-#: webapp/templates/frontpage.dev.html:55
-#: webapp/templates/frontpage.prod.html:14
-#: webapp/templates/frontpage.saas.html:38
-msgid "Already have an organisation, Start here"
-msgstr "Sie haben bereits eine Organisation, beginnen Sie hier"
-
-#: webapp/templates/frontpage.dev.html:56
-#: webapp/templates/frontpage.prod.html:15
-#: webapp/templates/frontpage.saas.html:39
-msgid ""
-"The entry point for defining an ontology is the repository. A repository may "
-"contain one or more versioned models/metamodels"
-msgstr ""
-
-#: webapp/templates/frontpage.dev.html:57
-#: webapp/templates/frontpage.prod.html:16
-#: webapp/templates/frontpage.saas.html:40
-msgid "Browse Organisations"
-msgstr "Organisationen durchsuchen"
-
-#: webapp/templates/frontpage.dev.html:58
-#: webapp/templates/frontpage.prod.html:17
-#: webapp/templates/frontpage.saas.html:41
-msgid "Browse Repositories"
-msgstr "Repositories durchsuchen"
-
-#: webapp/templates/frontpage.dev.html:65
-#: webapp/templates/frontpage.prod.html:24
-#: webapp/templates/frontpage.saas.html:48
-msgid "Join the team"
-msgstr "Tritt dem Team bei"
-
-#: webapp/templates/frontpage.dev.html:66
-#: webapp/templates/frontpage.prod.html:25
-#: webapp/templates/frontpage.saas.html:49
-msgid "Get aboard by contributing and/or joining the "
-msgstr "Steigen Sie ein, indem Sie einen Beitrag leisten und/oder beitreten"
-
-#: webapp/templates/frontpage.dev.html:66
-#: webapp/templates/frontpage.prod.html:25
-#: webapp/templates/frontpage.saas.html:49
-msgid "team"
-msgstr "Team"
-
-#: webapp/templates/frontpage.dev.html:66
-#: webapp/templates/frontpage.prod.html:25
-#: webapp/templates/frontpage.saas.html:49
-msgid "or if you are already on keybase"
-msgstr "oder wenn Sie bereits auf Keybase sind"
-
-#: webapp/templates/frontpage.dev.html:66
-#: webapp/templates/frontpage.prod.html:25
-#: webapp/templates/frontpage.saas.html:49
-msgid "Team OpenEA"
-msgstr ""
-
-#: webapp/templates/frontpage.dev.html:67
-#: webapp/templates/frontpage.prod.html:26
+#: webapp/templates/frontpage.dev.html:27
 msgid "Contribute"
 msgstr "Beitrag"
 
-#: webapp/templates/frontpage.dev.html:72
-#: webapp/templates/frontpage.prod.html:31
-#: webapp/templates/frontpage.saas.html:55
-msgid "Get help"
-msgstr "Hol Hilfe"
-
-#: webapp/templates/frontpage.dev.html:73
-#: webapp/templates/frontpage.prod.html:32
-#: webapp/templates/frontpage.saas.html:56
-msgid "The source is available here."
-msgstr "Die Quelle ist hier verfügbar."
-
-#: webapp/templates/frontpage.dev.html:74
-#: webapp/templates/frontpage.prod.html:33
-#: webapp/templates/frontpage.saas.html:57
-msgid "Open Source"
-msgstr "Offene Quelle"
-
-#: webapp/templates/frontpage.saas.html:15
-msgid "Request a private instance"
-msgstr "Fordern Sie eine private Instanz an"
-
-#: webapp/templates/frontpage.saas.html:16
-msgid ""
-"For increased privacy, private instances are offered on site or in the cloud."
-msgstr ""
-
-#: webapp/templates/frontpage.saas.html:17
-msgid "Private Instance"
-msgstr "Private Instanz"
-
-#: webapp/templates/frontpage.saas.html:22
-msgid "Register organisation in SaaS platform"
-msgstr "Organisation in der SaaS-Plattform registrieren"
-
-#: webapp/templates/frontpage.saas.html:23
-msgid "Oragnisations are created in the current SaaS, free of charge."
-msgstr "Organisationen werden kostenlos im aktuellen SaaS erstellt."
-
-#: webapp/templates/frontpage.saas.html:24
-msgid "Register Organisation"
-msgstr "Organisation registrieren"
-
-#: webapp/templates/frontpage.saas.html:29
-msgid "Select a tailored support plan"
-msgstr "Wählen Sie einen maßgeschneiderten Supportplan aus"
-
-#: webapp/templates/frontpage.saas.html:30
-msgid "Need a service plan tailored to your needs, let us know."
-msgstr "Benötigen Sie einen auf Ihre Bedürfnisse zugeschnittenen Serviceplan, lassen Sie es uns wissen."
-
-#: webapp/templates/frontpage.saas.html:31
-msgid "Tailored service"
-msgstr "Maßgeschneiderter Service"
-
-#: webapp/templates/import_export.html:49 webapp/templates/model_import.html:30
-msgid "Start Import"
-msgstr "Import starten"
-
-#: webapp/templates/import_export.html:84 webapp/templates/model_export.html:28
-msgid "Start Export"
-msgstr "Export starten"
-
-#: webapp/templates/layout.html:27
-msgid "Placeholder for page content."
-msgstr "Platzhalter für Seiteninhalt."
-
-#: webapp/templates/layout.html:34
-msgid "OpenEA"
-msgstr ""
-
-#: webapp/templates/layout.html:38
-msgid "Features"
-msgstr "Eigenschaften"
-
-#: webapp/templates/layout.html:40
-msgid "Web based enterprise architecture tool"
-msgstr "Webbasiertes Unternehmensarchitekturtool"
-
-#: webapp/templates/layout.html:41
-msgid "Ontology engine and research tool"
-msgstr "Ontologie-Engine und Forschungswerkzeug"
-
-#: webapp/templates/layout.html:42
-msgid "Tailored metamodel for your organisation"
-msgstr "Maßgeschneidertes Metamodell für Ihre Organisation"
-
-#: webapp/templates/layout.html:43
-msgid "Dynamic visualization"
-msgstr "Dynamische Visualisierung"
-
-#: webapp/templates/layout.html:44
-msgid "Custom reports on knowledge base"
-msgstr "Benutzerdefinierte Berichte in der Wissensdatenbank"
-
-#: webapp/templates/layout.html:45
-msgid "Model exchange"
-msgstr "Modellaustausch"
-
-#: webapp/templates/layout.html:46
-msgid "Custom Plugin development"
-msgstr "Benutzerdefinierte Plugin-Entwicklung"
-
-#: webapp/templates/layout.html:50
-msgid "Resources"
-msgstr "Ressourcen"
-
-#: webapp/templates/layout.html:52
+#: webapp/templates/layout.html:51
 msgid "Documentation"
 msgstr "Dokumentation"
 
-#: webapp/templates/layout.html:53
+#: webapp/templates/layout.html:52
 msgid "Support"
 msgstr "Unterstützung"
 
-#: webapp/templates/layout.html:57
-msgid "About"
-msgstr "Ungefähr"
+#~ msgid "Instances Diagram"
+#~ msgstr "Instanzdiagramm"
 
-#: webapp/templates/layout.html:59
-msgid "Contact us"
-msgstr "Kontaktieren Sie uns"
+#~ msgid "Ontology Diagram"
+#~ msgstr "Ontologiediagramm"
 
-#: webapp/templates/layout.html:60
-msgid "Team"
-msgstr "Mannschaft"
-
-#: webapp/templates/layout.html:61
-msgid "Terms"
-msgstr "Bedingungen"
-
-#: webapp/templates/layout.html:62
-msgid "Privacy Policy"
-msgstr "Datenschutzerklärung"
-
-#: webapp/templates/model_report.html:8
-msgid "Cost - Benefit Report"
-msgstr "Kosten-Nutzen-Bericht"
-
-#: webapp/templates/model_report.html:35
-msgid "Analyze"
-msgstr "Analysieren"
-
-#: webapp/templates/organisation/organisation_create.html:6
-msgid "Add Organisation"
-msgstr "Organisation hinzufügen"
-
-#: webapp/templates/organisation/organisation_delete.html:6
-msgid "Delete Organisation"
-msgstr "Organisation löschen"
-
-#: webapp/templates/organisation/organisation_detail.html:11
-msgid "Rebuild Permissions"
-msgstr "Berechtigungen neu aufbauen"
-
-#: webapp/templates/organisation/organisation_detail.html:19
-#: webapp/templates/user-menu.html:9
-msgid "Repositories"
-msgstr "Repositorien"
-
-#: webapp/templates/organisation/organisation_detail.html:20
-#: webapp/templates/user-menu.html:10
-msgid "Profiles"
-msgstr "Profile"
-
-#: webapp/templates/organisation/organisation_detail.html:21
-msgid "Security Groups"
-msgstr "Sicherheitsgruppen"
-
-#: webapp/templates/organisation/organisation_detail.html:22
-msgid "Permissions"
-msgstr "Berechtigungen"
-
-#: webapp/templates/organisation/organisation_detail.html:23
-msgid "Tag Groups"
-msgstr "Tag-Gruppen"
-
-#: webapp/templates/organisation/organisation_detail.html:24
-msgid "Tags"
-msgstr ""
-
-#: webapp/templates/organisation/organisation_detail.html:25
-#: webapp/templates/user-menu.html:11
-msgid "Tasks"
-msgstr "Aufgaben"
-
-#: webapp/templates/organisation/organisation_detail.html:35
-msgid "New Repository"
-msgstr "Neues Repository"
-
-#: webapp/templates/organisation/organisation_detail.html:76
-msgid "New Profile"
-msgstr "Neues Profil"
-
-#: webapp/templates/organisation/organisation_detail.html:81
-msgid "User"
-msgstr "Benutzer"
-
-#: webapp/templates/organisation/organisation_detail.html:119
-msgid "New Security Group"
-msgstr "Neue Sicherheitsgruppe"
-
-#: webapp/templates/organisation/organisation_detail.html:123
-#: webapp/templates/profile/profile_detail.html:16
-msgid "Security Group"
-msgstr "Sicherheitsgruppe"
-
-#: webapp/templates/organisation/organisation_detail.html:158
-msgid "New Permission"
-msgstr "Neue Berechtigung"
-
-#: webapp/templates/organisation/organisation_detail.html:201
-msgid "New Task"
-msgstr "Neue Aufgabe"
-
-#: webapp/templates/organisation/organisation_detail.html:222
-msgid "New Tag Group"
-msgstr "Neue Tag-Gruppe"
-
-#: webapp/templates/organisation/organisation_detail.html:264
-msgid "Rebuild"
-msgstr "Wiederaufbau"
-
-#: webapp/templates/organisation/organisation_update.html:6
-msgid "Update Organisation"
-msgstr "Organisation aktualisieren"
-
-#: webapp/templates/organisation/organisation_update.html:10
-msgid "Submit"
-msgstr "Senden"
-
-#: webapp/templates/others/terms.html:7
-msgid "Terms of Use"
-msgstr "Nutzungsbedingungen"
-
-#: webapp/templates/others/terms.html:9
-msgid "Version 1.0"
-msgstr ""
-
-#: webapp/templates/others/terms.html:11
-msgid ""
-"The 1 website located at 1 is a copyrighted work belonging to OpenEA. "
-"Certain features of the Site may be subject to additional guidelines, terms, "
-"or rules, which will be posted on the Site in connection with such features."
-msgstr ""
-
-#: webapp/templates/others/terms.html:13
-msgid ""
-"All such additional terms, guidelines, and rules are incorporated by "
-"reference into these Terms."
-msgstr ""
-
-#: webapp/templates/others/terms.html:15
-msgid ""
-"These Terms of Use described the legally binding terms and conditions that "
-"oversee your use of the Site. BY LOGGING INTO THE SITE, YOU ARE BEING "
-"COMPLIANT THAT THESE TERMS and you represent that you have the authority and "
-"capacity to enter into these Terms. YOU SHOULD BE AT LEAST 18 YEARS OF AGE "
-"TO ACCESS THE SITE. IF YOU DISAGREE WITH ALL OF THE PROVISION OF THESE "
-"TERMS, DO NOT LOG INTO AND/OR USE THE SITE.</p>"
-msgstr ""
-
-#: webapp/templates/others/terms.html:17
-msgid ""
-"These terms require the use of arbitration Section 10.2 on an individual "
-"basis to resolve disputes and also limit the remedies available to you in "
-"the event of a dispute."
-msgstr ""
-
-#: webapp/templates/others/terms.html:22
-msgid ""
-"<strong>Subject to these Terms.</strong> Company grants you a non-"
-"transferable, non-exclusive, revocable, limited license to access the Site "
-"solely for your own personal, noncommercial use."
-msgstr ""
-
-#: webapp/templates/others/terms.html:24
-msgid ""
-"<strong>Certain Restrictions.</strong> The rights approved to you in these "
-"Terms are subject to the following restrictions: (a) you shall not sell, "
-"rent, lease, transfer, assign, distribute, host, or otherwise commercially "
-"exploit the Site; (b) you shall not change, make derivative works of, "
-"disassemble, reverse compile or reverse engineer any part of the Site; (c) "
-"you shall not access the Site in order to build a similar or competitive "
-"website; and (d) except as expressly stated herein, no part of the Site may "
-"be copied, reproduced, distributed, republished, downloaded, displayed, "
-"posted or transmitted in any form or by any means unless otherwise "
-"indicated, any future release, update, or other addition to functionality of "
-"the Site shall be subject to these Terms.  All copyright and other "
-"proprietary notices on the Site must be retained on all copies thereof."
-msgstr ""
-
-#: webapp/templates/others/terms.html:26
-msgid ""
-"Company reserves the right to change, suspend, or cease the Site with or "
-"without notice to you.  You approved that Company will not be held liable to "
-"you or any third-party for any change, interruption, or termination of the "
-"Site or any part."
-msgstr ""
-
-#: webapp/templates/others/terms.html:28
-msgid ""
-"<strong>No Support or Maintenance.</strong> You agree that Company will have "
-"no obligation to provide you with any support in connection with the Site."
-msgstr ""
-
-#: webapp/templates/others/terms.html:30
-msgid ""
-"Excluding any User Content that you may provide, you are aware that all the "
-"intellectual property rights, including copyrights, patents, trademarks, and "
-"trade secrets, in the Site and its content are owned by Company or Company’s "
-"suppliers. Note that these Terms and access to the Site do not give you any "
-"rights, title or interest in or to any intellectual property rights, except "
-"for the limited access rights expressed in Section 2.1. Company and its "
-"suppliers reserve all rights not granted in these Terms."
-msgstr ""
-
-#: webapp/templates/others/terms.html:34
-msgid "<strong>User Content.</strong> "
-msgstr "<strong>Benutzerinhalt.</strong>"
-
-#: webapp/templates/others/terms.html:36
-msgid ""
-"You hereby grant to Company an irreversible, nonexclusive, royalty-free and "
-"fully paid, worldwide license to reproduce, distribute, publicly display and "
-"perform, prepare derivative works of, incorporate into other works, and "
-"otherwise use and exploit your User Content, and to grant sublicenses of the "
-"foregoing rights, solely for the purposes of including your User Content in "
-"the Site.  You hereby irreversibly waive any claims and assertions of moral "
-"rights or attribution with respect to your User Content."
-msgstr ""
-
-#: webapp/templates/others/terms.html:41
-msgid ""
-"In addition, you agree not to: (i) upload, transmit, or distribute to or "
-"through the Site any software intended to damage or alter a computer system "
-"or data; (ii) send through the Site unsolicited or unauthorized advertising, "
-"promotional materials, junk mail, spam, chain letters, pyramid schemes, or "
-"any other form of duplicative or unsolicited messages; (iii) use the Site to "
-"harvest, collect, gather or assemble information or data regarding other "
-"users without their consent; (iv) interfere with, disrupt, or create an "
-"undue burden on servers or networks connected to the Site, or violate the "
-"regulations, policies or procedures of such networks; (v) attempt to gain "
-"unauthorized access to the Site, whether through password mining or any "
-"other means; (vi) harass or interfere with any other user’s use and "
-"enjoyment of the Site; or (vi) use software or automated agents or scripts "
-"to produce multiple accounts on the Site, or to generate automated searches, "
-"requests, or queries to the Site."
-msgstr ""
-
-#: webapp/templates/others/terms.html:43
-msgid ""
-"We reserve the right to review any User Content, and to investigate and/or "
-"take appropriate action against you in our sole discretion if you violate "
-"the Acceptable Use Policy or any other provision of these Terms or otherwise "
-"create liability for us or any other person. Such action may include "
-"removing or modifying your User Content, terminating your Account in "
-"accordance with Section 8, and/or reporting you to law enforcement "
-"authorities."
-msgstr ""
-
-#: webapp/templates/others/terms.html:45
-msgid ""
-"If you provide Company with any feedback or suggestions regarding the Site, "
-"you hereby assign to Company all rights in such Feedback and agree that "
-"Company shall have the right to use and fully exploit such Feedback and "
-"related information in any manner it believes appropriate.  Company will "
-"treat any Feedback you provide to Company as non-confidential and non-"
-"proprietary."
-msgstr ""
-
-#: webapp/templates/others/terms.html:47
-msgid ""
-"You agree to indemnify and hold Company and its officers, employees, and "
-"agents harmless, including costs and attorneys’ fees, from any claim or "
-"demand made by any third-party due to or arising out of (a) your use of the "
-"Site, (b) your violation of these Terms, (c) your violation of applicable "
-"laws or regulations or (d) your User Content.  Company reserves the right to "
-"assume the exclusive defense and control of any matter for which you are "
-"required to indemnify us, and you agree to cooperate with our defense of "
-"these claims.  You agree not to settle any matter without the prior written "
-"consent of Company.  Company will use reasonable efforts to notify you of "
-"any such claim, action or proceeding upon becoming aware of it."
-msgstr ""
-
-#: webapp/templates/others/terms.html:51
-msgid ""
-"<strong>Third-Party Links & Ads.</strong> The Site may contain links to "
-"third-party websites and services, and/or display advertisements for third-"
-"parties.  Such Third-Party Links & Ads are not under the control of Company, "
-"and Company is not responsible for any Third-Party Links & Ads.  Company "
-"provides access to these Third-Party Links & Ads only as a convenience to "
-"you, and does not review, approve, monitor, endorse, warrant, or make any "
-"representations with respect to Third-Party Links & Ads.  You use all Third-"
-"Party Links & Ads at your own risk, and should apply a suitable level of "
-"caution and discretion in doing so. When you click on any of the Third-Party "
-"Links & Ads, the applicable third party’s terms and policies apply, "
-"including the third party’s privacy and data gathering practices."
-msgstr ""
-
-#: webapp/templates/others/terms.html:53
-msgid ""
-"<strong>Other Users.</strong> Each Site user is solely responsible for any "
-"and all of its own User Content.  Because we do not control User Content, "
-"you acknowledge and agree that we are not responsible for any User Content, "
-"whether provided by you or by others.  You agree that Company will not be "
-"responsible for any loss or damage incurred as the result of any such "
-"interactions.  If there is a dispute between you and any Site user, we are "
-"under no obligation to become involved."
-msgstr ""
-
-#: webapp/templates/others/terms.html:55
-msgid ""
-"You hereby release and forever discharge the Company and our officers, "
-"employees, agents, successors, and assigns from, and hereby waive and "
-"relinquish, each and every past, present and future dispute, claim, "
-"controversy, demand, right, obligation, liability, action and cause of "
-"action of every kind and nature, that has arisen or arises directly or "
-"indirectly out of, or that relates directly or indirectly to, the Site. If "
-"you are a California resident, you hereby waive California civil code "
-"section 1542 in connection with the foregoing, which states: "
-msgstr ""
-
-#: webapp/templates/others/terms.html:57
-msgid ""
-"<strong>Cookies and Web Beacons.</strong> Like any other website, 1 uses "
-"‘cookies’. These cookies are used to store information including visitors’ "
-"preferences, and the pages on the website that the visitor accessed or "
-"visited. The information is used to optimize the users’ experience by "
-"customizing our web page content based on visitors’ browser type and/or "
-"other information."
-msgstr ""
-
-#: webapp/templates/others/terms.html:63
-msgid "The site is provided on an "
-msgstr "Die Website wird auf einer bereitgestellt"
-
-#: webapp/templates/others/terms.html:65
-msgid ""
-"Some jurisdictions do not allow the exclusion of implied warranties, so the "
-"above exclusion may not apply to you.  Some jurisdictions do not allow "
-"limitations on how long an implied warranty lasts, so the above limitation "
-"may not apply to you."
-msgstr ""
-
-#: webapp/templates/others/terms.html:69
-msgid ""
-"To the maximum extent permitted by law, in no event shall company or our "
-"suppliers be liable to you or any third-party for any lost profits, lost "
-"data, costs of procurement of substitute products, or any indirect, "
-"consequential, exemplary, incidental, special or punitive damages arising "
-"from or relating to these terms or your use of, or incapability to use the "
-"site even if company has been advised of the possibility of such damages.  "
-"Access to and use of the site is at your own discretion and risk, and you "
-"will be solely responsible for any damage to your device or computer system, "
-"or loss of data resulting therefrom."
-msgstr ""
-
-#: webapp/templates/others/terms.html:71
-msgid ""
-"To the maximum extent permitted by law, notwithstanding anything to the "
-"contrary contained herein, our liability to you for any damages arising from "
-"or related to this agreement, will at all times be limited to a maximum of "
-"fifty U.S. dollars (u.s. $50). The existence of more than one claim will not "
-"enlarge this limit.  You agree that our suppliers will have no liability of "
-"any kind arising from or relating to this agreement."
-msgstr ""
-
-#: webapp/templates/others/terms.html:73
-msgid ""
-"Some jurisdictions do not allow the limitation or exclusion of liability for "
-"incidental or consequential damages, so the above limitation or exclusion "
-"may not apply to you."
-msgstr ""
-
-#: webapp/templates/others/terms.html:75
-msgid ""
-"<strong>Term and Termination.</strong> Subject to this Section, these Terms "
-"will remain in full force and effect while you use the Site.  We may suspend "
-"or terminate your rights to use the Site at any time for any reason at our "
-"sole discretion, including for any use of the Site in violation of these "
-"Terms.  Upon termination of your rights under these Terms, your Account and "
-"right to access and use the Site will terminate immediately.  You understand "
-"that any termination of your Account may involve deletion of your User "
-"Content associated with your Account from our live databases.  Company will "
-"not have any liability whatsoever to you for any termination of your rights "
-"under these Terms.  Even after your rights under these Terms are terminated, "
-"the following provisions of these Terms will remain in effect: Sections 2 "
-"through 2.5, Section 3 and Sections 4 through 10."
-msgstr ""
-
-#: webapp/templates/others/terms.html:79
-msgid ""
-"Company respects the intellectual property of others and asks that users of "
-"our Site do the same.  In connection with our Site, we have adopted and "
-"implemented a policy respecting copyright law that provides for the removal "
-"of any infringing materials and for the termination of users of our online "
-"Site who are repeated infringers of intellectual property rights, including "
-"copyrights.  If you believe that one of our users is, through the use of our "
-"Site, unlawfully infringing the copyright(s) in a work, and wish to have the "
-"allegedly infringing material removed, the following information in the form "
-"of a written notification (pursuant to 17 U.S.C. § 512(c)) must be provided "
-"to our designated Copyright Agent:"
-msgstr ""
-
-#: webapp/templates/others/terms.html:91
-msgid ""
-"Please note that, pursuant to 17 U.S.C. § 512(f), any misrepresentation of "
-"material fact in a written notification automatically subjects the "
-"complaining party to liability for any damages, costs and attorney’s fees "
-"incurred by us in connection with the written notification and allegation of "
-"copyright infringement."
-msgstr ""
-
-#: webapp/templates/others/terms.html:98
-msgid ""
-"<strong>Applicability of Arbitration Agreement.</strong> All claims and "
-"disputes in connection with the Terms or the use of any product or service "
-"provided by the Company that cannot be resolved informally or in small "
-"claims court shall be resolved by binding arbitration on an individual basis "
-"under the terms of this Arbitration Agreement.  Unless otherwise agreed to, "
-"all arbitration proceedings shall be held in English.  This Arbitration "
-"Agreement applies to you and the Company, and to any subsidiaries, "
-"affiliates, agents, employees, predecessors in interest, successors, and "
-"assigns, as well as all authorized or unauthorized users or beneficiaries of "
-"services or goods provided under the Terms."
-msgstr ""
-
-#: webapp/templates/others/terms.html:100
-msgid ""
-"<strong>Notice Requirement and Informal Dispute Resolution.</strong> Before "
-"either party may seek arbitration, the party must first send to the other "
-"party a written Notice of Dispute describing the nature and basis of the "
-"claim or dispute, and the requested relief.  A Notice to the Company should "
-"be sent to: 1. After the Notice is received, you and the Company may attempt "
-"to resolve the claim or dispute informally.  If you and the Company do not "
-"resolve the claim or dispute within thirty (30) days after the Notice is "
-"received, either party may begin an arbitration proceeding.  The amount of "
-"any settlement offer made by any party may not be disclosed to the "
-"arbitrator until after the arbitrator has determined the amount of the award "
-"to which either party is entitled."
-msgstr ""
-
-#: webapp/templates/others/terms.html:102
-msgid ""
-"<strong>Arbitration Rules.</strong> Arbitration shall be initiated through "
-"the American Arbitration Association, an established alternative dispute "
-"resolution provider that offers arbitration as set forth in this section.  "
-"If AAA is not available to arbitrate, the parties shall agree to select an "
-"alternative ADR Provider.  The rules of the ADR Provider shall govern all "
-"aspects of the arbitration except to the extent such rules are in conflict "
-"with the Terms.  The AAA Consumer Arbitration Rules governing the "
-"arbitration are available online at adr.org or by calling the AAA at "
-"1-800-778-7879.  The arbitration shall be conducted by a single, neutral "
-"arbitrator.  Any claims or disputes where the total amount of the award "
-"sought is less than Ten Thousand U.S. Dollars (US $10,000.00) may be "
-"resolved through binding non-appearance-based arbitration, at the option of "
-"the party seeking relief.  For claims or disputes where the total amount of "
-"the award sought is Ten Thousand U.S. Dollars (US $10,000.00) or more, the "
-"right to a hearing will be determined by the Arbitration Rules.  Any hearing "
-"will be held in a location within 100 miles of your residence, unless you "
-"reside outside of the United States, and unless the parties agree "
-"otherwise.  If you reside outside of the U.S., the arbitrator shall give the "
-"parties reasonable notice of the date, time and place of any oral hearings. "
-"Any judgment on the award rendered by the arbitrator may be entered in any "
-"court of competent jurisdiction.  If the arbitrator grants you an award that "
-"is greater than the last settlement offer that the Company made to you prior "
-"to the initiation of arbitration, the Company will pay you the greater of "
-"the award or $2,500.00.  Each party shall bear its own costs and "
-"disbursements arising out of the arbitration and shall pay an equal share of "
-"the fees and costs of the ADR Provider."
-msgstr ""
-
-#: webapp/templates/others/terms.html:104
-msgid ""
-"<strong>Additional Rules for Non-Appearance Based Arbitration.</strong> If "
-"non-appearance based arbitration is elected, the arbitration shall be "
-"conducted by telephone, online and/or based solely on written submissions; "
-"the specific manner shall be chosen by the party initiating the "
-"arbitration.  The arbitration shall not involve any personal appearance by "
-"the parties or witnesses unless otherwise agreed by the parties."
-msgstr ""
-
-#: webapp/templates/others/terms.html:106
-msgid ""
-"<strong>Time Limits.</strong> If you or the Company pursues arbitration, the "
-"arbitration action must be initiated and/or demanded within the statute of "
-"limitations and within any deadline imposed under the AAA Rules for the "
-"pertinent claim."
-msgstr ""
-
-#: webapp/templates/others/terms.html:108
-msgid ""
-"<strong>Authority of Arbitrator.</strong> If arbitration is initiated, the "
-"arbitrator will decide the rights and liabilities of you and the Company, "
-"and the dispute will not be consolidated with any other matters or joined "
-"with any other cases or parties.  The arbitrator shall have the authority to "
-"grant motions dispositive of all or part of any claim.  The arbitrator shall "
-"have the authority to award monetary damages, and to grant any non-monetary "
-"remedy or relief available to an individual under applicable law, the AAA "
-"Rules, and the Terms.  The arbitrator shall issue a written award and "
-"statement of decision describing the essential findings and conclusions on "
-"which the award is based.  The arbitrator has the same authority to award "
-"relief on an individual basis that a judge in a court of law would have.  "
-"The award of the arbitrator is final and binding upon you and the Company."
-msgstr ""
-
-#: webapp/templates/others/terms.html:110
-msgid ""
-"<strong>Waiver of Jury Trial.</strong> THE PARTIES HEREBY WAIVE THEIR "
-"CONSTITUTIONAL AND STATUTORY RIGHTS TO GO TO COURT AND HAVE A TRIAL IN FRONT "
-"OF A JUDGE OR A JURY, instead electing that all claims and disputes shall be "
-"resolved by arbitration under this Arbitration Agreement.  Arbitration "
-"procedures are typically more limited, more efficient and less expensive "
-"than rules applicable in a court and are subject to very limited review by a "
-"court.  In the event any litigation should arise between you and the Company "
-"in any state or federal court in a suit to vacate or enforce an arbitration "
-"award or otherwise, YOU AND THE COMPANY WAIVE ALL RIGHTS TO A JURY TRIAL, "
-"instead electing that the dispute be resolved by a judge."
-msgstr ""
-
-#: webapp/templates/others/terms.html:112
-msgid ""
-"<strong>Waiver of Class or Consolidated Actions.</strong> All claims and "
-"disputes within the scope of this arbitration agreement must be arbitrated "
-"or litigated on an individual basis and not on a class basis, and claims of "
-"more than one customer or user cannot be arbitrated or litigated jointly or "
-"consolidated with those of any other customer or user."
-msgstr ""
-
-#: webapp/templates/others/terms.html:114
-msgid ""
-"<strong>Confidentiality.</strong> All aspects of the arbitration proceeding "
-"shall be strictly confidential.  The parties agree to maintain "
-"confidentiality unless otherwise required by law.  This paragraph shall not "
-"prevent a party from submitting to a court of law any information necessary "
-"to enforce this Agreement, to enforce an arbitration award, or to seek "
-"injunctive or equitable relief."
-msgstr ""
-
-#: webapp/templates/others/terms.html:116
-msgid ""
-"<strong>Severability.</strong> If any part or parts of this Arbitration "
-"Agreement are found under the law to be invalid or unenforceable by a court "
-"of competent jurisdiction, then such specific part or parts shall be of no "
-"force and effect and shall be severed and the remainder of the Agreement "
-"shall continue in full force and effect."
-msgstr ""
-
-#: webapp/templates/others/terms.html:118
-msgid ""
-"<strong>Right to Waive.</strong> Any or all of the rights and limitations "
-"set forth in this Arbitration Agreement may be waived by the party against "
-"whom the claim is asserted.  Such waiver shall not waive or affect any other "
-"portion of this Arbitration Agreement."
-msgstr ""
-
-#: webapp/templates/others/terms.html:120
-msgid ""
-"<strong>Survival of Agreement.</strong> This Arbitration Agreement will "
-"survive the termination of your relationship with Company."
-msgstr ""
-
-#: webapp/templates/others/terms.html:122
-msgid ""
-"<strong>Small Claims Court.</strong> Nonetheless the foregoing, either you "
-"or the Company may bring an individual action in small claims court."
-msgstr ""
-
-#: webapp/templates/others/terms.html:124
-msgid ""
-"<strong>Emergency Equitable Relief.</strong> Anyhow the foregoing, either "
-"party may seek emergency equitable relief before a state or federal court in "
-"order to maintain the status quo pending arbitration.  A request for interim "
-"measures shall not be deemed a waiver of any other rights or obligations "
-"under this Arbitration Agreement."
-msgstr ""
-
-#: webapp/templates/others/terms.html:126
-msgid ""
-"<strong>Claims Not Subject to Arbitration.</strong> Notwithstanding the "
-"foregoing, claims of defamation, violation of the Computer Fraud and Abuse "
-"Act, and infringement or misappropriation of the other party’s patent, "
-"copyright, trademark or trade secrets shall not be subject to this "
-"Arbitration Agreement."
-msgstr ""
-
-#: webapp/templates/others/terms.html:128
-msgid ""
-"In any circumstances where the foregoing Arbitration Agreement permits the "
-"parties to litigate in court, the parties hereby agree to submit to the "
-"personal jurisdiction of the courts located within Netherlands County, "
-"California, for such purposes."
-msgstr ""
-
-#: webapp/templates/others/terms.html:130
-msgid ""
-"The Site may be subject to U.S. export control laws and may be subject to "
-"export or import regulations in other countries. You agree not to export, re-"
-"export, or transfer, directly or indirectly, any U.S. technical data "
-"acquired from Company, or any products utilizing such data, in violation of "
-"the United States export laws or regulations."
-msgstr ""
-
-#: webapp/templates/others/terms.html:132
-msgid ""
-"Company is located at the address in Section 10.8. If you are a California "
-"resident, you may report complaints to the Complaint Assistance Unit of the "
-"Division of Consumer Product of the California Department of Consumer "
-"Affairs by contacting them in writing at 400 R Street, Sacramento, CA 95814, "
-"or by telephone at (800) 952-5210."
-msgstr ""
-
-#: webapp/templates/others/terms.html:134
-msgid ""
-"<strong>Electronic Communications.</strong> The communications between you "
-"and Company use electronic means, whether you use the Site or send us "
-"emails, or whether Company posts notices on the Site or communicates with "
-"you via email. For contractual purposes, you (a) consent to receive "
-"communications from Company in an electronic form; and (b) agree that all "
-"terms and conditions, agreements, notices, disclosures, and other "
-"communications that Company provides to you electronically satisfy any legal "
-"obligation that such communications would satisfy if it were be in a hard "
-"copy writing."
-msgstr ""
-
-#: webapp/templates/others/terms.html:136
-msgid ""
-"<strong>Entire Terms.</strong> These Terms constitute the entire agreement "
-"between you and us regarding the use of the Site. Our failure to exercise or "
-"enforce any right or provision of these Terms shall not operate as a waiver "
-"of such right or provision. The section titles in these Terms are for "
-"convenience only and have no legal or contractual effect. The word "
-msgstr ""
-
-#: webapp/templates/others/terms.html:138
-msgid "<strong>Your Privacy.</strong> Please read our Privacy Policy."
-msgstr "<strong>Ihre Privatsphäre.</strong> Bitte lesen Sie unsere Datenschutzrichtlinie."
-
-#: webapp/templates/others/terms.html:140
-msgid ""
-"<strong>Copyright/Trademark Information.</strong> Copyright ©. All rights "
-"reserved.  All trademarks, logos and service marks displayed on the Site are "
-"our property or the property of other third-parties. You are not permitted "
-"to use these Marks without our prior written consent or the consent of such "
-"third party which may own the Marks."
-msgstr ""
-
-#: webapp/templates/profile/profile_delete.html:6
-msgid "Delete Profile"
-msgstr "Profil löschen"
-
-#: webapp/templates/profile/profile_list.html:26
-msgid "activate"
-msgstr "aktivieren"
-
-#: webapp/templates/profile/profile_update.html:6
-msgid "Update Profile"
-msgstr "Profil aktualisieren"
-
-#: webapp/templates/registration/login.html:5
-#: webapp/templates/user-menu.html:19
-msgid "Sign in"
-msgstr "Anmelden"
-
-#: webapp/templates/registration/login.html:12
-msgid "Sign In"
-msgstr "Anmelden"
-
-#: webapp/templates/registration/login.html:12
-#: webapp/templates/registration/register.html:11
-msgid "Register"
-msgstr "Registrieren"
-
-#: webapp/templates/registration/register.html:5
-msgid "Create an Account"
-msgstr "Erstellen Sie ein Konto"
-
-#: webapp/templates/task/task_create.html:6
-msgid "Add Task"
-msgstr "Aufgabe hinzufügen"
-
-#: webapp/templates/task/task_delete.html:6
-msgid "Delete Task"
-msgstr "Aufgabe löschen"
-
-#: webapp/templates/task/task_detail.html:7
-#: webapp/templates/task/task_list.html:6
-#: webapp/templates/task/task_table.html:5
-msgid "Task"
-msgstr "Aufgabe"
-
-#: webapp/templates/task/task_table.html:6
-msgid "Status"
-msgstr "Zustand"
-
-#: webapp/templates/task/task_table.html:7
-msgid "Attachment"
-msgstr "Anhang"
-
-#: webapp/templates/task/task_table.html:8
-msgid "Start"
-msgstr ""
-
-#: webapp/templates/task/task_table.html:9
-msgid "End"
-msgstr "Ende"
-
-#: webapp/templates/task/task_update.html:6
-msgid "Update Task"
-msgstr "Task aktualisieren"
-
-#: webapp/templates/user-menu.html:14
-msgid "Sign out"
-msgstr "Abmelden"
-
-#: webapp/templates/user-menu.html:18
-msgid "Request a Demo"
-msgstr "Fordern Sie eine Demo an"
-
+#~ msgid "Slot Value"
+#~ msgstr "Slot-Wert"

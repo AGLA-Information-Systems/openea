@@ -34,12 +34,12 @@ class Repository(models.Model):
         deferrable=models.Deferrable.DEFERRED,
     )
 
-    created_at = models.DateTimeField(auto_now_add=True, null=True, verbose_name=_("Created at"))
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, verbose_name=_("Created by"), related_name='repository_created')
-    modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='repository_modified')
-    deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='repository_deleted')
+    created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='repository_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='repository_modified')
+    deleted_at = models.DateTimeField(null=True, verbose_name=_("Deleted at"))
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='repository_deleted')
 
     def get_or_create(name, version=None, description='', id=None):
         try:
@@ -65,6 +65,10 @@ class Repository(models.Model):
      
     def __str__(self):
         return self.name
+    
+    class Meta:
+       verbose_name = _('Repository')
+       verbose_name_plural = _('Repositories')
 
 ###############################################################################
 ### Meta
@@ -85,12 +89,12 @@ class OModel(models.Model):
     repository = models.ForeignKey(Repository, on_delete=models.CASCADE, null=True, related_name='models')
     tags = models.ManyToManyField(Tag, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='model_created')
-    modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='model_modified')
-    deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='model_deleted')
+    created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='model_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='model_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='model_deleted')
 
     unique_model_version_per_repository = models.UniqueConstraint(
         name='unique_model_version_per_repository',
@@ -137,12 +141,12 @@ class OConcept(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
     quality_status = models.CharField(max_length=2, choices=QUALITY_STATUS, default=QUALITY_STATUS_PROPOSED)
 
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='concept_created')
-    modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='concept_modified')
-    deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='concept_deleted')
+    created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='concept_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='concept_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='concept_deleted')
 
     def get_or_create(name, description='', model=None, id=None):
         try:
@@ -195,12 +199,12 @@ class ORelation(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
     quality_status = models.CharField(max_length=2, choices=QUALITY_STATUS, default=QUALITY_STATUS_PROPOSED)
 
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='relation_created')
-    modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='relation_modified')
-    deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='relation_deleted')
+    created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='relation_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='relation_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='relation_deleted')
 
     unique_relation_per_model = models.UniqueConstraint(
         name='unique_relation_per_model',
@@ -254,12 +258,12 @@ class OPredicate(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
     quality_status = models.CharField(max_length=2, choices=QUALITY_STATUS, default=QUALITY_STATUS_PROPOSED)
 
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='predicate_created')
-    modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='predicate_modified')
-    deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='predicate_deleted')
+    created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='predicate_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='predicate_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='predicate_deleted')
 
     unique_predicate_per_model = models.UniqueConstraint(
         name='unique_predicate_per_model',
@@ -322,12 +326,12 @@ class OInstance(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
     quality_status = models.CharField(max_length=2, choices=QUALITY_STATUS, default=QUALITY_STATUS_PROPOSED)
 
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='instance_created')
-    modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='instance_modified')
-    deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='instance_deleted')
+    created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='instance_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='instance_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='instance_deleted')
 
     unique_instance_per_model = models.UniqueConstraint(
         name='unique_instance_per_model',
@@ -377,12 +381,12 @@ class OSlot(models.Model):
     predicate = models.ForeignKey(OPredicate, on_delete=models.CASCADE, null=True, related_name='used_in')
     model = models.ForeignKey(OModel, on_delete=models.CASCADE, null=True, related_name='slots')
 
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='slot_created')
-    modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='slot_modified')
-    deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='slot_deleted')
+    created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='slot_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='slot_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='slot_deleted')
 
 
     unique_slot_per_model = models.UniqueConstraint(
@@ -446,12 +450,12 @@ class OReport(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
     quality_status = models.CharField(max_length=2, choices=QUALITY_STATUS, default=QUALITY_STATUS_PROPOSED)
 
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='report_created')
-    modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='report_modified')
-    deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='report_deleted')
+    created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='report_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='report_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='report_deleted')
 
     def get_or_create(name, description='', model=None, id=None, path=None, content=''):
         try:

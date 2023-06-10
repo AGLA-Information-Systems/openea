@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-09 20:19-0400\n"
+"POT-Creation-Date: 2023-06-09 19:50-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: authorization/models.py:24 authorization/models.py:76 help/models.py:18
 #: ontology/models.py:37 ontology/models.py:92 ontology/models.py:144
@@ -25,7 +24,7 @@ msgstr ""
 #: organisation/models.py:98 organisation/models.py:143 payment/models.py:71
 #: saas/models.py:25 taxonomy/models.py:17 taxonomy/models.py:50
 msgid "Created at"
-msgstr "Criado em"
+msgstr ""
 
 #: authorization/models.py:25 authorization/models.py:77 help/models.py:19
 #: ontology/models.py:38 ontology/models.py:93 ontology/models.py:145
@@ -34,7 +33,7 @@ msgstr "Criado em"
 #: organisation/models.py:99 organisation/models.py:144 payment/models.py:72
 #: taxonomy/models.py:18 taxonomy/models.py:51
 msgid "Created by"
-msgstr "Criado por"
+msgstr ""
 
 #: authorization/models.py:26 authorization/models.py:78 help/models.py:20
 #: ontology/models.py:39 ontology/models.py:94 ontology/models.py:146
@@ -67,15 +66,13 @@ msgstr ""
 #: organisation/models.py:148 payment/models.py:75 payment/models.py:76
 #: taxonomy/models.py:21 taxonomy/models.py:22 taxonomy/models.py:54
 #: taxonomy/models.py:55
-#, fuzzy
-#| msgid "Delete Tag"
 msgid "Deleted at"
-msgstr "Excluir Etiqueta"
+msgstr ""
 
 #: authorization/templates/permission/permission_create.html:6
 #: authorization/templates/security_group/security_group_detail.html:17
 msgid "Add Permission"
-msgstr "Adicionar Permissão"
+msgstr ""
 
 #: authorization/templates/permission/permission_create.html:10
 #: authorization/templates/permission/permission_update.html:10
@@ -112,11 +109,11 @@ msgstr "Adicionar Permissão"
 #: taxonomy/templates/tag_group/tag_group_create.html:10
 #: taxonomy/templates/tag_group/tag_group_update.html:10
 msgid "Submit"
-msgstr "Enviar"
+msgstr ""
 
 #: authorization/templates/permission/permission_delete.html:6
 msgid "Delete Permission"
-msgstr "Excluir Permissão"
+msgstr ""
 
 #: authorization/templates/permission/permission_delete.html:8
 #: authorization/templates/security_group/security_group_delete.html:8
@@ -136,7 +133,7 @@ msgstr "Excluir Permissão"
 #: taxonomy/templates/tag/tag_delete.html:8
 #: taxonomy/templates/tag_group/tag_group_delete.html:8
 msgid "Are you sure you want to delete"
-msgstr "Tem certeza que deseja deletar"
+msgstr ""
 
 #: authorization/templates/permission/permission_delete.html:9
 #: authorization/templates/security_group/security_group_delete.html:9
@@ -156,10 +153,8 @@ msgstr "Tem certeza que deseja deletar"
 #: organisation/templates/task/task_delete.html:9
 #: taxonomy/templates/tag/tag_delete.html:9
 #: taxonomy/templates/tag_group/tag_group_delete.html:9
-#, fuzzy
-#| msgid "Configuration"
 msgid "Confirm"
-msgstr "Configuração"
+msgstr ""
 
 #: authorization/templates/permission/permission_detail.html:7
 #: authorization/templates/permission/permission_list.html:6
@@ -167,7 +162,7 @@ msgstr "Configuração"
 #: authorization/templates/security_group/security_group_detail.html:22
 #: organisation/templates/organisation/organisation_detail.html:181
 msgid "Permission"
-msgstr "Permissão"
+msgstr ""
 
 #: authorization/templates/permission/permission_list.html:12
 #: authorization/templates/security_group/security_group_detail.html:11
@@ -179,19 +174,19 @@ msgstr "Permissão"
 #: organisation/templates/profile/profile_list.html:12
 #: organisation/templates/task/task_detail.html:20
 msgid "Organisation"
-msgstr "Organização"
+msgstr ""
 
 #: authorization/templates/permission/permission_list.html:13
 #: authorization/templates/security_group/security_group_list.html:13
 #: ontology/templates/o_slot/o_slot_list.html:12
 msgid "View"
-msgstr "Visualizar"
+msgstr ""
 
 #: authorization/templates/permission/permission_list.html:23
 #: authorization/templates/security_group/security_group_list.html:23
 #: ontology/templates/o_slot/o_slot_list.html:21
 msgid "view"
-msgstr "ver"
+msgstr ""
 
 #: authorization/templates/permission/permission_list.html:24
 #: authorization/templates/security_group/security_group_detail.html:35
@@ -221,7 +216,7 @@ msgstr "ver"
 #: taxonomy/templates/tag/tag_table.html:16
 #: taxonomy/templates/tag_group/tag_group_table.html:16
 msgid "edit"
-msgstr "editar"
+msgstr ""
 
 #: authorization/templates/permission/permission_list.html:25
 #: authorization/templates/security_group/security_group_detail.html:36
@@ -250,7 +245,7 @@ msgstr "editar"
 #: taxonomy/templates/tag/tag_table.html:17
 #: taxonomy/templates/tag_group/tag_group_table.html:17
 msgid "delete"
-msgstr "excluir"
+msgstr ""
 
 #: authorization/templates/permission/permission_list.html:31
 #: authorization/templates/security_group/security_group_list.html:31
@@ -263,25 +258,25 @@ msgstr "excluir"
 #: taxonomy/templates/tag/tag_list.html:11
 #: taxonomy/templates/tag_group/tag_group_list.html:11
 msgid "New"
-msgstr "Novo"
+msgstr ""
 
 #: authorization/templates/permission/permission_update.html:6
 msgid "Update Permission"
-msgstr "Atualizar Permissão"
+msgstr ""
 
 #: authorization/templates/security_group/security_group_create.html:6
 msgid "Add SecurityGroup"
-msgstr "Adicionar Grupo de Segurança"
+msgstr ""
 
 #: authorization/templates/security_group/security_group_delete.html:6
 msgid "Delete SecurityGroup"
-msgstr "Excluir Grupo de Segurança"
+msgstr ""
 
 #: authorization/templates/security_group/security_group_detail.html:8
 #: authorization/templates/security_group/security_group_list.html:6
 #: authorization/templates/security_group/security_group_list.html:11
 msgid "SecurityGroup"
-msgstr "Grupo de Segurança"
+msgstr ""
 
 #: authorization/templates/security_group/security_group_detail.html:23
 #: authorization/templates/security_group/security_group_detail.html:64
@@ -291,7 +286,7 @@ msgstr "Grupo de Segurança"
 #: payment/templates/subscription/subscription_detail.html:28
 #: taxonomy/templates/tag_group/tag_group_table.html:6
 msgid "Description"
-msgstr "Descrição"
+msgstr ""
 
 #: authorization/templates/security_group/security_group_detail.html:45
 #: authorization/templates/security_group/security_group_detail.html:84
@@ -309,7 +304,7 @@ msgstr "Descrição"
 #: organisation/templates/organisation/organisation_detail.html:265
 #: organisation/templates/organisation/organisation_detail.html:287
 msgid "first"
-msgstr "primeiro"
+msgstr ""
 
 #: authorization/templates/security_group/security_group_detail.html:46
 #: authorization/templates/security_group/security_group_detail.html:85
@@ -329,7 +324,7 @@ msgstr "primeiro"
 #: organisation/templates/organisation/organisation_detail.html:266
 #: organisation/templates/organisation/organisation_detail.html:288
 msgid "previous"
-msgstr "anterior"
+msgstr ""
 
 #: authorization/templates/security_group/security_group_detail.html:48
 #: authorization/templates/security_group/security_group_detail.html:87
@@ -339,7 +334,7 @@ msgstr "anterior"
 #: organisation/templates/organisation/organisation_detail.html:205
 #: organisation/templates/organisation/organisation_detail.html:290
 msgid "of"
-msgstr "de"
+msgstr ""
 
 #: authorization/templates/security_group/security_group_detail.html:50
 #: authorization/templates/security_group/security_group_detail.html:89
@@ -359,7 +354,7 @@ msgstr "de"
 #: organisation/templates/organisation/organisation_detail.html:270
 #: organisation/templates/organisation/organisation_detail.html:292
 msgid "next"
-msgstr "próximo"
+msgstr ""
 
 #: authorization/templates/security_group/security_group_detail.html:51
 #: authorization/templates/security_group/security_group_detail.html:90
@@ -379,12 +374,12 @@ msgstr "próximo"
 #: organisation/templates/organisation/organisation_detail.html:271
 #: organisation/templates/organisation/organisation_detail.html:293
 msgid "last"
-msgstr "último"
+msgstr ""
 
 #: authorization/templates/security_group/security_group_detail.html:58
 #: organisation/templates/profile/profile_create.html:6
 msgid "Add Profile"
-msgstr "Adicionar Perfil"
+msgstr ""
 
 #: authorization/templates/security_group/security_group_detail.html:63
 #: organisation/templates/organisation/organisation_detail.html:101
@@ -392,20 +387,20 @@ msgstr "Adicionar Perfil"
 #: organisation/templates/profile/profile_list.html:6
 #: organisation/templates/profile/profile_list.html:11
 msgid "Profile"
-msgstr "Perfil"
+msgstr ""
 
 #: authorization/templates/security_group/security_group_update.html:6
 msgid "Update SecurityGroup"
-msgstr "Atualizar Grupo de Segurança"
+msgstr ""
 
 #: configuration/templates/configuration/configuration_create.html:8
 #: organisation/templates/organisation/organisation_detail.html:280
 msgid "Add Configuration"
-msgstr "Adicionar Configuração"
+msgstr ""
 
 #: configuration/templates/configuration/configuration_delete.html:6
 msgid "Delete Configuration"
-msgstr "Excluir Configuração"
+msgstr ""
 
 #: configuration/templates/configuration/configuration_detail.html:10
 #: ontology/templates/o_concept/o_concept_detail.html:14
@@ -417,7 +412,7 @@ msgstr "Excluir Configuração"
 #: ontology/templates/o_report/o_report_run.html:15
 #: ontology/templates/o_report/o_report_run.old.html:14
 msgid "Edit"
-msgstr "Editar"
+msgstr ""
 
 #: configuration/templates/configuration/configuration_detail.html:15
 #: ontology/templates/json_report.html:9
@@ -433,29 +428,29 @@ msgstr "Editar"
 #: ontology/templates/o_report/o_report_run.old.html:10
 #: ontology/templates/o_slot/o_slot_detail.html:9
 msgid "Model"
-msgstr "Modelo"
+msgstr ""
 
 #: configuration/templates/configuration/configuration_detail.html:16
 #: configuration/templates/configuration/configuration_list.html:6
 #: configuration/templates/configuration/configuration_table.html:5
 #: organisation/templates/organisation/organisation_detail.html:28
 msgid "Configuration"
-msgstr "Configuração"
+msgstr ""
 
 #: configuration/templates/configuration/configuration_detail.html:24
 #: ontology/templates/o_concept/o_concept_detail.html:37
 msgid "New Instance"
-msgstr "Nova Instância"
+msgstr ""
 
 #: configuration/templates/configuration/configuration_detail.html:27
 #: ontology/templates/o_concept/o_concept_detail.html:41
 msgid "Parents"
-msgstr "Pais"
+msgstr ""
 
 #: configuration/templates/configuration/configuration_detail.html:33
 #: ontology/templates/o_concept/o_concept_detail.html:46
 msgid "Children"
-msgstr "Crianças"
+msgstr ""
 
 #: configuration/templates/configuration/configuration_detail.html:42
 #: ontology/templates/o_instance/o_instance_list.html:8
@@ -464,23 +459,19 @@ msgstr "Crianças"
 #: ontology/templates/o_model/o_model_pathfinder.html:23
 #: ontology/templates/o_model/o_model_pathfinder.html:46
 msgid "Instance"
-msgstr "Instância"
+msgstr ""
 
 #: configuration/templates/configuration/configuration_update.html:6
 msgid "Update Configuration"
-msgstr "Atualizar Configuração"
+msgstr ""
 
 #: help/templates/post/post_create.html:6
-#, fuzzy
-#| msgid "Add Slot"
 msgid "Add Post"
-msgstr "Adicionar Espaço"
+msgstr ""
 
 #: help/templates/post/post_delete.html:6
-#, fuzzy
-#| msgid "Delete Slot"
 msgid "Delete Post"
-msgstr "Excluir Espaço"
+msgstr ""
 
 #: help/templates/post/post_list.html:6 saas/templates/layout.html:52
 msgid "Help"
@@ -495,10 +486,8 @@ msgid "Author"
 msgstr ""
 
 #: help/templates/post/post_update.html:6
-#, fuzzy
-#| msgid "Update Slot"
 msgid "Update Post"
-msgstr "Atualizar Slot"
+msgstr ""
 
 #: ontology/controllers/o_model.py:325
 #: ontology/templates/o_model/o_model_table.html:17
@@ -510,51 +499,51 @@ msgstr ""
 #: ontology/templates/repository/repository_list.html:13
 #: organisation/templates/organisation/organisation_detail.html:62
 msgid "Repository"
-msgstr "Repositório"
+msgstr ""
 
 #: ontology/models.py:71
 #: organisation/templates/organisation/organisation_detail.html:21
 #: saas/templates/user-menu.html:7 webapp/templates/user-menu.html:7
 msgid "Repositories"
-msgstr "Repositórios"
+msgstr ""
 
 #: ontology/models.py:80
 msgid "Proposed"
-msgstr "Proposta"
+msgstr ""
 
 #: ontology/models.py:81
 msgid "Approved"
-msgstr "Aprovado"
+msgstr ""
 
 #: ontology/models.py:188
 msgid "Property"
-msgstr "Propriedade"
+msgstr ""
 
 #: ontology/models.py:189
 msgid "Inheritance (Parent=Subject)"
-msgstr "Herança (Pai=Sujeito)"
+msgstr ""
 
 #: ontology/models.py:190
 msgid "Inheritance (Parent=Object)"
-msgstr "Herança (Pai=Objeto)"
+msgstr ""
 
 #: ontology/templates/model_report.html:8
 msgid "Cost - Benefit Report"
-msgstr "Relatório de Custos - Benefícios"
+msgstr ""
 
 #: ontology/templates/model_report.html:35
 #: ontology/templates/o_model/o_model_gap_analysis.html:48
 #: ontology/templates/o_model/o_model_impact_analysis.html:58
 msgid "Analyze"
-msgstr "Analisar"
+msgstr ""
 
 #: ontology/templates/o_concept/o_concept_create.html:7
 msgid "Add Concept"
-msgstr "Adicionar Conceito"
+msgstr ""
 
 #: ontology/templates/o_concept/o_concept_delete.html:6
 msgid "Delete Concept"
-msgstr "Excluir Conceito"
+msgstr ""
 
 #: ontology/templates/o_concept/o_concept_detail.html:10
 #: ontology/templates/o_concept/o_concept_list.html:7
@@ -564,7 +553,7 @@ msgstr "Excluir Conceito"
 #: ontology/templates/o_model/o_model_pathfinder.html:14
 #: ontology/templates/o_model/o_model_pathfinder.html:37
 msgid "Concept"
-msgstr "Conceito"
+msgstr ""
 
 #: ontology/templates/o_concept/o_concept_detail.html:15
 #: ontology/templates/o_instance/o_instance_detail.html:16
@@ -572,23 +561,19 @@ msgstr "Conceito"
 #: ontology/templates/o_predicate/o_predicate_detail.html:15
 #: ontology/templates/o_relation/o_relation_detail.html:15
 #: ontology/templates/o_report/o_report_detail.html:15
-#, fuzzy
-#| msgid "delete"
 msgid "Delete"
-msgstr "excluir"
+msgstr ""
 
 #: ontology/templates/o_concept/o_concept_detail.html:22
 #: ontology/templates/o_instance/o_instance_detail.html:29
 #: ontology/templates/o_predicate/o_predicate_detail.html:33
-#, fuzzy
-#| msgid "Status"
 msgid "Quality Status"
-msgstr "Estado"
+msgstr ""
 
 #: ontology/templates/o_concept/o_concept_detail.html:24
 #: organisation/templates/organisation/organisation_detail.html:26
 msgid "Tags"
-msgstr "Etiquetas"
+msgstr ""
 
 #: ontology/templates/o_concept/o_concept_detail.html:30
 #: ontology/templates/o_instance/o_instance_detail.html:32
@@ -600,10 +585,8 @@ msgstr "Etiquetas"
 #: ontology/templates/repository/repository_detail.html:12
 #: organisation/templates/profile/profile_detail.html:14
 #: organisation/templates/task/task_detail.html:35
-#, fuzzy
-#| msgid "Created at"
 msgid "Created"
-msgstr "Criado em"
+msgstr ""
 
 #: ontology/templates/o_concept/o_concept_detail.html:33
 #: ontology/templates/o_instance/o_instance_detail.html:35
@@ -628,15 +611,15 @@ msgstr ""
 
 #: ontology/templates/o_concept/o_concept_update.html:7
 msgid "Update Concept"
-msgstr "Atualizar Conceito"
+msgstr ""
 
 #: ontology/templates/o_instance/o_instance_create.html:8
 msgid "Add Instance"
-msgstr "Adicionar Instância"
+msgstr ""
 
 #: ontology/templates/o_instance/o_instance_delete.html:7
 msgid "Delete Instance"
-msgstr "Excluir Instância"
+msgstr ""
 
 #: ontology/templates/o_instance/o_instance_detail.html:26
 msgid "Code"
@@ -644,34 +627,28 @@ msgstr ""
 
 #: ontology/templates/o_instance/o_instance_update.html:8
 msgid "Update Instance"
-msgstr "Atualizar Instância"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_copy.html:6
-#, fuzzy
-#| msgid "Model"
 msgid "Copy Model"
-msgstr "Modelo"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_copy.html:8
-#, fuzzy
-#| msgid "Are you sure you want to delete"
 msgid "Are you sure you duplicate"
-msgstr "Tem certeza que deseja deletar"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_create.html:6
 msgid "Add Model"
-msgstr "Adicionar Modelo"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_delete.html:6
 msgid "Delete Model"
-msgstr "Excluir Modelo"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_detail.html:7
 #: ontology/templates/o_model/o_model_detail.html:8
-#, fuzzy
-#| msgid "Model exchange"
 msgid "Model detail"
-msgstr "Troca de modelo"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_detail.html:32
 msgid "Copy"
@@ -679,22 +656,22 @@ msgstr ""
 
 #: ontology/templates/o_model/o_model_detail.html:34
 msgid "Import"
-msgstr "Importar"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_detail.html:35
 msgid "Export"
-msgstr "Exportar"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_detail.html:36
 #: ontology/templates/o_report/o_report_detail.html:10
 #: ontology/templates/o_report/o_report_list.html:6
 #: ontology/templates/o_report/o_report_table.html:5
 msgid "Report"
-msgstr "Relatório"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_detail.html:76
 msgid "Reports"
-msgstr "Relatórios"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_detail.html:77
 #: ontology/templates/o_model/o_model_export.html:63
@@ -705,7 +682,7 @@ msgstr "Relatórios"
 #: ontology/templates/o_model/o_model_matrix.html:65
 #: ontology/templates/o_model/o_model_ontology_diagram.html:16
 msgid "Concepts"
-msgstr "Conceitos"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_detail.html:78
 #: ontology/templates/o_model/o_model_export.html:54
@@ -716,11 +693,11 @@ msgstr "Conceitos"
 #: ontology/templates/o_model/o_model_matrix.html:13
 #: ontology/templates/o_model/o_model_ontology_diagram.html:24
 msgid "Relations"
-msgstr "Relações"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_detail.html:79
 msgid "Ontology"
-msgstr "Ontologia"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_detail.html:80
 #: saas/templates/carousel.html:14
@@ -738,10 +715,8 @@ msgid "Impact Analysis"
 msgstr ""
 
 #: ontology/templates/o_model/o_model_detail.html:83
-#, fuzzy
-#| msgid "Analyser"
 msgid "Gap Analysis"
-msgstr "Analisador"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_detail.html:84
 msgid "Path Finder"
@@ -749,19 +724,19 @@ msgstr ""
 
 #: ontology/templates/o_model/o_model_detail.html:92
 msgid "New Report"
-msgstr "Novo Relatório"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_detail.html:117
 msgid "New Concept"
-msgstr "Novo Conceito"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_detail.html:141
 msgid "New Relation"
-msgstr "Nova Relação"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_detail.html:165
 msgid "New Predicate"
-msgstr "Novo Predicado"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_export.html:75
 #: ontology/templates/o_model/o_model_gap_analysis.html:31
@@ -769,10 +744,8 @@ msgstr "Novo Predicado"
 #: ontology/templates/o_model/o_model_impact_analysis.html:37
 #: ontology/templates/o_model/o_model_import.html:60
 #: ontology/templates/o_model/o_model_matrix.html:25
-#, fuzzy
-#| msgid "Predicate"
 msgid "Predicates"
-msgstr "Predicado"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_export.html:84
 #: ontology/templates/o_model/o_model_gap_analysis.html:21
@@ -782,17 +755,15 @@ msgstr "Predicado"
 #: ontology/templates/o_model/o_model_matrix.html:51
 #: ontology/templates/o_model/o_model_matrix.html:74
 msgid "Instances"
-msgstr "Instâncias"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_export.html:99
 msgid "Start Export"
-msgstr "Iniciar Exportação"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_gap_analysis.html:9
-#, fuzzy
-#| msgid "New Model"
 msgid "Other Model"
-msgstr "Novo Modelo"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_gap_analysis.html:17
 #: ontology/templates/o_model/o_model_impact_analysis.html:34
@@ -800,30 +771,24 @@ msgid "Filters"
 msgstr ""
 
 #: ontology/templates/o_model/o_model_gap_analysis.html:26
-#, fuzzy
-#| msgid "Add Slot"
 msgid "Slots"
-msgstr "Adicionar Espaço"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_graph.html:55
 msgid "Generate Ontology Graph"
 msgstr ""
 
 #: ontology/templates/o_model/o_model_graph.html:56
-#, fuzzy
-#| msgid "Delete Instance"
 msgid "Generate Instances Graph"
-msgstr "Excluir Instância"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_graph.html:57
 msgid "Download Graph"
 msgstr ""
 
 #: ontology/templates/o_model/o_model_impact_analysis.html:11
-#, fuzzy
-#| msgid "Instance"
 msgid "Root Instance"
-msgstr "Instância"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_impact_analysis.html:46
 #: ontology/templates/o_model/o_model_impact_analysis.html:143
@@ -832,20 +797,16 @@ msgstr ""
 
 #: ontology/templates/o_model/o_model_import.html:71
 msgid "Start Import"
-msgstr "Iniciar Importação"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_instances_matrix.html:10
 #: ontology/templates/o_model/o_model_ontology_matrix.html:15
-#, fuzzy
-#| msgid "Concepts"
 msgid "Concepts on Rows"
-msgstr "Conceitos"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_instances_matrix.html:15
-#, fuzzy
-#| msgid "Instances"
 msgid "Subject Instances"
-msgstr "Instâncias"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_instances_matrix.html:20
 #: ontology/templates/o_model/o_model_ontology_matrix.html:24
@@ -853,10 +814,8 @@ msgid "Concepts on Columns"
 msgstr ""
 
 #: ontology/templates/o_model/o_model_instances_matrix.html:27
-#, fuzzy
-#| msgid "Instances"
 msgid "Object Instances"
-msgstr "Instâncias"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_matrix.html:39
 msgid "Columns"
@@ -871,23 +830,21 @@ msgid "Generate Ontology Matrix"
 msgstr ""
 
 #: ontology/templates/o_model/o_model_matrix.html:88
-#, fuzzy
-#| msgid "Delete Instance"
 msgid "Generate Instances Matrix"
-msgstr "Excluir Instância"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_pathfinder.html:11
 #: organisation/templates/task/task_table.html:8
 #: payment/templates/subscription/subscription_detail.html:34
 msgid "Start"
-msgstr "Início"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_pathfinder.html:34
 #: organisation/templates/task/task_detail.html:32
 #: organisation/templates/task/task_table.html:9
 #: payment/templates/subscription/subscription_detail.html:37
 msgid "End"
-msgstr "Fim"
+msgstr ""
 
 #: ontology/templates/o_model/o_model_pathfinder.html:58
 msgid "Find Path"
@@ -895,21 +852,21 @@ msgstr ""
 
 #: ontology/templates/o_model/o_model_update.html:6
 msgid "Update OModel"
-msgstr "Atualizar OModel"
+msgstr ""
 
 #: ontology/templates/o_predicate/o_predicate_create.html:6
 msgid "Add Predicate"
-msgstr "Adicionar Predicado"
+msgstr ""
 
 #: ontology/templates/o_predicate/o_predicate_delete.html:6
 msgid "Delete Predicate"
-msgstr "Excluir Predicado"
+msgstr ""
 
 #: ontology/templates/o_predicate/o_predicate_detail.html:10
 #: ontology/templates/o_predicate/o_predicate_list.html:6
 #: ontology/templates/o_predicate/o_predicate_table.html:5
 msgid "Predicate"
-msgstr "Predicado"
+msgstr ""
 
 #: ontology/templates/o_predicate/o_predicate_detail.html:27
 msgid "Cardinality Min"
@@ -921,72 +878,72 @@ msgstr ""
 
 #: ontology/templates/o_predicate/o_predicate_update.html:6
 msgid "Update Predicate"
-msgstr "Atualizar Predicado"
+msgstr ""
 
 #: ontology/templates/o_relation/o_relation_create.html:6
 msgid "Add Relation"
-msgstr "Adicionar Relação"
+msgstr ""
 
 #: ontology/templates/o_relation/o_relation_delete.html:6
 msgid "Delete Relation"
-msgstr "Excluir Relação"
+msgstr ""
 
 #: ontology/templates/o_relation/o_relation_detail.html:10
 #: ontology/templates/o_relation/o_relation_list.html:6
 #: ontology/templates/o_relation/o_relation_table.html:5
 msgid "Relation"
-msgstr "Relação"
+msgstr ""
 
 #: ontology/templates/o_relation/o_relation_table.html:6
 #: organisation/templates/task/task_detail.html:11
 msgid "Type"
-msgstr "Tipo"
+msgstr ""
 
 #: ontology/templates/o_relation/o_relation_update.html:6
 msgid "Update Relation"
-msgstr "Atualizar Relação"
+msgstr ""
 
 #: ontology/templates/o_report/o_report_create.html:6
 msgid "Add Report"
-msgstr "Adicionar Relatório"
+msgstr ""
 
 #: ontology/templates/o_report/o_report_delete.html:6
 msgid "Delete Report"
-msgstr "Excluir Relatório"
+msgstr ""
 
 #: ontology/templates/o_report/o_report_run.html:37
 #: ontology/templates/o_report/o_report_run.old.html:32
 #: ontology/templates/xml_report.html:59
 msgid "Analyser"
-msgstr "Analisador"
+msgstr ""
 
 #: ontology/templates/o_report/o_report_table.html:23
 msgid "run"
-msgstr "correr"
+msgstr ""
 
 #: ontology/templates/o_report/o_report_update.html:6
 msgid "Update Report"
-msgstr "Atualizar Relatório"
+msgstr ""
 
 #: ontology/templates/o_slot/o_slot_create.html:7
 msgid "Add Slot"
-msgstr "Adicionar Espaço"
+msgstr ""
 
 #: ontology/templates/o_slot/o_slot_create.html:15
 msgid "Select an existing instance"
-msgstr "Selecione uma instância existente"
+msgstr ""
 
 #: ontology/templates/o_slot/o_slot_create.html:20
 msgid "Or"
-msgstr "Ou"
+msgstr ""
 
 #: ontology/templates/o_slot/o_slot_create.html:23
 msgid "Create a new instance"
-msgstr "Criar uma nova instância"
+msgstr ""
 
 #: ontology/templates/o_slot/o_slot_delete.html:6
 msgid "Delete Slot"
-msgstr "Excluir Espaço"
+msgstr ""
 
 #: ontology/templates/o_slot/o_slot_detail.html:10
 #: ontology/templates/o_slot/o_slot_list.html:6
@@ -1008,182 +965,168 @@ msgstr ""
 
 #: ontology/templates/o_slot/o_slot_update.html:6
 msgid "Update Slot"
-msgstr "Atualizar Slot"
+msgstr ""
 
 #: ontology/templates/repository/repository_create.html:6
 msgid "Add Repository"
-msgstr "Adicionar Repositório"
+msgstr ""
 
 #: ontology/templates/repository/repository_delete.html:6
 msgid "Delete Repository"
-msgstr "Excluir Repositório"
+msgstr ""
 
 #: ontology/templates/repository/repository_detail.html:19
 msgid "New Model"
-msgstr "Novo Modelo"
+msgstr ""
 
 #: ontology/templates/repository/repository_update.html:6
 msgid "Update Repository"
-msgstr "Atualizar Repositório"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_create.html:6
 msgid "Add Organisation"
-msgstr "Adicionar Organização"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_delete.html:6
 msgid "Delete Organisation"
-msgstr "Excluir Organização"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_detail.html:5
 #: organisation/templates/organisation/organisation_detail.html:6
-#, fuzzy
-#| msgid "Organisation"
 msgid "Organisation detail"
-msgstr "Organização"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_detail.html:12
 msgid "Rebuild Permissions"
-msgstr "Recriar Permissões"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_detail.html:20
-#, fuzzy
-#| msgid "Description"
 msgid "Subscriptions"
-msgstr "Descrição"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_detail.html:22
 #: saas/templates/user-menu.html:8 webapp/templates/user-menu.html:8
 msgid "Profiles"
-msgstr "Perfis"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_detail.html:23
 msgid "Security Groups"
-msgstr "Grupos de Segurança"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_detail.html:24
 msgid "Permissions"
-msgstr "Permissões"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_detail.html:25
 msgid "Tag Groups"
-msgstr "Grupos de Etiquetas"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_detail.html:27
 #: saas/templates/user-menu.html:9 webapp/templates/user-menu.html:9
 msgid "Tasks"
-msgstr "Tarefas"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_detail.html:37
-#, fuzzy
-#| msgid "Description"
 msgid "Add Subscription"
-msgstr "Descrição"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_detail.html:58
 msgid "New Repository"
-msgstr "Novo Repositório"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_detail.html:97
 msgid "New Profile"
-msgstr "Novo Perfil"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_detail.html:102
 msgid "User"
-msgstr "Usuário"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_detail.html:138
 msgid "New Security Group"
-msgstr "Novo Grupo de Segurança"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_detail.html:142
 #: organisation/templates/profile/profile_detail.html:25
 msgid "Security Group"
-msgstr "Grupo de Segurança"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_detail.html:177
 msgid "New Permission"
-msgstr "Nova Permissão"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_detail.html:218
 msgid "New Task"
-msgstr "Nova Tarefa"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_detail.html:239
 msgid "New Tag Group"
-msgstr "Novo Grupo de Etiquetas"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_detail.html:281
 msgid "Rebuild"
-msgstr "Reconstruir"
+msgstr ""
 
 #: organisation/templates/organisation/organisation_update.html:6
 msgid "Update Organisation"
-msgstr "Atualizar Organização"
+msgstr ""
 
 #: organisation/templates/profile/profile_delete.html:6
 msgid "Delete Profile"
-msgstr "Excluir Perfil"
+msgstr ""
 
 #: organisation/templates/profile/profile_list.html:24
-#, fuzzy
-#| msgid "activate"
 msgid "active"
-msgstr "ativar"
+msgstr ""
 
 #: organisation/templates/profile/profile_list.html:26
 msgid "activate"
-msgstr "ativar"
+msgstr ""
 
 #: organisation/templates/profile/profile_update.html:6
 msgid "Update Profile"
-msgstr "Atualizar Perfil"
+msgstr ""
 
 #: organisation/templates/task/task_create.html:6
 msgid "Add Task"
-msgstr "Adicionar Tarefa"
+msgstr ""
 
 #: organisation/templates/task/task_delete.html:6
 msgid "Delete Task"
-msgstr "Excluir Tarefa"
+msgstr ""
 
 #: organisation/templates/task/task_detail.html:7
 #: organisation/templates/task/task_list.html:6
 #: organisation/templates/task/task_table.html:5
 msgid "Task"
-msgstr "Tarefa"
+msgstr ""
 
 #: organisation/templates/task/task_detail.html:14
 #: organisation/templates/task/task_table.html:6
 #: payment/templates/subscription/subscription_detail.html:31
 msgid "Status"
-msgstr "Estado"
+msgstr ""
 
 #: organisation/templates/task/task_detail.html:17
-#, fuzzy
-#| msgid "Submit"
 msgid "Submitted by"
-msgstr "Enviar"
+msgstr ""
 
 #: organisation/templates/task/task_detail.html:23
 #: organisation/templates/task/task_table.html:7
 msgid "Attachment"
-msgstr "Anexo"
+msgstr ""
 
 #: organisation/templates/task/task_detail.html:26
-#, fuzzy
-#| msgid "Configuration"
 msgid "Config"
-msgstr "Configuração"
+msgstr ""
 
 #: organisation/templates/task/task_detail.html:29
-#, fuzzy
-#| msgid "Start"
 msgid "Started"
-msgstr "Início"
+msgstr ""
 
 #: organisation/templates/task/task_update.html:6
 msgid "Update Task"
-msgstr "Atualizar Tarefa"
+msgstr ""
 
 #: payment/templates/product/product_card.html:13
 msgid "Free"
@@ -1210,17 +1153,13 @@ msgid "Select"
 msgstr ""
 
 #: payment/templates/subscription/subscription_create.html:18
-#, fuzzy
-#| msgid "Request a private instance"
 msgid "Need something custom like a private instance"
-msgstr "Solicitar uma instância privada"
+msgstr ""
 
 #: payment/templates/subscription/subscription_create.html:18
 #: saas/templates/frontpage.dev.html:34
-#, fuzzy
-#| msgid "Tailored service"
 msgid "Tailored Service"
-msgstr "Serviço sob medida"
+msgstr ""
 
 #: payment/templates/subscription/subscription_create.html:18
 msgid "reach out to us"
@@ -1235,10 +1174,8 @@ msgid "Product"
 msgstr ""
 
 #: payment/templates/subscription/subscription_detail.html:43
-#, fuzzy
-#| msgid "Delete Configuration"
 msgid "Payment Confirmation"
-msgstr "Excluir Configuração"
+msgstr ""
 
 #: payment/templates/subscription/subscription_table.html:21
 msgid "paid"
@@ -1269,16 +1206,12 @@ msgid "Something unexpected happened."
 msgstr ""
 
 #: saas/templates/carousel.html:35
-#, fuzzy
-#| msgid "Reports"
 msgid "Custom Reports"
-msgstr "Relatórios"
+msgstr ""
 
 #: saas/templates/carousel.html:42
-#, fuzzy
-#| msgid "previous"
 msgid "Previous"
-msgstr "anterior"
+msgstr ""
 
 #: saas/templates/carousel.html:46
 msgid "Next"
@@ -1286,7 +1219,7 @@ msgstr ""
 
 #: saas/templates/frontpage.dev.html:11 webapp/templates/frontpage.dev.html:9
 msgid "Mission"
-msgstr "Missão"
+msgstr ""
 
 #: saas/templates/frontpage.dev.html:12 webapp/templates/frontpage.dev.html:10
 msgid ""
@@ -1297,7 +1230,7 @@ msgstr ""
 
 #: saas/templates/frontpage.dev.html:18
 msgid "Request a private instance"
-msgstr "Solicitar uma instância privada"
+msgstr ""
 
 #: saas/templates/frontpage.dev.html:19
 msgid ""
@@ -1306,37 +1239,35 @@ msgstr ""
 
 #: saas/templates/frontpage.dev.html:20
 msgid "Private Instance"
-msgstr "Instância Privada"
+msgstr ""
 
 #: saas/templates/frontpage.dev.html:25
 msgid "Register organisation in SaaS platform"
-msgstr "Registrar organização na plataforma SaaS"
+msgstr ""
 
 #: saas/templates/frontpage.dev.html:26
 msgid "Oragnisations are created in the current SaaS, free of charge."
-msgstr "As organizações são criadas no SaaS atual, gratuitamente."
+msgstr ""
 
 #: saas/templates/frontpage.dev.html:27
 msgid "Register Organisation"
-msgstr "Registrar Organização"
+msgstr ""
 
 #: saas/templates/frontpage.dev.html:32
 msgid "Select a tailored support plan"
-msgstr "Selecione um plano de suporte sob medida"
+msgstr ""
 
 #: saas/templates/frontpage.dev.html:33
 msgid "Need a service plan tailored to your needs, let us know."
 msgstr ""
-"Precisa de um plano de serviço sob medida para suas necessidades, fale "
-"conosco."
 
 #: saas/templates/frontpage.dev.html:34
 msgid "Tailored service"
-msgstr "Serviço sob medida"
+msgstr ""
 
 #: saas/templates/frontpage.dev.html:41 webapp/templates/frontpage.dev.html:15
 msgid "Already have an organisation, Start here"
-msgstr "Já tem uma organização, comece por aqui"
+msgstr ""
 
 #: saas/templates/frontpage.dev.html:42 webapp/templates/frontpage.dev.html:16
 msgid ""
@@ -1346,128 +1277,126 @@ msgstr ""
 
 #: saas/templates/frontpage.dev.html:43 webapp/templates/frontpage.dev.html:17
 msgid "Browse Organisations"
-msgstr "Procurar Organizações"
+msgstr ""
 
 #: saas/templates/frontpage.dev.html:44 webapp/templates/frontpage.dev.html:18
 msgid "Browse Repositories"
-msgstr "Procurar repositórios"
+msgstr ""
 
 #: saas/templates/frontpage.dev.html:51 webapp/templates/frontpage.dev.html:25
 msgid "Join the team"
-msgstr "Junte-se à equipe"
+msgstr ""
 
 #: saas/templates/frontpage.dev.html:52 webapp/templates/frontpage.dev.html:26
 msgid "Get aboard by contributing and/or joining the "
-msgstr "Suba a bordo contribuindo e/ou juntando-se ao"
+msgstr ""
 
 #: saas/templates/frontpage.dev.html:52 webapp/templates/frontpage.dev.html:26
 msgid "team"
-msgstr "equipe"
+msgstr ""
 
 #: saas/templates/frontpage.dev.html:52 webapp/templates/frontpage.dev.html:26
 msgid "or if you are already on keybase"
-msgstr "ou se você já estiver no keybase"
+msgstr ""
 
 #: saas/templates/frontpage.dev.html:52 webapp/templates/frontpage.dev.html:26
 msgid "Team OpenEA"
-msgstr "Equipe OpenEA"
+msgstr ""
 
 #: saas/templates/frontpage.dev.html:58 webapp/templates/frontpage.dev.html:32
 msgid "Get help"
-msgstr "Obtenha ajuda"
+msgstr ""
 
 #: saas/templates/frontpage.dev.html:59 webapp/templates/frontpage.dev.html:33
 msgid "The source is available here."
-msgstr "A fonte está disponível aqui."
+msgstr ""
 
 #: saas/templates/frontpage.dev.html:60 webapp/templates/frontpage.dev.html:34
 msgid "Open Source"
-msgstr "Código Aberto"
+msgstr ""
 
 #: saas/templates/layout.html:25 webapp/templates/layout.html:25
 msgid "Placeholder for page content."
-msgstr "Espaço reservado para o conteúdo da página."
+msgstr ""
 
 #: saas/templates/layout.html:32 webapp/templates/layout.html:32
 msgid "OpenEA"
 msgstr ""
 
 #: saas/templates/layout.html:35 webapp/templates/layout.html:34
-#, fuzzy
-#| msgid "Version 1.0"
 msgid "Version"
-msgstr "Versão 1.0"
+msgstr ""
 
 #: saas/templates/layout.html:38 webapp/templates/layout.html:37
 msgid "Features"
-msgstr "Características"
+msgstr ""
 
 #: saas/templates/layout.html:40 saas/templates/others/features.html:8
 #: webapp/templates/layout.html:39
 msgid "Web based enterprise architecture tool"
-msgstr "Ferramenta de arquitetura empresarial baseada na Web"
+msgstr ""
 
 #: saas/templates/layout.html:41 saas/templates/others/features.html:10
 #: webapp/templates/layout.html:40
 msgid "Ontology engine and research tool"
-msgstr "Mecanismo de ontologia e ferramenta de pesquisa"
+msgstr ""
 
 #: saas/templates/layout.html:42 saas/templates/others/features.html:12
 #: webapp/templates/layout.html:41
 msgid "Tailored metamodel for your organisation"
-msgstr "Metamodelo sob medida para sua organização"
+msgstr ""
 
 #: saas/templates/layout.html:43 saas/templates/others/features.html:14
 #: webapp/templates/layout.html:42
 msgid "Dynamic visualization"
-msgstr "Visualização Dinâmica"
+msgstr ""
 
 #: saas/templates/layout.html:44 saas/templates/others/features.html:16
 #: webapp/templates/layout.html:43
 msgid "Custom reports on knowledge base"
-msgstr "Relatórios personalizados na base de conhecimento"
+msgstr ""
 
 #: saas/templates/layout.html:45 saas/templates/others/features.html:18
 #: webapp/templates/layout.html:44
 msgid "Model exchange"
-msgstr "Troca de modelo"
+msgstr ""
 
 #: saas/templates/layout.html:46 saas/templates/others/features.html:20
 #: webapp/templates/layout.html:45
 msgid "Custom Plugin development"
-msgstr "Desenvolvimento de plug-in personalizado"
+msgstr ""
 
 #: saas/templates/layout.html:50 webapp/templates/layout.html:49
 msgid "Resources"
-msgstr "Recursos"
+msgstr ""
 
 #: saas/templates/layout.html:53 webapp/templates/layout.html:60
 msgid "Terms"
-msgstr "Termos"
+msgstr ""
 
 #: saas/templates/layout.html:54 webapp/templates/layout.html:61
 msgid "Privacy Policy"
-msgstr "Política de Privacidade"
+msgstr ""
 
 #: saas/templates/layout.html:58 webapp/templates/layout.html:56
 msgid "About"
-msgstr "Sobre"
+msgstr ""
 
 #: saas/templates/layout.html:60 webapp/templates/layout.html:58
 msgid "Contact us"
-msgstr "Fale conosco"
+msgstr ""
 
 #: saas/templates/layout.html:61 webapp/templates/layout.html:59
 msgid "Team"
-msgstr "Equipe"
+msgstr ""
 
 #: saas/templates/others/terms.html:7 webapp/templates/others/terms.html:7
 msgid "Terms of Use"
-msgstr "Termos de Uso"
+msgstr ""
 
 #: saas/templates/others/terms.html:9 webapp/templates/others/terms.html:9
 msgid "Version 1.0"
-msgstr "Versão 1.0"
+msgstr ""
 
 #: saas/templates/others/terms.html:11 webapp/templates/others/terms.html:11
 msgid ""
@@ -1549,7 +1478,7 @@ msgstr ""
 
 #: saas/templates/others/terms.html:34 webapp/templates/others/terms.html:34
 msgid "<strong>User Content.</strong> "
-msgstr "<strong>Conteúdo do usuário.</strong>"
+msgstr ""
 
 #: saas/templates/others/terms.html:36 webapp/templates/others/terms.html:36
 msgid ""
@@ -1665,7 +1594,7 @@ msgstr ""
 
 #: saas/templates/others/terms.html:63 webapp/templates/others/terms.html:63
 msgid "The site is provided on an "
-msgstr "O site é fornecido em um"
+msgstr ""
 
 #: saas/templates/others/terms.html:65 webapp/templates/others/terms.html:65
 msgid ""
@@ -1968,8 +1897,6 @@ msgstr ""
 #: saas/templates/others/terms.html:138 webapp/templates/others/terms.html:138
 msgid "<strong>Your Privacy.</strong> Please read our Privacy Policy."
 msgstr ""
-"<strong>Sua privacidade.</strong> Por favor, leia nossa Política de "
-"Privacidade."
 
 #: saas/templates/others/terms.html:140 webapp/templates/others/terms.html:140
 msgid ""
@@ -1985,12 +1912,12 @@ msgstr ""
 #: webapp/templates/registration/login.html:5
 #: webapp/templates/user-menu.html:17
 msgid "Sign in"
-msgstr "Entrar"
+msgstr ""
 
 #: saas/templates/registration/login.html:23
 #: webapp/templates/registration/login.html:12
 msgid "Sign In"
-msgstr "Entrar"
+msgstr ""
 
 #: saas/templates/registration/login.html:23
 msgid "ou"
@@ -2001,20 +1928,20 @@ msgstr ""
 #: webapp/templates/registration/login.html:12
 #: webapp/templates/registration/register.html:11
 msgid "Register"
-msgstr "Registrar"
+msgstr ""
 
 #: saas/templates/registration/register.html:5
 #: webapp/templates/registration/register.html:5
 msgid "Create an Account"
-msgstr "Criar uma Conta"
+msgstr ""
 
 #: saas/templates/user-menu.html:14 webapp/templates/user-menu.html:12
 msgid "Sign out"
-msgstr "Sair"
+msgstr ""
 
 #: saas/templates/user-menu.html:18 webapp/templates/user-menu.html:16
 msgid "Request a Demo"
-msgstr "Solicite uma Demonstração"
+msgstr ""
 
 #: stripepay/templates/cancel.html:7 stripepay/templates/success.html:7
 msgid "Return to profile"
@@ -2026,61 +1953,52 @@ msgstr ""
 
 #: taxonomy/templates/tag/tag_create.html:6
 msgid "Add Tag"
-msgstr "Adicionar Etiqueta"
+msgstr ""
 
 #: taxonomy/templates/tag/tag_delete.html:6
 msgid "Delete Tag"
-msgstr "Excluir Etiqueta"
+msgstr ""
 
 #: taxonomy/templates/tag/tag_detail.html:7
 #: taxonomy/templates/tag/tag_list.html:6
 #: taxonomy/templates/tag/tag_table.html:5
 msgid "Tag"
-msgstr "Etiqueta"
+msgstr ""
 
 #: taxonomy/templates/tag/tag_update.html:6
 msgid "Update Tag"
-msgstr "Atualizar Etiqueta"
+msgstr ""
 
 #: taxonomy/templates/tag_group/tag_group_create.html:6
 msgid "Add Tag Group"
-msgstr "Adicionar Grupo de Tags"
+msgstr ""
 
 #: taxonomy/templates/tag_group/tag_group_delete.html:6
 msgid "Delete Tag Group"
-msgstr "Excluir Grupo de Tags"
+msgstr ""
 
 #: taxonomy/templates/tag_group/tag_group_detail.html:7
 #: taxonomy/templates/tag_group/tag_group_list.html:6
 #: taxonomy/templates/tag_group/tag_group_table.html:5
 msgid "Tag Group"
-msgstr "Grupo de Etiquetas"
+msgstr ""
 
 #: taxonomy/templates/tag_group/tag_group_detail.html:10
 msgid "New Tag"
-msgstr "Nova Etiqueta"
+msgstr ""
 
 #: taxonomy/templates/tag_group/tag_group_update.html:6
 msgid "Update Tag Group"
-msgstr "Atualizar Grupo de Tags"
+msgstr ""
 
 #: webapp/templates/frontpage.dev.html:27
 msgid "Contribute"
-msgstr "Contribuir"
+msgstr ""
 
 #: webapp/templates/layout.html:51
 msgid "Documentation"
-msgstr "Documentação"
+msgstr ""
 
 #: webapp/templates/layout.html:52
 msgid "Support"
-msgstr "Suporte"
-
-#~ msgid "Instances Diagram"
-#~ msgstr "Diagrama de Instâncias"
-
-#~ msgid "Ontology Diagram"
-#~ msgstr "Diagrama de Ontologia"
-
-#~ msgid "Slot Value"
-#~ msgstr "Valor do Espaço"
+msgstr ""

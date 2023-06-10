@@ -19,8 +19,6 @@
 
 <p>{{object.description | markdown | safe}}</p>
 <dl class="row">
-    <dt class="col-sm-3">{% trans "Description" %}</dt>
-    <dd class="col-sm-9">{{object.description | markdown | safe}}</dd>
     <dt class="col-sm-3">{% trans "Quality Status" %}</dt>
     <dd class="col-sm-9">{% trans object.get_quality_status_display %}</dd>
     <dt class="col-sm-3">{% trans "Tags" %}</dt>

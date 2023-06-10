@@ -1,9 +1,12 @@
 import uuid
-from django.db import models
-from openea.utils import Utils
 
-from organisation.models import Organisation, Profile
 from django.contrib.auth.models import User
+from django.db import models
+from django.utils.translation import gettext as _
+
+from openea.utils import Utils
+from organisation.models import Organisation, Profile
+
 
 class SecurityGroup(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -18,12 +21,12 @@ class SecurityGroup(models.Model):
         deferrable=models.Deferrable.DEFERRED,
     )
 
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='security_group_created')
-    modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='security_group_modified')
-    deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='security_group_deleted')
+    created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='security_group_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='security_group_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='security_group_deleted')
 
     def get_or_create(name, organisation, description=''):
         try:
@@ -70,12 +73,12 @@ class Permission(models.Model):
     object_identifier = models.UUIDField(blank=True, null=True)
     organisation = models.ForeignKey(Organisation, on_delete=models.DO_NOTHING, null=True, related_name='organisation_permissions')
 
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='permission_created')
-    modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='permission_modified')
-    deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='permission_deleted')
+    created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='permission_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='permission_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='permission_deleted')
 
     unique_permission_per_organisation = models.UniqueConstraint(
         name='unique_permission_per_organisation',

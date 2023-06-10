@@ -1,8 +1,12 @@
 import uuid
-from django.db import models
+
 from django.contrib.auth.models import User
+from django.db import models
+from django.utils.translation import gettext as _
+
 from openea.utils import Utils
 from organisation.models import Organisation
+
 
 class TagGroup(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -10,12 +14,12 @@ class TagGroup(models.Model):
     description = models.TextField(blank=True, null=True)
     organisation = models.ForeignKey(Organisation, on_delete=models.DO_NOTHING, null=True, related_name='organisation_tag_groups')
 
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='tag_created')
-    modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='tag_modified')
-    deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='tag_deleted')
+    created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='tag_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='tag_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='tag_deleted')
 
     def get_or_create(name, description=''):
         try:
@@ -43,12 +47,12 @@ class Tag(models.Model):
     description = models.TextField(blank=True, null=True)
     tag_group = models.ForeignKey(TagGroup, on_delete=models.DO_NOTHING, null=True, related_name='tag_groups_tags')
 
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='tag_group_created')
-    modified_at = models.DateTimeField(auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='tag_group_modified')
-    deleted_at = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='tag_group_deleted')
+    created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='tag_group_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='tag_group_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='tag_group_deleted')
 
     def get_or_create(name, description=''):
         try:
