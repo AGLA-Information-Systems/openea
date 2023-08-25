@@ -58,7 +58,7 @@ class Repository(GenericModel, models.Model):
         constraints = [
             models.UniqueConstraint(
                 name='unique_repository_per_organisation',
-                fields=['name', 'organisation'],
+                fields=['name', 'id', 'organisation'],
                 deferrable=models.Deferrable.DEFERRED,
             )
         ]
@@ -122,7 +122,7 @@ class OModel(GenericModel, models.Model):
         constraints = [
             models.UniqueConstraint(
                 name='unique_model_version_per_repository',
-                fields=['name', 'version', 'repository'],
+                fields=['name', 'version', 'id', 'repository', 'organisation'],
                 deferrable=models.Deferrable.DEFERRED,
             )
         ]
@@ -175,7 +175,7 @@ class OConcept(GenericModel, models.Model):
         constraints = [
             models.UniqueConstraint(
                 name='unique_concept_per_model',
-                fields=['name', 'model'],
+                fields=['name', 'id', 'model', 'organisation'],
                 deferrable=models.Deferrable.DEFERRED,
             )
         ]
@@ -242,7 +242,7 @@ class ORelation(GenericModel, models.Model):
         constraints = [
             models.UniqueConstraint(
                 name='unique_relation_per_model',
-                fields=['name', 'model'],
+                fields=['name', 'id', 'model', 'organisation'],
                 deferrable=models.Deferrable.DEFERRED,
             )
         ]
@@ -315,7 +315,7 @@ class OPredicate(GenericModel, models.Model):
         constraints = [
             models.UniqueConstraint(
                 name='unique_predicate_per_model',
-                fields=['subject', 'relation', 'object', 'model'],
+                fields=['subject', 'relation', 'object', 'id', 'model', 'organisation'],
                 deferrable=models.Deferrable.DEFERRED,
             )
         ]
@@ -373,7 +373,7 @@ class OInstance(GenericModel, models.Model):
         constraints = [
             models.UniqueConstraint(
                 name='unique_instance_per_concept',
-                fields=['name', 'concept'],
+                fields=['name', 'id', 'concept', 'model', 'organisation'],
                 deferrable=models.Deferrable.DEFERRED,
             )
         ]
@@ -446,7 +446,7 @@ class OSlot(GenericModel, models.Model):
         constraints = [
             models.UniqueConstraint(
                 name='unique_slot_per_model',
-                fields=['subject', 'predicate', 'object', 'model'],
+                fields=['subject', 'predicate', 'object', 'model', 'organisation'],
                 deferrable=models.Deferrable.DEFERRED,
             )
         ]
