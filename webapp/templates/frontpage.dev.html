@@ -10,11 +10,21 @@
   <p class="col-md-8 fs-4">{% trans "The mission of OpenEA (Open Enterprise Architect) is to provide an open source enterprise-grade Enterprise Architecture tool, for governments, and researchers." %}</p>
 </div>
 
+{% if user.active_profile is None %}
+<div class="p-5 mb-4 bg-light rounded-3">
+  <div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold">{% trans "Join or Create an organisation" %}</h1>
+    <p class="col-md-8 fs-4">{% trans "The entry point for defining an ontology is the repository. A repository may contain one or more versioned models/metamodels" %}</p>
+    <a href="{% url 'organisation_create' %}" class="btn btn-primary btn-lg">{% trans "Create Organisation" %}</a>
+    <a href="{% url 'organisation_list' %}" class="btn btn-primary btn-lg">{% trans "Browse Organisations" %}</a>
+  </div>
+</div>
+{% endif %}
+
 <div class="p-5 mb-4 bg-light rounded-3">
   <div class="container-fluid py-5">
     <h1 class="display-5 fw-bold">{% trans "Already have an organisation, Start here" %}</h1>
     <p class="col-md-8 fs-4">{% trans "The entry point for defining an ontology is the repository. A repository may contain one or more versioned models/metamodels" %}</p>
-    <a href="{% url 'organisation_list' %}" class="btn btn-primary btn-lg">{% trans "Browse Organisations" %}</a>
     <a href="{% url 'repository_list' %}" class="btn btn-primary btn-lg">{% trans "Browse Repositories" %}</a>
   </div>
 </div>

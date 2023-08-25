@@ -1,17 +1,16 @@
 from django.views.generic import DetailView
 from django.core.paginator import Paginator
 
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from taxonomy.models import TagGroup, Tag
-from organisation.models import Profile
+from openea.utils import Utils
 
-
-class TagGroupDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, DetailView):
+class TagGroupDetailView(LoginRequiredMixin, DetailView):
     model = TagGroup
     template_name = "tag_group/tag_group_detail.html"
     paginate_by = 10000
-    permission_required = [('VIEW', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_VIEW, model.get_object_type(), None)]
 
     def get_context_data(self, **kwargs):
         context = super(TagGroupDetailView, self).get_context_data(**kwargs)

@@ -22,6 +22,7 @@ CONTACT_EMAIL = ini_config.get('DEFAULT', "CONTACT_EMAIL", fallback='email@email
 DOMAIN_URL = ini_config.get('DEFAULT', "DOMAIN_URL", fallback='http://localhost:8000/')
 DEFAULT_CURRENCY = ini_config.get('DEFAULT', "DEFAULT_CURRENCY", fallback='')
 RESOURCE_CONCEPT = ini_config.get('DEFAULT', "RESOURCE_CONCEPT", fallback='{Resource}')
+LOGIN_URL = '/user/login/'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,6 +43,7 @@ ALLOWED_HOSTS = ini_config.get('DEFAULT', "DJANGO_ALLOWED_HOSTS", fallback='*').
 INSTALLED_APPS = ['webapp.apps.WebappConfig']
 INSTALLED_APPS += [
     'organisation.apps.OrganisationConfig',
+    'log.apps.LogConfig',
     'authorization.apps.AuthorizationConfig',
     'authentication.apps.AuthenticationConfig',
     'ontology.apps.OntologyConfig',
@@ -55,6 +57,7 @@ INSTALLED_APPS += [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rosetta',
     'crispy_forms',
     "crispy_bootstrap5",
     'pagedown',
@@ -72,7 +75,15 @@ MIDDLEWARE = [
 
     'django.middleware.locale.LocaleMiddleware',
     'organisation.middleware.profile.ActiveProfileMiddleware',
+    'authorization.middleware.access.ACLMiddleware',
+    'log.middleware.request.RequestMiddleware',
+    'log.middleware.log.ExecutionTimeMiddleware'
 ]
+
+if DEBUG:
+    MIDDLEWARE += [
+        #'log.middleware.sql.SQLMiddleware'
+    ]
 
 ROOT_URLCONF = 'openea.urls'
 
@@ -94,6 +105,11 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'openea.wsgi.application'
+
+AUTHENTICATION_BACKENDS = [
+    #"django.contrib.auth.backends.ModelBackend"
+    "authentication.backends.authentication.CustomAuthenticationBackend"
+]
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -143,8 +159,8 @@ USE_L10N = True
 USE_TZ = True
 
 LANGUAGES = [
-  ('fr-ca', 'French'),
-  ('en', 'English'),
+  ('en-us', 'English'),
+  ('fr', 'French'),
   ('es', 'Spanish'),
   ('de', 'German'),
   ('ja', 'Japanese'),

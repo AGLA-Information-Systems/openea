@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from organisation.models import Organisation, Profile, Task
+
+admin.site.register([Organisation, Profile, Task])

@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block content %}
+<h2 class="form-title">{% trans "Task" %}</h2>
+
+{% include "task/task_table.html"%}
+
+<a href="{% url "task_create_user" user_id=user.id %}">{% trans "New" %}</a>
+
+{% endblock content %}

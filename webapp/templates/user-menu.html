@@ -1,15 +1,27 @@
 {% load i18n %}
 {% if user.is_authenticated %}
- <div class="dropdown">
-    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">{{ user.username }}:{{ user.active_profile.role }}@{{ user.active_profile.organisation.name }}</a>
-    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser1">
-      <!--<li><a class="dropdown-item" href="{% url 'organisation_create' %}">New organisation...</a></li>-->
-      <li><a class="dropdown-item" href="{% url 'repository_list' %}">{% trans "Repositories" %}</a>
-      <li><a class="dropdown-item" href="{% url 'profile_list_user' user_id=user.id %}">{% trans "Profiles" %}</a></li>
-      <li><a class="dropdown-item" href="{% url 'task_list_user' user_id=user.id %}">{% trans "Tasks" %}</a></li>
-      <!--<li><a class="dropdown-item" href="{% url 'organisation_list_user' user_id=user.id %}">Organisations</a></li>-->
-      <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" href="{% url 'logout' %}">{% trans "Sign out" %}</a></li>
+<div class="dropdown">
+  <a href="#" class="d-flex py-2 align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">{{ user.username }}:{{ user.active_profile.role }}@{{ user.active_profile.organisation.name }}</a>
+  <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser1">
+    {% if user.active_profile is not None %}
+
+
+    <!--<li><a class="dropdown-item" href="{% url 'organisation_create' %}">New organisation...</a></li>-->
+    <li><a class="dropdown-item" href="{% url 'repository_list' %}">{% trans "Repositories" %}</a>
+    <li><a class="dropdown-item" href="{% url 'profile_list_user' user_id=user.id %}">{% trans "Profiles" %}</a></li>
+    <li><a class="dropdown-item" href="{% url 'task_list_user' user_id=user.id %}">{% trans "Tasks" %}</a></li>
+    <!--<li><a class="dropdown-item" href="{% url 'organisation_list_user' user_id=user.id %}">Organisations</a></li>-->
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="{% url 'organisation_list_user' user_id=user.id %}">Organisations</a></li>
+    <li><hr class="dropdown-divider"></li>
+      
+
+    {% else %}
+    <li><a class="dropdown-item" href="{% url 'organisation_create' %}">Create Organisation</a></li>
+
+    {% endif %}
+    <li><a class="dropdown-item" href="{% url 'password_change' %}">{% trans "Change password" %}</a></li>
+    <li><a class="dropdown-item" href="{% url 'logout' %}">{% trans "Sign out" %}</a></li>
     </ul>
   </div>
 {% else %}

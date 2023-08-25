@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block title %}{% trans "Sign in" %}{% endblock %}
+
+{% block content %}
+<h2>{% trans "Sign in" %}</h2>
+<form class="form-group" method="POST">
+  {{ form.non_field_errors }}
+  {% csrf_token %}
+
+  {% for field in form %}
+    <div class="form-group">
+        <div>{{ field.errors }}</div>
+        <!--<div>{{ field.label }}</div>-->
+        <div>{{ field|as_crispy_field }}</div>
+    </div>
+  {% endfor %}
+  <button class="btn btn-success" type="submit">{% trans "Sign In" %}</button>
+  <br/> 
+  <a href="{% url 'password_reset' %}">{% trans "Forgotten password" %}</a> {% trans "or" %} <a href="{% url 'register' %}">{% trans "Create an Account" %}</a>
+</form>
+
+{% endblock content %}

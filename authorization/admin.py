@@ -1,3 +1,5 @@
 from django.contrib import admin
+from authorization.models import AccessPermission, Permission, SecurityGroup
 
-# Register your models here.
+
+admin.site.register([Permission, AccessPermission, SecurityGroup])

@@ -1,16 +1,17 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import FormView
-from datetime import datetime
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from django.utils import timezone
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.forms.o_instance.o_instance_update import OInstanceUpdateForm
 from ontology.models import OInstance, OPredicate, OSlot
 from openea.utils import Utils
+from openea.utils import Utils
 from utils.views.custom import SingleObjectView
 
 
-class OInstanceUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, FormView):
+class OInstanceUpdateView(LoginRequiredMixin, SingleObjectView, FormView):
     model = OInstance
     template_name = "o_instance/o_instance_update.html"
     form_class = OInstanceUpdateForm
@@ -31,7 +32,7 @@ class OInstanceUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, Sin
         #instance.tag_groups = form.cleaned_data.get('tag_groups')
         instance.tags.set(form.cleaned_data.get('tags', []))
         instance.modified_by = self.request.user
-        instance.modified_at = datetime.now()
+        instance.modified_at = timezone.now()
         instance.save()
 
         predicates_as_subject = OPredicate.objects.filter(subject=concept).all()

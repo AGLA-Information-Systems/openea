@@ -1,15 +1,16 @@
 from utils.views.custom import CustomCreateView
 from django.urls import reverse_lazy, reverse
 from taxonomy.models import Tag
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from openea.utils import Utils
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-class TagCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CustomCreateView):
+
+class TagCreateView(LoginRequiredMixin, CustomCreateView):
     model = Tag
     fields = ['name', 'description', 'tag_group']
     template_name = "tag/tag_create.html"
     #success_url = reverse_lazy('tag_list')
-    permission_required = [('CREATE', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_CREATE, model.get_object_type(), None)]
 
     def form_valid(self, form):
         if self.request.user.is_authenticated:

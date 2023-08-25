@@ -1,15 +1,16 @@
 from django.views.generic import ListView
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+
 from django.contrib.auth.mixins import LoginRequiredMixin
+from openea.utils import Utils
 from utils.views.custom import MultipleObjectsView
 
 from organisation.models import Task
 
-class TaskListView(LoginRequiredMixin, CustomPermissionRequiredMixin, MultipleObjectsView, ListView):
+class TaskListView(LoginRequiredMixin, MultipleObjectsView, ListView):
     model = Task
     template_name = "task/task_list.html"
     paginate_by = 10000
-    permission_required = [('LIST', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_LIST, model.get_object_type(), None)]
 
     def get_queryset(self):
         # search = self.request.GET.get('search')
@@ -20,22 +21,22 @@ class TaskListView(LoginRequiredMixin, CustomPermissionRequiredMixin, MultipleOb
         return qs.all().order_by('-created_at')
 
 
-class TaskListUserView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
+class TaskListUserView(LoginRequiredMixin, ListView):
     model = Task
     template_name = "task/task_list.html"
     paginate_by = 10000
-    permission_required = [('LIST', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_LIST, model.get_object_type(), None)]
 
     def get_queryset(self):
         qs = super().get_queryset() 
         return qs.filter(user=self.request.user).order_by('-created_at')
 
 
-class TaskListOrganisationView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
+class TaskListOrganisationView(LoginRequiredMixin, ListView):
     model = Task
     template_name = "task/task_list.html"
     paginate_by = 10000
-    permission_required = [('LIST', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_LIST, model.get_object_type(), None)]
 
     def get_queryset(self):
         qs = super().get_queryset() 

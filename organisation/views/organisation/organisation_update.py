@@ -1,12 +1,13 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+
 from django.contrib.auth.mixins import LoginRequiredMixin
+from openea.utils import Utils
 from utils.views.custom import SingleObjectView
-from datetime import datetime
+from django.utils import timezone
 from organisation.models import Organisation
 
-class OrganisationUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
+class OrganisationUpdateView(LoginRequiredMixin, SingleObjectView, UpdateView):
     model = Organisation
     fields = ['name', 'description', 'location']
     template_name = "organisation/organisation_update.html"
@@ -15,5 +16,5 @@ class OrganisationUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, 
 
     def form_valid(self, form):
         form.instance.modified_by = self.request.user
-        form.instance.modified_at = datetime.now()
+        form.instance.modified_at = timezone.now()
         return super().form_valid(form)

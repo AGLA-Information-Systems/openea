@@ -1,22 +1,23 @@
+import traceback
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from django.core.exceptions import SuspiciousOperation
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.controllers.utils import KnowledgeBaseUtils
 from ontology.forms.o_slot.o_slot_create import OSlotCreateForm
 from django.views.generic.edit import FormView
 
 from ontology.models import OConcept, OInstance, OPredicate, OSlot
-from utils.generic import handle_errors
 from utils.views.custom import ReferrerView
+from openea.utils import Utils
 
-class OSlotCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, ReferrerView, FormView):
+class OSlotCreateView(LoginRequiredMixin, ReferrerView, FormView):
     model = OSlot
     template_name = "o_slot/o_slot_create.html"
     form_class = OSlotCreateForm
     #success_url = reverse_lazy('o_slot_list')
-    permission_required = [('CREATE', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_CREATE, model.get_object_type(), None)]
 
-    @handle_errors
     def form_valid(self, form):
         self.return_url = self.request.POST.get('return_url')
         form.instance.created_by = self.request.user
@@ -59,14 +60,19 @@ class OSlotCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, Referre
         if predicate.cardinality_max != 0 and slots_count >= predicate.cardinality_max:
             raise ValueError('MAX_SLOTS_REACHED')
 
-        slot, created = OSlot.objects.get_or_create(
-            model=model, 
-            predicate=predicate, 
-            subject=subject,
-            object=object,
-            order=order
-        )
-        return super().form_valid(form)
+        try:
+            slot, created = OSlot.objects.get_or_create(
+                model=model,
+                organisation=model.organisation,
+                predicate=predicate, 
+                subject=subject,
+                object=object,
+                order=order
+            )
+        except Exception as e:
+            traceback.print_exc()
+            raise SuspiciousOperation(str(e))
+        return HttpResponseRedirect(self.get_success_url())
 
     def get_initial(self):
         initials = super().get_initial()

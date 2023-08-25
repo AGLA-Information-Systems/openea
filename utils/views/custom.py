@@ -1,18 +1,36 @@
 from django.http import Http404
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import ImproperlyConfigured
 from urllib.parse import urlparse
 from organisation.models import Organisation
-from datetime import datetime
 from django.views.generic.edit import CreateView
 
 
 class ReferrerView:
+    """
+    Master view class that provides default functions.
+    """
     organisation = None
+    permission_required = []
 
-    def get_current_organisation(self, request, *args, **kwargs):
-        if hasattr(self, 'object') and self.object is not None:
-            self.organisation = self.object.get_organsiation()
-            object_id = str(self.object.id)
+    def get_permission_required(self):
+        """
+        Override this method to override the permission_required attribute.
+        Must return an iterable.
+        """
+        if self.permission_required is None:
+            raise ImproperlyConfigured(
+                f"{self.__class__.__name__} is missing the "
+                f"permission_required attribute. Define "
+                f"{self.__class__.__name__}.permission_required, or override "
+                f"{self.__class__.__name__}.get_permission_required()."
+            )
+        if isinstance(self.permission_required, tuple):
+            perms = [self.permission_required]
+        else:
+            perms = self.permission_required
+        return perms
+
+    def get_target_organisation(self, *args, **kwargs):
         if self.organisation is None and self.request.user.is_authenticated and self.request.user.active_profile is not None:
             self.organisation = self.request.user.active_profile.organisation
         return self.organisation
@@ -25,6 +43,14 @@ class ReferrerView:
         context["return_path"] = parsed.path
         self.return_url = full_url
         return context
+    
+    def dispatch(self, request, *args, **kwargs):
+        permissions_required = self.get_permission_required()
+        if permissions_required:
+            self.get_target_organisation()
+            request.acl.check_raise(organisation=self.organisation, permissions_required=permissions_required)
+        self.request.view = self
+        return super().dispatch(request, *args, **kwargs)
 
 class SingleObjectView (ReferrerView):
     def get_object(self, **kwargs):
@@ -45,7 +71,7 @@ class SingleObjectView (ReferrerView):
     #     if self.request.user.active_profile.organisation != form.instance.organisation:
     #         raise PermissionDenied()
     #     form.instance.modified_by = self.request.user
-    #     form.instance.modified_at = datetime.now()
+    #     form.instance.modified_at = timezone.now()
     #     return super().form_valid(form)
     
 class MultipleObjectsView (ReferrerView):
@@ -63,7 +89,6 @@ class MultipleObjectsView (ReferrerView):
 class CustomCreateView(ReferrerView, CreateView):
     def post(self, request, *args, **kwargs):
         self.object = None
-        #check access
-        self.get_current_organisation(request, *args, **kwargs)
-
+        #check payment access
+        
         return super(CustomCreateView, self).post(request, *args, **kwargs)

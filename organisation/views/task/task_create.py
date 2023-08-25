@@ -1,16 +1,15 @@
 from utils.views.custom import CustomCreateView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from organisation.models import Task
-
-class TaskCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CustomCreateView):
+from openea.utils import Utils
+class TaskCreateView(LoginRequiredMixin, CustomCreateView):
     model = Task
     fields = ['name', 'description', 'attachment', 'organisation']
     template_name = "task/task_create.html"
     #success_url = reverse_lazy('task_list')
-    permission_required = [('CREATE', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_CREATE, model.get_object_type(), None)]
 
     def form_valid(self, form):
         if self.request.user.is_authenticated:

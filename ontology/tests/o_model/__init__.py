@@ -3,3 +3,5 @@ from .o_model_update_test import OModelUpdateTestCase
 from .o_model_detail_test import OModelDetailTestCase
 from .o_model_create_test import OModelCreateTestCase
 from .o_model_list_test import OModelListTestCase
+from .o_model_export_test import OModelExportTestCase
+from .o_model_import_test import OModelImportTestCase

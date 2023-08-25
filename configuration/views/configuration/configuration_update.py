@@ -1,11 +1,11 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
-from datetime import datetime
+from django.utils import timezone
 from configuration.models import Configuration
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-class ConfigurationUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, UpdateView):
+class ConfigurationUpdateView(LoginRequiredMixin, UpdateView):
     model = Configuration
     fields = ['action', 'object_type', 'object_identifier', 'description', 'organisation']
     template_name = "configuration/configuration_update.html"
@@ -14,7 +14,7 @@ class ConfigurationUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin,
 
     def form_valid(self, form):
         form.instance.modified_by = self.request.user
-        form.instance.modified_at = datetime.now()
+        form.instance.modified_at = timezone.now()
         return super().form_valid(form)
 
     def get_success_url(self):

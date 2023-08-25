@@ -1,22 +1,21 @@
 from django.views.generic import ListView
 
 from configuration.models import Configuration
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
+from openea.utils import Utils
 
-
-class ConfigurationListView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
+class ConfigurationListView(LoginRequiredMixin, ListView):
     model = Configuration
     template_name = "configuration/configuration_list.html"
     paginate_by = 10000
-    configuration_required = [('LIST', model.get_object_type(), None)]
+    configuration_required = [(Utils.PERMISSION_ACTION_LIST, model.get_object_type(), None)]
 
 
-class ConfigurationListUserView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
+class ConfigurationListUserView(LoginRequiredMixin, ListView):
     model = Configuration
     template_name = "configuration/configuration_list.html"
     paginate_by = 10000
-    configuration_required = [('LIST', model.get_object_type(), None)]
+    configuration_required = [(Utils.PERMISSION_ACTION_LIST, model.get_object_type(), None)]
 
     def get_queryset(self):
         # search = self.request.GET.get('search')
@@ -27,11 +26,11 @@ class ConfigurationListUserView(LoginRequiredMixin, CustomPermissionRequiredMixi
         return qs.filter(user=self.request.user)
 
 
-class ConfigurationListOrganisationView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
+class ConfigurationListOrganisationView(LoginRequiredMixin, ListView):
     model = Configuration
     template_name = "configuration/configuration_list.html"
     paginate_by = 10000
-    configuration_required = [('LIST', model.get_object_type(), None)]
+    configuration_required = [(Utils.PERMISSION_ACTION_LIST, model.get_object_type(), None)]
 
     def get_queryset(self):
         qs = super().get_queryset() 

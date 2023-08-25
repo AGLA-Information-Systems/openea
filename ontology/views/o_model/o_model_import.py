@@ -9,7 +9,7 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views import View
 
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+
 from ontology.controllers.o_model import ModelUtils
 from ontology.forms import ModelExportForm, ModelImportForm
 from ontology.models import OModel
@@ -20,7 +20,7 @@ from organisation.controllers.tasks import TaskController
 from organisation.models import TASK_STATUS_SUCCESS, TASK_TYPE_IMPORT, Task
 
 
-class ModelImportView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
+class ModelImportView(LoginRequiredMixin, View):
     form_class = ModelImportForm
     template_name = 'o_model/o_model_import.html'
     success_url = reverse_lazy('task_list')

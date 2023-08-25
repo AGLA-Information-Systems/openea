@@ -1,15 +1,16 @@
 from django.views.generic import ListView
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from ontology.models import OInstance
+from openea.utils import Utils
 from utils.views.custom import MultipleObjectsView
 
-class OInstanceListView(LoginRequiredMixin, CustomPermissionRequiredMixin, MultipleObjectsView, ListView):
+class OInstanceListView(LoginRequiredMixin, MultipleObjectsView, ListView):
     model = OInstance
     template_name = "o_instance/o_instance_list.html"
     paginate_by = 10000
-    permission_required = [('LIST', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_LIST, model.get_object_type(), None)]
     
     def get_queryset(self):
         concept_id=self.kwargs.get('concept_id')

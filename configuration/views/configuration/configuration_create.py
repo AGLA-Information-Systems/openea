@@ -2,15 +2,15 @@ from utils.views.custom import CustomCreateView
 from django.urls import reverse_lazy, reverse
 
 from configuration.models import Configuration
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
+from openea.utils import Utils
 
-class ConfigurationCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CustomCreateView):
+class ConfigurationCreateView(LoginRequiredMixin, CustomCreateView):
     model = Configuration
     fields = ['action', 'object_type', 'object_identifier', 'description', 'organisation']
     template_name = "configuration/configuration_create.html"
     #success_url = reverse_lazy('configuration_list')
-    configuration_required = [('CREATE', model.get_object_type(), None)]
+    configuration_required = [(Utils.PERMISSION_ACTION_CREATE, model.get_object_type(), None)]
 
     def form_valid(self, form):
         if self.request.user.is_authenticated:
@@ -28,5 +28,5 @@ class ConfigurationCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin,
         return reverse('organisation_detail', kwargs={'pk': self.object.organisation.id})
 
 
-class ConfigurationRebuildView(LoginRequiredMixin, CustomPermissionRequiredMixin, CustomCreateView):
+class ConfigurationRebuildView(LoginRequiredMixin, CustomCreateView):
     model = Configuration

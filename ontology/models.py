@@ -5,42 +5,30 @@ from django.db import models
 from django.utils.translation import gettext as _
 
 from openea.utils import Utils
-from organisation.models import Organisation
+from organisation.models import Organisation, OrganisationManager
 from taxonomy.models import Tag, TagGroup
-
-__author__ = "Patrick Agbokou"
-__copyright__ = "Copyright 2021, OpenEA"
-__credits__ = ["Patrick Agbokou"]
-__license__ = "Apache License 2.0"
-__version__ = "1.0.0"
-__maintainer__ = "Patrick Agbokou"
-__email__ = "patrick.agbokou@aglaglobal.com"
-__status__ = "Development"
+from utils.generic import GenericModel
 
 
 ###############################################################################
 ### System
 ###############################################################################
-class Repository(models.Model):
+class Repository(GenericModel, models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=1024)
     description = models.TextField(blank=True, null=True)
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE, null=True, related_name='repositories')
     tags = models.ManyToManyField(Tag, blank=True)
 
-    unique_repository_per_organisation = models.UniqueConstraint(
-        name='unique_repository_per_organisation',
-        fields=['name', 'organisation'],
-        deferrable=models.Deferrable.DEFERRED,
-    )
-
     created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='repository_created')
-    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='repository_modified')
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.PROTECT, null=True, related_name='repository_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, blank=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.PROTECT, blank=True, null=True, related_name='repository_modified')
     deleted_at = models.DateTimeField(null=True, verbose_name=_("Deleted at"))
-    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='repository_deleted')
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted by"), on_delete=models.PROTECT, blank=True, null=True, related_name='repository_deleted')
 
+    objects = OrganisationManager()
+    
     def get_or_create(name, version=None, description='', id=None):
         try:
             repository = Repository.objects.get(id=id)
@@ -59,16 +47,21 @@ class Repository(models.Model):
     
     def filter_by_organisation(organisation):
         return Repository.objects.filter(organisation=organisation)
-
-    def get_object_type():
-        return Utils.OBJECT_REPOSITORY
      
     def __str__(self):
         return self.name
     
     class Meta:
-       verbose_name = _('Repository')
-       verbose_name_plural = _('Repositories')
+        verbose_name = _('Repository')
+        verbose_name_plural = _('Repositories')
+
+        constraints = [
+            models.UniqueConstraint(
+                name='unique_repository_per_organisation',
+                fields=['name', 'organisation'],
+                deferrable=models.Deferrable.DEFERRED,
+            )
+        ]
 
 ###############################################################################
 ### Meta
@@ -81,26 +74,23 @@ QUALITY_STATUS = [
         (QUALITY_STATUS_APPROVED, _('Approved')),
 ]
 
-class OModel(models.Model):
+class OModel(GenericModel, models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=1024)
     description = models.TextField(blank=True, null=True)
     version = models.CharField(max_length=60, blank=True, null=True)
     repository = models.ForeignKey(Repository, on_delete=models.CASCADE, null=True, related_name='models')
     tags = models.ManyToManyField(Tag, blank=True)
+    organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE, null=True, related_name='organisation_models')
 
     created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='model_created')
-    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='model_modified')
-    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
-    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='model_deleted')
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.PROTECT, null=True, related_name='model_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, blank=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.PROTECT, blank=True, null=True, related_name='model_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), blank=True, null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted by"), on_delete=models.PROTECT, blank=True, null=True, related_name='model_deleted')
 
-    unique_model_version_per_repository = models.UniqueConstraint(
-        name='unique_model_version_per_repository',
-        fields=['name', 'version', 'repository'],
-        deferrable=models.Deferrable.DEFERRED,
-    )
+    objects = OrganisationManager()
 
     def get_or_create(name, version=None, description='', repository=None, id=None):
         try:
@@ -115,38 +105,46 @@ class OModel(models.Model):
         model.description = description
         model.save()
         return model
-
-    @property
-    def organisation(self):
-        return self.repository.organisation
     
     def get_organisation(self):
         return self.repository.organisation
     
     def filter_by_organisation(organisation):
         return OModel.objects.filter(repository__organisation=organisation)
-
-    def get_object_type():
-        return Utils.OBJECT_MODEL
     
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name = _('Model')
+        verbose_name_plural = _('Models')
+
+        constraints = [
+            models.UniqueConstraint(
+                name='unique_model_version_per_repository',
+                fields=['name', 'version', 'repository'],
+                deferrable=models.Deferrable.DEFERRED,
+            )
+        ]
 
 
-class OConcept(models.Model):
+class OConcept(GenericModel, models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=1024)
     description = models.TextField(blank=True, null=True)
     model = models.ForeignKey(OModel, on_delete=models.CASCADE, null=True, related_name='concepts')
     tags = models.ManyToManyField(Tag, blank=True)
     quality_status = models.CharField(max_length=2, choices=QUALITY_STATUS, default=QUALITY_STATUS_PROPOSED)
+    organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE, null=True, related_name='organisation_concepts')
 
     created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='concept_created')
-    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='concept_modified')
-    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
-    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='concept_deleted')
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.PROTECT, null=True, related_name='concept_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, blank=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.PROTECT, blank=True, null=True, related_name='concept_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), blank=True, null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted by"), on_delete=models.PROTECT, blank=True, null=True, related_name='concept_deleted')
+
+    objects = OrganisationManager()
 
     def get_or_create(name, description='', model=None, id=None):
         try:
@@ -160,24 +158,29 @@ class OConcept(models.Model):
         concept.description = description
         concept.save()
         return concept
-
-    @property
-    def organisation(self):
-        return self.model.repository.organisation
     
     def get_organisation(self):
         return self.model.repository.organisation
     
     def filter_by_organisation(organisation):
         return OConcept.objects.filter(model__repository__organisation=organisation)
-
-    def get_object_type():
-        return Utils.OBJECT_CONCEPT
     
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name = _('Concept')
+        verbose_name_plural = _('Concepts')
 
-class ORelation(models.Model):
+        constraints = [
+            models.UniqueConstraint(
+                name='unique_concept_per_model',
+                fields=['name', 'model'],
+                deferrable=models.Deferrable.DEFERRED,
+            )
+        ]
+
+class ORelation(GenericModel, models.Model):
     """
     Meta class describing predicates between concepts
     """
@@ -198,19 +201,16 @@ class ORelation(models.Model):
     model = models.ForeignKey(OModel, on_delete=models.CASCADE, null=True, related_name='relations')
     tags = models.ManyToManyField(Tag, blank=True)
     quality_status = models.CharField(max_length=2, choices=QUALITY_STATUS, default=QUALITY_STATUS_PROPOSED)
+    organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE, null=True, related_name='organisation_relations')
 
     created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='relation_created')
-    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='relation_modified')
-    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
-    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='relation_deleted')
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.PROTECT, null=True, related_name='relation_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, blank=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.PROTECT, blank=True, null=True, related_name='relation_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), blank=True, null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted by"), on_delete=models.PROTECT, blank=True, null=True, related_name='relation_deleted') 
 
-    unique_relation_per_model = models.UniqueConstraint(
-        name='unique_relation_per_model',
-        fields=['name', 'model'],
-        deferrable=models.Deferrable.DEFERRED,
-    )
+    objects = OrganisationManager()
 
     def get_or_create(model, name, type=PROPERTY, description='', id=None):
         try:
@@ -225,10 +225,6 @@ class ORelation(models.Model):
         relation.type = type
         relation.save()
         return relation
-
-    @property
-    def organisation(self):
-        return self.model.repository.organisation
     
     def get_organisation(self):
         return self.model.repository.organisation
@@ -236,13 +232,23 @@ class ORelation(models.Model):
     def filter_by_organisation(organisation):
         return ORelation.objects.filter(model__repository__organisation=organisation)
 
-    def get_object_type():
-        return Utils.OBJECT_RELATION
-
     def __str__(self):
         return "{}".format(self.name)
+    
+    class Meta:
+        verbose_name = _('Relation')
+        verbose_name_plural = _('Relations')
 
-class OPredicate(models.Model):
+        constraints = [
+            models.UniqueConstraint(
+                name='unique_relation_per_model',
+                fields=['name', 'model'],
+                deferrable=models.Deferrable.DEFERRED,
+            )
+        ]
+
+
+class OPredicate(GenericModel, models.Model):
     """
     Meta class describing predicates between concepts
     """
@@ -257,19 +263,16 @@ class OPredicate(models.Model):
     cardinality_max = models.IntegerField(blank=True, null=True, default=0)
     tags = models.ManyToManyField(Tag, blank=True)
     quality_status = models.CharField(max_length=2, choices=QUALITY_STATUS, default=QUALITY_STATUS_PROPOSED)
+    organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE, null=True, related_name='organisation_predicates')
 
     created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='predicate_created')
-    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='predicate_modified')
-    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
-    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='predicate_deleted')
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.PROTECT, null=True, related_name='predicate_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, blank=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.PROTECT, blank=True, null=True, related_name='predicate_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), blank=True, null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted by"), on_delete=models.PROTECT, blank=True, null=True, related_name='predicate_deleted')
 
-    unique_predicate_per_model = models.UniqueConstraint(
-        name='unique_predicate_per_model',
-        fields=['subject', 'relation', 'object', 'model'],
-        deferrable=models.Deferrable.DEFERRED,
-    )
+    objects = OrganisationManager()
 
     @property
     def name(self):
@@ -291,10 +294,6 @@ class OPredicate(models.Model):
         predicate.cardinality_max= cardinality_max
         predicate.save()
         return predicate
-
-    @property
-    def organisation(self):
-        return self.model.repository.organisation
     
     @property
     def name(self):
@@ -306,14 +305,23 @@ class OPredicate(models.Model):
     def filter_by_organisation(organisation):
         return OPredicate.objects.filter(model__repository__organisation=organisation)
 
-    def get_object_type():
-        return Utils.OBJECT_PREDICATE
-
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name = _('Predicate')
+        verbose_name_plural = _('Predicates')
+
+        constraints = [
+            models.UniqueConstraint(
+                name='unique_predicate_per_model',
+                fields=['subject', 'relation', 'object', 'model'],
+                deferrable=models.Deferrable.DEFERRED,
+            )
+        ]
 
 
-class OInstance(models.Model):
+class OInstance(GenericModel, models.Model):
     """
     Meta class describing instances between concepts
     """
@@ -325,19 +333,16 @@ class OInstance(models.Model):
     model = models.ForeignKey(OModel, on_delete=models.CASCADE, null=True, related_name='model_instances')
     tags = models.ManyToManyField(Tag, blank=True)
     quality_status = models.CharField(max_length=2, choices=QUALITY_STATUS, default=QUALITY_STATUS_PROPOSED)
+    organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE, null=True, related_name='organisation_instances')
 
     created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='instance_created')
-    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='instance_modified')
-    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
-    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='instance_deleted')
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.PROTECT, null=True, related_name='instance_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, blank=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.PROTECT, blank=True, null=True, related_name='instance_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), blank=True, null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted by"), on_delete=models.PROTECT, blank=True, null=True, related_name='instance_deleted')
 
-    unique_instance_per_model = models.UniqueConstraint(
-        name='unique_instance_per_model',
-        fields=['name', 'concept'],
-        deferrable=models.Deferrable.DEFERRED,
-    )
+    objects = OrganisationManager()
 
     def get_or_create(model, name, code, concept, description='', id=None):
         try:
@@ -351,10 +356,6 @@ class OInstance(models.Model):
         instance.concept = concept
         instance.save()
         return instance
-
-    @property
-    def organisation(self):
-        return self.model.repository.organisation
     
     def get_organisation(self):
         return self.model.repository.organisation
@@ -362,13 +363,22 @@ class OInstance(models.Model):
     def filter_by_organisation(organisation):
         return OInstance.objects.filter(model__repository__organisation=organisation)
 
-    def get_object_type():
-        return Utils.OBJECT_INSTANCE
-
     def __str__(self):
         return "{} :: {}".format(self.name, self.concept)
+    
+    class Meta:
+        verbose_name = _('Instance')
+        verbose_name_plural = _('Instances')
 
-class OSlot(models.Model):
+        constraints = [
+            models.UniqueConstraint(
+                name='unique_instance_per_concept',
+                fields=['name', 'concept'],
+                deferrable=models.Deferrable.DEFERRED,
+            )
+        ]
+
+class OSlot(GenericModel, models.Model):
     """
     Meta class describing predicates between concepts
     """
@@ -380,20 +390,16 @@ class OSlot(models.Model):
     object = models.ForeignKey(OInstance, on_delete=models.CASCADE, null=True, related_name='slot_object')
     predicate = models.ForeignKey(OPredicate, on_delete=models.CASCADE, null=True, related_name='used_in')
     model = models.ForeignKey(OModel, on_delete=models.CASCADE, null=True, related_name='slots')
+    organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE, null=True, related_name='organisation_slots')
 
     created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='slot_created')
-    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='slot_modified')
-    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
-    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='slot_deleted')
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.PROTECT, null=True, related_name='slot_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, blank=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.PROTECT, blank=True, null=True, related_name='slot_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), blank=True, null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted by"), on_delete=models.PROTECT, blank=True, null=True, related_name='slot_deleted')
 
-
-    unique_slot_per_model = models.UniqueConstraint(
-        name='unique_slot_per_model',
-        fields=['subject', 'predicate', 'object', 'model'],
-        deferrable=models.Deferrable.DEFERRED,
-    )
+    objects = OrganisationManager()
 
     @property
     def name(self):
@@ -420,10 +426,6 @@ class OSlot(models.Model):
         slot.order = order
         slot.save()
         return slot
-
-    @property
-    def organisation(self):
-        return self.model.repository.organisation
     
     def get_organisation(self):
         return self.model.repository.organisation
@@ -431,16 +433,25 @@ class OSlot(models.Model):
     def filter_by_organisation(organisation):
         return OConcept.objects.filter(model__repository__organisation=organisation)
 
-    def get_object_type():
-        return Utils.OBJECT_INSTANCE
-
     def __str__(self):
         return self.name
     
     def __lt__(self, other):
         return True
+    
+    class Meta:
+        verbose_name = _('Slot')
+        verbose_name_plural = _('Slots')
 
-class OReport(models.Model):
+        constraints = [
+            models.UniqueConstraint(
+                name='unique_slot_per_model',
+                fields=['subject', 'predicate', 'object', 'model'],
+                deferrable=models.Deferrable.DEFERRED,
+            )
+        ]
+
+class OReport(GenericModel, models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=1024)
     description = models.TextField(blank=True, null=True)
@@ -449,13 +460,16 @@ class OReport(models.Model):
     model = models.ForeignKey(OModel, on_delete=models.CASCADE, null=True, related_name='reports')
     tags = models.ManyToManyField(Tag, blank=True)
     quality_status = models.CharField(max_length=2, choices=QUALITY_STATUS, default=QUALITY_STATUS_PROPOSED)
+    organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE, null=True, related_name='organisation_reports')
 
     created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True, null=True)
-    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.DO_NOTHING, null=True, related_name='report_created')
-    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, null=True)
-    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.DO_NOTHING, null=True, related_name='report_modified')
-    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), null=True)
-    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted at"), on_delete=models.DO_NOTHING, null=True, related_name='report_deleted')
+    created_by = models.ForeignKey(User, verbose_name=_("Created by"), on_delete=models.PROTECT, null=True, related_name='report_created')
+    modified_at = models.DateTimeField(verbose_name=_("Modified at"), auto_now=True, blank=True, null=True)
+    modified_by = models.ForeignKey(User, verbose_name=_("Modified by"), on_delete=models.PROTECT, blank=True, null=True, related_name='report_modified')
+    deleted_at = models.DateTimeField(verbose_name=_("Deleted at"), blank=True, null=True)
+    deleted_by = models.ForeignKey(User, verbose_name=_("Deleted by"), on_delete=models.PROTECT, blank=True, null=True, related_name='report_deleted')
+
+    objects = OrganisationManager()
 
     def get_or_create(name, description='', model=None, id=None, path=None, content=''):
         try:
@@ -471,18 +485,19 @@ class OReport(models.Model):
         report.save()
         return report
     
-    @property
-    def organisation(self):
-        return self.model.repository.organisation
-    
     def get_organisation(self):
         return self.model.repository.organisation
     
     def filter_by_organisation(organisation):
         return OConcept.objects.filter(model__repository__organisation=organisation)
     
-    def get_object_type():
-        return Utils.OBJECT_REPORT
+    @classmethod
+    def get_actions(cls):
+        return [Utils.PERMISSION_ACTION_CREATE, Utils.PERMISSION_ACTION_LIST, Utils.PERMISSION_ACTION_VIEW, Utils.PERMISSION_ACTION_UPDATE, Utils.PERMISSION_ACTION_EXECUTE]
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = _('Report')
+        verbose_name_plural = _('Reports')

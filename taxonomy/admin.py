@@ -1,3 +1,5 @@
 from django.contrib import admin
+from taxonomy.models import Tag, TagGroup
 
-# Register your models here.
+
+admin.site.register([TagGroup, Tag])

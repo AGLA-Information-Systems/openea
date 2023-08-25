@@ -1,3 +1,5 @@
 from django.contrib import admin
+from ontology.models import OConcept, OInstance, OModel, OPredicate, ORelation, OReport, OSlot, Repository
 
-# Register your models here.
+
+admin.site.register([Repository, OModel, OConcept, ORelation, OPredicate, OInstance, OSlot, OReport])

@@ -9,8 +9,7 @@
     <thead>
         <tr>
             <th>{% trans "Permission" %}</th>
-            <th>{% trans "Organisation" %}</th>
-            <th>{% trans "View" %}</th>
+            <th></th>
             <th></th>
             <th></th>
         </tr>
@@ -19,7 +18,6 @@
         {% for Permission in object_list %}
         <tr>
             <td>{{ Permission }}</td>
-            <td><a href="{% url "organisation_detail" Permission.organisation.id %}">{{ Permission.organisation.name }}</a></td>
             <td><a href="{% url "permission_detail" Permission.id %}">{% trans "view" %}</a></td>
             <td><a href="{% url "permission_update" Permission.id %}">{% trans "edit" %}</a></td>
             <td><a href="{% url "permission_delete" Permission.id %}">{% trans "delete" %}</a></td>

@@ -1,5 +1,2 @@
-from .permission_delete import PermissionDeleteView
-from .permission_update import PermissionUpdateView
 from .permission_detail import PermissionDetailView
-from .permission_create import PermissionCreateView
-from .permission_list import PermissionListView, PermissionListOrganisationView, PermissionListUserView
+from .permission_list import PermissionListView

@@ -8,7 +8,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
 
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+
 from ontology.controllers.o_model import ModelUtils
 from ontology.forms import ModelExportForm
 from ontology.models import OModel
@@ -18,7 +18,7 @@ from organisation.controllers.tasks import TaskController
 from organisation.models import TASK_STATUS_SUCCESS, TASK_TYPE_EXPORT, Task
 
 
-class ModelExportView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
+class ModelExportView(LoginRequiredMixin, View):
     form_class = ModelExportForm
     template_name = 'o_model/o_model_export.html'
     success_url = reverse_lazy('task_list')

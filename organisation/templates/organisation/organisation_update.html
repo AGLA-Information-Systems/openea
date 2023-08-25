@@ -7,6 +7,6 @@
 <form class="form-group" method="POST">
     {% csrf_token %}
     {{ form|crispy }}
-    <input type="submit" value="{% trans "Submit" %} " />
+    <input type="submit" class='btn btn-primary btn-lg' value="{% trans "Submit" %} " />
 </form>
 {% endblock content %}

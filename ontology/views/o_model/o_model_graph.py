@@ -6,17 +6,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, HttpResponse
 from django.views import View
 
-from authorization.controllers.utils import CustomPermissionRequiredMixin
-from authorization.models import Permission
+
+from openea.utils import Utils
 from ontology.controllers.graphviz import GraphvizController
 from ontology.controllers.o_model import ModelUtils
 from ontology.models import OModel
+from openea.utils import Utils
 from utils.views.custom import SingleObjectView
 
 
-class OModelGraphView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, View):
+class OModelGraphView(LoginRequiredMixin, SingleObjectView, View):
     model = OModel
-    permission_required = [(Permission.PERMISSION_ACTION_VIEW, model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_VIEW, model.get_object_type(), None)]
 
     def post(self, request, *args, **kwargs):
         model_id = kwargs.pop('model_id')

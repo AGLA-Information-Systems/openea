@@ -1,14 +1,15 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse, reverse_lazy
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from ontology.forms.repository.repository_update import RepositoryUpdateForm
-from datetime import datetime
+from django.utils import timezone
 from ontology.models import Repository
+from openea.utils import Utils
 from utils.views.custom import SingleObjectView
 
-class RepositoryUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
+class RepositoryUpdateView(LoginRequiredMixin, SingleObjectView, UpdateView):
     model = Repository
     template_name = "repository/repository_update.html"
     form_class = RepositoryUpdateForm
@@ -17,7 +18,7 @@ class RepositoryUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, Si
 
     def form_valid(self, form):
         form.instance.modified_by = self.request.user
-        form.instance.modified_at = datetime.now()
+        form.instance.modified_at = timezone.now()
         return super().form_valid(form)
     
     def get_initial(self):

@@ -1,13 +1,14 @@
 import re
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+
 from django.contrib.auth.mixins import LoginRequiredMixin
-from datetime import datetime
+from django.utils import timezone
 from ontology.models import OReport
+from openea.utils import Utils
 from utils.views.custom import SingleObjectView
 
-class OReportUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
+class OReportUpdateView(LoginRequiredMixin, SingleObjectView, UpdateView):
     model = OReport
     fields = ['name', 'description', 'path', 'content', 'model', 'quality_status',  'tags']
     template_name = "o_report/o_report_update.html"
@@ -19,7 +20,7 @@ class OReportUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, Singl
         if path is not None:
             path = re.sub('/+','/', '/' + path.replace('.', '/'))
         form.instance.modified_by = self.request.user
-        form.instance.modified_at = datetime.now()
+        form.instance.modified_at = timezone.now()
         form.instance.path = path
         return super().form_valid(form)
 

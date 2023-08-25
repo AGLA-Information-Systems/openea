@@ -1,24 +1,25 @@
 from django.views.generic import ListView
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+
 from django.contrib.auth.mixins import LoginRequiredMixin
+from openea.utils import Utils
 from utils.views.custom import MultipleObjectsView
 
 
 from organisation.models import Profile
+from openea.utils import Utils
 
-
-class ProfileListView(LoginRequiredMixin, CustomPermissionRequiredMixin, MultipleObjectsView, ListView):
+class ProfileListView(LoginRequiredMixin, MultipleObjectsView, ListView):
     model = Profile
     template_name = "profile/profile_list.html"
     paginate_by = 10000
-    permission_required = [('LIST', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_LIST, model.get_object_type(), None)]
 
 
-class ProfileListUserView(LoginRequiredMixin, CustomPermissionRequiredMixin, MultipleObjectsView, ListView):
+class ProfileListUserView(LoginRequiredMixin, MultipleObjectsView, ListView):
     model = Profile
     template_name = "profile/profile_list.html"
     paginate_by = 10000
-    permission_required = [('LIST', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_LIST, model.get_object_type(), None)]
 
     def get_queryset(self):
         # search = self.request.GET.get('search')
@@ -29,11 +30,11 @@ class ProfileListUserView(LoginRequiredMixin, CustomPermissionRequiredMixin, Mul
         return qs.filter(user=self.request.user)
 
 
-class ProfileListOrganisationView(LoginRequiredMixin, CustomPermissionRequiredMixin, MultipleObjectsView, ListView):
+class ProfileListOrganisationView(LoginRequiredMixin, MultipleObjectsView, ListView):
     model = Profile
     template_name = "profile/profile_list.html"
     paginate_by = 10000
-    permission_required = [('LIST', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_LIST, model.get_object_type(), None)]
 
     def get_queryset(self):
         qs = super().get_queryset() 

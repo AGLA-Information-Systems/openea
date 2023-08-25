@@ -1,11 +1,10 @@
 from django.views.generic import DetailView
 
 from authorization.models import Permission
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
+from openea.utils import Utils
 
-
-class PermissionDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, DetailView):
+class PermissionDetailView(LoginRequiredMixin, DetailView):
     model = Permission
     template_name = "permission/permission_detail.html"
-    permission_required = [('VIEW', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_VIEW, model.get_object_type(), None)]

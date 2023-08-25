@@ -7,20 +7,15 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import View
 
-from authorization.controllers.utils import (
-    CustomPermissionRequiredMixin, check_permission,
-    create_organisation_admin_security_group)
-from authorization.models import Permission
-
 from ontology.controllers.o_model import ModelUtils
 
-from ontology.models import OModel
+from ontology.models import OConcept, OInstance, OModel, OPredicate, ORelation
 from ontology.plugins.json import GenericEncoder
 from openea.utils import Utils
 
 
-class OModelGapAnalysisView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
-    permission_required = [('VIEW', OModel.get_object_type(), None)]
+class OModelGapAnalysisView(LoginRequiredMixin, View):
+    permission_required = [(Utils.PERMISSION_ACTION_VIEW, OModel.get_object_type(), None)]
 
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body)
@@ -31,11 +26,11 @@ class OModelGapAnalysisView(LoginRequiredMixin, CustomPermissionRequiredMixin, V
         model_2 = OModel.objects.get(id=model_2_id)
         filters = data.get('filters', [])
 
-        show_model = check_permission(user=self.request.user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_MODEL)
-        show_relations = check_permission(user=self.request.user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_RELATION)
-        show_concepts = check_permission(user=self.request.user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_CONCEPT)
-        show_predicates = check_permission(user=self.request.user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_PREDICATE)
-        show_instances = check_permission(user=self.request.user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_INSTANCE)
+        show_model = self.request.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OModel.get_object_type(), None))
+        show_relations = self.request.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, ORelation.get_object_type(), None))
+        show_concepts = self.request.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OConcept.get_object_type(), None))
+        show_predicates = self.request.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OPredicate.get_object_type(), None))
+        show_instances = self.request.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OInstance.get_object_type(), None))
 
         if not (show_model and show_relations and show_concepts and show_predicates and show_instances):
             raise PermissionDenied('Permission Denied')

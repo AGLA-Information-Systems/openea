@@ -1,15 +1,21 @@
 from django.urls import path
 
-from authorization.views import PermissionCreateView
-from authorization.views import PermissionDeleteView
+
 from authorization.views import PermissionDetailView
-from authorization.views import PermissionListOrganisationView, PermissionListUserView, PermissionListView
-from authorization.views import PermissionUpdateView
+from authorization.views import PermissionListView
+
 from authorization.views import SecurityGroupCreateView
 from authorization.views import SecurityGroupDeleteView
 from authorization.views import SecurityGroupDetailView
 from authorization.views import SecurityGroupListOrganisationView, SecurityGroupListUserView, SecurityGroupListView
 from authorization.views import SecurityGroupUpdateView
+
+from authorization.views import AccessPermissionCreateView
+from authorization.views import AccessPermissionDeleteView
+from authorization.views import AccessPermissionDetailView
+from authorization.views import AccessPermissionListOrganisationView, AccessPermissionListUserView, AccessPermissionListView
+from authorization.views import AccessPermissionUpdateView
+
 from authorization.views.security_group.security_group_create import SecurityGroupAdminCreateView
 
 urlpatterns = [
@@ -24,11 +30,15 @@ urlpatterns = [
     path('security_group/rebuild_admin/<uuid:organisation_id>/', SecurityGroupAdminCreateView.as_view(), name='security_group_admin_rebuild'),
     
     path('permission/list/', PermissionListView.as_view(), name='permission_list'),
-    path('permission/list/<int:user_id>/', PermissionListUserView.as_view(), name='permission_list_user'),
-    path('permission/list/<uuid:organisation_id>/', PermissionListOrganisationView.as_view(), name='permission_list_organisation'),
-    path('permission/create/<int:user_id>/', PermissionCreateView.as_view(), name='permission_create_user'),
-    path('permission/create/<uuid:organisation_id>/', PermissionCreateView.as_view(), name='permission_create'),
     path('permission/detail/<uuid:pk>/', PermissionDetailView.as_view(), name='permission_detail'),
-    path('permission/update/<uuid:pk>/', PermissionUpdateView.as_view(), name='permission_update'),
-    path('permission/delete/<uuid:pk>/', PermissionDeleteView.as_view(), name='permission_delete')
+
+
+    path('accesspermission/list/', AccessPermissionListView.as_view(), name='accesspermission_list'),
+    path('accesspermission/list/<int:user_id>/', AccessPermissionListUserView.as_view(), name='accesspermission_list_user'),
+    path('accesspermission/list/<uuid:organisation_id>/', AccessPermissionListOrganisationView.as_view(), name='accesspermission_list_organisation'),
+    path('accesspermission/create/<int:user_id>/', AccessPermissionCreateView.as_view(), name='accesspermission_create_user'),
+    path('accesspermission/create/<uuid:organisation_id>/', AccessPermissionCreateView.as_view(), name='accesspermission_create'),
+    path('accesspermission/detail/<uuid:pk>/', AccessPermissionDetailView.as_view(), name='accesspermission_detail'),
+    path('accesspermission/update/<uuid:pk>/', AccessPermissionUpdateView.as_view(), name='accesspermission_update'),
+    path('accesspermission/delete/<uuid:pk>/', AccessPermissionDeleteView.as_view(), name='accesspermission_delete')
 ]

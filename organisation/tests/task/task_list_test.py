@@ -5,7 +5,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from authorization.models import Permission
-from utils.test.helpers import (add_object_type_permissions_to_security_group,
+from utils.test.helpers import (add_object_type_accesspermissions_to_security_group, create_accesspermission,
                                 create_organisation, create_security_group,
                                 create_task, create_user, create_user_profile)
 from organisation.models import Task
@@ -19,7 +19,7 @@ class TaskListTestCase(TestCase):
         self.org_1_security_group_1 = create_security_group(name='Org 1 SecG 1', description='', organisation=self.org_1)
         self.org_1_security_group_1.profiles.add(self.org_1_user_1_profile)
         self.object_type = Task.get_object_type()
-        add_object_type_permissions_to_security_group(organisation=self.org_1, security_group=self.org_1_security_group_1, object_type=self.object_type)
+        add_object_type_accesspermissions_to_security_group(organisation=self.org_1, security_group=self.org_1_security_group_1, object_type=self.object_type)
 
         self.org_1_user_2 = create_user(username='org_1_user_2')
         self.org_1_user_2_profile = create_user_profile(role='Admin', user=self.org_1_user_2, organisation=self.org_1)
@@ -35,9 +35,9 @@ class TaskListTestCase(TestCase):
     def test_task_list_page_not_authenticated(self):
         bogus_uuid = uuid.uuid4()
         response = self.client.get(reverse('task_list'))
-        self.assertRedirects(response, '/user/login/?redirect_to=/task/list/', status_code=302, target_status_code=200, fetch_redirect_response=True)
+        self.assertRedirects(response, '/user/login/?next=/task/list/', status_code=302, target_status_code=200, fetch_redirect_response=True)
         response = self.client.post(reverse('task_list'), data={})
-        self.assertRedirects(response, '/user/login/?redirect_to=/task/list/', status_code=302, target_status_code=200, fetch_redirect_response=True)
+        self.assertRedirects(response, '/user/login/?next=/task/list/', status_code=302, target_status_code=200, fetch_redirect_response=True)
         
     def test_task_list_page_authenticated_not_allowed(self):
         bogus_uuid = uuid.uuid4()
@@ -63,13 +63,7 @@ class TaskListTestCase(TestCase):
         self.assertTrue(self.org_1_user_1_profile.organisation == self.org_1)
         self.assertTrue(self.org_1_user_1_profile.security_groups.filter(id=self.org_1_security_group_1.id).exists())
         
-        for perm in Permission.objects.filter(organisation=self.org_1, action='LIST', object_type=self.object_type):
-            print(perm)
-
-        required_permission = Permission.objects.get(organisation=self.org_1, action='LIST', object_type=self.object_type)
-        self.assertIsNotNone(required_permission)
-        perms = [str(x) for x in self.org_1_security_group_1.permissions.all()]
-        self.assertTrue(self.org_1_security_group_1.permissions.filter(id=required_permission.id).exists())
+        create_accesspermission(security_group=self.org_1_security_group_1, action='LIST', object_type=self.object_type)
 
         response = self.client.get(reverse('task_list'))
         self.assertEqual(response.status_code, 200)
@@ -81,7 +75,7 @@ class TaskListTestCase(TestCase):
         self.client.logout()
 
         response = self.client.get(reverse('task_list'))
-        self.assertRedirects(response, '/user/login/?redirect_to=/task/list/', status_code=302, target_status_code=200, fetch_redirect_response=True)
+        self.assertRedirects(response, '/user/login/?next=/task/list/', status_code=302, target_status_code=200, fetch_redirect_response=True)
 
         logged_in = self.client.login(username='org_1_user_2', password='12345')
         self.assertTrue(logged_in)

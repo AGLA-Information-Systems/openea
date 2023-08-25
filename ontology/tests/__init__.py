@@ -4,7 +4,7 @@ from .o_concept import (OConceptCreateTestCase, OConceptDeleteTestCase,
                         OConceptUpdateTestCase)
 from .o_model import (OModelCreateTestCase, OModelDeleteTestCase,
                       OModelDetailTestCase, OModelListTestCase,
-                      OModelUpdateTestCase)
+                      OModelUpdateTestCase, OModelExportTestCase, OModelImportTestCase)
 from .o_predicate import (OPredicateCreateTestCase, OPredicateDeleteTestCase,
                           OPredicateDetailTestCase, OPredicateListTestCase,
                           OPredicateUpdateTestCase)
@@ -17,4 +17,3 @@ from .o_slot import (OSlotCreateTestCase, OSlotDeleteTestCase,
 from .repository import (RepositoryCreateTestCase, RepositoryDeleteTestCase,
                          RepositoryDetailTestCase, RepositoryListTestCase,
                          RepositoryUpdateTestCase)
-from .import_export import (InstanceImportTestCase, InstanceExportTestCase)

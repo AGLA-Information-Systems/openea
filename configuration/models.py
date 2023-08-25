@@ -3,9 +3,10 @@ from django.db import models
 
 from openea.utils import Utils
 from organisation.models import Organisation
+from utils.generic import GenericModel
 
 
-class Configuration(models.Model):
+class Configuration(GenericModel, models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=1024)
     content = models.JSONField(blank=True, null=True)
@@ -22,9 +23,6 @@ class Configuration(models.Model):
 
     def get_organisation(self):
         return self.organisation
-
-    def get_object_type():
-        return Utils.OBJECT_CONFIG
 
     def __str__(self):
         return self.name

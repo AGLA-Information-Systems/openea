@@ -1,15 +1,18 @@
 from django.contrib.auth.models import User
 
-from authorization.controllers.utils import DEFAULT_PERMISSIONS
-from authorization.models import Permission, SecurityGroup
+from authorization.controllers.utils import DEFAULT_ACLS, populate_permissions
+from authorization.models import AccessPermission, Permission, SecurityGroup
 from ontology.models import (OConcept, OInstance, OModel, OPredicate,
                              ORelation, OReport, OSlot, Repository)
 from organisation.models import Organisation, Profile, Task
+from payment.controllers.products import populate_products
 
 
 def create_organisation(name='Org 1', description='', location='test'):
     org_1 = Organisation.objects.create(name=name, description=description, location=location)
     org_1.save()
+    populate_test_env_with_products()
+    populate_permissions()
     return org_1
 
 def create_task(organisation, user, name='Org 1 Task 1', attachment=None, description='', type='', status='', config=''):
@@ -33,17 +36,18 @@ def create_security_group(organisation, name='Org 1 SecG', description=''):
     org_1_admin_security_group.save()
     return org_1_admin_security_group
 
-def add_object_type_permissions_to_security_group(organisation, security_group, object_type):
+def add_object_type_accesspermissions_to_security_group(organisation, security_group, object_type):
     if security_group.organisation != organisation:
         raise ValueError("Security group does not belong to the organisation!")
-    for action in DEFAULT_PERMISSIONS[object_type]:
-        create_permission(security_group=security_group, action=action, object_type=object_type)
+    for action in DEFAULT_ACLS[object_type]:
+        create_accesspermission(security_group=security_group, action=action, object_type=object_type)
 
-def create_permission(security_group, action, object_type):
-    perm = Permission.get_or_create(action=action, object_type=object_type, organisation=security_group.organisation)
-    perm.security_groups.add(security_group)
-    perm.save()
-    return perm
+def create_accesspermission(security_group, action, object_type):
+    perm = Permission.objects.get(action=action, object_type=object_type)
+    accperm, created = AccessPermission.objects.get_or_create(permission=perm, organisation=security_group.organisation)
+    security_group.accesspermissions.add(accperm)
+    accperm.save()
+    return accperm
 
 def create_repository(organisation, name='Org 1 Repo 1', description=''):
     org_1_repository = Repository.objects.create(name=name, description=description, organisation=organisation)
@@ -51,37 +55,37 @@ def create_repository(organisation, name='Org 1 Repo 1', description=''):
     return org_1_repository
 
 def create_model(repository, name='Org 1 Model 1', version='1.1', description=''):
-    org_1_o_model = OModel.objects.create(name=name, version=version, description=description, repository=repository)
+    org_1_o_model = OModel.objects.create(name=name, version=version, description=description, repository=repository, organisation=repository.organisation)
     org_1_o_model.save()
     return org_1_o_model
 
 def create_report(model, name='Org 1 Report 1', path='/test', content='', description=''):
-    org_1_o_report = OReport.objects.create(name=name, path=path, content=content, description=description, model=model)
+    org_1_o_report = OReport.objects.create(name=name, path=path, content=content, description=description, model=model, organisation=model.organisation)
     org_1_o_report.save()
     return org_1_o_report
 
 def create_concept(model, name='Org 1 Concept 1', description=''):
-    org_1_o_concept = OConcept.objects.create(name=name, description=description, model=model)
+    org_1_o_concept = OConcept.objects.create(name=name, description=description, model=model, organisation=model.organisation)
     org_1_o_concept.save()
     return org_1_o_concept
 
 def create_relation(model, name='Org 1 Model 1', type=ORelation.PROPERTY, description=''):
-    org_1_o_relation = ORelation.objects.create(name=name, type=type, description=description, model=model)
+    org_1_o_relation = ORelation.objects.create(name=name, type=type, description=description, model=model, organisation=model.organisation)
     org_1_o_relation.save()
     return org_1_o_relation
 
 def create_predicate(model, subject, relation, object, description='', cardinality_min=0, cardinality_max=0):
-    org_1_o_relation = OPredicate.objects.create(subject=subject, relation=relation, object=object, description=description, cardinality_min=cardinality_min, cardinality_max=cardinality_max, model=model)
+    org_1_o_relation = OPredicate.objects.create(subject=subject, relation=relation, object=object, description=description, cardinality_min=cardinality_min, cardinality_max=cardinality_max, model=model, organisation=model.organisation)
     org_1_o_relation.save()
     return org_1_o_relation
 
 def create_instance(model, concept, name='Org 1 Instance 1', description=''):
-    org_1_o_instance = OInstance.objects.create(name=name, concept=concept, description=description, model=model)
+    org_1_o_instance = OInstance.objects.create(name=name, concept=concept, description=description, model=model, organisation=model.organisation)
     org_1_o_instance.save()
     return org_1_o_instance
 
 def create_slot(model, subject, predicate, object, description=''):
-    org_1_o_predicate = OSlot.objects.create(subject=subject, predicate=predicate, object=object, description=description, order='1.1', model=model)
+    org_1_o_predicate = OSlot.objects.create(subject=subject, predicate=predicate, object=object, description=description, order='1.1', model=model, organisation=model.organisation)
     org_1_o_predicate.save()
     return org_1_o_predicate
 
@@ -92,7 +96,7 @@ def populate_test_env(x):
     x.org_1_security_group_1 = create_security_group(name='Org 1 SecG 1', description='', organisation=x.org_1)
     x.org_1_security_group_1.profiles.add(x.org_1_user_1_profile)
     x.object_type = OSlot.get_object_type()
-    add_object_type_permissions_to_security_group(organisation=x.org_1, security_group=x.org_1_security_group_1, object_type=x.object_type)
+    add_object_type_accesspermissions_to_security_group(organisation=x.org_1, security_group=x.org_1_security_group_1, object_type=x.object_type)
 
     x.org_1_user_2 = create_user(username='org_1_user_2')
     x.org_1_user_2_profile = create_user_profile(role='Admin', user=x.org_1_user_2, organisation=x.org_1)
@@ -139,3 +143,6 @@ def populate_test_env(x):
     x.org_1_model_2 = create_model(repository=x.org_1_repo_1, name='org_1_model_2')
     
     return x
+
+def populate_test_env_with_products():
+    return populate_products()

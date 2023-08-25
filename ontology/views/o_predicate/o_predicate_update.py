@@ -1,13 +1,14 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.forms.o_predicate.o_predicate_update import OPredicateUpdateForm
-from datetime import datetime
+from django.utils import timezone
 from ontology.models import OPredicate
+from openea.utils import Utils
 from utils.views.custom import SingleObjectView
 
-class OPredicateUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
+class OPredicateUpdateView(LoginRequiredMixin, SingleObjectView, UpdateView):
     model = OPredicate
     template_name = "o_predicate/o_predicate_update.html"
     form_class = OPredicateUpdateForm
@@ -16,7 +17,7 @@ class OPredicateUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, Si
 
     def form_valid(self, form):
         form.instance.modified_by = self.request.user
-        form.instance.modified_at = datetime.now()
+        form.instance.modified_at = timezone.now()
         return super().form_valid(form)
     
     def get_initial(self):

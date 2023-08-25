@@ -1,0 +1,5 @@
+from .accesspermission_delete import AccessPermissionDeleteView
+from .accesspermission_update import AccessPermissionUpdateView
+from .accesspermission_detail import AccessPermissionDetailView
+from .accesspermission_create import AccessPermissionCreateView
+from .accesspermission_list import AccessPermissionListView, AccessPermissionListOrganisationView, AccessPermissionListUserView

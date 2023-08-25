@@ -4,14 +4,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.views.generic import View
 
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+from openea.utils import Utils
 from ontology.controllers.o_model import ModelUtils
 from ontology.models import OModel
 from ontology.plugins.json import GenericEncoder
 
 
-class OModelJSONFilterView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
-    permission_required = [('VIEW', OModel.get_object_type(), None)]
+class OModelJSONFilterView(LoginRequiredMixin, View):
+    permission_required = [(Utils.PERMISSION_ACTION_VIEW, OModel.get_object_type(), None)]
 
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body)

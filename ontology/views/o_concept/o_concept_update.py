@@ -1,13 +1,14 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.forms.o_concept.o_concept_update import OConceptUpdateForm
-from datetime import datetime
+from django.utils import timezone
 from ontology.models import OConcept
+from openea.utils import Utils
 from utils.views.custom import SingleObjectView
 
-class OConceptUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
+class OConceptUpdateView(LoginRequiredMixin, SingleObjectView, UpdateView):
     model = OConcept
     form_class = OConceptUpdateForm
     template_name = "o_concept/o_concept_update.html"
@@ -16,7 +17,7 @@ class OConceptUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, Sing
 
     def form_valid(self, form):
         form.instance.modified_by = self.request.user
-        form.instance.modified_at = datetime.now()
+        form.instance.modified_at = timezone.now()
         return super().form_valid(form)
 
     def get_initial(self):

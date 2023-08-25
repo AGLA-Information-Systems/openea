@@ -1,22 +1,21 @@
 from django.views.generic import ListView
 
 from taxonomy.models import TagGroup
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
+from openea.utils import Utils
 
-
-class TagGroupListView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
+class TagGroupListView(LoginRequiredMixin, ListView):
     model = TagGroup
     template_name = "tag_group/tag_group_list.html"
     paginate_by = 10000
-    permission_required = [('LIST', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_LIST, model.get_object_type(), None)]
 
 
-class TagGroupListUserView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
+class TagGroupListUserView(LoginRequiredMixin, ListView):
     model = TagGroup
     template_name = "tag_group/tag_group_list.html"
     paginate_by = 10000
-    permission_required = [('LIST', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_LIST, model.get_object_type(), None)]
 
     def get_queryset(self):
         # search = self.request.GET.get('search')
@@ -27,11 +26,11 @@ class TagGroupListUserView(LoginRequiredMixin, CustomPermissionRequiredMixin, Li
         return qs.filter(user=self.request.user)
 
 
-class TagGroupListOrganisationView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
+class TagGroupListOrganisationView(LoginRequiredMixin, ListView):
     model = TagGroup
     template_name = "tag_group/tag_group_list.html"
     paginate_by = 10000
-    permission_required = [('LIST', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_LIST, model.get_object_type(), None)]
 
     def get_queryset(self):
         qs = super().get_queryset() 

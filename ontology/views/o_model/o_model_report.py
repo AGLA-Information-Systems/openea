@@ -5,21 +5,21 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from django.core import serializers
 import lxml.etree as ET
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 from ontology.controllers.knowledge_base import KnowledgeBaseController
 from ontology.models import OModel, OConcept, ORelation, OPredicate
+from openea.utils import Utils
 
 
-
-class OModelReportView(LoginRequiredMixin, CustomPermissionRequiredMixin, DetailView):
+class OModelReportView(LoginRequiredMixin, DetailView):
     model = OModel
     #template_name = "o_model/o_model_report.xml"
     paginate_by = 10000
     #content_type = 'application/xml'
-    permission_required = [('VIEW', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_VIEW, model.get_object_type(), None)]
 
 
     def get_context_data(self, **kwargs):

@@ -8,19 +8,15 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import View
 
-from authorization.controllers.utils import (
-    CustomPermissionRequiredMixin, check_permission,
-    create_organisation_admin_security_group)
-from authorization.models import Permission
 from ontology.controllers.graphviz import GraphvizController
 from ontology.controllers.o_model import ModelUtils
-from ontology.models import  OInstance, OModel
+from ontology.models import  OConcept, OInstance, OModel, OPredicate, ORelation
 from ontology.plugins.json import GenericEncoder
 from openea.utils import Utils
 
 
-class OModelImpactAnalysisView(LoginRequiredMixin, CustomPermissionRequiredMixin, View):
-    permission_required = [('VIEW', OModel.get_object_type(), None)]
+class OModelImpactAnalysisView(LoginRequiredMixin, View):
+    permission_required = [(Utils.PERMISSION_ACTION_VIEW, OModel.get_object_type(), None)]
 
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body)
@@ -34,10 +30,10 @@ class OModelImpactAnalysisView(LoginRequiredMixin, CustomPermissionRequiredMixin
             predicate_ids = [predicate_ids]
         level = int(data.get('level', 10)) + 1
         
-        show_relations = check_permission(user=self.request.user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_RELATION)
-        show_concepts = check_permission(user=self.request.user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_CONCEPT)
-        show_predicates = check_permission(user=self.request.user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_PREDICATE)
-        show_instances = check_permission(user=self.request.user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_INSTANCE)
+        show_relations = self.request.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, ORelation.get_object_type(), None))
+        show_concepts = self.request.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OConcept.get_object_type(), None))
+        show_predicates = self.request.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OPredicate.get_object_type(), None))
+        show_instances = self.request.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OInstance.get_object_type(), None))
 
         if not (show_relations and show_concepts and show_predicates and show_instances):
             raise PermissionDenied('Permission Denied')

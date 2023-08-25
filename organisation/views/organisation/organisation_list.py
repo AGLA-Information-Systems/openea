@@ -1,23 +1,23 @@
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from authorization.models import Permission
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+from openea.utils import Utils
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from organisation.models import Organisation
 
 
-class OrganisationListView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
+class OrganisationListView(LoginRequiredMixin, ListView):
     model = Organisation
     template_name = "organisation/organisation_list.html"
     paginate_by = 10000
-    permission_required = [(Permission.PERMISSION_ACTION_LIST, model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_LIST, model.get_object_type(), None)]
 
 
-class OrganisationListUserView(ListView, CustomPermissionRequiredMixin):
+class OrganisationListUserView(ListView):
     model = Organisation
     template_name = "organisation/organisation_list.html"
     paginate_by = 10000
-    permission_required = [(Permission.PERMISSION_ACTION_LIST, model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_LIST, model.get_object_type(), None)]
 
     def get_queryset(self):
         # search = self.request.GET.get('search')
@@ -27,4 +27,3 @@ class OrganisationListUserView(ListView, CustomPermissionRequiredMixin):
         qs = super().get_queryset()
         organisation_ids = [x.organisation.id for x in self.request.user.profiles.all()]
         return qs.filter(id__in=organisation_ids)
-

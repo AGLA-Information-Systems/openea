@@ -1,18 +1,18 @@
 from organisation.forms.profile.profile_create import ProfileCreateForm
 from utils.views.custom import CustomCreateView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from organisation.models import Profile
+from openea.utils import Utils
 
-
-class ProfileCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CustomCreateView):
+class ProfileCreateView(LoginRequiredMixin, CustomCreateView):
     model = Profile
     template_name = "profile/profile_create.html"
     form_class = ProfileCreateForm
     #success_url = reverse_lazy('profile_list')
-    permission_required = [('CREATE', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_CREATE, model.get_object_type(), None)]
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user

@@ -4,21 +4,13 @@ from django.db import transaction
 from django.db.models import Q
 from django.utils.translation import gettext as _
 
-from authorization.controllers.utils import check_permission
 from authorization.models import Permission
 from ontology.controllers.utils import KnowledgeBaseUtils
 from ontology.models import (OConcept, OInstance, OModel, OPredicate,
                              ORelation, OReport, OSlot)
 from openea.utils import Utils
 
-__author__ = "Patrick Agbokou"
-__copyright__ = "Copyright 2021, OpenEA"
-__credits__ = ["Patrick Agbokou"]
-__license__ = "Apache License 2.0"
-__version__ = "1.0.0"
-__maintainer__ = "Patrick Agbokou"
-__email__ = "patrick.agbokou@aglaglobal.com"
-__status__ = "Development"
+
 
 DEFAULT_MAX_LEVEL = 100
 
@@ -32,13 +24,13 @@ class ModelUtils:
         target = data.get('target')
 
         relation_ids = ModelUtils.get_filtering_param(data, 'relation_ids', [])
-        show_relations = check_permission(user=user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_RELATION)
+        show_relations = user.acl.check((Utils.PERMISSION_ACTION_VIEW, ORelation.get_object_type(), None))
         if not show_relations:
             relation_ids = []
         
             
         concept_ids = ModelUtils.get_filtering_param(data, 'concept_ids', [])
-        show_concepts = check_permission(user=user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_CONCEPT)
+        show_concepts = user.acl.check((Utils.PERMISSION_ACTION_VIEW, OConcept.get_object_type(), None))
         if not show_concepts:
             concept_ids = []
         
@@ -46,7 +38,7 @@ class ModelUtils:
         predicate_ids = ModelUtils.get_filtering_param(data, 'predicate_ids', None)
         if not predicate_ids:
             predicate_ids = None
-        show_predicates = check_permission(user=user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_PREDICATE)
+        show_predicates = user.acl.check((Utils.PERMISSION_ACTION_VIEW, OPredicate.get_object_type(), None))
         if not show_predicates:
             predicate_ids = []
         
@@ -54,7 +46,7 @@ class ModelUtils:
         instance_ids = ModelUtils.get_filtering_param(data, 'instance_ids', None)
         if not instance_ids:
             instance_ids = None
-        show_instances = check_permission(user=user, action=Permission.PERMISSION_ACTION_VIEW, object_type=Utils.OBJECT_INSTANCE)
+        show_instances = user.acl.check((Utils.PERMISSION_ACTION_VIEW, OInstance.get_object_type(), None))
         if not show_instances:
             instance_ids = []
         

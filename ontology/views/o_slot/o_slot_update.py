@@ -1,15 +1,16 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.controllers.knowledge_base import KnowledgeBaseController
 from ontology.forms.o_slot.o_slot_update import OSlotUpdateForm
 from django.views.generic.edit import FormView
 
 from ontology.models import OInstance, OSlot, OPredicate, OSlot
+from openea.utils import Utils
 from utils.views.custom import SingleObjectView
 
-class OSlotUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, FormView):
+class OSlotUpdateView(LoginRequiredMixin, SingleObjectView, FormView):
     model = OSlot
     template_name = "o_slot/o_slot_update.html"
     form_class = OSlotUpdateForm

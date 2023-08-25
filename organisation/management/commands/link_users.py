@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
-
+from django.utils.translation import gettext as _
 from authorization.models import SecurityGroup
 from organisation.models import Organisation, Profile
 
@@ -18,7 +18,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         org_name = options['org_name'][0]
         security_group_name = options['security_group'][0]
-        role = options['role'][0] or 'employee'
+        role = options['role'][0] or _('member')
         users = options['users']
         with transaction.atomic():
             try:

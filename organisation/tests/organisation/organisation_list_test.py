@@ -3,7 +3,7 @@ from django.urls import reverse
 
 from authorization.models import Permission
 from ontology.models import Organisation
-from utils.test.helpers import (create_organisation, create_permission,
+from utils.test.helpers import (create_organisation, create_accesspermission,
                                 create_security_group, create_user,
                                 create_user_profile)
 
@@ -15,7 +15,7 @@ class OrganisationListTestCase(TestCase):
         self.org_1_security_group_1 = create_security_group(name='Org 1 SecG 1', description='', organisation=self.org_1)
         self.org_1_security_group_1.profiles.add(self.org_1_user_1_profile)
         self.object_type = Organisation.get_object_type()
-        self.perm = create_permission(security_group=self.org_1_security_group_1, action='LIST', object_type=self.object_type)
+        self.perm = create_accesspermission(security_group=self.org_1_security_group_1, action='LIST', object_type=self.object_type)
 
         self.org_1_user_2 = create_user(username='org_1_user_2')
         self.org_1_user_2_profile = create_user_profile(role='Admin', user=self.org_1_user_2, organisation=self.org_1)
@@ -27,9 +27,9 @@ class OrganisationListTestCase(TestCase):
         
     def test_organisation_list_page_not_authenticated(self):
         response = self.client.get(reverse('organisation_list'))
-        self.assertRedirects(response, '/user/login/?redirect_to=/organisation/list/', status_code=302, target_status_code=200, fetch_redirect_response=True)
+        self.assertRedirects(response, '/user/login/?next=/organisation/list/', status_code=302, target_status_code=200, fetch_redirect_response=True)
         response = self.client.post(reverse('organisation_list'), data={})
-        self.assertRedirects(response, '/user/login/?redirect_to=/organisation/list/', status_code=302, target_status_code=200, fetch_redirect_response=True)
+        self.assertRedirects(response, '/user/login/?next=/organisation/list/', status_code=302, target_status_code=200, fetch_redirect_response=True)
         
     def test_organisation_list_page_authenticated_not_allowed(self):
         logged_in = self.client.login(username='org_1_user_1', password='12345')
@@ -49,13 +49,7 @@ class OrganisationListTestCase(TestCase):
         self.assertTrue(self.org_1_user_1_profile.organisation == self.org_1)
         self.assertTrue(self.org_1_user_1_profile.security_groups.filter(id=self.org_1_security_group_1.id).exists())
         
-        for perm in Permission.objects.filter(organisation=self.org_1, action='LIST', object_type=self.object_type):
-            print(perm)
-
-        required_permission = Permission.objects.get(organisation=self.org_1, action='LIST', object_type=self.object_type)
-        self.assertIsNotNone(required_permission)
-        perms = [str(x) for x in self.org_1_security_group_1.permissions.all()]
-        self.assertTrue(self.org_1_security_group_1.permissions.filter(id=required_permission.id).exists())
+        create_accesspermission(security_group=self.org_1_security_group_1, action='LIST', object_type=self.object_type)
 
         response = self.client.get(reverse('organisation_list'))
         self.assertEqual(response.status_code, 200)
@@ -67,7 +61,7 @@ class OrganisationListTestCase(TestCase):
         self.client.logout()
 
         response = self.client.get(reverse('organisation_list'))
-        self.assertRedirects(response, '/user/login/?redirect_to=/organisation/list/', status_code=302, target_status_code=200, fetch_redirect_response=True)
+        self.assertRedirects(response, '/user/login/?next=/organisation/list/', status_code=302, target_status_code=200, fetch_redirect_response=True)
 
         logged_in = self.client.login(username='org_1_user_2', password='12345')
         self.assertTrue(logged_in)

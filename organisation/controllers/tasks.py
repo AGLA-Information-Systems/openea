@@ -35,6 +35,7 @@ class TaskController:
             task.status = TASK_STATUS_FAILURE
             #task.error = traceback.format_exc()
             task.error = str(e)
+            traceback.print_exc()
         task.ended_at = timezone.now()
         task.save()
 

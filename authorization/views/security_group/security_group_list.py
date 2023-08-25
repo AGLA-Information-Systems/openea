@@ -1,22 +1,23 @@
 from django.views.generic import ListView
 
 from authorization.models import SecurityGroup
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+
 from django.contrib.auth.mixins import LoginRequiredMixin
+from openea.utils import Utils
 
 
-class SecurityGroupListView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
+class SecurityGroupListView(LoginRequiredMixin, ListView):
     model = SecurityGroup
     template_name = "security_group/security_group_list.html"
     paginate_by = 10000
-    permission_required = [('LIST', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_LIST, model.get_object_type(), None)]
 
 
-class SecurityGroupListUserView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
+class SecurityGroupListUserView(LoginRequiredMixin, ListView):
     model = SecurityGroup
     template_name = "security_group/security_group_list.html"
     paginate_by = 10000
-    permission_required = [('LIST', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_LIST, model.get_object_type(), None)]
 
     def get_queryset(self):
         # search = self.request.GET.get('search')
@@ -27,11 +28,11 @@ class SecurityGroupListUserView(LoginRequiredMixin, CustomPermissionRequiredMixi
         return qs.filter(user=self.request.user)
 
 
-class SecurityGroupListOrganisationView(LoginRequiredMixin, CustomPermissionRequiredMixin, ListView):
+class SecurityGroupListOrganisationView(LoginRequiredMixin, ListView):
     model = SecurityGroup
     template_name = "security_group/security_group_list.html"
     paginate_by = 10000
-    permission_required = [('LIST', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_LIST, model.get_object_type(), None)]
 
     def get_queryset(self):
         qs = super().get_queryset() 

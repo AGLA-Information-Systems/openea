@@ -3,18 +3,18 @@ from unicodedata import name
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import FormView
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.forms.o_instance.o_instance_create import OInstanceCreateForm
 from ontology.models import OConcept, OInstance, OModel
+from openea.utils import Utils
 
-
-class OInstanceCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, FormView):
+class OInstanceCreateView(LoginRequiredMixin, FormView):
     model = OInstance
     template_name = "o_instance/o_instance_create.html"
     form_class = OInstanceCreateForm
     #success_url = reverse_lazy('o_instance_list')
-    permission_required = [('CREATE', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_CREATE, model.get_object_type(), None)]
 
     def form_valid(self, form):
         concept = OConcept.objects.get(id=self.kwargs.get('concept_id'))

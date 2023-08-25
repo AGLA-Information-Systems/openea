@@ -1,8 +1,9 @@
 from django.core.management.base import BaseCommand, CommandError
-from authorization.controllers.utils import create_organisation_admin_security_group
+from authorization.controllers.utils import create_security_group_with_permissions, populate_permissions
 from organisation.models import Organisation, Profile
 from django.contrib.auth.models import User
 from django.db import transaction
+from django.utils.translation import gettext as _
 
 class Command(BaseCommand):
     help = 'Create an organisation with its permissions'
@@ -16,21 +17,23 @@ class Command(BaseCommand):
         superadmin = False
         if options['superadmin']:
             superadmin = True
-
         org_name = options['org_name'][0]
         users = options['users']
+
+        populate_permissions()
+
         with transaction.atomic():
             try:
                 print('org_name=', org_name)
                 print('superadmin=', superadmin)
                 print('users=', users)
                 organisation, created = Organisation.objects.get_or_create(name=org_name, defaults={'description': ''})
-                admin_security_group_name = org_name + ' Admin Sec Group'
-                admin_security_group = create_organisation_admin_security_group(organisation=organisation, admin_security_group_name=admin_security_group_name, superadmin=superadmin)
+                security_group_name = org_name + ' ' + _('Admin')
+                admin_security_group = create_security_group_with_permissions(organisation=organisation, security_group_name=security_group_name, superadmin=superadmin)
                 self.stdout.write(self.style.SUCCESS('Successfully created organisation "%s"' % org_name))
                 for username in users:
                     user = User.objects.get(username=username)
-                    user_profile, created = Profile.objects.get_or_create(organisation=organisation, user=user, defaults={'role': 'employee'})
+                    user_profile, created = Profile.objects.get_or_create(organisation=organisation, user=user, defaults={'role': _('member')})
                     user_profile.is_active = True
                     user_profile.save()
                     admin_security_group.profiles.add(user_profile)

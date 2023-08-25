@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block content %}
+<h2 class="form-title">{% trans "AccessPermission" %}</h2>
+
+{% include "accesspermission/accesspermission_table.html" %}
+
+<a href="{% url "accesspermission_create_user" user_id=user.id %}">{% trans "New" %}</a>
+
+{% endblock content %}

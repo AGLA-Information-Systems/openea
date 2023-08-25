@@ -1,11 +1,11 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
-from datetime import datetime
+from django.utils import timezone
 from taxonomy.models import Tag
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-class TagUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, UpdateView):
+class TagUpdateView(LoginRequiredMixin, UpdateView):
     model = Tag
     fields = ['name', 'description', 'tag_group']
     template_name = "tag/tag_update.html"
@@ -14,7 +14,7 @@ class TagUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, UpdateVie
 
     def form_valid(self, form):
         form.instance.modified_by = self.request.user
-        form.instance.modified_at = datetime.now()
+        form.instance.modified_at = timezone.now()
         return super().form_valid(form)
 
     def get_success_url(self):

@@ -2,14 +2,15 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy, reverse
 
 from taxonomy.models import Tag
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
-from django.contrib.auth.mixins import LoginRequiredMixin
 
-class TagDeleteView(LoginRequiredMixin, CustomPermissionRequiredMixin, DeleteView):
+from django.contrib.auth.mixins import LoginRequiredMixin
+from openea.utils import Utils
+
+class TagDeleteView(LoginRequiredMixin, DeleteView):
     model = Tag
     template_name = "tag/tag_delete.html"
     #success_url = reverse_lazy('tag_list')
-    permission_required = [('DELETE', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_DELETE, model.get_object_type(), None)]
 
     def get_success_url(self):
         pk = self.kwargs.get('organisation_id')

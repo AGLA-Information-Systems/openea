@@ -1,28 +1,36 @@
+import traceback
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from utils.views.custom import CustomCreateView
+from django.core.exceptions import SuspiciousOperation
 
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.forms.o_relation.o_relation_create import ORelationCreateForm
 from ontology.models import ORelation
+from openea.utils import Utils
 
-
-class ORelationCreateView(LoginRequiredMixin, CustomPermissionRequiredMixin, CustomCreateView):
+class ORelationCreateView(LoginRequiredMixin, CustomCreateView):
     model = ORelation
     form_class = ORelationCreateForm
     template_name = "o_relation/o_relation_create.html"
     #success_url = reverse_lazy('o_relation_list')
-    permission_required = [('CREATE', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_CREATE, model.get_object_type(), None)]
 
     def form_valid(self, form):
-        if self.request.user.is_authenticated:
-            form.instance, created = ORelation.objects.get_or_create(model=form.cleaned_data['model'],
-                                                                    name=form.cleaned_data['name'],
-                                                                    type=form.cleaned_data['type'],
-                                                                    defaults={'description':form.cleaned_data['description'],
-                                                                            'quality_status':form.cleaned_data['quality_status'],
-                                                                            'created_by': self.request.user})
+        try:
+            form.instance, created = ORelation.objects.get_or_create(
+                name=form.cleaned_data['name'],
+                type=form.cleaned_data['type'],
+                model=form.cleaned_data['model'],
+                organisation=form.cleaned_data['model'].organisation,
+                defaults={
+                    'description':form.cleaned_data['description'],
+                    'quality_status':form.cleaned_data['quality_status'],
+                    'created_by': self.request.user
+                })
+        except Exception as e:
+            traceback.print_exc()
+            raise SuspiciousOperation(str(e))
         return HttpResponseRedirect(self.get_success_url())
 
     def get_initial(self):

@@ -1,12 +1,13 @@
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
-from authorization.controllers.utils import CustomPermissionRequiredMixin, create_organisation_admin_security_group
+
 from django.contrib.auth.mixins import LoginRequiredMixin
+from openea.utils import Utils
 from utils.views.custom import SingleObjectView
-from datetime import datetime
+from django.utils import timezone
 from organisation.models import Profile
 
-class ProfileUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, UpdateView):
+class ProfileUpdateView(LoginRequiredMixin, SingleObjectView, UpdateView):
     model = Profile
     fields = ['role', 'description']
     template_name = "profile/profile_update.html"
@@ -15,7 +16,7 @@ class ProfileUpdateView(LoginRequiredMixin, CustomPermissionRequiredMixin, Singl
 
     def form_valid(self, form):
         form.instance.modified_by = self.request.user
-        form.instance.modified_at = datetime.now()
+        form.instance.modified_at = timezone.now()
         return super().form_valid(form)
 
     def get_success_url(self):

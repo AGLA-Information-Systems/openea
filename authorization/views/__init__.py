@@ -1,8 +1,12 @@
-from .permission.permission_create import PermissionCreateView
-from .permission.permission_delete import PermissionDeleteView
 from .permission.permission_detail import PermissionDetailView
-from .permission.permission_list import PermissionListOrganisationView, PermissionListUserView, PermissionListView
-from .permission.permission_update import PermissionUpdateView
+from .permission.permission_list import PermissionListView
+
+from .accesspermission.accesspermission_create import AccessPermissionCreateView
+from .accesspermission.accesspermission_delete import AccessPermissionDeleteView
+from .accesspermission.accesspermission_detail import AccessPermissionDetailView
+from .accesspermission.accesspermission_list import AccessPermissionListOrganisationView, AccessPermissionListUserView, AccessPermissionListView
+from .accesspermission.accesspermission_update import AccessPermissionUpdateView
+
 from .security_group.security_group_create import SecurityGroupCreateView
 from .security_group.security_group_delete import SecurityGroupDeleteView
 from .security_group.security_group_detail import SecurityGroupDetailView

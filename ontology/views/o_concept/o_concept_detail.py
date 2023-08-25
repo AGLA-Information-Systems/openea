@@ -2,18 +2,19 @@ from django.core.paginator import Paginator
 from django.http import Http404
 from django.views.generic import DetailView
 
-from authorization.controllers.utils import CustomPermissionRequiredMixin
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.controllers.utils import KnowledgeBaseUtils
 from ontology.models import OConcept, OInstance
+from openea.utils import Utils
 from utils.views.custom import SingleObjectView
 
 
-class OConceptDetailView(LoginRequiredMixin, CustomPermissionRequiredMixin, SingleObjectView, DetailView):
+class OConceptDetailView(LoginRequiredMixin, SingleObjectView, DetailView):
     model = OConcept
     template_name = "o_concept/o_concept_detail.html"
     paginate_by = 10000
-    permission_required = [('VIEW', model.get_object_type(), None)]
+    permission_required = [(Utils.PERMISSION_ACTION_VIEW, model.get_object_type(), None)]
     
     def get_context_data(self, **kwargs):
         context = super(OConceptDetailView, self).get_context_data(**kwargs)
