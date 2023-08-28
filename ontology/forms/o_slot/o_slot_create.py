@@ -6,6 +6,7 @@ from ontology.models import OInstance, OModel, OPredicate, OSlot
 class OSlotCreateForm(forms.ModelForm):
     new_object_name = forms.CharField(required=False)
     new_object_description = forms.CharField(required=False)
+    name = forms.CharField(required=False)
     description = forms.CharField(required=False)
 
     def __init__(self,*args,**kwargs):
@@ -40,6 +41,7 @@ class OSlotCreateForm(forms.ModelForm):
             self.fields['subject'].required = False
         
         self.fields['order'].initial = '0'
+        
     class Meta:      
         model = OSlot
         fields = ['model', 'predicate', 'subject', 'object', 'description', 'order']

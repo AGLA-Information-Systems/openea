@@ -65,8 +65,8 @@
                 <tr>
                     <td>{{ OPredicate }}</td>
                     <td><a href="{% url "o_predicate_detail" OPredicate.id %}">view</a></td>
-                    <td><a href="{% url "o_predicate_update" OPredicate.id %}">{% trans "edit" %}</a></td>
-                    <td><a href="{% url "o_predicate_delete" OPredicate.id %}">{% trans "delete" %}</a></td>
+                    <td><a href="{% url "o_predicate_update" OPredicate.id %}"><i class="far fa-edit"></i></a></td>
+                    <td><a href="{% url "o_predicate_delete" OPredicate.id %}"><i class="fa fa-remove"></i></a></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -106,8 +106,8 @@
                     <td>{{ OConcept }}</td>
                     <td>{{ OConcept.description }}</td>
                     <td><a href="{% url "o_concept_detail" OConcept.id %}">view</a></td>
-                    <td><a href="{% url "o_concept_update" OConcept.id %}">{% trans "edit" %}</a></td>
-                    <td><a href="{% url "o_concept_delete" OConcept.id %}">{% trans "delete" %}</a></td>
+                    <td><a href="{% url "o_concept_update" OConcept.id %}"><i class="far fa-edit"></i></a></td>
+                    <td><a href="{% url "o_concept_delete" OConcept.id %}"><i class="fa fa-remove"></i></a></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -146,8 +146,8 @@
                     <td>{{ ORelation }}</td>
                     <td>{{ OConcept.description }}</td>
                     <td><a href="{% url "o_relation_detail" ORelation.id %}">view</a></td>
-                    <td><a href="{% url "o_relation_update" ORelation.id %}">{% trans "edit" %}</a></td>
-                    <td><a href="{% url "o_relation_delete" ORelation.id %}">{% trans "delete" %}</a></td>
+                    <td><a href="{% url "o_relation_update" ORelation.id %}"><i class="far fa-edit"></i></a></td>
+                    <td><a href="{% url "o_relation_delete" ORelation.id %}"><i class="fa fa-remove"></i></a></td>
                 </tr>
                 {% endfor %}
             </tbody>

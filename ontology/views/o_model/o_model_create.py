@@ -1,6 +1,7 @@
 import traceback
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
+from ontology.controllers.o_model import ModelUtils
 from utils.views.custom import CustomCreateView
 from django.core.exceptions import SuspiciousOperation
 
@@ -32,6 +33,14 @@ class OModelCreateView(LoginRequiredMixin, CustomCreateView):
                     'description': form.cleaned_data['description'],
                     'created_by': self.request.user
                 })
+            
+            root_concept = None
+            if form.cleaned_data['root_concept_name']:
+                root_concept = ModelUtils.set_root_concept(model=form.instance, root_concept_name=form.cleaned_data['root_concept_name'])
+
+            if form.cleaned_data['native_concepts'] is True:
+                ModelUtils.add_native_concepts(model=form.instance, root_concept=root_concept)
+
         except Exception as e:
             traceback.print_exc()
             raise SuspiciousOperation(str(e))

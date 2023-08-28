@@ -19,8 +19,8 @@
             <td>{{ OConcept.description }}</td>
             <td>{% for tag in ORelation.tags.all %}{{ tag.name }} {% endfor %}</td>
             <td>{% trans ORelation.get_quality_status_display %}</td>
-            <td><a href="{% url "o_relation_update" ORelation.id %}">{% trans "edit" %}</a></td>
-            <td><a href="{% url "o_relation_delete" ORelation.id %}">{% trans "delete" %}</a></td>
+            <td><a href="{% url "o_relation_update" ORelation.id %}"><i class="far fa-edit"></i></a></td>
+            <td><a href="{% url "o_relation_delete" ORelation.id %}"><i class="fa fa-remove"></i></a></td>
         </tr>
         {% endfor %}
     </tbody>

@@ -5,8 +5,20 @@
 {% block content %}
 <h2 class="form-title">{% trans "Update Slot" %}</h2>
 <form class="form-group" method="POST">
+    {{ form.non_field_errors }}
     {% csrf_token %}
-    {{ form|crispy }}
+    {{ form.predicate|as_crispy_field }}
+    <div>
+        <fieldset>
+            <legend>{% trans "Select an existing instance" %}</legend>
+        {{ form.subject|as_crispy_field }}
+        {{ form.object|as_crispy_field }}
+        </fieldset>
+    </div>
+    {{ form.name|as_crispy_field }}
+    {{ form.description|as_crispy_field }}
+    {{ form.order|as_crispy_field }}
+    {{ form.model|as_crispy_field }}
     <input type="hidden" name="return_url" value="{{ return_url }}"/>
     <input class="btn btn-primary" type="submit" value="{% trans 'Submit' %}" />
 </form>

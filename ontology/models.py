@@ -132,6 +132,7 @@ class OConcept(GenericModel, models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=1024)
     description = models.TextField(blank=True, null=True)
+    native = models.BooleanField(default=False)
     model = models.ForeignKey(OModel, on_delete=models.CASCADE, null=True, related_name='concepts')
     tags = models.ManyToManyField(Tag, blank=True)
     quality_status = models.CharField(max_length=2, choices=QUALITY_STATUS, default=QUALITY_STATUS_PROPOSED)
@@ -196,6 +197,7 @@ class ORelation(GenericModel, models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=1024)
     description = models.TextField(blank=True, null=True)
+    native = models.BooleanField(default=False)
     type = models.CharField(max_length=4, choices=RELATION_TYPE, default=PROPERTY)
     concept = models.ForeignKey(OConcept, on_delete=models.CASCADE, null=True, related_name='implements')
     model = models.ForeignKey(OModel, on_delete=models.CASCADE, null=True, related_name='relations')
@@ -384,6 +386,7 @@ class OSlot(GenericModel, models.Model):
     """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     description = models.TextField(blank=True, null=True)
+    name = models.CharField(max_length=1024, blank=True, null=True)
     value = models.CharField(max_length=1024, blank=True, null=True)
     order = models.CharField(max_length=100, default='0')
     subject = models.ForeignKey(OInstance, on_delete=models.CASCADE, null=True, related_name='slot_subject')
@@ -401,15 +404,32 @@ class OSlot(GenericModel, models.Model):
 
     objects = OrganisationManager()
 
-    @property
-    def name(self):
-        subject_name = self.value or ''
-        if self.subject is not None:
-            subject_name = self.subject.name
-        object_name = self.value or ''
-        if self.object is not None:
-            object_name = self.object.name
-        return subject_name + ' -> ' + self.predicate.relation.name + ' -> ' + object_name 
+    # @property
+    # def name(self):
+    #     if self.name:
+    #         name = self.name + ' : '
+    #     subject_name = self.value or ''
+    #     if self.subject is not None:
+    #         subject_name = self.subject.name
+    #     object_name = self.value or ''
+    #     if self.object is not None:
+    #         object_name = self.object.name
+    #     name =+ subject_name + ' -> ' + self.predicate.relation.name + ' -> ' + object_name
+    #     return name
+    
+    def get_display(self):
+        name = self.name or ""
+
+        if self.subject is None and self.object is not None:
+            return name + ' : ' + self.value + ' ' + self.predicate.subject.name 
+
+        if self.subject is not None and self.object is None:
+            return name + ' : ' + self.value + ' ' + self.predicate.object.name 
+        
+        if self.subject is not None and self.object is not None:
+            return name + self.subject.name + ' ' + self.predicate.relation.name + ' ' + self.object.name
+
+        raise ValueError('Malformed slot!')
 
     def get_or_create(model, predicate, description='', order='0', subject=None, object=None, value=None, id=None):
         try:
@@ -434,7 +454,7 @@ class OSlot(GenericModel, models.Model):
         return OConcept.objects.filter(model__repository__organisation=organisation)
 
     def __str__(self):
-        return self.name
+        return self.get_display()
     
     def __lt__(self, other):
         return True

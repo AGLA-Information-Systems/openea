@@ -41,7 +41,7 @@ class OInstanceDetailView(LoginRequiredMixin, SingleObjectView, DetailView):
                          [{'predicate':p,
                            'kind':'own_as_subject',
                            'sort_key':p.object.name,
-                           'slots':OSlot.objects.filter(model=model, predicate=p, subject=instance).order_by('object__name'),
+                           'slots': OSlot.objects.filter(model=model, predicate=p, subject=instance).order_by('object__name'),
                            'possible_concepts': [x[0] for x in KnowledgeBaseUtils.get_child_concepts(concept=p.object)] + [p.object]} for p in own_predicates_as_subject] + \
                          [{'predicate':p,
                            'kind':'own_as_object',

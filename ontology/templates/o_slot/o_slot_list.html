@@ -19,8 +19,8 @@
         <tr>
             <td>{{ OSlot }}</td>
             <td><a href="{% url "o_slot_detail" OSlot.id %}">{% trans "view" %}</a></td>
-            <td><a href="{% url "o_slot_update" OSlot.id %}">{% trans "edit" %}</a></td>
-            <td><a href="{% url "o_slot_delete" OSlot.id %}">{% trans "delete" %}</a></td>
+            <td><a href="{% url "o_slot_update" OSlot.id %}"><i class="far fa-edit"></i></a></td>
+            <td><a href="{% url "o_slot_delete" OSlot.id %}"><i class="fa fa-remove"></i></a></td>
         </tr>
         {% endfor %}
     </tbody>

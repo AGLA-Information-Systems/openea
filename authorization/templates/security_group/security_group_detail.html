@@ -50,8 +50,8 @@
         <tr>
             <td><a class="link-dark" href="{% url "profile_detail" profile.id %}">{{ profile }}</a></td>
             <td>{{ profile.description }}</td>
-            <td><a href="{% url "profile_update" profile.id %}">{% trans "edit" %}</a></td>
-            <td><a href="{% url "profile_delete" profile.id %}">{% trans "delete" %}</a></td>
+            <td><a href="{% url "profile_update" profile.id %}"><i class="far fa-edit"></i></a></td>
+            <td><a href="{% url "profile_delete" profile.id %}"><i class="fa fa-remove"></i></a></td>
         </tr>
         {% endfor %}
     </tbody>

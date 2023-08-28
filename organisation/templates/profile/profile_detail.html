@@ -33,8 +33,8 @@
         <tr>
             <td><a class="link-dark" href="{% url "security_group_detail" security_group.id %}">{{ security_group.name }}</a></td>
             <td>{{ security_group.description }}</td>
-            <td><a href="{% url "security_group_update" security_group.id %}">{% trans "edit" %}</a></td>
-            <td><a href="{% url "security_group_delete" security_group.id %}">{% trans "delete" %}</a></td>
+            <td><a href="{% url "security_group_update" security_group.id %}"><i class="far fa-edit"></i></a></td>
+            <td><a href="{% url "security_group_delete" security_group.id %}"><i class="fa fa-remove"></i></a></td>
         </tr>
         {% endfor %}
     </tbody>

@@ -48,7 +48,7 @@ class ReferrerView:
         permissions_required = self.get_permission_required()
         if permissions_required:
             self.get_target_organisation()
-            request.acl.check_raise(organisation=self.organisation, permissions_required=permissions_required)
+            request.user.acl.check_raise(organisation=self.organisation, permissions_required=permissions_required)
         self.request.view = self
         return super().dispatch(request, *args, **kwargs)
 

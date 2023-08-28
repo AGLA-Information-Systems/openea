@@ -11,8 +11,8 @@ from ontology.models import (OConcept, OInstance, OModel, OPredicate,
 from openea.utils import Utils
 
 
-
 DEFAULT_MAX_LEVEL = 100
+
 
 class ModelUtils:
     def filterSlots(user, data):
@@ -24,13 +24,13 @@ class ModelUtils:
         target = data.get('target')
 
         relation_ids = ModelUtils.get_filtering_param(data, 'relation_ids', [])
-        show_relations = user.acl.check((Utils.PERMISSION_ACTION_VIEW, ORelation.get_object_type(), None))
+        show_relations = user.acl.check(organisation=model.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, ORelation.get_object_type(), None))
         if not show_relations:
             relation_ids = []
         
             
         concept_ids = ModelUtils.get_filtering_param(data, 'concept_ids', [])
-        show_concepts = user.acl.check((Utils.PERMISSION_ACTION_VIEW, OConcept.get_object_type(), None))
+        show_concepts = user.acl.check(organisation=model.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OConcept.get_object_type(), None))
         if not show_concepts:
             concept_ids = []
         
@@ -38,7 +38,7 @@ class ModelUtils:
         predicate_ids = ModelUtils.get_filtering_param(data, 'predicate_ids', None)
         if not predicate_ids:
             predicate_ids = None
-        show_predicates = user.acl.check((Utils.PERMISSION_ACTION_VIEW, OPredicate.get_object_type(), None))
+        show_predicates = user.acl.check(organisation=model.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OPredicate.get_object_type(), None))
         if not show_predicates:
             predicate_ids = []
         
@@ -46,7 +46,7 @@ class ModelUtils:
         instance_ids = ModelUtils.get_filtering_param(data, 'instance_ids', None)
         if not instance_ids:
             instance_ids = None
-        show_instances = user.acl.check((Utils.PERMISSION_ACTION_VIEW, OInstance.get_object_type(), None))
+        show_instances = user.acl.check(organisation=model.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OInstance.get_object_type(), None))
         if not show_instances:
             instance_ids = []
         
@@ -574,3 +574,23 @@ class ModelUtils:
             if isinstance(item_ids, str):
                 item_ids = [item_ids]
         return item_ids
+    
+    def set_root_concept(model, root_concept_name=':THING'):
+        root_concept, created = OConcept.objects.get_or_create(name=root_concept_name, model=model)
+        return root_concept
+
+    def add_native_concepts(model, root_concept=None):
+        string_concept, created = OConcept.objects.get_or_create(name=':STRING', model=model, organisation=model.organisation, native=True)
+        numeric_concept, created = OConcept.objects.get_or_create(name=':NUMERIC', model=model, organisation=model.organisation, native=True)
+        date_concept, created = OConcept.objects.get_or_create(name=':DATE', model=model, organisation=model.organisation, native=True)
+        timestamp_concept, created = OConcept.objects.get_or_create(name=':TIMESTAMP', model=model, organisation=model.organisation, native=True)
+        boolean_concept, created = OConcept.objects.get_or_create(name=':BOOLEAN', model=model, organisation=model.organisation, native=True)
+
+        if root_concept is not None:            
+            inheritance_relation, created = ORelation.objects.get_or_create(model=model, organisation=model.organisation, name=':is', type=ORelation.INHERITANCE_SUPER_IS_OBJECT, native=True)
+            string_predicate, created = OPredicate.objects.get_or_create(model=model, organisation=model.organisation, subject=string_concept, relation=inheritance_relation, object=root_concept, defaults={'cardinality_min':0, 'cardinality_max':0})
+            numeric_predicate, created = OPredicate.objects.get_or_create(model=model, organisation=model.organisation, subject=numeric_concept, relation=inheritance_relation, object=root_concept, defaults={'cardinality_min':0, 'cardinality_max':0})
+            date_predicate, created = OPredicate.objects.get_or_create(model=model, organisation=model.organisation, subject=date_concept, relation=inheritance_relation, object=root_concept, defaults={'cardinality_min':0, 'cardinality_max':0})
+            timestamp_predicate, created = OPredicate.objects.get_or_create(model=model, organisation=model.organisation, subject=timestamp_concept, relation=inheritance_relation, object=root_concept, defaults={'cardinality_min':0, 'cardinality_max':0})
+            boolean_predicate, created = OPredicate.objects.get_or_create(model=model, organisation=model.organisation, subject=boolean_concept, relation=inheritance_relation, object=root_concept, defaults={'cardinality_min':0, 'cardinality_max':0})
+        

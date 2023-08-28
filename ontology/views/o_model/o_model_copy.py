@@ -11,6 +11,7 @@ from authorization.models import Permission
 from ontology.controllers.o_model import ModelUtils
 from ontology.models import OConcept, OInstance, OModel, OPredicate, ORelation
 from openea.utils import Utils
+
 from utils.views.custom import ReferrerView
 
 

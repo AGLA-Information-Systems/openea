@@ -26,6 +26,8 @@ class OSlotUpdateView(LoginRequiredMixin, SingleObjectView, FormView):
         object=OInstance.objects.get(id=form.cleaned_data['object'].id)
         slot.object=object
         slot.order=form.cleaned_data['order']
+        slot.name=form.cleaned_data['name']
+        slot.description=form.cleaned_data['description']
         slot.save()
             
         return super().form_valid(form)

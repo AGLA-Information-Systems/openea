@@ -45,22 +45,26 @@
                 {% if p.kind == "inherited_as_subject" or p.kind == "own_as_subject" %}
                     <li>
                     {% if slot_value.object %}
-                        <a class="link-dark" href="{% url "o_instance_detail" slot_value.object.id %}">{{ slot_value.object.name }}</a>
+                        <a class="link-dark" href="{% url "o_instance_detail" slot_value.object.id %}">{{slot_value.object.name}}</a> 
                     {% else %}
-                        <span class="link-dark" >{{ slot_value.value }}</span>
+                        <span class="link-dark" >{{ slot_value.get_display }}</span>
                     {% endif %}
-                        <a href="{% url "o_slot_update" slot_value.id %}">{% trans "edit" %}</a>
-                        <a href="{% url "o_slot_delete" slot_value.id %}">{% trans "delete" %}</a>
+                        <a href="{% url "o_slot_update" slot_value.id %}"><i class="far fa-edit"></i></a>
+                        <a href="{% url "o_slot_delete" slot_value.id %}"><i class="fa fa-remove"></i></a>
+                        &nbsp;&nbsp;&nbsp;
+                        <span class="text-secondary">({{ slot_value.get_display }})</span>
                     </li>
                 {% elif p.kind == "inherited_as_object" or p.kind == "own_as_object" %}
                     <li>
                     {% if slot_value.subject %}
-                        <a class="link-dark" href="{% url "o_instance_detail" slot_value.subject.id %}">{{ slot_value.subject.name }}</a>
+                        <a class="link-dark" href="{% url "o_instance_detail" slot_value.subject.id %}">{{slot_value.subject.name}}</a> 
                     {% else %}
-                        <span class="link-dark" >{{ slot_value.value }}</span>
+                        <span class="link-dark" >{{ slot_value.get_display }}</span>
                     {% endif %}
-                        <a href="{% url "o_slot_update" slot_value.id %}">{% trans "edit" %}</a>
-                        <a href="{% url "o_slot_delete" slot_value.id %}">{% trans "delete" %}</a>
+                        <a href="{% url "o_slot_update" slot_value.id %}"><i class="far fa-edit"></i></a>
+                        <a href="{% url "o_slot_delete" slot_value.id %}"><i class="fa fa-remove"></i></a>
+                        &nbsp;&nbsp;&nbsp; 
+                        <span class="text-secondary">({{ slot_value.get_display }})</span>
                     </li>   
                 {% endif %} 
             {% endfor %}

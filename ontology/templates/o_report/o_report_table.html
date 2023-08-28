@@ -21,8 +21,8 @@
             <td>{% for tag in report.tags.all %}{{ tag.name }} {% endfor %}</td>
             <td>{% trans report.get_quality_status_display %}</td>
             <td><a href="{% url "o_report_run" report.id %}">{% trans "run" %}</a></td>
-            <td><a href="{% url "o_report_update" report.id %}">{% trans "edit" %}</a></td>
-            <td><a href="{% url "o_report_delete" report.id %}">{% trans "delete" %}</a></td>
+            <td><a href="{% url "o_report_update" report.id %}"><i class="far fa-edit"></i></a></td>
+            <td><a href="{% url "o_report_delete" report.id %}"><i class="fa fa-remove"></i></a></td>
         </tr>
         {% endfor %}
     </tbody>

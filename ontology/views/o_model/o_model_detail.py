@@ -24,35 +24,35 @@ class OModelDetailView(LoginRequiredMixin, SingleObjectView, DetailView):
         context = super(OModelDetailView, self).get_context_data(**kwargs)
         model = context.get('object')
         
-        context['show_concepts'] = self.request.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OConcept.get_object_type(), None))
+        context['show_concepts'] = self.request.user.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OConcept.get_object_type(), None))
         if context['show_concepts']:
             concept_list = OConcept.objects.filter(model=model).order_by('name').all()
             concept_paginator = Paginator(concept_list, self.paginate_by)
             concept_page_number = self.request.GET.get('concept_page')
             context['concepts'] = concept_paginator.get_page(concept_page_number)
 
-        context['show_relations'] = self.request.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, ORelation.get_object_type(), None))
+        context['show_relations'] = self.request.user.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, ORelation.get_object_type(), None))
         if context['show_relations']:
             relation_list = ORelation.objects.filter(model=model).order_by('name').all()
             relation_paginator = Paginator(relation_list, self.paginate_by)
             relation_page_number = self.request.GET.get('relation_page')
             context['relations'] = relation_paginator.get_page(relation_page_number)
 
-        context['show_predicates'] = self.request.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OPredicate.get_object_type(), None))
+        context['show_predicates'] = self.request.user.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OPredicate.get_object_type(), None))
         if context['show_predicates']:
             predicate_list = OPredicate.objects.filter(model=model).order_by('object__name').order_by('relation__name').order_by('subject__name').all()
             predicate_paginator = Paginator(predicate_list, self.paginate_by)
             predicate_page_number = self.request.GET.get('predicate_page')
             context['predicates'] = predicate_paginator.get_page(predicate_page_number)
 
-        context['show_instances'] = self.request.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OInstance.get_object_type(), None))
+        context['show_instances'] = self.request.user.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OInstance.get_object_type(), None))
         if context['show_instances']:
             instance_list = OInstance.objects.filter(model=model).order_by('name').all()
             instance_paginator = Paginator(instance_list, self.paginate_by)
             instance_page_number = self.request.GET.get('instance_page')
             context['instances'] = instance_paginator.get_page(instance_page_number)
 
-        context['show_reports'] = self.request.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OReport.get_object_type(), None))
+        context['show_reports'] = self.request.user.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OReport.get_object_type(), None))
         if context['show_reports']:
             report_list = OReport.objects.filter(model=model).order_by('name').all()
             report_paginator = Paginator(report_list, self.paginate_by)

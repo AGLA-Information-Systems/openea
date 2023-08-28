@@ -26,6 +26,7 @@
                 </fieldset>
             </div>
         </div>
+        {{ form.name|as_crispy_field }}
         {{ form.description|as_crispy_field }}
         {{ form.order|as_crispy_field }}
         {{ form.model|as_crispy_field }}

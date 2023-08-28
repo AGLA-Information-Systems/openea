@@ -68,8 +68,8 @@
                 {% for Repository in repositories %}
                 <tr>
                     <td><a class="link-dark" href="{% url "repository_detail" Repository.id %}">{{ Repository }}</a></td>
-                    <td><a href="{% url "repository_update" Repository.id %}">{% trans "edit" %}</a></td>
-                    <td><a href="{% url "repository_delete" Repository.id %}">{% trans "delete" %}</a></td>
+                    <td><a href="{% url "repository_update" Repository.id %}"><i class="far fa-edit"></i></a></td>
+                    <td><a href="{% url "repository_delete" Repository.id %}"><i class="fa fa-remove"></i></a></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -109,8 +109,8 @@
                 <tr>
                     <td><a class="link-dark" href="{% url "profile_detail" Profile.id %}">{{ Profile }}</a></td>
                     <td>{{ Profile.user }}</td>
-                    <td><a href="{% url "profile_update" Profile.id %}">{% trans "edit" %}</a></td>
-                    <td><a href="{% url "profile_delete" Profile.id %}">{% trans "delete" %}</a></td>
+                    <td><a href="{% url "profile_update" Profile.id %}"><i class="far fa-edit"></i></a></td>
+                    <td><a href="{% url "profile_delete" Profile.id %}"><i class="fa fa-remove"></i></a></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -148,8 +148,8 @@
                 {% for security_group in security_groups %}
                 <tr>
                     <td><a class="link-dark" href="{% url "security_group_detail" security_group.id %}">{{ security_group }}</a></td>
-                    <td><a href="{% url "security_group_update" security_group.id %}">{% trans "edit" %}</a></td>
-                    <td><a href="{% url "security_group_delete" security_group.id %}">{% trans "delete" %}</a></td>
+                    <td><a href="{% url "security_group_update" security_group.id %}"><i class="far fa-edit"></i></a></td>
+                    <td><a href="{% url "security_group_delete" security_group.id %}"><i class="fa fa-remove"></i></a></td>
                 </tr>
                 {% endfor %}
             </tbody>

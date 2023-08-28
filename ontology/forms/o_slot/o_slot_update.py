@@ -9,6 +9,7 @@ class OSlotUpdateForm(forms.ModelForm):
     object = forms.ModelChoiceField(queryset=OInstance.objects.all())
     predicate = forms.ModelChoiceField(queryset=OPredicate.objects.all())
     model = forms.ModelChoiceField(queryset=OModel.objects.all())
+    name = forms.CharField(required=False)
     description = forms.CharField(required=False)
 
     def __init__(self,*args,**kwargs):
@@ -34,6 +35,9 @@ class OSlotUpdateForm(forms.ModelForm):
         #self.fields['object'].disabled = True
         
         self.fields['order'].initial = slot.order
+
+        self.fields['name'].initial = slot.name
+        self.fields['description'].initial = slot.description
 
     class Meta:      
         model = OSlot

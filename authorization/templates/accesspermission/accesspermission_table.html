@@ -13,8 +13,8 @@
         <tr>
             <td><a class="link-dark" href="{% url "accesspermission_detail" accesspermission.id %}">{{ accesspermission.permission.action }} {{ accesspermission.permission.object_type }} {% if accesspermission.object_identifier %} {{ accesspermission.object_identifier }} {% endif %}</a></td>
             <td><a class="link-dark" href="{% url "organisation_detail" accesspermission.organisation.id %}">{{ accesspermission.organisation.name }}</a></td>
-            <td><a href="{% url "accesspermission_update" accesspermission.id %}">{% trans "edit" %}</a></td>
-            <td><a href="{% url "accesspermission_delete" accesspermission.id %}">{% trans "delete" %}</a></td>
+            <td><a href="{% url "accesspermission_update" accesspermission.id %}"><i class="far fa-edit"></i></a></td>
+            <td><a href="{% url "accesspermission_delete" accesspermission.id %}"><i class="fa fa-remove"></i></a></td>
         </tr>
         {% endfor %}
     </tbody>

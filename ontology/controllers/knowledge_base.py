@@ -4,8 +4,6 @@ from ..models import OConcept, OModel, OPredicate, ORelation, Repository
 from ..utils import get_index
 
 
-
-
 BASIC_ONTOLOGY = {
     'entities': [
         [None, 'THING', 'The original subject of all entities'],

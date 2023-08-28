@@ -15,8 +15,8 @@
             <td><a class="link-dark" href="{% url "o_predicate_detail" OPredicate.id %}">{{OPredicate.name}}</a></td>
             <td>{% for tag in OPredicate.tags.all %}{{ tag.name }} {% endfor %}</td>
             <td>{% trans OPredicate.get_quality_status_display %}</td>
-            <td><a href="{% url "o_predicate_update" OPredicate.id %}">{% trans "edit" %}</a></td>
-            <td><a href="{% url "o_predicate_delete" OPredicate.id %}">{% trans "delete" %}</a></td>
+            <td><a href="{% url "o_predicate_update" OPredicate.id %}"><i class="far fa-edit"></i></a></td>
+            <td><a href="{% url "o_predicate_delete" OPredicate.id %}"><i class="fa fa-remove"></i></a></td>
         </tr>
         {% endfor %}
     </tbody>

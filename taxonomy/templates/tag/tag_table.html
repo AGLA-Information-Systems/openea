@@ -13,8 +13,8 @@
         <tr>
             <td><a class="link-dark" href="{% url "tag_detail" Tag.id %}">{{ Tag }}</a></td>
             <td>{{ Tag.description }}</td>
-            <td><a href="{% url "tag_update" Tag.id %}">{% trans "edit" %}</a></td>
-            <td><a href="{% url "tag_delete" Tag.id %}">{% trans "delete" %}</a></td>
+            <td><a href="{% url "tag_update" Tag.id %}"><i class="far fa-edit"></i></a></td>
+            <td><a href="{% url "tag_delete" Tag.id %}"><i class="fa fa-remove"></i></a></td>
         </tr>
         {% endfor %}
     </tbody>

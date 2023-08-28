@@ -19,8 +19,8 @@
         {% for Organisation in object_list %}
         <tr>
             <td><a href="{% url "organisation_detail" Organisation.id %}">{{ Organisation }}</a></td>
-            <td><a href="{% url "organisation_update" Organisation.id %}">{% trans "edit" %}</a></td>
-            <td><a href="{% url "organisation_delete" Organisation.id %}">{% trans "delete" %}</a></td>
+            <td><a href="{% url "organisation_update" Organisation.id %}"><i class="far fa-edit"></i></a></td>
+            <td><a href="{% url "organisation_delete" Organisation.id %}"><i class="fa fa-remove"></i></a></td>
         </tr>
         {% endfor %}
     </tbody>

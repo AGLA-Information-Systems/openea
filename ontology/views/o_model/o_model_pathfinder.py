@@ -23,10 +23,10 @@ class OModelPathFinderView(LoginRequiredMixin, View):
         end_instance_id = ModelUtils.version_uuid(data.get('end_instance_id'))
         end_instance = OInstance.objects.get(id=end_instance_id)
         
-        show_relations = self.request.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, ORelation.get_object_type(), None))
-        show_concepts = self.request.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OConcept.get_object_type(), None))
-        show_predicates = self.request.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OPredicate.get_object_type(), None))
-        show_instances = self.request.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OInstance.get_object_type(), None))
+        show_relations = self.request.user.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, ORelation.get_object_type(), None))
+        show_concepts = self.request.user.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OConcept.get_object_type(), None))
+        show_predicates = self.request.user.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OPredicate.get_object_type(), None))
+        show_instances = self.request.user.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OInstance.get_object_type(), None))
 
         if not (show_relations and show_concepts and show_predicates and show_instances):
             raise PermissionDenied('Permission Denied')

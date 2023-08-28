@@ -11,7 +11,7 @@ class ACLMiddleware:
         # Code to be executed for each request before
         # the view (and later middleware) are called.
         if request.user.is_authenticated:
-            request.acl = SimpleLazyObject(lambda: Acl(request.user))
+            request.user.acl = SimpleLazyObject(lambda: Acl(request.user))
 
         response = self.get_response(request)
 

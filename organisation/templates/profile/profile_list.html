@@ -25,8 +25,8 @@
             {% else %}
             <td><a href="{% url "profile_activate" Profile.id %}">{% trans "activate" %}</a></td>
             {% endif %}
-            <td><a href="{% url "profile_update" Profile.id %}">{% trans "edit" %}</a></td>
-            <td><a href="{% url "profile_delete" Profile.id %}">{% trans "delete" %}</a></td>
+            <td><a href="{% url "profile_update" Profile.id %}"><i class="far fa-edit"></i></a></td>
+            <td><a href="{% url "profile_delete" Profile.id %}"><i class="fa fa-remove"></i></a></td>
         </tr>
         {% endfor %}
     </tbody>

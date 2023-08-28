@@ -13,8 +13,8 @@
         <tr>
             <td><a class="link-dark" href="{% url "configuration_detail" Configuration.id %}">{{ Configuration.name }}</a></td>
             <td>{{ Configuration.content }}</td>
-            <td><a href="{% url "configuration_update" Configuration.id %}">{% trans "edit" %}</a></td>
-            <td><a href="{% url "configuration_delete" Configuration.id %}">{% trans "delete" %}</a></td>
+            <td><a href="{% url "configuration_update" Configuration.id %}"><i class="far fa-edit"></i></a></td>
+            <td><a href="{% url "configuration_delete" Configuration.id %}"><i class="fa fa-remove"></i></a></td>
         </tr>
         {% endfor %}
     </tbody>
