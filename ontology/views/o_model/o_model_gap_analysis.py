@@ -26,11 +26,16 @@ class OModelGapAnalysisView(LoginRequiredMixin, View):
         model_2 = OModel.objects.get(id=model_2_id)
         filters = data.get('filters', [])
 
-        show_model = self.request.user.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OModel.get_object_type(), None))
-        show_relations = self.request.user.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, ORelation.get_object_type(), None))
-        show_concepts = self.request.user.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OConcept.get_object_type(), None))
-        show_predicates = self.request.user.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OPredicate.get_object_type(), None))
-        show_instances = self.request.user.acl.check(organisation=self.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OInstance.get_object_type(), None))
+        show_model = self.request.user.acl.check(organisation=model_1.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OModel.get_object_type(), None)) \
+                     and self.request.user.acl.check(organisation=model_2.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OModel.get_object_type(), None))
+        show_relations = self.request.user.acl.check(organisation=model_1.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, ORelation.get_object_type(), None)) \
+                         and self.request.user.acl.check(organisation=model_2.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, ORelation.get_object_type(), None))
+        show_concepts = self.request.user.acl.check(organisation=model_1.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OConcept.get_object_type(), None)) \
+                        and self.request.user.acl.check(organisation=model_2.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OConcept.get_object_type(), None))
+        show_predicates = self.request.user.acl.check(organisation=model_1.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OPredicate.get_object_type(), None)) \
+                         and self.request.user.acl.check(organisation=model_2.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OPredicate.get_object_type(), None))
+        show_instances = self.request.user.acl.check(organisation=model_1.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OInstance.get_object_type(), None)) \
+                        and self.request.user.acl.check(organisation=model_2.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OInstance.get_object_type(), None))
 
         if not (show_model and show_relations and show_concepts and show_predicates and show_instances):
             raise PermissionDenied('Permission Denied')

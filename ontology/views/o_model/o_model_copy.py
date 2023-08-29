@@ -11,7 +11,7 @@ from authorization.models import Permission
 from ontology.controllers.o_model import ModelUtils
 from ontology.models import OConcept, OInstance, OModel, OPredicate, ORelation
 from openea.utils import Utils
-
+from payment.controllers.access import check_max_object_type
 from utils.views.custom import ReferrerView
 
 
@@ -27,6 +27,7 @@ class OModelCopyView(LoginRequiredMixin, ReferrerView, View):
         model_1 = OModel.objects.get(id=model_id)
         
         self.get_current_organisation(request=request, args=args, kwargs=kwargs)
+        check_max_object_type(organisation=model_1.organisation, object_model=self.model)
         
         new_model = ModelUtils.model_copy(model_1)
         

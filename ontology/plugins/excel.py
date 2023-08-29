@@ -224,15 +224,15 @@ class ExcelPlugin(Plugin_v1):
                     object_description = ws['U' + str(index)].value or ''
 
                     if instance_name:
-                        concept = OConcept.get_or_create(model=model, name=concept_name, id=concept_id)
-                        relation = ORelation.get_or_create(model=model, name=relation_id_name, id=relation_id)
-                        object_concept = OConcept.get_or_create(model=model, name=object_concept_name, id=object_concept_id)
-                        predicate = OPredicate.get_or_create(model=model, relation=relation, subject=concept, object=object_concept, cardinality_min=predicate_cardinality_min, cardinality_max=predicate_cardinality_max, id=predicate_id)
+                        concept, created = OConcept.get_or_create(model=model, name=concept_name, id=concept_id)
+                        relation, created = ORelation.get_or_create(model=model, name=relation_id_name, id=relation_id)
+                        object_concept, created = OConcept.get_or_create(model=model, name=object_concept_name, id=object_concept_id)
+                        predicate, created = OPredicate.get_or_create(model=model, relation=relation, subject=concept, object=object_concept, cardinality_min=predicate_cardinality_min, cardinality_max=predicate_cardinality_max, id=predicate_id)
                         
-                        instance = OInstance.get_or_create(model=model, name=instance_name, code=instance_code, concept=concept, id=instance_id, description=instance_description)
-                        object = OInstance.get_or_create(model=model, name=object_name, code=object_code, concept=object_concept, id=object_id, description=object_description)
+                        instance, created = OInstance.get_or_create(model=model, name=instance_name, code=instance_code, concept=concept, id=instance_id, description=instance_description)
+                        object, created = OInstance.get_or_create(model=model, name=object_name, code=object_code, concept=object_concept, id=object_id, description=object_description)
                         
-                        slot = OSlot.get_or_create(model=model, predicate=predicate, description=slot_description, order=slot_order, subject=instance, object=object, id=slot_id)
+                        slot, created = OSlot.get_or_create(model=model, predicate=predicate, name=slot_name, order=slot_order, description=slot_description, subject=instance, object=object, id=slot_id)
 
             # Close the workbook after reading
             wb.close()

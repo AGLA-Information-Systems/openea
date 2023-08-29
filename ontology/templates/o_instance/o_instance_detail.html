@@ -51,7 +51,7 @@
                     {% endif %}
                         <a href="{% url "o_slot_update" slot_value.id %}"><i class="far fa-edit"></i></a>
                         <a href="{% url "o_slot_delete" slot_value.id %}"><i class="fa fa-remove"></i></a>
-                        &nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;
                         <span class="text-secondary">({{ slot_value.get_display }})</span>
                     </li>
                 {% elif p.kind == "inherited_as_object" or p.kind == "own_as_object" %}
@@ -63,7 +63,7 @@
                     {% endif %}
                         <a href="{% url "o_slot_update" slot_value.id %}"><i class="far fa-edit"></i></a>
                         <a href="{% url "o_slot_delete" slot_value.id %}"><i class="fa fa-remove"></i></a>
-                        &nbsp;&nbsp;&nbsp; 
+                        &nbsp;&nbsp;
                         <span class="text-secondary">({{ slot_value.get_display }})</span>
                     </li>   
                 {% endif %} 
