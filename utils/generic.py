@@ -1,6 +1,6 @@
 from django.utils import timezone
-from log.middleware.request import get_request
 
+from log.middleware.request import get_request
 from openea.utils import Utils
 
 
@@ -90,7 +90,8 @@ class GenericModel:
         # The real thing
         #super().delete(*args, **kwargs)
         self.deleted_at = timezone.now()
-        super().save(*args, **kwargs)
+        #super().save(*args, **kwargs)
+        super().delete(*args, **kwargs)
 
         log_entry = {}
         log_entry['organisation'] = None

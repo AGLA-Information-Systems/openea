@@ -165,6 +165,7 @@ class ModelUtils:
         for slot in OSlot.objects.filter(subject=instance).all():
             data["ownslots"][str(slot.id)] = {
                 "id": slot.id,
+                "name": slot.name,
                 "description": slot.description,
                 "predicate_id": slot.predicate.id,
                 "predicate": slot.predicate.name,
@@ -179,6 +180,7 @@ class ModelUtils:
         for slot in OSlot.objects.filter(object=instance).all():
             data["inslots"][str(slot.id)] = {
                 "id": slot.id,
+                "name": slot.name,
                 "description": slot.description,
                 "predicate_id": slot.predicate.id,
                 "predicate": slot.predicate.name,
@@ -194,6 +196,7 @@ class ModelUtils:
     def slot_to_dict(slot):
         return {
             "id": slot.id,
+            "name": slot.name,
             "description": slot.description,
             "predicate_id": slot.predicate.id,
             "predicate": slot.predicate.name,
@@ -295,9 +298,9 @@ class ModelUtils:
                 ModelUtils.compare_objects(result, key, model_1_item_list[i], model_2_item_list[i])
             else:
                 if is_model_1_larger_than_model_2:
-                    result[key].append( (None, {"id": str(larger_list[i].id), "name": larger_list[i].name}) )
+                    result[key].append( (None, {"id": str(larger_list[i].id), "name": str(larger_list[i])}) )
                 else:
-                    result[key].append( ({"id": str(larger_list[i].id), "name": larger_list[i].name}, None) )
+                    result[key].append( ({"id": str(larger_list[i].id), "name": str(larger_list[i])}, None) )
             i = i + 1
 
         #tuples.sort(key=lambda x: x[0], reverse=True)
@@ -593,4 +596,3 @@ class ModelUtils:
             date_predicate, created = OPredicate.objects.get_or_create(model=model, organisation=model.organisation, subject=date_concept, relation=inheritance_relation, object=root_concept, defaults={'cardinality_min':0, 'cardinality_max':0})
             timestamp_predicate, created = OPredicate.objects.get_or_create(model=model, organisation=model.organisation, subject=timestamp_concept, relation=inheritance_relation, object=root_concept, defaults={'cardinality_min':0, 'cardinality_max':0})
             boolean_predicate, created = OPredicate.objects.get_or_create(model=model, organisation=model.organisation, subject=boolean_concept, relation=inheritance_relation, object=root_concept, defaults={'cardinality_min':0, 'cardinality_max':0})
-        

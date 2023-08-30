@@ -3,11 +3,10 @@ import uuid
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext as _
+
 from log.middleware.request import get_request
 from openea.utils import Utils
-
 from utils.generic import GenericModel
-
 
 ###############################################################################
 ### System
@@ -36,19 +35,24 @@ TASK_STATUS = [
 TASK_PROCESSABLE_STATUSES = [TASK_STATUS_PENDING, TASK_STATUS_FAILURE]
 
 
-class DeleteManager(models.Manager):
-    def get_queryset(self):
-        request = get_request()
-        if request and request.user and request.user.is_authenticated:
-            if request.user.is_superuser:
-                return super().get_queryset()
-            return super().get_queryset().filter(deleted_at__isnull=True)
-        return super().get_queryset()
+# class DeleteManager(models.Manager):
+#     def get_queryset(self):
+#         request = get_request()
+#         if request and request.user and request.user.is_authenticated:
+#             #if request.user.is_superuser:
+#             #    return super().get_queryset()
+#             return super().get_queryset().filter(deleted_at__isnull=True)
+#         return super().get_queryset()
     
-    # def delete(self):
-    #     self.delete()
+#     # def delete(self):
+#     #     self.delete()
 
-class OrganisationManager(DeleteManager):
+#     def create(self, **obj_data):
+#         obj_data['deleted_at'] = None
+#         obj_data['deleted_by'] = None
+#         return super().create(**obj_data) # Python 3 syntax!!
+
+class OrganisationManager(models.Manager):
     def get_queryset(self):
         request = get_request()
         if request and request.user and request.user.is_authenticated:
