@@ -8,7 +8,7 @@
 <div class="d-flex flex-column flex-md-row align-items-center pb-2">
     <div>
         <a class="link-dark breadcrumb" href="{% url "o_model_detail" model_id %}" href="#"> ({% trans "Model" %}) {{ object.model.name|truncatechars:15 }} > </a>
-        <h2>{{object.name}} ({{object.concept.name}})</h2>
+        <h2>{{object.name}} (<a class="link-dark" href="{% url "o_concept_detail" object.concept.id %}">{{object.concept.name}}</a>)</h2>
     </div>
     <div class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
@@ -28,6 +28,9 @@
 
     <dt class="col-sm-3">{% trans "Quality Status" %}</dt>
     <dd class="col-sm-9">{% trans object.get_quality_status_display %}</dd>
+
+    <dt class="col-sm-3 text-muted">{% trans "id" %}</dt>
+    <dd class="col-sm-9 text-muted">{{object.id}}</dd>
 
     <dt class="col-sm-3 text-muted">{% trans "Created" %}</dt>
     <dd class="col-sm-9 text-muted">{{object.created_at}} - {{object.created_by.username}}</dd>

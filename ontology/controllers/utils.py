@@ -5,8 +5,6 @@ from django.db.models import Q
 
 from ontology.models import OConcept, OInstance, OPredicate, ORelation, OSlot
 
-
-
 DEFAULT_MAX_LEVEL = 100
 
 
@@ -92,23 +90,23 @@ class KnowledgeBaseUtils:
      
     def get_related_instances(root_instance, predicate_ids, level):
         results = {}
-        already_found = []
         predicates = OPredicate.objects.filter(model=root_instance.model)
         if predicate_ids and isinstance(predicate_ids, list):
             predicates = predicates.filter(id__in=predicate_ids)
         
         results[0] = [(None, root_instance)]
-        already_found = [root_instance]
+        already_found = set([root_instance])
         KnowledgeBaseUtils.get_related_instances_recusrsive(results=results, already_found=already_found, instance=root_instance, predicates=predicates, level=1, max_level=level)
         return results
 
     def get_related_instances_recusrsive(results, already_found, instance, predicates, level, max_level):
+        tmp_results = []
         if level >= max_level:
-            return None
-        found = [(x, x.object) for x in OSlot.objects.filter(subject=instance, predicate__in=predicates).all() if x.object not in already_found] + [(x, x.subject) for x in OSlot.objects.filter(object=instance, predicate__in=predicates).all() if x.subject not in already_found]
-        if len(found) > 0:
-            results[level] = found
-            already_found = already_found + [x[1] for x in found]
-            for x in results[level]:
-                KnowledgeBaseUtils.get_related_instances_recusrsive(results=results, already_found=already_found, instance=x[1], predicates=predicates, level=level + 1, max_level=max_level)
-
+            return tmp_results
+        
+        for i in results[level-1]:
+            tmp_results += [(x, x.object) for x in OSlot.objects.filter(subject=i[1], predicate__in=predicates).all() if x.object not in already_found] + [(x, x.subject) for x in OSlot.objects.filter(object=i[1], predicate__in=predicates).all() if x.subject not in already_found]
+        
+        already_found.update([x[1] for x in tmp_results])
+        results[level] = set(tmp_results)
+        KnowledgeBaseUtils.get_related_instances_recusrsive(results=results, already_found=already_found, instance=instance, predicates=predicates, level=level + 1, max_level=max_level)

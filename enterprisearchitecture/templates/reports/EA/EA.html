@@ -1,0 +1,188 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="{% static '/EA/css/EA.css' %}"/>
+<style type='text/css'>
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="{% static '/EA/js/helpers.js' %}"></script>
+<script src="{% static '/EA/js/configuration.js' %}"></script>
+<script src="{% static '/EA/js/value_stream_view.js' %}"></script>
+<script src="{% static '/EA/js/capability_view.js' %}"></script>
+<script src="{% static '/EA/js/product_view.js' %}"></script>
+<script src="{% static '/EA/js/location_view.js' %}"></script>
+</head>
+<body>
+
+  <div id="enterprise-architecture">
+    <div class="viewpoint">
+      <div class="viewpoint-heading" id="motivation-viewpoint">{% trans "Motivation Viewpoint" %}</div>
+      <div class="viewpoint-details">
+        <div class="view">
+          <a class="view-heading" href="#show-data" id="principle-view">{% trans "Principle view" %}</a>
+          <div class="view-details">...</div>
+        </div>
+        <div class="view">
+          <a class="view-heading" href="#show-data" id="objective-view">{% trans "Objective view" %}</a>
+          <div class="view-details">...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="viewpoint">
+      <div class="viewpoint-heading" id="strategy-viewpoint">{% trans "Strategy Viewpoint" %}</div>
+      <div class="viewpoint-details">
+        <div class="view">
+          <a class="view-heading" href="#show-data" id="course-of-action-view">{% trans "Course of Action view" %}</a>
+          <div class="view-details">...</div>
+        </div>
+        <div class="view">
+          <a class="view-heading" href="#show-data" id="value-stream-view">{% trans "Value Stream view" %}</a>
+          <div class="view-details">...</div>
+        </div>
+        <div class="view">
+          <a class="view-heading" href="#show-data" id="capability-view">{% trans "Capabilities view" %}</a>
+          <div class="view-details">...</div>
+        </div>
+        <div class="view">
+          <a class="view-heading" href="#show-data" id="resource-view">{% trans "Resource catalog" %}</a>
+          <div class="view-details">...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="viewpoint">
+      <div class="viewpoint-heading" id="business-viewpoint">{% trans "Business Architecture Viewpoint" %}</div>
+      <div class="viewpoint-details">
+        
+        <div class="view">
+          <a class="view-heading" href="#show-data" id="product-view">{% trans "Products view" %}</a>
+          <div class="view-details">...</div>
+        </div>
+        <div class="view">
+          <a class="view-heading" href="#show-data" id="process-view">{% trans "Services view" %}</a>
+          <div class="view-details">...</div>
+        </div>
+        <div class="view">
+          <a class="view-heading" href="#show-data" id="process-view">{% trans "Process catalog" %}</a>
+          <div class="view-details">...</div>
+        </div>
+        <div class="view">
+          <a class="view-heading" href="#show-data" id="process-information-view">{% trans "Process information matrix" %}</a>
+          <div class="view-details">...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="viewpoint">
+      <div class="viewpoint-heading"  id="information-viewpoint">{% trans "Information Architecture Viewpoint" %}</div>
+      <div class="viewpoint-details">
+        <div class="view">
+          <a class="view-heading" href="#show-data" id="data-catalog">{% trans "Data Subject Catalog" %}</a>
+          <div class="view-details">...</div>
+        </div>
+        <div class="view">
+          <a class="view-heading" href="#show-data" id="data-quality">{% trans "Data Quality" %}</a>
+          <div class="view-details">...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="viewpoint">
+      <div class="viewpoint-heading" id="application-viewpoint">{% trans "Application Architecture Viewpoint" %}</div>
+      <div class="viewpoint-details">
+
+        <div class="view">
+          <a class="view-heading" href="#show-data" id="application-view">{% trans "Application Subject Catalog" %}</a>
+          <div class="view-details">...</div>
+        </div>
+        <div class="view">
+          <a class="view-heading" href="#show-data" id="application-information-view">{% trans "Application Information View" %}</a>
+          <div class="view-details">...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="viewpoint">
+      <div class="viewpoint-heading" id="technology-viewpoint">{% trans "Technology Viewpoint" %}</div>
+      <div class="viewpoint-details">
+        <div class="view">
+          <a class="view-heading" href="#show-data" id="technology-view">{% trans "Technology Catalog" %}</a>
+          <div class="view-details">...</div>
+        </div>
+        <div class="view">
+          <a class="view-heading" href="#show-data" id="technology-application-view">{% trans "Technology Application View" %}</a>
+          <div class="view-details">...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="viewpoint">
+      <div class="viewpoint-heading" id="implementation-viewpoint">{% trans "Implementation Viewpoint" %}</div>
+      <div class="viewpoint-details">
+        <div class="view">
+          <a class="view-heading" href="#show-data" id="projects-view">{% trans "Projects registry" %}</a>
+          <div class="view-details">...</div>
+        </div>
+        <div class="view">
+          <a class="view-heading" href="#show-data" id="location-view">{% trans "Location view" %}</a>
+          <div class="view-details">...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div id="menu"></div>
+<div id="legend"></div>
+<div id="data-details"></div>
+
+<script>
+  const panes = {
+    'menu':'menu',
+    'legend':'legend',
+    'data':'data-details',
+  }
+
+  function clear_panes (){
+    for (const [pane_key, pane_id] of Object.entries(panes)){
+      $('#menu').html('');
+    }
+  }
+
+  function toggle_datapane (){
+    $('#data-details').css('display', 'block').animate(
+      {
+        //opacity: 0.25,
+        left: "+=50",
+        height: "toggle"
+      }, 200, function() {
+        // Animation complete.
+      });
+  }
+  function load_data(el_id){
+    if(el_id){
+      const view_name = el_id.replaceAll('-', '_');
+      
+      if (!(view_name in window)){
+        console.log('Undefined view:' + view_name);
+        return false;
+      }
+      window[view_name]('7c0340d9-0aad-499b-aba6-a23abbdb1882', panes);
+    }
+  }
+
+  $('.view-heading').click(function(){
+    var el_id  = this.id;
+    toggle_datapane();
+    clear_panes();
+    load_data(el_id);
+    toggle_datapane();
+  });
+
+</script>
+</body>
+</html>

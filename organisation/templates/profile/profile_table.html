@@ -1,0 +1,27 @@
+{% load i18n %}
+<table class="table table-fluid table-hover">
+    <thead>
+        <tr>
+            <th>{% trans "Profile" %}</th>
+            <th>{% trans "User" %}</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for profile in object_list %}
+        <tr>
+            <td><a class="link-dark" href="{% url "profile_detail" profile.id %}">{{ profile }}</a></td>
+            <td>{{ profile.user }}</td>
+            {% if profile.is_active %}
+            <td>{% trans "active" %}</td>
+            {% else %}
+            <td><a href="{% url "profile_activate" profile.id %}">{% trans "activate" %}</a></td>
+            {% endif %}
+            <td><a href="{% url "profile_update" profile.id %}"><i class="far fa-edit"></i></a></td>
+            <td><a href="{% url "profile_delete" profile.id %}"><i class="fa fa-remove"></i></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

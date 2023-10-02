@@ -49,6 +49,9 @@ INSTALLED_APPS += [
     'ontology.apps.OntologyConfig',
     'taxonomy.apps.TaxonomyConfig',
     'configuration.apps.ConfigurationConfig',
+    'api.apps.ApiConfig',
+    'reporting.apps.ReportingConfig',
+    'enterprisearchitecture.apps.EnterprisearchitectureConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -57,6 +60,8 @@ INSTALLED_APPS += [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
+    'graphene_django',
     'rosetta',
     'crispy_forms',
     "crispy_bootstrap5",
@@ -252,3 +257,22 @@ EMAIL_HOST_USER = ini_config.get('Email', "EMAIL_HOST_USER", fallback='')
 EMAIL_HOST_PASSWORD = ini_config.get('Email', "EMAIL_HOST_PASSWORD", fallback='')
 EMAIL_USE_TLS = ini_config.getboolean('Email', "EMAIL_USE_TLS", fallback=True) 
 EMAIL_USE_SSL = ini_config.getboolean('Email', "EMAIL_USE_SSL", fallback=False)
+
+### APIs ###################################################################################
+GRAPHENE = {
+    "SCHEMA": "api_graphql.schema.schema"
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'api.controllers.jwt.JWTController',
+        'rest_framework.authentication.BasicAuthentication',
+    ]
+}
+
+JWT_CONF = {
+    'TOKEN_LIFETIME_HOURS': 1
+}

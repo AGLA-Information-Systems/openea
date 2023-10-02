@@ -1,13 +1,12 @@
 import uuid
-
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext as _
-
 from openea.utils import Utils
 from organisation.models import Organisation
 from utils.generic import GenericModel
 
+User = get_user_model()
 
 class TagGroup(GenericModel, models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

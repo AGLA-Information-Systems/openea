@@ -1,10 +1,13 @@
 import traceback
 from django.conf import settings
 from django.contrib.auth.backends import BaseBackend
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.forms import ValidationError
 from organisation.controllers.profile import ProfileController
+
+User = get_user_model()
+
 
 class CustomAuthenticationBackend(BaseBackend):
     """
@@ -21,9 +24,7 @@ class CustomAuthenticationBackend(BaseBackend):
             return None
         try:
             user = User.objects.get(Q(username=username)|Q(email=username))
-            if not user.is_active:
-                return None
-            if user.check_password(password):
+            if user.is_active and user.check_password(password):
                 if organisation:
                     try:
                         profile = user.profiles.get(organisation__name=organisation)
@@ -31,6 +32,7 @@ class CustomAuthenticationBackend(BaseBackend):
                         traceback.print_exc()
                         raise ValidationError("User {} is not enrolled with organisation {}".format(username, organisation))
                 return user
+            return None
         except User.DoesNotExist:
             return None
         

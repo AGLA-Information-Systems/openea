@@ -29,6 +29,11 @@ async-timeout==4.0.2
 django-redis==5.2.0
 redis==4.5.2
 six==1.16.0
+stripe==5.4.0
 graphviz==0.20.1
 beautifulsoup4==4.12.2
 xmltodict==0.13.0
+graphene==3.3
+graphene-django==3.1.5
+djangorestframework==3.14.0
+pyjwt==2.8.0

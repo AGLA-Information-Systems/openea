@@ -1,9 +1,12 @@
 from django.core.management.base import BaseCommand, CommandError
 from authorization.controllers.utils import create_security_group_with_permissions, populate_permissions
 from organisation.models import Organisation, Profile
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.utils.translation import gettext as _
+
+User = get_user_model()
+
 
 class Command(BaseCommand):
     help = 'Create an organisation with its permissions'

@@ -1,17 +1,16 @@
 import json
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse, HttpResponseRedirect
+
+from django.http import  HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import View
 
-from authorization.models import Permission
 from ontology.controllers.o_model import ModelUtils
 from ontology.models import OConcept, OInstance, OModel, OPredicate, ORelation
 from openea.utils import Utils
-from payment.controllers.access import check_max_object_type
+
 from utils.views.custom import ReferrerView
 
 
@@ -27,7 +26,6 @@ class OModelCopyView(LoginRequiredMixin, ReferrerView, View):
         model_1 = OModel.objects.get(id=model_id)
         
         self.get_current_organisation(request=request, args=args, kwargs=kwargs)
-        check_max_object_type(organisation=model_1.organisation, object_model=self.model)
         
         new_model = ModelUtils.model_copy(model_1)
         

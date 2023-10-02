@@ -36,6 +36,7 @@ urlpatterns += [
     path('select2/', include('django_select2.urls')),
     path('admin/', admin.site.urls),
     path('rosetta/', include('rosetta.urls')),
+    path('api/', include('api.urls'))
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

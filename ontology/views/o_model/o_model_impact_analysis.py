@@ -4,13 +4,13 @@ import json
 from bs4 import BeautifulSoup
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from django.views.generic import View
 
 from ontology.controllers.graphviz import GraphvizController
 from ontology.controllers.o_model import ModelUtils
-from ontology.models import  OConcept, OInstance, OModel, OPredicate, ORelation
+from ontology.models import OConcept, OInstance, OModel, OPredicate, ORelation
 from ontology.plugins.json import GenericEncoder
 from openea.utils import Utils
 
@@ -24,11 +24,14 @@ class OModelImpactAnalysisView(LoginRequiredMixin, View):
         model = OModel.objects.get(id=model_id)
 
         root_instance_id = ModelUtils.version_uuid(data.get('root_instance_id'))
+        if not root_instance_id:
+            return HttpResponseBadRequest(content_type="application/json")
+        
         root_instance = OInstance.objects.get(id=root_instance_id)
         predicate_ids = data.get('predicate_ids', [])
         if isinstance(predicate_ids, str):
             predicate_ids = [predicate_ids]
-        level = int(data.get('level', 10)) + 1
+        level = int(data.get('level', 3)) + 1
         
         show_relations = self.request.user.acl.check(organisation=model.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, ORelation.get_object_type(), None))
         show_concepts = self.request.user.acl.check(organisation=model.organisation, permissions_required=(Utils.PERMISSION_ACTION_VIEW, OConcept.get_object_type(), None))
@@ -55,4 +58,3 @@ class OModelImpactAnalysisView(LoginRequiredMixin, View):
         }
 
         return HttpResponse(json.dumps(result, cls=GenericEncoder), content_type="application/json")
-    

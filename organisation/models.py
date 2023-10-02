@@ -1,12 +1,13 @@
 import uuid
-
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext as _
-
 from log.middleware.request import get_request
 from openea.utils import Utils
 from utils.generic import GenericModel
+
+User = get_user_model()
+
 
 ###############################################################################
 ### System

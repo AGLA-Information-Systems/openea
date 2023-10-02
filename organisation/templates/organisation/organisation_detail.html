@@ -95,26 +95,7 @@
 
     <div class="tab-pane fade" id="nav-profiles" role="tabpanel" aria-labelledby="nav-profiles-tab">
         <div class="mt-3"><a class="btn btn-primary" href="{% url "profile_create" organisation_id=object.id %}">{% trans "New Profile" %}</a></div>
-        <table class="table table-fluid table-hover">
-            <thead>
-                <tr>
-                    <th>{% trans "Profile" %}</th>
-                    <th>{% trans "User" %}</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for Profile in profiles %}
-                <tr>
-                    <td><a class="link-dark" href="{% url "profile_detail" Profile.id %}">{{ Profile }}</a></td>
-                    <td>{{ Profile.user }}</td>
-                    <td><a href="{% url "profile_update" Profile.id %}"><i class="far fa-edit"></i></a></td>
-                    <td><a href="{% url "profile_delete" Profile.id %}"><i class="fa fa-remove"></i></a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        {% include "profile/profile_table.html" with object_list=profiles %}
 
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">

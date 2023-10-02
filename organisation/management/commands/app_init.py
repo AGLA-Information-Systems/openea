@@ -1,9 +1,12 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from django.utils.translation import gettext as _
 from payment.controllers.products import populate_products
 from authorization.controllers.utils import populate_permissions
+
+User = get_user_model()
+
 
 class Command(BaseCommand):
     help = 'Create an organisation with its permissions'

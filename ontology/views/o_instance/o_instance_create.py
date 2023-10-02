@@ -1,13 +1,14 @@
 from unicodedata import name
 
-from django.http import HttpResponseForbidden, HttpResponseRedirect
-from django.urls import reverse, reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.views.generic.edit import FormView
 
-from django.contrib.auth.mixins import LoginRequiredMixin
 from ontology.forms.o_instance.o_instance_create import OInstanceCreateForm
 from ontology.models import OConcept, OInstance, OModel
 from openea.utils import Utils
+
 
 class OInstanceCreateView(LoginRequiredMixin, FormView):
     model = OInstance

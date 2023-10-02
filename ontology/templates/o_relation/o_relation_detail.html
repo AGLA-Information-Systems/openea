@@ -25,11 +25,16 @@
 </p>
 
 <dl class="row">
+  <dt class="col-sm-3 text-muted">{% trans "id" %}</dt>
+  <dd class="col-sm-9 text-muted">{{object.id}}</dd>
+
   <dt class="col-sm-3 text-muted">{% trans "Created" %}</dt>
   <dd class="col-sm-9 text-muted">{{object.created_at}} - {{object.created_by.username}}</dd>
 
   <dt class="col-sm-3 text-muted">{% trans "Modified" %}</dt>
   <dd class="col-sm-9 text-muted">{{object.modified_at}} - {{object.modified_by.username}}</dd>
 </dl>
+
+{% include "o_predicate/o_predicate_table.html" with object_list=predicates %}
 
 {% endblock content %}

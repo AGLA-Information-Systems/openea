@@ -20,8 +20,8 @@
     <tbody>
         {% for repository in object_list %}
         <tr>
-            <td><a href="{% url "repository_detail" repository.id %}">{{ repository.name }}</a></td>
-            <td><a href="{% url "organisation_detail" repository.organisation.id %}">{{ repository.organisation }}</a></td>
+            <td><a  class="link-dark" href="{% url "repository_detail" repository.id %}">{{ repository.name }}</a></td>
+            <td><a  class="link-dark" href="{% url "organisation_detail" repository.organisation.id %}">{{ repository.organisation }}</a></td>
             <td>{% for tag in repository.tags.all %}{{ tag.name }} {% endfor %}</td>
             <td><a href="{% url "repository_update" repository.id %}"><i class="far fa-edit"></i></a></td>
             <td><a href="{% url "repository_delete" repository.id %}"><i class="fa fa-remove"></i></a></td>

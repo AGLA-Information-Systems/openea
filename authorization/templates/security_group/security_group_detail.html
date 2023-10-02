@@ -36,26 +36,7 @@
 <hr/>
 <div class="mt-3"><a class="btn btn-primary" href="{% url "profile_create" organisation_id=object.id %}">{% trans "Add Profile" %}</a></div>
 <hr/>
-<table class="table table-fluid table-hover">
-    <thead>
-        <tr>
-            <th>{% trans "Profile" %}</th>
-            <th>{% trans "Description" %}</th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for profile in profiles %}
-        <tr>
-            <td><a class="link-dark" href="{% url "profile_detail" profile.id %}">{{ profile }}</a></td>
-            <td>{{ profile.description }}</td>
-            <td><a href="{% url "profile_update" profile.id %}"><i class="far fa-edit"></i></a></td>
-            <td><a href="{% url "profile_delete" profile.id %}"><i class="fa fa-remove"></i></a></td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% include "profile/profile_table.html" with object_list=profiles %}
 
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">

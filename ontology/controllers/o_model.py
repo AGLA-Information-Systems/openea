@@ -10,7 +10,6 @@ from ontology.models import (OConcept, OInstance, OModel, OPredicate,
                              ORelation, OReport, OSlot)
 from openea.utils import Utils
 
-
 DEFAULT_MAX_LEVEL = 100
 
 
@@ -222,7 +221,7 @@ class ModelUtils:
         try:
             UUID(uuid).version
             return uuid
-        except ValueError:
+        except TypeError:
             return None
         
 
@@ -239,14 +238,14 @@ class ModelUtils:
     
     def dictify_impact_analysis(results):
         dictified_results = {}
-        for level, instances in results.items():
+        for level, slots in results.items():
             dictified_results[level] = []
-            for x in instances:
+            for x in slots:
                 slot_data = None
                 if x[0]:
                     slot_data = ModelUtils.slot_to_dict(x[0])
-                    if x[1] is not None:
-                        dictified_results[level].append((slot_data, ModelUtils.instance_to_dict(x[1])))
+                if x[1] is not None:
+                    dictified_results[level].append((slot_data, ModelUtils.instance_to_dict(x[1])))
         return dictified_results
     
     def model_diff(model_1, model_2, filters):

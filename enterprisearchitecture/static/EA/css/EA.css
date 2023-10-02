@@ -1,0 +1,119 @@
+#enterprise-architecture {
+    display: block;
+    margin:5px; 
+    padding:5px; 
+    text-align:center
+  }
+  
+  .viewpoint {
+    display: inline-block;
+    border: 1px solid #BBB;
+    margin:5px; 
+    padding:5px; 
+    text-align:center
+  }
+  .viewpoint-heading {
+    padding:5px 10px;
+  }
+  .viewpoint-details {
+    overflow: hidden;
+  }
+  
+  .view {
+    display: inline-block;
+    margin:5px; 
+    padding:5px; 
+    text-align:center
+  }
+  .view-heading {
+    padding:5px 10px;
+  }
+  .view-details {
+    overflow: hidden;
+    display: none;
+  }
+  
+  #show-data {
+    display: none;
+    border: 1px solid #BBB;
+  }
+  
+  .infobox {
+    vertical-align: top;
+    display: inline-block;
+    border: 1px solid #BBB;
+    border-radius: 5px;
+    margin:10px; 
+    padding:10px; 
+    text-align:center;
+  }
+  .infobox > div > table{
+    margin: 0 auto;
+  }
+
+  .submenu{
+    border: 1px solid #BBB;
+    border-radius: 5px;
+    margin:10px; 
+    padding:10px; 
+    text-align:center;
+  }
+  .submenu > div{
+    margin:5px; 
+    padding:5px; 
+  }
+  .menu-item {
+    margin: 0 10px;
+  }
+  .label-1 {
+    background-color: bisque;
+    border-radius: 5px;
+    padding:5px;
+    margin:5px; 
+  }
+  .label-2 {
+    background-color: rgb(209, 204, 139);
+    border-radius: 5px;
+    padding:5px;
+    margin:5px; 
+  }
+  .label-3 {
+    background-color: rgb(146, 206, 127);
+    border-radius: 5px;
+    padding:5px;
+    margin:5px; 
+  }
+  .legend-label {
+    border-radius: 50%;
+  }
+  .item-details{
+    width: 200px;
+    max-width: 200px;
+  }
+a {
+  color: #444;
+  text-decoration: none;
+}
+a:hover {
+  color: #444;
+  text-decoration: underline;
+}
+
+.gradient-1{
+  text-decoration: none;
+}
+.gradient-1-1{
+  background-color: #fafa6e;
+}
+.gradient-1-2{
+  background-color: #86d780;
+}
+.gradient-1-3{
+  background-color: #23aa8f;
+}
+.gradient-1-4{
+  background-color: #007882;
+}
+.gradient-1-5{
+  background-color: #2a4858;
+}

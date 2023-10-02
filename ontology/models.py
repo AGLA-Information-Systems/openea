@@ -1,13 +1,13 @@
 import uuid
-
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext as _
-
 from openea.utils import Utils
 from organisation.models import Organisation, OrganisationManager
 from taxonomy.models import Tag, TagGroup
 from utils.generic import GenericModel
+
+User = get_user_model()
 
 
 ###############################################################################

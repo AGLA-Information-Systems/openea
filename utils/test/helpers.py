@@ -1,5 +1,4 @@
-from django.contrib.auth.models import User
-
+from django.contrib.auth import get_user_model
 from authorization.controllers.utils import DEFAULT_ACLS, populate_permissions
 from authorization.models import AccessPermission, Permission, SecurityGroup
 from ontology.models import (OConcept, OInstance, OModel, OPredicate,
@@ -7,6 +6,7 @@ from ontology.models import (OConcept, OInstance, OModel, OPredicate,
 from organisation.models import Organisation, Profile, Task
 from payment.controllers.products import populate_products
 
+User = get_user_model()
 
 def create_organisation(name='Org 1', description='', location='test'):
     org_1 = Organisation.objects.create(name=name, description=description, location=location)

@@ -21,7 +21,7 @@ class OReportCreateView(LoginRequiredMixin, CustomCreateView):
         try:
             path = form.cleaned_data['path']
             if path is not None:
-                path = re.sub('/+','/', '/' + path.replace('.', '/'))
+                path = re.sub('/+','/', '/' + path)
             form.instance, created = OReport.objects.get_or_create(
                 name=form.cleaned_data['name'],
                 model=form.cleaned_data['model'],

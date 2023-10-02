@@ -7,3 +7,6 @@
 
 ./manage.py dumpdata --exclude auth.permission --exclude contenttypes --exclude authorization --indent 2 --format xml > currentdb.xml
 ./manage.py loaddata currentdb.xml
+
+./manage.py dumpdata ontology --indent 2 --format xml > ontology.20230922.xml
+./manage.py loaddata ontology.20230922.xml

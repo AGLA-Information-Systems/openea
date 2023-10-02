@@ -6,7 +6,7 @@ from django.test import TestCase
 from django.urls import NoReverseMatch, reverse
 import openpyxl
 
-from utils.test.helpers import add_object_type_permissions_to_security_group, create_concept, create_model, create_organisation, create_model, create_repository, create_security_group, create_user, create_user_profile
+from utils.test.helpers import create_concept, create_model, create_organisation, create_model, create_repository, create_security_group, create_user, create_user_profile
 from ontology.models import OModel
 from authorization.models import Permission
 from organisation.constants import TIME_SCHEDULE_NOW, TIME_SCHEDULE_SCHEDULED
@@ -20,7 +20,7 @@ class OModelImportTestCase(TestCase):
         self.org_1_security_group_1 = create_security_group(name='Org 1 SecG 1', description='', organisation=self.org_1)
         self.org_1_security_group_1.profiles.add(self.org_1_user_1_profile)
         self.object_type = OModel.get_object_type()
-        add_object_type_permissions_to_security_group(organisation=self.org_1, security_group=self.org_1_security_group_1, object_type=self.object_type)
+        #add_object_type_permissions_to_security_group(organisation=self.org_1, security_group=self.org_1_security_group_1, object_type=self.object_type)
 
         self.org_1_user_2 = create_user(username='org_1_user_2')
         self.org_1_user_2_profile = create_user_profile(role='Admin', user=self.org_1_user_2, organisation=self.org_1)

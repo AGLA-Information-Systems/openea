@@ -17,7 +17,7 @@ class SecurityGroupDetailView(LoginRequiredMixin, DetailView):
         context = super(SecurityGroupDetailView, self).get_context_data(**kwargs)
         context['organisation_id'] = self.object.organisation.id
 
-        accesspermission_list = AccessPermission.objects.filter(security_group_accesspermissions__in=[self.object]).order_by('permission__object_type').order_by('permission__action').all()
+        accesspermission_list = self.object.accesspermissions.order_by('permission__object_type').order_by('permission__action').all()
         accesspermission_paginator = Paginator(accesspermission_list, self.paginate_by)
         accesspermission_page_number = self.request.GET.get('accesspermission_page')
         context['accesspermissions'] = accesspermission_paginator.get_page(accesspermission_page_number)

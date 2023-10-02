@@ -1,8 +1,12 @@
 from faulthandler import disable
-from django import forms
-from ontology.controllers.knowledge_base import KnowledgeBaseController
 
-from ontology.models import OConcept, OInstance, OSlot, OModel, OPredicate, ORelation, OSlot
+from django import forms
+from django_select2 import forms as s2forms
+
+from ontology.controllers.utils import KnowledgeBaseUtils
+from ontology.models import (OConcept, OInstance, OModel, OPredicate,
+                             ORelation, OSlot)
+
 
 class OSlotUpdateForm(forms.ModelForm):
     subject = forms.ModelChoiceField(queryset=OInstance.objects.all())
@@ -30,9 +34,15 @@ class OSlotUpdateForm(forms.ModelForm):
         self.fields['subject'].initial = slot.subject.id
         self.fields['subject'].disabled = True
 
-        self.fields['object'].queryset = OInstance.objects.filter(model__id=slot.model.id, concept=slot.predicate.object)
+        
+        possible_concepts = [x[0] for x in KnowledgeBaseUtils.get_child_concepts(concept=slot.predicate.object)] + [slot.predicate.object]
+        queryset = OInstance.objects.filter(model__id=slot.model.id, concept__in=possible_concepts).order_by('name')
+        self.fields['object'].widget = s2forms.ModelSelect2Widget(
+            queryset=queryset,
+            search_fields=['name__icontains']
+        )
+        self.fields['object'].queryset = queryset
         self.fields['object'].initial = slot.object.id
-        #self.fields['object'].disabled = True
         
         self.fields['order'].initial = slot.order
 

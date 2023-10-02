@@ -18,7 +18,7 @@ class OReportUpdateView(LoginRequiredMixin, SingleObjectView, UpdateView):
     def form_valid(self, form):
         path = form.cleaned_data['path']
         if path is not None:
-            path = re.sub('/+','/', '/' + path.replace('.', '/'))
+            path = re.sub('/+','/', '/' + path)
         form.instance.modified_by = self.request.user
         form.instance.modified_at = timezone.now()
         form.instance.path = path
